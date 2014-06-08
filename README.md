@@ -24,7 +24,7 @@ addr = multiaddr(addr.buffer())
 
 ### Protocols
 
-```
+```js
 // get the multiaddr protocol codes
 addr.protoCodes()
 // [4, 6]
