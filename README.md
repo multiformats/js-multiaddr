@@ -46,16 +46,19 @@ addr.nodeAddress()
 // {family: "IPv4", port:1234, address: "127.0.0.1"} - note no UDP :(
 
 // handles the stupid string version too
-addr = multiaddr.fromStupidString("udp4://127.0.0.1:8080")
-// <Multiaddr /ip4/127.0.0.1/udp/8080>
+addr = multiaddr.fromStupidString("udp4://127.0.0.1:1234")
+// <Multiaddr /ip4/127.0.0.1/udp/1234>
 addr.toStupidString(buf)
-// udp4://127.0.0.1:8000
+// udp4://127.0.0.1:1234
 ```
 
 ### En/decapsulate
 
 ```js
-var addr2 = addr.encapsulate('/sctp/')
+addr.encapsulate('/sctp/5678')
+// <Multiaddr /ip4/127.0.0.1/udp/1234/sctp/5678>
+addr.decapsulate('/udp') // up to + inc last occurrence of this subaddr
+// <Multiaddr /ip4/127.0.0.1>
 ```
 
 ### Tunneling
@@ -67,4 +70,7 @@ var printer = multiaddr('/ip4/192.168.0.13/tcp/80')
 var proxy = multiaddr('/ip4/10.20.30.40/tcp/443')
 var printerOverProxy = proxy.encapsulate(laptop)
 // <Multiaddr /ip4/10.20.30.40/tcp/443/ip4/192.168.0.13/tcp/80>
+
+var proxyAgain = printerOverProxy.decapsulate('/ip4')
+// <Multiaddr /ip4/10.20.30.40/tcp/443>
 ```
