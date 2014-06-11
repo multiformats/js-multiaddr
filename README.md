@@ -2,8 +2,6 @@
 
 [multiaddr](https://github.com/jbenet/multiaddr) implementation in node.
 
-### ~~ WIP ~~
-
 ## Example
 
 ### Simple
