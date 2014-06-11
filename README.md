@@ -12,13 +12,13 @@
 var multiaddr = require('multiaddr')
 var addr = multiaddr("/ip4/127.0.0.1/udp/1234")
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
-addr.buffer()
+addr.buffer
 // <Buffer >
 addr.string()
 // /ip4/127.0.0.1/udp/1234
 
 // construct with Buffer
-addr = multiaddr(addr.buffer())
+addr = multiaddr(addr.buffer)
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
 ```
 
@@ -33,9 +33,10 @@ addr.protoCodes()
 addr.protoNames()
 // ['ip4', 'tcp']
 
-// get the multiaddr protocol "formal" string names
-addr.protoNamesFormal()
-// ['IPv4', 'TCP']
+// get the multiaddr protocol description objects
+addr.protos()
+// [{code: 4, name: 'ip4', size: 32},
+//  {code: 17, name: 'udp', size: 16}]
 ```
 
 ### Other formats
@@ -68,7 +69,7 @@ Multiaddr allows expressing tunnels very nicely.
 ```js
 var printer = multiaddr('/ip4/192.168.0.13/tcp/80')
 var proxy = multiaddr('/ip4/10.20.30.40/tcp/443')
-var printerOverProxy = proxy.encapsulate(laptop)
+var printerOverProxy = proxy.encapsulate(printer)
 // <Multiaddr /ip4/10.20.30.40/tcp/443/ip4/192.168.0.13/tcp/80>
 
 var proxyAgain = printerOverProxy.decapsulate('/ip4')

@@ -1,0 +1,29 @@
+{
+  "name": "multiaddr",
+  "version": "0.1.0",
+  "description": "multiaddr implementation (binary + string representation of network addresses)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbenet/node-multiaddr.git"
+  },
+  "keywords": [
+    "multiaddr",
+    "binary",
+    "string"
+  ],
+  "author": "Juan Benet <juan@benet.ai> (http://juan.benet.ai/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jbenet/node-multiaddr/issues"
+  },
+  "homepage": "https://github.com/jbenet/node-multiaddr",
+  "dependencies": {
+    "ip": "^0.3.0",
+    "lodash.map": "^2.4.1",
+    "xtend": "^3.0.0"
+  }
+}
