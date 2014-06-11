@@ -14,7 +14,7 @@ var addr = multiaddr("/ip4/127.0.0.1/udp/1234")
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
 addr.buffer
 // <Buffer >
-addr.string()
+addr.toString()
 // /ip4/127.0.0.1/udp/1234
 
 // construct with Buffer

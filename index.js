@@ -25,13 +25,15 @@ function Multiaddr(addr) {
 }
 
 // get the multiaddr protocols
-Multiaddr.prototype.string = function string() {
+Multiaddr.prototype.toString = function toString() {
   return codec.bufferToString(this.buffer)
 }
 
 // get the multiaddr protocols
-Multiaddr.prototype.toString = function toString() {
-  return "<Mutliaddr "+ codec.bufferToString(this.buffer) + ">"
+Multiaddr.prototype.inspect = function inspect() {
+  return "<Mutliaddr "+
+    this.buffer.toString('hex') + " - " +
+    codec.bufferToString(this.buffer) + ">"
 }
 
 // get the multiaddr protocols
@@ -83,12 +85,12 @@ Multiaddr.prototype.stringTuples = function stringTuples() {
 
 Multiaddr.prototype.encapsulate = function encapsulate(addr) {
   addr = Multiaddr(addr)
-  return Multiaddr(this.string() + addr.string())
+  return Multiaddr(this.toString() + addr.toString())
 }
 
 Multiaddr.prototype.decapsulate = function decapsulate(addr) {
   addr = addr.toString()
-  var s = this.string()
+  var s = this.toString()
   var i = s.lastIndexOf(addr)
   if (i < 0)
     throw new Error("Address " +this+" does not contain subaddress: " +addr)
@@ -101,7 +103,7 @@ Multiaddr.prototype.nodeAddress = function nodeAddress() {
     throw new Error('Multiaddr must be "thin waist" address for nodeAddress.')
 
   var codes = this.protoCodes()
-  var parts = this.string().split('/').slice(1)
+  var parts = this.toString().split('/').slice(1)
   return {
     family: (codes[0] == 41) ? "IPv6" : "IPv4",
     address: parts[1], // ip addr

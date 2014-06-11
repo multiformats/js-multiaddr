@@ -2,9 +2,9 @@ var multiaddr = require('./')
 var log = console.log
 
 var addr = multiaddr("/ip4/127.0.0.1/udp/1234")
-log("" + addr)
+log(addr)
 log(addr.buffer)
-log(addr.string())
+log(addr.toString())
 log(multiaddr(addr.buffer))
 
 log(addr.protoCodes())
