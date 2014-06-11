@@ -1,6 +1,7 @@
 var map = require('lodash.map')
 var extend = require('xtend')
 var codec = require('./codec')
+var bufeq = require('buffer-equal')
 var protocols = require('./protocols')
 var NotImplemented = new Error("Sorry, Not Implemented Yet.")
 
@@ -17,7 +18,7 @@ function Multiaddr(addr) {
   if (addr instanceof Buffer)
     this.buffer = codec.fromBuffer(addr)
   else if (typeof(addr) == 'string' || addr instanceof String)
-    this.buffer = codec.stringToBuffer(addr)
+    this.buffer = codec.fromString(addr)
   else if (addr.buffer && addr.protos && addr.protoCodes) // Multiaddr
     this.buffer = codec.fromBuffer(addr.buffer) // validate + copy buffer
   else
@@ -95,6 +96,10 @@ Multiaddr.prototype.decapsulate = function decapsulate(addr) {
   if (i < 0)
     throw new Error("Address " +this+" does not contain subaddress: " +addr)
   return Multiaddr(s.slice(0, i))
+}
+
+Multiaddr.prototype.equals = function equals(addr) {
+  return bufeq(this.buffer, addr.buffer)
 }
 
 // get a node friendly address object

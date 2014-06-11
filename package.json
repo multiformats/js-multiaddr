@@ -1,6 +1,6 @@
 {
   "name": "multiaddr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "main": "index.js",
   "scripts": {
@@ -22,8 +22,13 @@
   },
   "homepage": "https://github.com/jbenet/node-multiaddr",
   "dependencies": {
+    "buffer-equal": "0.0.1",
     "ip": "^0.3.0",
+    "lodash.filter": "^2.4.1",
     "lodash.map": "^2.4.1",
     "xtend": "^3.0.0"
+  },
+  "devDependencies": {
+    "tape": "^2.13.2"
   }
 }

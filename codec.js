@@ -1,4 +1,5 @@
 var map = require('lodash.map')
+var filter = require('lodash.filter')
 var log = console.log
 var convert = require('./convert')
 var protocols = require('./protocols')
@@ -17,9 +18,11 @@ var codec = module.exports = {
   bufferToString: bufferToString,
   stringToBuffer: stringToBuffer,
 
+  fromString: fromString,
   fromBuffer: fromBuffer,
   validateBuffer: validateBuffer,
   isValidBuffer: isValidBuffer,
+  cleanPath: cleanPath,
 
   ParseError: ParseError,
   protoFromTuple: protoFromTuple,
@@ -29,6 +32,9 @@ var codec = module.exports = {
 function stringToStringTuples(str) {
   var tuples = []
   var parts = str.split('/').slice(1) // skip first empty elem
+  if (parts.length == 1 && parts[0] == '')
+    return []
+
   for (var p = 0; p < parts.length; p++) {
     var part = parts[p]
     var proto = protocols(part)
@@ -119,9 +125,15 @@ function bufferToString(buf) {
 
 // String -> Buffer
 function stringToBuffer(str) {
+  str = cleanPath(str)
   var a = stringToStringTuples(str)
   var b = stringTuplesToTuples(a)
   return tuplesToBuffer(b)
+}
+
+// String -> Buffer
+function fromString(str) {
+  return stringToBuffer(str)
 }
 
 // Buffer -> Buffer
@@ -142,6 +154,10 @@ function isValidBuffer(buf) {
   } catch(e) {
     return false
   }
+}
+
+function cleanPath(str) {
+  return '/' + filter(str.trim().split('/')).join('/')
 }
 
 function ParseError(str) {
