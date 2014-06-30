@@ -12,6 +12,7 @@ log(addr.protoNames())
 log(addr.protos())
 
 log(addr.nodeAddress())
+log(multiaddr.fromNodeAddress(addr.nodeAddress(), 'udp'))
 // addr = multiaddr.fromStupidString("udp4://127.0.0.1:1234")
 
 log(addr.encapsulate('/sctp/5678'))

@@ -116,6 +116,15 @@ Multiaddr.prototype.nodeAddress = function nodeAddress() {
   }
 }
 
+// from a node friendly address object
+Multiaddr.fromNodeAddress = function fromNodeAddress(addr, transport) {
+  if (!addr) throw new Error('requires node address object')
+  if (!transport) throw new Error('requires transport protocol')
+  var ip = (addr.family == "IPv6") ? 'ip6' : 'ip4'
+  return Multiaddr('/' + [ip, addr.address, transport, addr.port].join('/'))
+}
+
+
 // returns whether this address is a standard combination:
 // /{IPv4, IPv6}/{TCP, UDP}
 Multiaddr.prototype.isThinWaistAddress = function isThinWaistAddress(addr) {

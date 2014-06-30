@@ -43,6 +43,8 @@ addr.protos()
 // get a node friendly address object
 addr.nodeAddress()
 // {family: "IPv4", port:1234, address: "127.0.0.1"} - note no UDP :(
+addr.fromNodeAddress({family: "IPv4", port:1234, address: "127.0.0.1"}, 'udp')
+// /ip4/127.0.0.1/udp/1234
 
 // handles the stupid string version too
 addr = multiaddr.fromStupidString("udp4://127.0.0.1:1234")
