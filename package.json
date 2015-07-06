@@ -4,7 +4,7 @@
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/tape test.js"
   },
   "repository": {
     "type": "git",

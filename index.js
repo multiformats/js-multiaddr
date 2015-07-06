@@ -30,6 +30,16 @@ Multiaddr.prototype.toString = function toString() {
   return codec.bufferToString(this.buffer)
 }
 
+// get the multiaddr as a convinent options object to be dropped in net.createConnection
+Multiaddr.prototype.toOptions = function toOptions() {
+  var opts = {}
+  var parsed = this.toString().split('/')
+  opts.family = parsed[1] === 'ip4' ? 'ipv4' : 'ipv6'
+  opts.host = parsed[2]
+  opts.port = parsed[4]
+  return opts
+}
+
 // get the multiaddr protocols
 Multiaddr.prototype.inspect = function inspect() {
   return "<Mutliaddr "+
