@@ -1,10 +1,10 @@
 {
   "name": "multiaddr",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tape test.js"
+    "test": "tape test.js"
   },
   "repository": {
     "type": "git",
