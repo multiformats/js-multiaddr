@@ -1,6 +1,6 @@
-# node-multiaddr
+# js-multiaddr
 
-[multiaddr](https://github.com/jbenet/multiaddr) implementation in node.
+[multiaddr](https://github.com/jbenet/multiaddr) implementation in JavaScript.
 
 ## Example
 
