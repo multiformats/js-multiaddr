@@ -1,8 +1,39 @@
 # js-multiaddr
 
-[multiaddr](https://github.com/jbenet/multiaddr) implementation in JavaScript.
+[![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io) [[![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs) ![Build Status](https://travis-ci.org/diasdavid/js-multiaddr.svg?style=flat-square)](https://travis-ci.org/diasdavid/js-multiaddr) ![](https://img.shields.io/badge/coverage-%3F-yellow.svg?style=flat-square) [![Dependency Status](https://david-dm.org/diasdavid/js-multiaddr.svg?style=flat-square)](https://david-dm.org/diasdavid/js-multiaddr) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 
-## Example
+> [multiaddr](https://github.com/jbenet/multiaddr) implementation in JavaScript.
+
+# Usage
+
+### In Node.js through npm
+
+```bash
+$ npm install --save multiaddr
+```
+
+```javascript
+var multiaddr = require('multiaddr')
+```
+
+### In the Browser through browserify
+
+Same as in Node.js, you just have to [browserify](https://github.com/substack/node-browserify) the code before serving it. See the browserify repo for how to do that.
+
+### In the Browser through `<script>` tag
+
+Make the [multiaddr.min.js](/dist/multiaddr.min.js) available through your server and load it using a normal `<script>` tag, this will export the `multiaddr` on the `window` object, such that:
+
+```JavaScript
+var multiaddr = window.multiaddr
+```
+
+#### Gotchas
+
+You will need to use Node.js `Buffer` API compatible, if you are running inside the browser, you can access it by `multiaddr.Buffer` or you can install Feross's [Buffer](https://github.com/feross/buffer).
+
+
+### Example
 
 ### Simple
 
