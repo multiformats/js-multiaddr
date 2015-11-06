@@ -1,8 +1,8 @@
 var test = require('tape')
 var bufeq = require('buffer-equal')
-var m = require('./')
+var m = require('../src')
 
-test('construction', function(t) {
+test('construction', function (t) {
   var a = m('/ip4/127.0.0.1/udp/1234')
   t.ok(m('/ip4/127.0.0.1/udp/1234') instanceof m, 'construction')
   t.ok(m(a) !== a, 're-construct should copy')
@@ -25,7 +25,7 @@ test('construction', function(t) {
   t.end()
 })
 
-test('basic', function(t) {
+test('basic', function (t) {
   var s = '/ip4/127.0.0.1/udp/1234'
   var b = new Buffer('047f0000011104d2', 'hex')
   var a = m(s)
@@ -37,14 +37,13 @@ test('basic', function(t) {
   t.deepEqual(a.protos(), [m.protocols.codes[4], m.protocols.codes[17]], '.protos')
   t.ok(a.protos()[0] !== m.protocols.codes[4], '.protos copies')
 
-  var b = a.encapsulate('/udp/5678')
+  b = a.encapsulate('/udp/5678')
   t.equal(b.toString(), '/ip4/127.0.0.1/udp/1234/udp/5678', '.encapsulate')
   t.equal(b.decapsulate('/udp').toString(), '/ip4/127.0.0.1/udp/1234', '.decapsulate')
   t.equal(b.decapsulate('/ip4').toString(), '/', '.decapsulate')
-  t.throws(function() { a.decapsulate('/').toString()}, undefined, '.decapsulate / throws')
+  t.throws(function () { a.decapsulate('/').toString() }, undefined, '.decapsulate / throws')
   t.equal(m('/').encapsulate(a).toString(), a.toString(), '.encapsulate empty works')
   t.equal(m('/').decapsulate('/').toString(), '/', '.decapsulate empty works')
 
   t.end()
 })
-

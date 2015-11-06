@@ -2,9 +2,23 @@
   "name": "multiaddr",
   "version": "1.0.0",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "tape test.js"
+    "test:node": "node tests/test.js",
+    "lint": "standard",
+    "test": "npm run test:node",
+    "test:browser": "./node_modules/.bin/zuul --browser-version $BROWSER_VERSION --browser-name $BROWSER_NAME -- tests/test.js",
+    "test:browser:q": "BROWSER_VERSION=46 BROWSER_NAME=chrome npm run test:browser",
+    "build": "./node_modules/.bin/browserify -s multiaddr -e ./src/index.js | tee dist/multiaddr.js | ./node_modules/.bin/uglifyjs -m > dist/multiaddr.min.js"
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
   },
   "repository": {
     "type": "git",
@@ -29,6 +43,11 @@
     "xtend": "^3.0.0"
   },
   "devDependencies": {
-    "tape": "^2.13.2"
+    "browserify": "^12.0.1",
+    "pre-commit": "^1.1.2",
+    "standard": "^5.3.1",
+    "tape": "^2.13.2",
+    "uglifyjs": "^2.4.10",
+    "zuul": "^3.7.2"
   }
 }

@@ -1,7 +1,7 @@
-var multiaddr = require('./')
+var multiaddr = require('../src')
 var log = console.log
 
-var addr = multiaddr("/ip4/127.0.0.1/udp/1234")
+var addr = multiaddr('/ip4/127.0.0.1/udp/1234')
 log(addr)
 log(addr.buffer)
 log(addr.toString())
@@ -17,7 +17,6 @@ log(multiaddr.fromNodeAddress(addr.nodeAddress(), 'udp'))
 
 log(addr.encapsulate('/sctp/5678'))
 log(addr.decapsulate('/udp'))
-
 
 var printer = multiaddr('/ip4/192.168.0.13/tcp/80')
 var proxy = multiaddr('/ip4/10.20.30.40/tcp/443')
