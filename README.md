@@ -15,12 +15,16 @@ js-multiaddr
 ### In Node.js through npm
 
 ```bash
-$ npm install --save multiaddr
+> npm install multiaddr --save
 ```
 
-```javascript
-var multiaddr = require('multiaddr')
+```JavaScript
+const multiaddr = require('multiaddr')
 ```
+
+### In the Browser through Webpack
+
+Same as in Node.js, you just have to transpile it with Webpack before serving the code. Follow the webpack config example.
 
 ### In the Browser through browserify
 
@@ -28,24 +32,23 @@ Same as in Node.js, you just have to [browserify](https://github.com/substack/no
 
 ### In the Browser through `<script>` tag
 
-Make the [multiaddr.min.js](/dist/multiaddr.min.js) available through your server and load it using a normal `<script>` tag, this will export the `multiaddr` on the `window` object, such that:
+Make the [multiaddr.js](/dist/multiaddr.js) available through your server and load it using a normal `<script>` tag, this will export the `multiaddr` on the `window` object, such that:
 
 ```JavaScript
-var multiaddr = window.multiaddr
+const multiaddr = window.multiaddr
 ```
 
 #### Gotchas
 
 You will need to use Node.js `Buffer` API compatible, if you are running inside the browser, you can access it by `multiaddr.Buffer` or you can install Feross's [Buffer](https://github.com/feross/buffer).
 
-
-### Example
+# Examples
 
 ### Simple
 
-```js
-var multiaddr = require('multiaddr')
-var addr = multiaddr("/ip4/127.0.0.1/udp/1234")
+```JavaScript
+const multiaddr = require('multiaddr')
+const addr = multiaddr("/ip4/127.0.0.1/udp/1234")
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
 addr.buffer
 // <Buffer >
@@ -59,7 +62,7 @@ addr = multiaddr(addr.buffer)
 
 ### Protocols
 
-```js
+```JavaScript
 // get the multiaddr protocol codes
 addr.protoCodes()
 // [4, 6]
@@ -76,7 +79,7 @@ addr.protos()
 
 ### Other formats
 
-```js
+```JavaScript
 // get a node friendly address object
 addr.nodeAddress()
 // {family: "IPv4", port:1234, address: "127.0.0.1"} - note no UDP :(
@@ -92,7 +95,7 @@ addr.toStupidString(buf)
 
 ### En/decapsulate
 
-```js
+```JavaScript
 addr.encapsulate('/sctp/5678')
 // <Multiaddr /ip4/127.0.0.1/udp/1234/sctp/5678>
 addr.decapsulate('/udp') // up to + inc last occurrence of this subaddr
@@ -103,12 +106,12 @@ addr.decapsulate('/udp') // up to + inc last occurrence of this subaddr
 
 Multiaddr allows expressing tunnels very nicely.
 
-```js
-var printer = multiaddr('/ip4/192.168.0.13/tcp/80')
-var proxy = multiaddr('/ip4/10.20.30.40/tcp/443')
-var printerOverProxy = proxy.encapsulate(printer)
+```JavaScript
+const printer = multiaddr('/ip4/192.168.0.13/tcp/80')
+const proxy = multiaddr('/ip4/10.20.30.40/tcp/443')
+const printerOverProxy = proxy.encapsulate(printer)
 // <Multiaddr /ip4/10.20.30.40/tcp/443/ip4/192.168.0.13/tcp/80>
 
-var proxyAgain = printerOverProxy.decapsulate('/ip4')
+const proxyAgain = printerOverProxy.decapsulate('/ip4')
 // <Multiaddr /ip4/10.20.30.40/tcp/443>
 ```
