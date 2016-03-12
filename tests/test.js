@@ -174,6 +174,7 @@ describe('variants', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/5000/utp'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
+    expect(addr.protoNames())
     expect(addr.toString()).to.equal(str)
     done()
   })

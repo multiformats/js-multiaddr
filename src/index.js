@@ -3,6 +3,7 @@ var extend = require('xtend')
 var codec = require('./codec')
 var protocols = require('./protocols')
 var NotImplemented = new Error('Sorry, Not Implemented Yet.')
+var varint = require('varint')
 
 exports = module.exports = Multiaddr
 
@@ -52,6 +53,7 @@ Multiaddr.prototype.inspect = function inspect () {
 // get the multiaddr protocols
 Multiaddr.prototype.protos = function protos () {
   return map(this.protoCodes(), function (code) {
+    console.log('->', code)
     return extend(protocols(code))
   // copy to prevent users from modifying the internal objs.
   })
@@ -69,8 +71,9 @@ Multiaddr.prototype.protos = function protos () {
 Multiaddr.prototype.protoCodes = function protoCodes () {
   var codes = []
   for (var i = 0; i < this.buffer.length; i++) {
-    var code = 0 + this.buffer[i]
+    var code = varint.decode(this.buffer, i)
     var size = protocols(code).size / 8
+    i = i + varint.decode.bytes - 1
     i += size // skip over proto data
     codes.push(code)
   }
