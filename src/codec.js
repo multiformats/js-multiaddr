@@ -1,8 +1,8 @@
 var map = require('lodash.map')
 var filter = require('lodash.filter')
-// var log = console.log
 var convert = require('./convert')
 var protocols = require('./protocols')
+var varint = require('varint')
 
 // export codec
 module.exports = {
@@ -40,7 +40,8 @@ function stringToStringTuples (str) {
     var part = parts[p]
     var proto = protocols(part)
     if (proto.size === 0) {
-      return [part]
+      tuples.push([part])
+      return tuples
     }
 
     p++ // advance addr part
@@ -63,12 +64,19 @@ function stringTuplesToString (tuples) {
       parts.push(tup[1])
     }
   })
+  if (parts[parts.length - 1] === '') {
+    parts.pop()
+  }
+
   return '/' + parts.join('/')
 }
 
 // [[str name, str addr]... ] -> [[int code, Buffer]... ]
 function stringTuplesToTuples (tuples) {
   return map(tuples, function (tup) {
+    if (!Array.isArray(tup)) {
+      tup = [tup]
+    }
     var proto = protoFromTuple(tup)
     if (tup.length > 1) {
       return [proto.code, convert.toBuffer(proto.code, tup[1])]
@@ -92,7 +100,7 @@ function tuplesToStringTuples (tuples) {
 function tuplesToBuffer (tuples) {
   return fromBuffer(Buffer.concat(map(tuples, function (tup) {
     var proto = protoFromTuple(tup)
-    var buf = new Buffer([proto.code])
+    var buf = new Buffer(varint.encode(proto.code))
     if (tup.length > 1) {
       buf = Buffer.concat([buf, tup[1]]) // add address buffer
     }
@@ -104,14 +112,15 @@ function tuplesToBuffer (tuples) {
 function bufferToTuples (buf) {
   var tuples = []
   for (var i = 0; i < buf.length;) {
-    var code = buf[i]
+    var code = varint.decode(buf, i)
+
     var proto = protocols(code)
     if (!proto) {
       throw ParseError('Invalid protocol code: ' + code)
     }
 
     var size = (proto.size / 8)
-    code = 0 + buf[i]
+    code = Number(code)
     var addr = buf.slice(i + 1, i + 1 + size)
     i += 1 + size
     if (i > buf.length) { // did not end _exactly_ at buffer.length
@@ -120,6 +129,7 @@ function bufferToTuples (buf) {
 
     // ok, tuple seems good.
     tuples.push([code, addr])
+    i = i + varint.decode.bytes - 1
   }
   return tuples
 }
@@ -174,8 +184,5 @@ function ParseError (str) {
 
 function protoFromTuple (tup) {
   var proto = protocols(tup[0])
-  if (tup.length > 1 && proto.size === 0) {
-    throw ParseError('tuple has address but protocol size is 0')
-  }
   return proto
 }

@@ -31,10 +31,12 @@ Protocols.table = [
   [17, 16, 'udp'],
   [33, 16, 'dccp'],
   [41, 128, 'ip6'],
-  // these require varint:
-  [132, 16, 'sctp']
-// [480, 0, 'http'],
-// [443, 0, 'https'],
+  [132, 16, 'sctp'],
+  // these require varint for the protocol code
+  [302, 0, 'utp'],
+  [480, 0, 'http'],
+  [443, 0, 'https'],
+  [477, 0, 'websockets']
 ]
 
 Protocols.names = {}

@@ -12,7 +12,9 @@ function Multiaddr (addr) {
   }
 
   // defaults
-  if (!addr) { addr = '' }
+  if (!addr) {
+    addr = ''
+  }
 
   if (addr instanceof Buffer) {
     this.buffer = codec.fromBuffer(addr)
