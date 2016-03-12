@@ -1,13 +1,10 @@
 var map = require('lodash.map')
 var extend = require('xtend')
 var codec = require('./codec')
-var bufeq = require('buffer-equal')
 var protocols = require('./protocols')
 var NotImplemented = new Error('Sorry, Not Implemented Yet.')
 
 exports = module.exports = Multiaddr
-
-exports.Buffer = Buffer
 
 function Multiaddr (addr) {
   if (!(this instanceof Multiaddr)) {
@@ -26,7 +23,7 @@ function Multiaddr (addr) {
   } else if (addr.buffer && addr.protos && addr.protoCodes) { // Multiaddr
     this.buffer = codec.fromBuffer(addr.buffer) // validate + copy buffer
   } else {
-    throw new Error('addr must be a string, Buffer, or Multiaddr')
+    throw new Error('addr must be a string, Buffer, or another Multiaddr')
   }
 }
 
@@ -47,7 +44,7 @@ Multiaddr.prototype.toOptions = function toOptions () {
 
 // get the multiaddr protocols
 Multiaddr.prototype.inspect = function inspect () {
-  return '<Mutliaddr ' +
+  return '<Multiaddr ' +
   this.buffer.toString('hex') + ' - ' +
   codec.bufferToString(this.buffer) + '>'
 }
@@ -64,7 +61,7 @@ Multiaddr.prototype.protos = function protos () {
 Multiaddr.prototype.protos = function protos () {
   return map(this.protoCodes(), function (code) {
     return extend(protocols(code))
-  // copy to prevent users from modifying the internal objs.
+    // copy to prevent users from modifying the internal objs.
   })
 }
 
@@ -114,7 +111,7 @@ Multiaddr.prototype.decapsulate = function decapsulate (addr) {
 }
 
 Multiaddr.prototype.equals = function equals (addr) {
-  return bufeq(this.buffer, addr.buffer)
+  return this.buffer.equals(addr.buffer)
 }
 
 // get a node friendly address object
