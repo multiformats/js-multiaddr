@@ -1,3 +1,5 @@
+'use strict'
+
 var multiaddr = require('../src')
 var log = console.log
 

@@ -1,3 +1,5 @@
+'use strict'
+
 var map = require('lodash.map')
 var filter = require('lodash.filter')
 var convert = require('./convert')
@@ -115,10 +117,6 @@ function bufferToTuples (buf) {
     var code = varint.decode(buf, i)
 
     var proto = protocols(code)
-    if (!proto) {
-      throw ParseError('Invalid protocol code: ' + code)
-    }
-
     var size = (proto.size / 8)
     code = Number(code)
     var addr = buf.slice(i + 1, i + 1 + size)
@@ -162,16 +160,15 @@ function fromBuffer (buf) {
 }
 
 function validateBuffer (buf) {
-  bufferToTuples(buf) // try to parse. will throw if breaks
+  try {
+    bufferToTuples(buf) // try to parse. will throw if breaks
+  } catch (err) {
+    return err
+  }
 }
 
 function isValidBuffer (buf) {
-  try {
-    validateBuffer(buf) // try to parse. will throw if breaks
-    return true
-  } catch (e) {
-    return false
-  }
+  return validateBuffer(buf) === undefined
 }
 
 function cleanPath (str) {
