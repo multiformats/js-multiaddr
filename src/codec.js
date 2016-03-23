@@ -1,3 +1,5 @@
+'use strict'
+
 var map = require('lodash.map')
 var filter = require('lodash.filter')
 var convert = require('./convert')

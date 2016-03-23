@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+'use strict'
 
 const multiaddr = require('../src')
 const expect = require('chai').expect

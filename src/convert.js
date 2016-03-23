@@ -1,3 +1,5 @@
+'use strict'
+
 var ip = require('ip')
 var protocols = require('./protocols')
 
@@ -24,8 +26,9 @@ Convert.toString = function convertToString (proto, buf) {
     case 33: // dccp
     case 132: // sctp
       return buf2port(buf)
+    default:
+      return buf.toString('hex') // no clue. convert to hex
   }
-  return buf.toString('hex') // no clue. convert to hex
 }
 
 Convert.toBuffer = function convertToBuffer (proto, str) {
@@ -40,8 +43,9 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
     case 33: // dccp
     case 132: // sctp
       return port2buf(parseInt(str, 10))
+    default:
+      return new Buffer(str, 'hex') // no clue. convert from hex
   }
-  return new Buffer(str, 'hex') // no clue. convert from hex
 }
 
 function port2buf (port) {
