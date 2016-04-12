@@ -1,3 +1,5 @@
+'use strict'
+
 var map = require('lodash.map')
 var extend = require('xtend')
 var codec = require('./codec')
@@ -53,9 +55,8 @@ Multiaddr.prototype.inspect = function inspect () {
 // get the multiaddr protocols
 Multiaddr.prototype.protos = function protos () {
   return map(this.protoCodes(), function (code) {
-    console.log('->', code)
     return extend(protocols(code))
-  // copy to prevent users from modifying the internal objs.
+    // copy to prevent users from modifying the internal objs.
   })
 }
 
