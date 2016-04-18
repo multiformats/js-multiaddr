@@ -1,3 +1,5 @@
+'use strict'
+
 var map = require('lodash.map')
 var extend = require('xtend')
 var codec = require('./codec')
@@ -48,15 +50,6 @@ Multiaddr.prototype.inspect = function inspect () {
   return '<Multiaddr ' +
   this.buffer.toString('hex') + ' - ' +
   codec.bufferToString(this.buffer) + '>'
-}
-
-// get the multiaddr protocols
-Multiaddr.prototype.protos = function protos () {
-  return map(this.protoCodes(), function (code) {
-    console.log('->', code)
-    return extend(protocols(code))
-  // copy to prevent users from modifying the internal objs.
-  })
 }
 
 // get the multiaddr protocols
@@ -144,9 +137,11 @@ Multiaddr.fromNodeAddress = function fromNodeAddress (addr, transport) {
 // /{IPv4, IPv6}/{TCP, UDP}
 Multiaddr.prototype.isThinWaistAddress = function isThinWaistAddress (addr) {
   var protos = (addr || this).protos()
+
   if (protos.length !== 2) {
     return false
   }
+
   if (protos[0].code !== 4 && protos[0].code !== 41) {
     return false
   }

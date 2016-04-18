@@ -2,15 +2,16 @@ js-multiaddr
 ============
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)
+[![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](http://ipfs.io/)
 [![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs)
-[![Build Status](https://travis-ci.org/jbenet/js-multiaddr.svg?style=flat-square)](https://travis-ci.org/jbenet/js-multiaddr)
-![](https://img.shields.io/badge/coverage-%3F-yellow.svg?style=flat-square)
-[![Dependency Status](https://david-dm.org/jbenet/js-multiaddr.svg?style=flat-square)](https://david-dm.org/jbenet/js-multiaddr)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
+[![Coverage Status](https://coveralls.io/repos/github/jbenet/js-multiaddr/badge.svg?branch=master)](https://coveralls.io/github/jbenet/js-multiaddr?branch=master)
+[![Travis CI](https://travis-ci.org/jbenet/js-multiaddr.svg?branch=master)](https://travis-ci.org/jbenet/js-multiaddr)
+[![Circle CI](https://circleci.com/gh/jbenet/js-multiaddr.svg?style=svg)](https://circleci.com/gh/jbenet/js-multiaddr)
+[![Dependency Status](https://david-dm.org/jbenet/js-multiaddr.svg?style=flat-square)](https://david-dm.org/jbenet/js-multiaddr) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 
-> [multiaddr](https://github.com/jbenet/multiaddr) implementation in JavaScript.
+> JavaScript implementation of [multiaddr](https://github.com/jbenet/multiaddr).
 
-# What is multiaddr?
+## What is multiaddr?
 
 A standard way to represent addresses that
 
@@ -20,7 +21,7 @@ A standard way to represent addresses that
 - have a nice string representation
 - encapsulate well
 
-# Example
+## Example
 
 ```js
 $ node
@@ -53,34 +54,33 @@ $ node
 <Multiaddr /ip4/127.0.0.1/udp/1234/sctp/5678>
 ```
 
-# API
+## API
 
 ```js
 const multiaddr = require('multiaddr')
 ```
 
-## Create
+### Create
 
-### const addr = multiaddr(str)
+#### const addr = multiaddr(str)
 
 Creates a multiaddress from a string (e.g. `/ip4/127.0.0.1/udp/1234`).
 
-### const addr = multiaddr(buf)
+#### const addr = multiaddr(buf)
 
 Creates a multiaddress from another multiaddress' raw bytes.
 
-### addr.buffer
+#### addr.buffer
 
 The raw bytes representing this multiaddress.
 
-### addr.toString()
+#### addr.toString()
 
 The multiaddress in string format (e.g. `/ip4/127.0.0.1/udp/1234`).
 
+### Protocols
 
-## Protocols
-
-### addr.protoCodes()
+#### addr.protoCodes()
 
 Returns the codes of the protocols in the multiaddress, in left-to-right order.
 
@@ -89,7 +89,7 @@ addr.protoCodes()
 // [4, 6]
 ```
 
-### addr.protoNames()
+#### addr.protoNames()
 
 Returns the names of the protocols in the multiaddress, in left-to-right order.
 
@@ -98,7 +98,7 @@ addr.protoNames()
 // ['ip4', 'tcp']
 ```
 
-### addr.protos()
+#### addr.protos()
 
 Returns description objects of the protocols in the multiaddress, in left-to-right order.
 
@@ -113,12 +113,12 @@ addr.protos()
 Each object contains the protocol code, protocol name, and the size of its
 address space in bits.
 
-## Node-Friendly Addresses
+### Node-Friendly Addresses
 
 Utility functions for getting NodeJS-friendly address information from a
 multiaddress.
 
-### addr.nodeAddress()
+#### addr.nodeAddress()
 
 Returns a NodeJS-friendly object describing the left-most address in the
 multiaddress.
@@ -131,7 +131,7 @@ addr.nodeAddress()
 Note that protocol information is left out: in Node (and most network systems)
 the protocol is unknowable given only the address.
 
-### addr.fromNodeAddress(addr)
+#### addr.fromNodeAddress(addr)
 
 Constructs a multiaddress, given a NodeJS-friendly address object and a protocol.
 
@@ -140,7 +140,7 @@ addr.fromNodeAddress({family: "IPv4", port:1234, address: "127.0.0.1"}, 'udp')
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
 ```
 
-### addr.fromStupidString(str)
+#### addr.fromStupidString(str)
 
 Returns a multiaddress, given a URI in the format `<proto><IPv>://<IP
 Addr>[:<proto port>]`
@@ -152,13 +152,13 @@ addr = multiaddr.fromStupidString("udp4://127.0.0.1:1234")
 
 *NOT IMPLEMENTED*
 
-### addr.toStupidString()
+#### addr.toStupidString()
 
 *NOT IMPLEMENTED*
 
-## En/decapsulate
+### En/decapsulate
 
-### addr.encapsulate(str)
+#### addr.encapsulate(str)
 
 Returns a new multiaddress that encapsulates `addr` in a new protocol string,
 `str`.
@@ -168,7 +168,7 @@ addr.encapsulate('/sctp/5678')
 // <Multiaddr /ip4/127.0.0.1/udp/1234/sctp/5678>
 ```
 
-### addr.decapsulate(str)
+#### addr.decapsulate(str)
 
 Returns a new multiaddress with the right-most protocol string `str` removed.
 
@@ -177,12 +177,12 @@ multiaddress('/ip4/127.0.0.1/udp/1234').decapsulate('/udp')
 // <Multiaddr /ip4/127.0.0.1>
 ```
 
-## Tunneling
+### Tunneling
 
 Given these encapsulation/decapsulate tools, multiaddresses lend
 themselves to expressing tunnels very nicely:
 
-```JavaScript
+```js
 const printer = multiaddr('/ip4/192.168.0.13/tcp/80')
 
 const proxy = multiaddr('/ip4/10.20.30.40/tcp/443')
@@ -191,33 +191,42 @@ const printerOverProxy = proxy.encapsulate(printer)
 // <Multiaddr /ip4/10.20.30.40/tcp/443/ip4/192.168.0.13/tcp/80>
 ```
 
-# Installation
+## Installation
 
-### Node.js + npm
+### npm
 
-```bash
-$ npm install multiaddr --save
+```sh
+> npm i multiaddr
 ```
-### Browser + Webpack
 
-Same as in Node.js, you just have to transpile it with Webpack before serving
-the code. Follow the [webpack config
-example](/webpack.config.js).
+## Setup
 
-### Browser + Browserify
+### Node.js
 
-Same as in Node.js, you just have to
-[browserify](https://github.com/substack/node-browserify) the code before
-serving it.
+```js
+const multiaddr = require('multiaddr')
+```
 
-### Browser + `<script>` Tag
+### Browser: Browserify, Webpack, other bundlers
 
-Make the [multiaddr.js](/dist/multiaddr.js) available through your server and
-load it using a normal `<script>` tag. This will export the `multiaddr` on the
-`window` object:
+The code published to npm that gets loaded on require is in fact a ES5
+transpiled version with the right shims added. This means that you can require
+it and use with your favourite bundler without having to adjust asset management
+process.
 
-```JavaScript
-const multiaddr = window.multiaddr
+```js
+const multiaddr = require('multiaddr')
+```
+
+### Browser: `<script>` Tag
+
+Loading this module through a script tag will make the `Multiaddr` obj available in
+the global namespace.
+
+```html
+<script src="https://npmcdn.com/multiaddr/dist/index.min.js"></script>
+<!-- OR -->
+<script src="https://npmcdn.com/multiaddr/dist/index.js"></script>
 ```
 
 **NOTE**: You will need access to the Node.js `Buffer` API. If you are running
