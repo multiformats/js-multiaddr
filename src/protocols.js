@@ -22,6 +22,8 @@ function Protocols (proto) {
   throw new Error('invalid protocol id type: ' + proto)
 }
 
+Protocols.lengthPrefixedVarSize = -1
+
 // replicating table here to:
 // 1. avoid parsing the csv
 // 2. ensuring errors in the csv don't screw up code.
@@ -36,6 +38,7 @@ Protocols.table = [
   [132, 16, 'sctp'],
   // these require varint for the protocol code
   [302, 0, 'utp'],
+  [421, Protocols.lengthPrefixedVarSize, 'ipfs'],
   [480, 0, 'http'],
   [443, 0, 'https'],
   [477, 0, 'websockets']

@@ -41,9 +41,10 @@ function stringToStringTuples (str) {
   for (var p = 0; p < parts.length; p++) {
     var part = parts[p]
     var proto = protocols(part)
+
     if (proto.size === 0) {
       tuples.push([part])
-      return tuples
+      continue
     }
 
     p++ // advance addr part
@@ -53,6 +54,7 @@ function stringToStringTuples (str) {
 
     tuples.push([part, parts[p]])
   }
+
   return tuples
 }
 
@@ -66,9 +68,6 @@ function stringTuplesToString (tuples) {
       parts.push(tup[1])
     }
   })
-  if (parts[parts.length - 1] === '') {
-    parts.pop()
-  }
 
   return '/' + parts.join('/')
 }
@@ -103,32 +102,56 @@ function tuplesToBuffer (tuples) {
   return fromBuffer(Buffer.concat(map(tuples, function (tup) {
     var proto = protoFromTuple(tup)
     var buf = new Buffer(varint.encode(proto.code))
+
     if (tup.length > 1) {
       buf = Buffer.concat([buf, tup[1]]) // add address buffer
     }
+
     return buf
   })))
 }
 
+function sizeForAddr (p, addr) {
+  if (p.size > 0) {
+    return p.size / 8
+  } else if (p.size === 0) {
+    return 0
+  } else {
+    const size = varint.decode(addr)
+    return size + varint.decode.bytes
+  }
+}
+
 // Buffer -> [[int code, Buffer ]... ]
 function bufferToTuples (buf) {
-  var tuples = []
-  for (var i = 0; i < buf.length;) {
-    var code = varint.decode(buf, i)
+  const tuples = []
+  let i = 0
+  while (i < buf.length) {
+    const code = varint.decode(buf, i)
+    const n = varint.decode.bytes
 
-    var proto = protocols(code)
-    var size = (proto.size / 8)
-    code = Number(code)
-    var addr = buf.slice(i + 1, i + 1 + size)
-    i += 1 + size
+    const p = protocols(code)
+
+    const size = sizeForAddr(p, buf.slice(i + n))
+
+    if (size === 0) {
+      tuples.push([code])
+      i += n
+      continue
+    }
+
+    const addr = buf.slice(i + n, i + n + size)
+
+    i += (size + n)
+
     if (i > buf.length) { // did not end _exactly_ at buffer.length
       throw ParseError('Invalid address buffer: ' + buf.toString('hex'))
     }
 
     // ok, tuple seems good.
     tuples.push([code, addr])
-    i = i + varint.decode.bytes - 1
   }
+
   return tuples
 }
 
