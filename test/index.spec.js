@@ -282,7 +282,6 @@ describe('variants', () => {
     const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    console.log(addr.buffer.toString('hex'))
     expect(addr.toString()).to.equal(str)
   })
 })
