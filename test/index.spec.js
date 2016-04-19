@@ -100,6 +100,55 @@ describe('manipulation', () => {
     expect(multiaddr('/').encapsulate(udpAddr).toString()).to.equal(udpAddr.toString())
     expect(multiaddr('/').decapsulate('/').toString()).to.equal('/')
   })
+
+  it('ipfs', () => {
+    const ipfsAddr = multiaddr('/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
+    const ip6Addr = multiaddr('/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095')
+    const tcpAddr = multiaddr('/tcp/8000')
+    const webAddr = multiaddr('/websockets')
+
+    expect(
+      multiaddr('/')
+        .encapsulate(ip6Addr)
+        .encapsulate(tcpAddr)
+        .encapsulate(webAddr)
+        .encapsulate(ipfsAddr)
+        .toString()
+    ).to.equal([
+      ip6Addr.toString(),
+      tcpAddr.toString(),
+      webAddr.toString(),
+      ipfsAddr.toString()
+    ].join(''))
+
+    expect(
+      multiaddr('/')
+        .encapsulate(ip6Addr)
+        .encapsulate(tcpAddr)
+        .encapsulate(webAddr)
+        .encapsulate(ipfsAddr)
+        .decapsulate(ipfsAddr)
+        .toString()
+    ).to.equal([
+      ip6Addr.toString(),
+      tcpAddr.toString(),
+      webAddr.toString()
+    ].join(''))
+
+    expect(
+      multiaddr('/')
+        .encapsulate(ip6Addr)
+        .encapsulate(tcpAddr)
+        .encapsulate(ipfsAddr)
+        .encapsulate(webAddr)
+        .decapsulate(webAddr)
+        .toString()
+    ).to.equal([
+      ip6Addr.toString(),
+      tcpAddr.toString(),
+      ipfsAddr.toString()
+    ].join(''))
+  })
 })
 
 describe('variants', () => {
@@ -140,6 +189,20 @@ describe('variants', () => {
 
   it('ip6 + udp', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/5000'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('ip4 + ipfs', () => {
+    const str = '/ip4/127.0.0.1/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('ip6 + ipfs', () => {
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
@@ -207,6 +270,21 @@ describe('variants', () => {
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
+
+  it('ip6 + tcp + websockets + ipfs', () => {
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/websockets/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('ipfs', () => {
+    const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    console.log(addr.buffer.toString('hex'))
+    expect(addr.toString()).to.equal(str)
+  })
 })
 
 describe('helpers', () => {
@@ -254,7 +332,7 @@ describe('helpers', () => {
         multiaddr('/ip4/0.0.0.0/utp').tuples()
       ).to.be.eql([
         [4, new Buffer([0, 0, 0, 0])],
-        [302, new Buffer([])]
+        [302]
       ])
     })
   })
@@ -265,7 +343,7 @@ describe('helpers', () => {
         multiaddr('/ip4/0.0.0.0/utp').stringTuples()
       ).to.be.eql([
         [4, '0.0.0.0'],
-        [302, '']
+        [302]
       ])
     })
   })
@@ -389,7 +467,7 @@ describe('helpers', () => {
       )
 
       expect(
-        multiaddr('/http/0.0.0.0/utp').isThinWaistAddress()
+        multiaddr('/http/utp').isThinWaistAddress()
       ).to.be.eql(
         false
       )
