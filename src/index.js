@@ -62,14 +62,20 @@ Multiaddr.prototype.protos = function protos () {
 
 // get the multiaddr protocol codes
 Multiaddr.prototype.protoCodes = function protoCodes () {
-  var codes = []
-  for (var i = 0; i < this.buffer.length; i++) {
-    var code = varint.decode(this.buffer, i)
-    var size = protocols(code).size / 8
-    i = i + varint.decode.bytes - 1
-    i += size // skip over proto data
+  const codes = []
+  const buf = this.buffer
+  let i = 0
+  while (i < buf.length) {
+    const code = varint.decode(buf, i)
+    const n = varint.decode.bytes
+
+    const p = protocols(code)
+    const size = codec.sizeForAddr(p, buf.slice(i + n))
+
+    i += (size + n)
     codes.push(code)
   }
+
   return codes
 }
 
