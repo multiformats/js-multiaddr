@@ -27,7 +27,9 @@ module.exports = {
   cleanPath: cleanPath,
 
   ParseError: ParseError,
-  protoFromTuple: protoFromTuple
+  protoFromTuple: protoFromTuple,
+
+  sizeForAddr: sizeForAddr
 }
 
 // string -> [[str name, str addr]... ]

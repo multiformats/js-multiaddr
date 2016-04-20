@@ -323,6 +323,24 @@ describe('helpers', () => {
         size: 0
       }])
     })
+
+    it('works with ipfs', () => {
+      expect(
+        multiaddr('/ip4/0.0.0.0/utp/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').protos()
+      ).to.be.eql([{
+        code: 4,
+        name: 'ip4',
+        size: 32
+      }, {
+        code: 302,
+        name: 'utp',
+        size: 0
+      }, {
+        code: 421,
+        name: 'ipfs',
+        size: -1
+      }])
+    })
   })
 
   describe('.tuples', () => {
