@@ -24,7 +24,7 @@ describe('convert', () => {
   describe('.toBuffer', () => {
     it('defaults to hex conversion', () => {
       expect(
-        convert.toBuffer('websockets', 'c0a80001')
+        convert.toBuffer('ws', 'c0a80001')
       ).to.be.eql(
         new Buffer([192, 168, 0, 1])
       )
@@ -43,7 +43,7 @@ describe('convert', () => {
 
     it('defaults to hex conversion', () => {
       expect(
-        convert.toString('websockets', new Buffer([192, 168, 0, 1]))
+        convert.toString('ws', new Buffer([192, 168, 0, 1]))
       ).to.be.eql(
         'c0a80001'
       )
