@@ -1,6 +1,6 @@
 {
   "name": "multiaddr",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
