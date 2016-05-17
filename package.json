@@ -11,8 +11,8 @@
     "test:browser": "aegir-test browser",
     "build": "aegir-build",
     "release": "aegir-release",
-    "release-minor": "aegir-release minor",
-    "release-major": "aegir-release major",
+    "release-minor": "aegir-release --type minor",
+    "release-major": "aegir-release --type major",
     "coverage": "aegir-coverage",
     "coverage-publish": "aegir-coverage publish"
   },
@@ -45,7 +45,7 @@
     "xtend": "^4.0.1"
   },
   "devDependencies": {
-    "aegir": "^2.1.1",
+    "aegir": "^3.0.4",
     "buffer-loader": "0.0.1",
     "chai": "^3.5.0",
     "pre-commit": "^1.1.2"
