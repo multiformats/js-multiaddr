@@ -41,7 +41,7 @@ Protocols.table = [
   [421, Protocols.lengthPrefixedVarSize, 'ipfs'],
   [480, 0, 'http'],
   [443, 0, 'https'],
-  [477, 0, 'websockets']
+  [477, 0, 'ws']
 ]
 
 Protocols.names = {}
