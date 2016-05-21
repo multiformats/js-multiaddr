@@ -284,6 +284,13 @@ describe('variants', () => {
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
+
+  it('webrtc-star', () => {
+    const str = '/libp2p-webrtc-star/ip4/127.0.0.1/tcp/9090/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
 })
 
 describe('helpers', () => {
