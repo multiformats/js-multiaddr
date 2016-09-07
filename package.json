@@ -36,19 +36,19 @@
   },
   "homepage": "https://github.com/jbenet/js-multiaddr",
   "dependencies": {
-    "babel-runtime": "^6.6.1",
+    "babel-runtime": "^6.11.6",
     "bs58": "^3.0.0",
-    "ip": "^1.0.2",
-    "lodash.filter": "^4.2.1",
-    "lodash.map": "^4.2.1",
-    "varint": "^4.0.0",
+    "ip": "^1.1.3",
+    "lodash.filter": "^4.6.0",
+    "lodash.map": "^4.6.0",
+    "varint": "^4.0.1",
     "xtend": "^4.0.1"
   },
   "devDependencies": {
-    "aegir": "^3.0.4",
+    "aegir": "^8.0.0",
     "buffer-loader": "0.0.1",
     "chai": "^3.5.0",
-    "pre-commit": "^1.1.2"
+    "pre-commit": "^1.1.3"
   },
   "contributors": [
     "David Dias <daviddias.p@gmail.com>",
