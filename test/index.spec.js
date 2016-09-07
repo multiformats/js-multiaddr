@@ -1,3 +1,4 @@
+/* eslint max-nested-callbacks: ["error", 8] */
 /* eslint-env mocha */
 'use strict'
 
@@ -513,6 +514,16 @@ describe('helpers', () => {
       ).to.throw(
           /Not Implemented/
       )
+    })
+  })
+
+  describe('multiaddr.isMultiaddr', () => {
+    it('handles different inputs', () => {
+      expect(multiaddr.isMultiaddr(multiaddr('/'))).to.be.eql(true)
+      expect(multiaddr.isMultiaddr('/')).to.be.eql(false)
+      expect(multiaddr.isMultiaddr(123)).to.be.eql(false)
+
+      expect(multiaddr.isMultiaddr(Buffer('/hello'))).to.be.eql(false)
     })
   })
 })

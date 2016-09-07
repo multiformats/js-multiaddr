@@ -191,6 +191,12 @@ const printerOverProxy = proxy.encapsulate(printer)
 // <Multiaddr /ip4/10.20.30.40/tcp/443/ip4/192.168.0.13/tcp/80>
 ```
 
+### Misc
+
+#### `multiaddr.isMultiaddr(addr)`
+
+Returns `true` if the passed in `addr` is a valid `multiaddr`.
+
 ## Installation
 
 ### npm

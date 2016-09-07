@@ -166,3 +166,14 @@ Multiaddr.prototype.fromStupidString = function fromStupidString (str) {
 
 // patch this in
 Multiaddr.protocols = protocols
+
+Multiaddr.isMultiaddr = function isMultiaddr (addr) {
+  if (addr.constructor && addr.constructor.name) {
+    return addr.constructor.name === 'Multiaddr'
+  }
+
+  return Boolean(
+    addr.fromStupidString &&
+    addr.protos
+  )
+}
