@@ -1,15 +1,15 @@
-code,  size,  name
-4,     32,    ip4
-6,     16,    tcp
-17,    16,    udp
-33,    16,    dccp
-41,    128,   ip6
-132,   16,    sctp
-301,   0,     udt
-302,   0,     utp
-42,    V,     ipfs
-480,   0,     http
-443,   0,     https
-477,   0,     ws
-444,   10,    onion
-275,   0,     libp2p-webrtc-star
+hex-code,   dec-code,  size,  name
+0x04,       4,         32,    ip4
+0x29,       41,        128,   ip6
+0x06,      6,         16,    tcp
+0x11,       17,        16,    udp
+0x21,       33,        16,    dccp
+0x84,       132,       16,    sctp
+0x012D,     301,       0,     udt
+0x012E,     302,       0,     utp
+0x2A,       42,        V,     ipfs
+0x01E0,     480,       0,     http
+0x01BB,     443,       0,     https
+0x01DD,     477,       0,     ws
+0x01BC,     444,       10,    onion
+0x0113,     275,       0,     libp2p-webrtc-star
