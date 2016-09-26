@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jbenet/js-multiaddr.git"
+    "url": "https://github.com/multiformats/js-multiaddr.git"
   },
   "keywords": [
     "multiaddr",
@@ -32,9 +32,9 @@
   "author": "Juan Benet <juan@benet.ai> (http://juan.benet.ai/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jbenet/js-multiaddr/issues"
+    "url": "https://github.com/multiformats/js-multiaddr/issues"
   },
-  "homepage": "https://github.com/jbenet/js-multiaddr",
+  "homepage": "https://github.com/multiformats/js-multiaddr",
   "dependencies": {
     "babel-runtime": "^6.11.6",
     "bs58": "^3.0.0",
