@@ -41,6 +41,7 @@ Multiaddr.prototype.toOptions = function toOptions () {
   var parsed = this.toString().split('/')
   opts.family = parsed[1] === 'ip4' ? 'ipv4' : 'ipv6'
   opts.host = parsed[2]
+  opts.transport = parsed[3]
   opts.port = parsed[4]
   return opts
 }
