@@ -4,10 +4,10 @@ js-multiaddr
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)
 [![](https://img.shields.io/badge/project-multiformats-blue.svg?style=flat-square)](http://github.com/multiformats/multiformats)
 [![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs)
-[![Coverage Status](https://coveralls.io/repos/github/jbenet/js-multiaddr/badge.svg?branch=master)](https://coveralls.io/github/jbenet/js-multiaddr?branch=master)
-[![Travis CI](https://travis-ci.org/jbenet/js-multiaddr.svg?branch=master)](https://travis-ci.org/jbenet/js-multiaddr)
-[![Circle CI](https://circleci.com/gh/jbenet/js-multiaddr.svg?style=svg)](https://circleci.com/gh/jbenet/js-multiaddr)
-[![Dependency Status](https://david-dm.org/jbenet/js-multiaddr.svg?style=flat-square)](https://david-dm.org/jbenet/js-multiaddr) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
+[![Coverage Status](https://coveralls.io/repos/github/multiformats/js-multiaddr/badge.svg?branch=master)](https://coveralls.io/github/multiformats/js-multiaddr?branch=master)
+[![Travis CI](https://travis-ci.org/multiformats/js-multiaddr.svg?branch=master)](https://travis-ci.org/multiformats/js-multiaddr)
+[![Circle CI](https://circleci.com/gh/multiformats/js-multiaddr.svg?style=svg)](https://circleci.com/gh/multiformats/js-multiaddr)
+[![Dependency Status](https://david-dm.org/multiformats/js-multiaddr.svg?style=flat-square)](https://david-dm.org/multiformats/js-multiaddr) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 
 > JavaScript implementation of [multiaddr](https://github.com/multiformats/multiaddr).
 
