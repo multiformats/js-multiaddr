@@ -302,7 +302,7 @@ describe('helpers', () => {
       ).to.be.eql({
         family: 'ipv4',
         host: '0.0.0.0',
-				transport: 'tcp',
+        transport: 'tcp',
         port: '1234'
       })
     })
