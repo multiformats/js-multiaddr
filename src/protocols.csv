@@ -11,5 +11,5 @@ hex-code,   dec-code,  size,  name
 0x01E0,     480,       0,     http
 0x01BB,     443,       0,     https
 0x01DD,     477,       0,     ws
-0x01BC,     444,       10,    onion
+0x01BC,     444,       96,    onion
 0x0113,     275,       0,     libp2p-webrtc-star
