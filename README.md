@@ -119,7 +119,7 @@ $ node
 
 ## API
 
-TODO: Moved to API-docs, insert link here
+https://multiformats.github.io/js-multiaddr/
 
 ## Maintainers
 
