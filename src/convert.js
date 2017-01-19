@@ -29,6 +29,11 @@ Convert.toString = function convertToString (proto, buf) {
     case 132: // sctp
       return buf2port(buf)
 
+    case 53: // dns
+    case 54: // dns4
+    case 55: // dns6
+      return buf2str(buf)
+
     case 421: // ipfs
       return buf2mh(buf)
     default:
@@ -49,6 +54,11 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
     case 132: // sctp
       return port2buf(parseInt(str, 10))
 
+    case 53: // dns
+    case 54: // dns4
+    case 55: // dns6
+      return str2buf(str)
+
     case 421: // ipfs
       return mh2buf(str)
     default:
@@ -64,6 +74,23 @@ function port2buf (port) {
 
 function buf2port (buf) {
   return buf.readUInt16BE(0)
+}
+
+function str2buf (str) {
+  const buf = new Buffer(str)
+  const size = new Buffer(varint.encode(buf.length))
+  return Buffer.concat([size, buf])
+}
+
+function buf2str (buf) {
+  const size = varint.decode(buf)
+  buf = buf.slice(varint.decode.bytes)
+
+  if (buf.length !== size) {
+    throw new Error('inconsistent lengths')
+  }
+
+  return buf.toString()
 }
 
 function mh2buf (hash) {

@@ -169,6 +169,7 @@ function stringToBuffer (str) {
   str = cleanPath(str)
   const a = stringToStringTuples(str)
   const b = stringTuplesToTuples(a)
+
   return tuplesToBuffer(b)
 }
 

@@ -325,14 +325,16 @@ describe('helpers', () => {
     it('returns a list of all protocols in the address', () => {
       expect(
         multiaddr('/ip4/0.0.0.0/utp').protos()
-      ).to.be.eql([{
+      ).to.eql([{
         code: 4,
         name: 'ip4',
-        size: 32
+        size: 32,
+        resolvable: false
       }, {
         code: 302,
         name: 'utp',
-        size: 0
+        size: 0,
+        resolvable: false
       }])
     })
 
@@ -342,15 +344,18 @@ describe('helpers', () => {
       ).to.be.eql([{
         code: 4,
         name: 'ip4',
-        size: 32
+        size: 32,
+        resolvable: false
       }, {
         code: 302,
         name: 'utp',
-        size: 0
+        size: 0,
+        resolvable: false
       }, {
         code: 421,
         name: 'ipfs',
-        size: -1
+        size: -1,
+        resolvable: false
       }])
     })
   })
@@ -523,25 +528,15 @@ describe('helpers', () => {
     })
   })
 
-  describe('resolvable multiaddrs', () => {
+  describe.only('resolvable multiaddrs', () => {
     describe('.isName', () => {
-      it.skip('valid name, String format', () => {
-        const str = '/dns/ipfs.io'
-        expect(multiaddr.isName(str)).to.be.true
-      })
-
-      it.skip('valid name, Buffer format', () => {
+      it('valid name', () => {
         const str = '/dns/ipfs.io'
         const addr = multiaddr(str)
         expect(multiaddr.isName(addr)).to.be.true
       })
 
-      it.skip('invalid name, String format', () => {
-        const str = '/ip4/127.0.0.1'
-        expect(multiaddr.isName(str)).to.be.false
-      })
-
-      it.skip('invalid name, Buffer format', () => {
+      it('invalid name', () => {
         const str = '/ip4/127.0.0.1'
         const addr = multiaddr(str)
         expect(multiaddr.isName(addr)).to.be.false

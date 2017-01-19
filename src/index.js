@@ -26,17 +26,15 @@ function Multiaddr (addr) {
     return new Multiaddr(addr)
   }
 
-  // defaults
-  if (!addr) {
-    addr = ''
-  }
+  // default
+  addr = addr || ''
 
   if (addr instanceof Buffer) {
     /**
      * @type {Buffer} - The raw bytes representing this multiaddress
      */
     this.buffer = codec.fromBuffer(addr)
-  } else if (typeof (addr) === 'string' || addr instanceof String) {
+  } else if (typeof addr === 'string' || addr instanceof String) {
     this.buffer = codec.fromString(addr)
   } else if (addr.buffer && addr.protos && addr.protoCodes) { // Multiaddr
     this.buffer = codec.fromBuffer(addr.buffer) // validate + copy buffer
@@ -394,3 +392,33 @@ Multiaddr.isMultiaddr = function isMultiaddr (addr) {
     addr.protos
   )
 }
+
+/**
+ * Returns if something is a Multiaddr that is a name
+ *
+ * @param {Multiaddr} addr
+ * @return {Bool} isName
+ */
+Multiaddr.isName = function isName (addr) {
+  if (!Multiaddr.isMultiaddr(addr)) {
+    return false
+  }
+
+  // if a part of the multiaddr is resolvable, then return true
+  return addr.protos().some((proto) => proto.resolvable)
+}
+
+/**
+ * Returns if something is a Multiaddr that is a name
+ *
+ * @param {Multiaddr} addr
+ *
+ * @param {Function} callback
+ * @return {Bool} isName
+ */
+Multiaddr.resolve = function resolve (addr, callback) {
+  if (!Multiaddr.isMultiaddr(addr) || !Multiaddr.isName(addr)) {
+    return callback(new Error('not a valid name'))
+  }
+}
+
