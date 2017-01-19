@@ -528,7 +528,7 @@ describe('helpers', () => {
     })
   })
 
-  describe.only('resolvable multiaddrs', () => {
+  describe('resolvable multiaddrs', () => {
     describe('.isName', () => {
       it('valid name', () => {
         const str = '/dns/ipfs.io'
