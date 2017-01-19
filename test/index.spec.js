@@ -544,9 +544,16 @@ describe('helpers', () => {
     })
 
     describe('.resolve', () => {
-      it.skip('valid and active DNS name', () => {})
-      it.skip('valid but inactive DNS name', () => {})
-      it.skip('invalid DNS name', () => {})
+      it.skip('valid and active DNS name', (done) => {})
+      it.skip('valid but inactive DNS name', (done) => {})
+      it('invalid DNS name', (done) => {
+        const str = '/ip4/127.0.0.1'
+        const addr = multiaddr(str)
+        multiaddr.resolve(addr, (err, multiaddrs) => {
+          expect(err).to.exist
+          done()
+        })
+      })
     })
   })
 })

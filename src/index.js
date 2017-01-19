@@ -420,5 +420,12 @@ Multiaddr.resolve = function resolve (addr, callback) {
   if (!Multiaddr.isMultiaddr(addr) || !Multiaddr.isName(addr)) {
     return callback(new Error('not a valid name'))
   }
+
+  /*
+   * Needs more consideration from spec design:
+   *   - what to return
+   *   - how to achieve it in the browser?
+   */
+  return callback(new Error('not implemented yet'))
 }
 
