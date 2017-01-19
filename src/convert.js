@@ -1,9 +1,9 @@
 'use strict'
 
-var ip = require('ip')
-var protocols = require('./protocols')
-var bs58 = require('bs58')
-var varint = require('varint')
+const ip = require('ip')
+const protocols = require('./protocols-table')
+const bs58 = require('bs58')
+const varint = require('varint')
 
 module.exports = Convert
 
@@ -57,7 +57,7 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
 }
 
 function port2buf (port) {
-  var buf = new Buffer(2)
+  const buf = new Buffer(2)
   buf.writeUInt16BE(port, 0)
   return buf
 }

@@ -3,7 +3,7 @@
 
 const codec = require('../src/codec')
 const expect = require('chai').expect
-var varint = require('varint')
+const varint = require('varint')
 
 describe('codec', () => {
   describe('.stringToStringTuples', () => {

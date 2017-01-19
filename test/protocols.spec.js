@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 'use strict'
 
-const protocols = require('../src/protocols')
+const protocols = require('../src/protocols-table')
 const expect = require('chai').expect
 
 describe('protocols', () => {

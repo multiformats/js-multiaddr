@@ -6,7 +6,7 @@ const multiaddr = require('../src')
 const expect = require('chai').expect
 
 describe('construction', () => {
-  var udpAddr
+  let udpAddr
 
   it('create multiaddr', () => {
     udpAddr = multiaddr('/ip4/127.0.0.1/udp/1234')
