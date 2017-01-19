@@ -38,11 +38,7 @@ describe('construction', () => {
   })
 
   it('throws on non string or buffer', () => {
-    expect(
-      () => multiaddr({})
-    ).to.throw(
-      /addr must be a string/
-    )
+    expect(() => multiaddr({})).to.throw(/addr must be a string/)
   })
 })
 
@@ -396,22 +392,14 @@ describe('helpers', () => {
       const addr1 = multiaddr('/ip4/192.168.0.1')
       const addr2 = multiaddr('/ip4/192.168.0.1')
 
-      expect(
-        addr1.equals(addr2)
-      ).to.be.eql(
-        true
-      )
+      expect(addr1.equals(addr2)).to.be.true
     })
 
     it('returns false for non equal addresses', () => {
       const addr1 = multiaddr('/ip4/192.168.1.1')
       const addr2 = multiaddr('/ip4/192.168.0.1')
 
-      expect(
-        addr1.equals(addr2)
-      ).to.be.eql(
-        false
-      )
+      expect(addr1.equals(addr2)).to.be.false
     })
   })
 
@@ -532,6 +520,38 @@ describe('helpers', () => {
       expect(multiaddr.isMultiaddr(123)).to.be.eql(false)
 
       expect(multiaddr.isMultiaddr(Buffer('/hello'))).to.be.eql(false)
+    })
+  })
+
+  describe('resolvable multiaddrs', () => {
+    describe('.isName', () => {
+      it.skip('valid name, String format', () => {
+        const str = '/dns/ipfs.io'
+        expect(multiaddr.isName(str)).to.be.true
+      })
+
+      it.skip('valid name, Buffer format', () => {
+        const str = '/dns/ipfs.io'
+        const addr = multiaddr(str)
+        expect(multiaddr.isName(addr)).to.be.true
+      })
+
+      it.skip('invalid name, String format', () => {
+        const str = '/ip4/127.0.0.1'
+        expect(multiaddr.isName(str)).to.be.false
+      })
+
+      it.skip('invalid name, Buffer format', () => {
+        const str = '/ip4/127.0.0.1'
+        const addr = multiaddr(str)
+        expect(multiaddr.isName(addr)).to.be.false
+      })
+    })
+
+    describe('.resolve', () => {
+      it.skip('valid and active DNS name', () => {})
+      it.skip('valid but inactive DNS name', () => {})
+      it.skip('invalid DNS name', () => {})
     })
   })
 })

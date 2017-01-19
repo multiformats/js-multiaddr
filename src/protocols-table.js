@@ -30,9 +30,9 @@ Protocols.table = [
   [17, 16, 'udp'],
   [33, 16, 'dccp'],
   [41, 128, 'ip6'],
-  [53, V, 'dns'],
-  [54, V, 'dns4'],
-  [55, V, 'dns6'],
+  [53, V, 'dns', 'resolvable'],
+  [54, V, 'dns4', 'resolvable'],
+  [55, V, 'dns6', 'resolvable'],
   [132, 16, 'sctp'],
   // all of the below use varint for size
   [302, 0, 'utp'],
@@ -57,11 +57,12 @@ map(Protocols.table, function (row) {
 
 Protocols.object = p
 
-function p (code, size, name) {
+function p (code, size, name, resolvable) {
   return {
     code: code,
     size: size,
-    name: name
+    name: name,
+    resolvable: Boolean(resolvable)
   }
 }
 
