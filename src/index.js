@@ -409,7 +409,7 @@ Multiaddr.isName = function isName (addr) {
 }
 
 /**
- * Returns if something is a Multiaddr that is a name
+ * Returns an array of multiaddrs, by resolving the multiaddr that is a name
  *
  * @param {Multiaddr} addr
  *
