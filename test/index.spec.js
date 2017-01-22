@@ -530,8 +530,20 @@ describe('helpers', () => {
 
   describe('resolvable multiaddrs', () => {
     describe('.isName', () => {
-      it('valid name', () => {
+      it('valid name dns', () => {
         const str = '/dns/ipfs.io'
+        const addr = multiaddr(str)
+        expect(multiaddr.isName(addr)).to.be.true
+      })
+
+      it('valid name dns4', () => {
+        const str = '/dns4/ipfs.io'
+        const addr = multiaddr(str)
+        expect(multiaddr.isName(addr)).to.be.true
+      })
+
+      it('valid name dns6', () => {
+        const str = '/dns6/ipfs.io'
         const addr = multiaddr(str)
         expect(multiaddr.isName(addr)).to.be.true
       })
