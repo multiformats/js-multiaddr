@@ -1,11 +1,12 @@
 'use strict'
 
-var map = require('lodash.map')
-var extend = require('xtend')
-var codec = require('./codec')
-var protocols = require('./protocols')
-var NotImplemented = new Error('Sorry, Not Implemented Yet.')
-var varint = require('varint')
+const map = require('lodash.map')
+const extend = require('xtend')
+const codec = require('./codec')
+const protocols = require('./protocols-table')
+const varint = require('varint')
+
+const NotImplemented = new Error('Sorry, Not Implemented Yet.')
 
 exports = module.exports = Multiaddr
 
@@ -25,17 +26,15 @@ function Multiaddr (addr) {
     return new Multiaddr(addr)
   }
 
-  // defaults
-  if (!addr) {
-    addr = ''
-  }
+  // default
+  addr = addr || ''
 
   if (addr instanceof Buffer) {
     /**
      * @type {Buffer} - The raw bytes representing this multiaddress
      */
     this.buffer = codec.fromBuffer(addr)
-  } else if (typeof (addr) === 'string' || addr instanceof String) {
+  } else if (typeof addr === 'string' || addr instanceof String) {
     this.buffer = codec.fromString(addr)
   } else if (addr.buffer && addr.protos && addr.protoCodes) { // Multiaddr
     this.buffer = codec.fromBuffer(addr.buffer) // validate + copy buffer
@@ -65,8 +64,8 @@ Multiaddr.prototype.toString = function toString () {
  * // { family: 'ipv4', host: '127.0.0.1', transport: 'tcp', port: '4001' }
  */
 Multiaddr.prototype.toOptions = function toOptions () {
-  var opts = {}
-  var parsed = this.toString().split('/')
+  const opts = {}
+  const parsed = this.toString().split('/')
   opts.family = parsed[1] === 'ip4' ? 'ipv4' : 'ipv6'
   opts.host = parsed[2]
   opts.transport = parsed[3]
@@ -177,7 +176,7 @@ Multiaddr.prototype.tuples = function tuples () {
  * // [ [ 4, '127.0.0.1' ], [ 6, 4001 ] ]
  */
 Multiaddr.prototype.stringTuples = function stringTuples () {
-  var t = codec.bufferToTuples(this.buffer)
+  const t = codec.bufferToTuples(this.buffer)
   return codec.tuplesToStringTuples(t)
 }
 
@@ -187,13 +186,13 @@ Multiaddr.prototype.stringTuples = function stringTuples () {
  * @param {Multiaddr} addr - Multiaddr to add into this Multiaddr
  * @return {Multiaddr}
  * @example
- * var mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
+ * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
  * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
  *
- * var mh2 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
+ * const mh2 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
  * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
  *
- * var mh3 = mh1.encapsulate(mh2)
+ * const mh3 = mh1.encapsulate(mh2)
  * // <Multiaddr 0408080808060438047f000001060fa1 - /ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001>
  *
  * mh3.toString()
@@ -210,13 +209,13 @@ Multiaddr.prototype.encapsulate = function encapsulate (addr) {
  * @param {Multiaddr} addr - Multiaddr to remove from this Multiaddr
  * @return {Multiaddr}
  * @example
- * var mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
+ * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
  * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
  *
- * var mh2 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
+ * const mh2 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
  * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
  *
- * var mh3 = mh1.encapsulate(mh2)
+ * const mh3 = mh1.encapsulate(mh2)
  * // <Multiaddr 0408080808060438047f000001060fa1 - /ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001>
  *
  * mh3.decapsulate(mh2).toString()
@@ -224,8 +223,8 @@ Multiaddr.prototype.encapsulate = function encapsulate (addr) {
  */
 Multiaddr.prototype.decapsulate = function decapsulate (addr) {
   addr = addr.toString()
-  var s = this.toString()
-  var i = s.lastIndexOf(addr)
+  const s = this.toString()
+  const i = s.lastIndexOf(addr)
   if (i < 0) {
     throw new Error('Address ' + this + ' does not contain subaddress: ' + addr)
   }
@@ -238,10 +237,10 @@ Multiaddr.prototype.decapsulate = function decapsulate (addr) {
  * @param {Multiaddr} addr
  * @return {Bool}
  * @example
- * var mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
+ * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
  * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
  *
- * var mh2 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
+ * const mh2 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
  * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
  *
  * mh1.equals(mh1)
@@ -272,8 +271,8 @@ Multiaddr.prototype.nodeAddress = function nodeAddress () {
     throw new Error('Multiaddr must be "thin waist" address for nodeAddress.')
   }
 
-  var codes = this.protoCodes()
-  var parts = this.toString().split('/').slice(1)
+  const codes = this.protoCodes()
+  const parts = this.toString().split('/').slice(1)
   return {
     family: (codes[0] === 41) ? 'IPv6' : 'IPv4',
     address: parts[1], // ip addr
@@ -296,7 +295,7 @@ Multiaddr.prototype.nodeAddress = function nodeAddress () {
 Multiaddr.fromNodeAddress = function fromNodeAddress (addr, transport) {
   if (!addr) throw new Error('requires node address object')
   if (!transport) throw new Error('requires transport protocol')
-  var ip = (addr.family === 'IPv6') ? 'ip6' : 'ip4'
+  const ip = (addr.family === 'IPv6') ? 'ip6' : 'ip4'
   return Multiaddr('/' + [ip, addr.address, transport, addr.port].join('/'))
 }
 
@@ -325,7 +324,7 @@ Multiaddr.fromNodeAddress = function fromNodeAddress (addr, transport) {
  * // false
  */
 Multiaddr.prototype.isThinWaistAddress = function isThinWaistAddress (addr) {
-  var protos = (addr || this).protos()
+  const protos = (addr || this).protos()
 
   if (protos.length !== 2) {
     return false
@@ -393,3 +392,40 @@ Multiaddr.isMultiaddr = function isMultiaddr (addr) {
     addr.protos
   )
 }
+
+/**
+ * Returns if something is a Multiaddr that is a name
+ *
+ * @param {Multiaddr} addr
+ * @return {Bool} isName
+ */
+Multiaddr.isName = function isName (addr) {
+  if (!Multiaddr.isMultiaddr(addr)) {
+    return false
+  }
+
+  // if a part of the multiaddr is resolvable, then return true
+  return addr.protos().some((proto) => proto.resolvable)
+}
+
+/**
+ * Returns an array of multiaddrs, by resolving the multiaddr that is a name
+ *
+ * @param {Multiaddr} addr
+ *
+ * @param {Function} callback
+ * @return {Bool} isName
+ */
+Multiaddr.resolve = function resolve (addr, callback) {
+  if (!Multiaddr.isMultiaddr(addr) || !Multiaddr.isName(addr)) {
+    return callback(new Error('not a valid name'))
+  }
+
+  /*
+   * Needs more consideration from spec design:
+   *   - what to return
+   *   - how to achieve it in the browser?
+   */
+  return callback(new Error('not implemented yet'))
+}
+

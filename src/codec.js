@@ -1,10 +1,10 @@
 'use strict'
 
-var map = require('lodash.map')
-var filter = require('lodash.filter')
-var convert = require('./convert')
-var protocols = require('./protocols')
-var varint = require('varint')
+const map = require('lodash.map')
+const filter = require('lodash.filter')
+const convert = require('./convert')
+const protocols = require('./protocols-table')
+const varint = require('varint')
 
 // export codec
 module.exports = {
@@ -34,15 +34,15 @@ module.exports = {
 
 // string -> [[str name, str addr]... ]
 function stringToStringTuples (str) {
-  var tuples = []
-  var parts = str.split('/').slice(1) // skip first empty elem
+  const tuples = []
+  const parts = str.split('/').slice(1) // skip first empty elem
   if (parts.length === 1 && parts[0] === '') {
     return []
   }
 
-  for (var p = 0; p < parts.length; p++) {
-    var part = parts[p]
-    var proto = protocols(part)
+  for (let p = 0; p < parts.length; p++) {
+    const part = parts[p]
+    const proto = protocols(part)
 
     if (proto.size === 0) {
       tuples.push([part])
@@ -62,9 +62,9 @@ function stringToStringTuples (str) {
 
 // [[str name, str addr]... ] -> string
 function stringTuplesToString (tuples) {
-  var parts = []
+  const parts = []
   map(tuples, function (tup) {
-    var proto = protoFromTuple(tup)
+    const proto = protoFromTuple(tup)
     parts.push(proto.name)
     if (tup.length > 1) {
       parts.push(tup[1])
@@ -80,7 +80,7 @@ function stringTuplesToTuples (tuples) {
     if (!Array.isArray(tup)) {
       tup = [tup]
     }
-    var proto = protoFromTuple(tup)
+    const proto = protoFromTuple(tup)
     if (tup.length > 1) {
       return [proto.code, convert.toBuffer(proto.code, tup[1])]
     }
@@ -91,7 +91,7 @@ function stringTuplesToTuples (tuples) {
 // [[int code, Buffer]... ] -> [[str name, str addr]... ]
 function tuplesToStringTuples (tuples) {
   return map(tuples, function (tup) {
-    var proto = protoFromTuple(tup)
+    const proto = protoFromTuple(tup)
     if (tup.length > 1) {
       return [proto.code, convert.toString(proto.code, tup[1])]
     }
@@ -102,8 +102,8 @@ function tuplesToStringTuples (tuples) {
 // [[int code, Buffer ]... ] -> Buffer
 function tuplesToBuffer (tuples) {
   return fromBuffer(Buffer.concat(map(tuples, function (tup) {
-    var proto = protoFromTuple(tup)
-    var buf = new Buffer(varint.encode(proto.code))
+    const proto = protoFromTuple(tup)
+    let buf = new Buffer(varint.encode(proto.code))
 
     if (tup.length > 1) {
       buf = Buffer.concat([buf, tup[1]]) // add address buffer
@@ -159,16 +159,17 @@ function bufferToTuples (buf) {
 
 // Buffer -> String
 function bufferToString (buf) {
-  var a = bufferToTuples(buf)
-  var b = tuplesToStringTuples(a)
+  const a = bufferToTuples(buf)
+  const b = tuplesToStringTuples(a)
   return stringTuplesToString(b)
 }
 
 // String -> Buffer
 function stringToBuffer (str) {
   str = cleanPath(str)
-  var a = stringToStringTuples(str)
-  var b = stringTuplesToTuples(a)
+  const a = stringToStringTuples(str)
+  const b = stringTuplesToTuples(a)
+
   return tuplesToBuffer(b)
 }
 
@@ -179,7 +180,7 @@ function fromString (str) {
 
 // Buffer -> Buffer
 function fromBuffer (buf) {
-  var err = validateBuffer(buf)
+  const err = validateBuffer(buf)
   if (err) throw err
   return new Buffer(buf) // copy
 }
@@ -205,6 +206,6 @@ function ParseError (str) {
 }
 
 function protoFromTuple (tup) {
-  var proto = protocols(tup[0])
+  const proto = protocols(tup[0])
   return proto
 }

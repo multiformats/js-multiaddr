@@ -1,8 +1,6 @@
 'use strict'
 
-var map = require('lodash.map')
-
-module.exports = Protocols
+const map = require('lodash.map')
 
 function Protocols (proto) {
   if (typeof (proto) === 'number') {
@@ -22,12 +20,9 @@ function Protocols (proto) {
   throw new Error('invalid protocol id type: ' + proto)
 }
 
-Protocols.lengthPrefixedVarSize = -1
-
-// replicating table here to:
-// 1. avoid parsing the csv
-// 2. ensuring errors in the csv don't screw up code.
-// 3. changing a number has to happen in two places.
+const V = -1
+Protocols.lengthPrefixedVarSize = V
+Protocols.V = V
 
 Protocols.table = [
   [4, 32, 'ip4'],
@@ -35,13 +30,17 @@ Protocols.table = [
   [17, 16, 'udp'],
   [33, 16, 'dccp'],
   [41, 128, 'ip6'],
+  [53, V, 'dns', 'resolvable'],
+  [54, V, 'dns4', 'resolvable'],
+  [55, V, 'dns6', 'resolvable'],
   [132, 16, 'sctp'],
-  // these require varint for the protocol code
+  // all of the below use varint for size
   [302, 0, 'utp'],
   [421, Protocols.lengthPrefixedVarSize, 'ipfs'],
   [480, 0, 'http'],
   [443, 0, 'https'],
   [477, 0, 'ws'],
+  [478, 0, 'wss'],
   [275, 0, 'libp2p-webrtc-star'],
   [276, 0, 'libp2p-webrtc-direct']
 ]
@@ -50,14 +49,21 @@ Protocols.names = {}
 Protocols.codes = {}
 
 // populate tables
-map(Protocols.table, function (e) {
-  var proto = p.apply(this, e)
+map(Protocols.table, function (row) {
+  const proto = p.apply(null, row)
   Protocols.codes[proto.code] = proto
   Protocols.names[proto.name] = proto
 })
 
 Protocols.object = p
 
-function p (code, size, name) {
-  return {code: code, size: size, name: name}
+function p (code, size, name, resolvable) {
+  return {
+    code: code,
+    size: size,
+    name: name,
+    resolvable: Boolean(resolvable)
+  }
 }
+
+module.exports = Protocols

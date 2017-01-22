@@ -6,7 +6,7 @@ const multiaddr = require('../src')
 const expect = require('chai').expect
 
 describe('construction', () => {
-  var udpAddr
+  let udpAddr
 
   it('create multiaddr', () => {
     udpAddr = multiaddr('/ip4/127.0.0.1/udp/1234')
@@ -38,11 +38,7 @@ describe('construction', () => {
   })
 
   it('throws on non string or buffer', () => {
-    expect(
-      () => multiaddr({})
-    ).to.throw(
-      /addr must be a string/
-    )
+    expect(() => multiaddr({})).to.throw(/addr must be a string/)
   })
 })
 
@@ -329,14 +325,16 @@ describe('helpers', () => {
     it('returns a list of all protocols in the address', () => {
       expect(
         multiaddr('/ip4/0.0.0.0/utp').protos()
-      ).to.be.eql([{
+      ).to.eql([{
         code: 4,
         name: 'ip4',
-        size: 32
+        size: 32,
+        resolvable: false
       }, {
         code: 302,
         name: 'utp',
-        size: 0
+        size: 0,
+        resolvable: false
       }])
     })
 
@@ -346,15 +344,18 @@ describe('helpers', () => {
       ).to.be.eql([{
         code: 4,
         name: 'ip4',
-        size: 32
+        size: 32,
+        resolvable: false
       }, {
         code: 302,
         name: 'utp',
-        size: 0
+        size: 0,
+        resolvable: false
       }, {
         code: 421,
         name: 'ipfs',
-        size: -1
+        size: -1,
+        resolvable: false
       }])
     })
   })
@@ -396,22 +397,14 @@ describe('helpers', () => {
       const addr1 = multiaddr('/ip4/192.168.0.1')
       const addr2 = multiaddr('/ip4/192.168.0.1')
 
-      expect(
-        addr1.equals(addr2)
-      ).to.be.eql(
-        true
-      )
+      expect(addr1.equals(addr2)).to.be.true
     })
 
     it('returns false for non equal addresses', () => {
       const addr1 = multiaddr('/ip4/192.168.1.1')
       const addr2 = multiaddr('/ip4/192.168.0.1')
 
-      expect(
-        addr1.equals(addr2)
-      ).to.be.eql(
-        false
-      )
+      expect(addr1.equals(addr2)).to.be.false
     })
   })
 
@@ -532,6 +525,35 @@ describe('helpers', () => {
       expect(multiaddr.isMultiaddr(123)).to.be.eql(false)
 
       expect(multiaddr.isMultiaddr(Buffer('/hello'))).to.be.eql(false)
+    })
+  })
+
+  describe('resolvable multiaddrs', () => {
+    describe('.isName', () => {
+      it('valid name', () => {
+        const str = '/dns/ipfs.io'
+        const addr = multiaddr(str)
+        expect(multiaddr.isName(addr)).to.be.true
+      })
+
+      it('invalid name', () => {
+        const str = '/ip4/127.0.0.1'
+        const addr = multiaddr(str)
+        expect(multiaddr.isName(addr)).to.be.false
+      })
+    })
+
+    describe('.resolve', () => {
+      it.skip('valid and active DNS name', (done) => {})
+      it.skip('valid but inactive DNS name', (done) => {})
+      it('invalid DNS name', (done) => {
+        const str = '/ip4/127.0.0.1'
+        const addr = multiaddr(str)
+        multiaddr.resolve(addr, (err, multiaddrs) => {
+          expect(err).to.exist
+          done()
+        })
+      })
     })
   })
 })
