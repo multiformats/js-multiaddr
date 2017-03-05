@@ -5,6 +5,7 @@ const extend = require('xtend')
 const codec = require('./codec')
 const protocols = require('./protocols-table')
 const varint = require('varint')
+const bs58 = require('bs58')
 
 const NotImplemented = new Error('Sorry, Not Implemented Yet.')
 
@@ -83,8 +84,8 @@ Multiaddr.prototype.toOptions = function toOptions () {
  */
 Multiaddr.prototype.inspect = function inspect () {
   return '<Multiaddr ' +
-  this.buffer.toString('hex') + ' - ' +
-  codec.bufferToString(this.buffer) + '>'
+    this.buffer.toString('hex') + ' - ' +
+    codec.bufferToString(this.buffer) + '>'
 }
 
 /**
@@ -105,7 +106,7 @@ Multiaddr.prototype.inspect = function inspect () {
 Multiaddr.prototype.protos = function protos () {
   return map(this.protoCodes(), function (code) {
     return extend(protocols(code))
-    // copy to prevent users from modifying the internal objs.
+  // copy to prevent users from modifying the internal objs.
   })
 }
 
@@ -229,6 +230,33 @@ Multiaddr.prototype.decapsulate = function decapsulate (addr) {
     throw new Error('Address ' + this + ' does not contain subaddress: ' + addr)
   }
   return Multiaddr(s.slice(0, i))
+}
+
+/**
+ * Extract the peerId if the multiaddr contains one
+ *
+ * @return {String} peerId - The id of the peer
+ * @example
+ * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string')
+ * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string>
+ *
+ * const peerId
+ *
+ * try {
+ *  peerId = mh1.getPeerId()
+ * } catch (err) {
+ *  // not a valid base58 address
+ * }
+ */
+Multiaddr.prototype.getPeerId = function getPeerId () {
+  let b58str = this.stringTuples().filter((tuple) => {
+    if (tuple[0] === protocols.names['ipfs'].code) {
+      return true
+    }
+  })[0][1]
+
+  bs58.decode(b58str)
+  return b58str
 }
 
 /**
@@ -428,4 +456,3 @@ Multiaddr.resolve = function resolve (addr, callback) {
    */
   return callback(new Error('not implemented yet'))
 }
-
