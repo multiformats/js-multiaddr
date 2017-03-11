@@ -43,7 +43,7 @@ Protocols.table = [
   [478, 0, 'wss'],
   [275, 0, 'libp2p-webrtc-star'],
   [276, 0, 'libp2p-webrtc-direct'],
-  [277, 0, 'p2p-circuit']
+  [290, V, 'p2p-circuit']
 ]
 
 Protocols.names = {}
