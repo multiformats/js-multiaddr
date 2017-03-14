@@ -282,6 +282,20 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('p2p-circuit', () => {
+    const str = '/p2p-circuit/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('p2p-circuit ipfs', () => {
+    const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/p2p-circuit'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it('webrtc-star', () => {
     const str = '/libp2p-webrtc-star/ip4/127.0.0.1/tcp/9090/ws/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
