@@ -2,7 +2,10 @@
 'use strict'
 
 const convert = require('../src/convert')
-const expect = require('chai').expect
+const chai = require('chai')
+const dirtyChai = require('dirty-chai')
+const expect = chai.expect
+chai.use(dirtyChai)
 
 describe('convert', () => {
   it('handles buffers', () => {

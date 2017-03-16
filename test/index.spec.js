@@ -3,7 +3,10 @@
 'use strict'
 
 const multiaddr = require('../src')
-const expect = require('chai').expect
+const chai = require('chai')
+const dirtyChai = require('dirty-chai')
+chai.use(dirtyChai)
+const expect = chai.expect
 
 describe('construction', () => {
   let udpAddr
@@ -562,7 +565,7 @@ describe('helpers', () => {
         const str = '/ip4/127.0.0.1'
         const addr = multiaddr(str)
         multiaddr.resolve(addr, (err, multiaddrs) => {
-          expect(err).to.exist // eslint-disable-line
+          expect(err).to.exist()
           done()
         })
       })

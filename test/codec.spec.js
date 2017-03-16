@@ -2,8 +2,11 @@
 'use strict'
 
 const codec = require('../src/codec')
-const expect = require('chai').expect
 const varint = require('varint')
+const chai = require('chai')
+const dirtyChai = require('dirty-chai')
+const expect = chai.expect
+chai.use(dirtyChai)
 
 describe('codec', () => {
   describe('.stringToStringTuples', () => {

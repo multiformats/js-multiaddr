@@ -2,7 +2,10 @@
 'use strict'
 
 const protocols = require('../src/protocols-table')
-const expect = require('chai').expect
+const chai = require('chai')
+const dirtyChai = require('dirty-chai')
+const expect = chai.expect
+chai.use(dirtyChai)
 
 describe('protocols', () => {
   describe('throws on non existent protocol', () => {
