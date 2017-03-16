@@ -428,4 +428,3 @@ Multiaddr.resolve = function resolve (addr, callback) {
    */
   return callback(new Error('not implemented yet'))
 }
-

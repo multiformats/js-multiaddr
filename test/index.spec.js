@@ -93,7 +93,7 @@ describe('manipulation', () => {
     expect(udpAddrBuf2.toString()).to.equal('/ip4/127.0.0.1/udp/1234/udp/5678')
     expect(udpAddrBuf2.decapsulate('/udp').toString()).to.equal('/ip4/127.0.0.1/udp/1234')
     expect(udpAddrBuf2.decapsulate('/ip4').toString()).to.equal('/')
-    expect(function () { udpAddr.decapsulate('/').toString() }).to.throw
+    expect(function () { udpAddr.decapsulate('/').toString() }).to.throw()
     expect(multiaddr('/').encapsulate(udpAddr).toString()).to.equal(udpAddr.toString())
     expect(multiaddr('/').decapsulate('/').toString()).to.equal('/')
   })
@@ -397,14 +397,14 @@ describe('helpers', () => {
       const addr1 = multiaddr('/ip4/192.168.0.1')
       const addr2 = multiaddr('/ip4/192.168.0.1')
 
-      expect(addr1.equals(addr2)).to.be.true
+      expect(addr1.equals(addr2)).to.equal(true)
     })
 
     it('returns false for non equal addresses', () => {
       const addr1 = multiaddr('/ip4/192.168.1.1')
       const addr2 = multiaddr('/ip4/192.168.0.1')
 
-      expect(addr1.equals(addr2)).to.be.false
+      expect(addr1.equals(addr2)).to.equal(false)
     })
   })
 
@@ -533,25 +533,25 @@ describe('helpers', () => {
       it('valid name dns', () => {
         const str = '/dns/ipfs.io'
         const addr = multiaddr(str)
-        expect(multiaddr.isName(addr)).to.be.true
+        expect(multiaddr.isName(addr)).to.equal(true)
       })
 
       it('valid name dns4', () => {
         const str = '/dns4/ipfs.io'
         const addr = multiaddr(str)
-        expect(multiaddr.isName(addr)).to.be.true
+        expect(multiaddr.isName(addr)).to.equal(true)
       })
 
       it('valid name dns6', () => {
         const str = '/dns6/ipfs.io'
         const addr = multiaddr(str)
-        expect(multiaddr.isName(addr)).to.be.true
+        expect(multiaddr.isName(addr)).to.equal(true)
       })
 
       it('invalid name', () => {
         const str = '/ip4/127.0.0.1'
         const addr = multiaddr(str)
-        expect(multiaddr.isName(addr)).to.be.false
+        expect(multiaddr.isName(addr)).to.equal(false)
       })
     })
 
@@ -562,7 +562,7 @@ describe('helpers', () => {
         const str = '/ip4/127.0.0.1'
         const addr = multiaddr(str)
         multiaddr.resolve(addr, (err, multiaddrs) => {
-          expect(err).to.exist
+          expect(err).to.exist // eslint-disable-line
           done()
         })
       })
