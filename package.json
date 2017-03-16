@@ -45,7 +45,7 @@
     "xtend": "^4.0.1"
   },
   "devDependencies": {
-    "aegir": "^10.0.0",
+    "aegir": "^11.0.0",
     "buffer-loader": "0.0.1",
     "chai": "^3.5.0",
     "pre-commit": "^1.2.2"
