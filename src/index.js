@@ -253,7 +253,9 @@ Multiaddr.prototype.getPeerId = function getPeerId () {
     })[0][1]
 
     bs58.decode(b58str)
-  } catch (e) {}
+  } catch (e) {
+    b58str = null
+  }
 
   return b58str
 }
