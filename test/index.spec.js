@@ -579,7 +579,7 @@ describe('helpers', () => {
         const str = '/ip4/127.0.0.1'
         const addr = multiaddr(str)
         multiaddr.resolve(addr, (err, multiaddrs) => {
-          expect(err).to.exist
+          expect(err).to.exist()
           done()
         })
       })
