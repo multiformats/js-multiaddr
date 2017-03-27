@@ -249,7 +249,7 @@ Multiaddr.prototype.decapsulate = function decapsulate (addr) {
  * }
  */
 Multiaddr.prototype.getPeerId = function getPeerId () {
-  let b58str
+  let b58str = null
   try {
     b58str = this.stringTuples().filter((tuple) => {
       if (tuple[0] === protocols.names['ipfs'].code) {
