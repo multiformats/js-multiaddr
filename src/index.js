@@ -106,7 +106,7 @@ Multiaddr.prototype.inspect = function inspect () {
 Multiaddr.prototype.protos = function protos () {
   return map(this.protoCodes(), function (code) {
     return extend(protocols(code))
-  // copy to prevent users from modifying the internal objs.
+    // copy to prevent users from modifying the internal objs.
   })
 }
 
@@ -235,27 +235,28 @@ Multiaddr.prototype.decapsulate = function decapsulate (addr) {
 /**
  * Extract the peerId if the multiaddr contains one
  *
- * @return {String} peerId - The id of the peer
+ * @return {String|null} peerId - The id of the peer or null if invalid or missing from the ma
  * @example
  * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string')
  * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string>
  *
- * const peerId
- *
- * try {
- *  peerId = mh1.getPeerId()
- * } catch (err) {
- *  // not a valid base58 address
- * }
+ * // should return QmValidBase58string or null if the id is missing or invalid
+ * const peerId = mh1.getPeerId()
  */
 Multiaddr.prototype.getPeerId = function getPeerId () {
-  let b58str = this.stringTuples().filter((tuple) => {
-    if (tuple[0] === protocols.names['ipfs'].code) {
-      return true
-    }
-  })[0][1]
+  let b58str = null
+  try {
+    b58str = this.stringTuples().filter((tuple) => {
+      if (tuple[0] === protocols.names['ipfs'].code) {
+        return true
+      }
+    })[0][1]
 
-  bs58.decode(b58str)
+    bs58.decode(b58str)
+  } catch (e) {
+    b58str = null
+  }
+
   return b58str
 }
 

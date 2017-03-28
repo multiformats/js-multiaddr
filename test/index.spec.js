@@ -535,6 +535,22 @@ describe('helpers', () => {
     })
   })
 
+  describe('.getPeerId should parse id from multiaddr', () => {
+    it('parses extracts the peer Id from a multiaddr', () => {
+      expect(
+        multiaddr('/p2p-circuit/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPeerId()
+      ).to.equal('QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
+    })
+  })
+
+  describe('.getPeerId should return null on missing peer id in multiaddr', () => {
+    it('parses extracts the peer Id from a multiaddr', () => {
+      expect(
+        multiaddr('/ip4/0.0.0.0/tcp/1234/utp').getPeerId()
+      ).to.be.null()
+    })
+  })
+
   describe('multiaddr.isMultiaddr', () => {
     it('handles different inputs', () => {
       expect(multiaddr.isMultiaddr(multiaddr('/'))).to.be.eql(true)
