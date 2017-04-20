@@ -76,9 +76,9 @@ Loading this module through a script tag will make the `Multiaddr` obj available
 the global namespace.
 
 ```html
-<script src="https://unpkg.com/multiaddr/dist/index.min.js"></script>
+<script src="/multiaddr@2.0.3/dist/index.min.js"></script>
 <!-- OR -->
-<script src="https://unpkg.com/multiaddr/dist/index.js"></script>
+<script src="/multiaddr@2.0.3/dist/index.js"></script>
 ```
 
 **NOTE**: You will need access to the Node.js `Buffer` API. If you are running
