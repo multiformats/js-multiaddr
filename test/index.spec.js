@@ -81,7 +81,7 @@ describe('requiring varint', () => {
 describe('manipulation', () => {
   it('basic', () => {
     const udpAddrStr = '/ip4/127.0.0.1/udp/1234'
-    const udpAddrBuf = new Buffer('047f0000011104d2', 'hex')
+    const udpAddrBuf = Buffer.from('047f0000011104d2', 'hex')
     const udpAddr = multiaddr(udpAddrStr)
 
     expect(udpAddr.toString()).to.equal(udpAddrStr)
@@ -299,15 +299,22 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
-  it('webrtc-star', () => {
-    const str = '/libp2p-webrtc-star/ip4/127.0.0.1/tcp/9090/ws/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+  it('p2p-webrtc-star', () => {
+    const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-webrtc-star/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
 
-  it('webrtc-direct', () => {
-    const str = '/libp2p-webrtc-direct/ip4/127.0.0.1/tcp/9090/http'
+  it('p2p-webrtc-direct', () => {
+    const str = '/ip4/127.0.0.1/tcp/9090/http/p2p-webrtc-direct'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('p2p-websockets-star', () => {
+    const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-websockets-star'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
@@ -317,42 +324,37 @@ describe('variants', () => {
 describe('helpers', () => {
   describe('.toOptions', () => {
     it('returns a well formed options object', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/tcp/1234').toOptions()
-      ).to.be.eql({
-        family: 'ipv4',
-        host: '0.0.0.0',
-        transport: 'tcp',
-        port: '1234'
-      })
+      expect(multiaddr('/ip4/0.0.0.0/tcp/1234').toOptions())
+        .to.eql({
+          family: 'ipv4',
+          host: '0.0.0.0',
+          transport: 'tcp',
+          port: '1234'
+        })
     })
   })
 
   describe('.inspect', () => {
     it('renders the buffer as hex', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/tcp/1234').inspect()
-      ).to.be.eql(
-        '<Multiaddr 04000000000604d2 - /ip4/0.0.0.0/tcp/1234>'
-      )
+      expect(multiaddr('/ip4/0.0.0.0/tcp/1234').inspect())
+        .to.eql('<Multiaddr 04000000000604d2 - /ip4/0.0.0.0/tcp/1234>')
     })
   })
 
   describe('.protos', () => {
     it('returns a list of all protocols in the address', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/utp').protos()
-      ).to.eql([{
-        code: 4,
-        name: 'ip4',
-        size: 32,
-        resolvable: false
-      }, {
-        code: 302,
-        name: 'utp',
-        size: 0,
-        resolvable: false
-      }])
+      expect(multiaddr('/ip4/0.0.0.0/utp').protos())
+        .to.eql([{
+          code: 4,
+          name: 'ip4',
+          size: 32,
+          resolvable: false
+        }, {
+          code: 302,
+          name: 'utp',
+          size: 0,
+          resolvable: false
+        }])
     })
 
     it('works with ipfs', () => {
@@ -379,23 +381,21 @@ describe('helpers', () => {
 
   describe('.tuples', () => {
     it('returns the tuples', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/utp').tuples()
-      ).to.be.eql([
-        [4, new Buffer([0, 0, 0, 0])],
-        [302]
-      ])
+      expect(multiaddr('/ip4/0.0.0.0/utp').tuples())
+        .to.eql([
+          [4, Buffer.from([0, 0, 0, 0])],
+          [302]
+        ])
     })
   })
 
   describe('.stringTuples', () => {
     it('returns the string partss', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/utp').stringTuples()
-      ).to.be.eql([
-        [4, '0.0.0.0'],
-        [302]
-      ])
+      expect(multiaddr('/ip4/0.0.0.0/utp').stringTuples())
+        .to.eql([
+          [4, '0.0.0.0'],
+          [302]
+        ])
     })
   })
 
