@@ -41,8 +41,9 @@ Protocols.table = [
   [443, 0, 'https'],
   [477, 0, 'ws'],
   [478, 0, 'wss'],
-  [275, 0, 'libp2p-webrtc-star'],
-  [276, 0, 'libp2p-webrtc-direct'],
+  [479, 0, 'p2p-websockets-star'],
+  [275, 0, 'p2p-webrtc-star'],
+  [276, 0, 'p2p-webrtc-direct'],
   [290, 0, 'p2p-circuit']
 ]
 
