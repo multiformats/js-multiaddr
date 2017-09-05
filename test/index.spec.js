@@ -313,8 +313,8 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
-  it('p2p-websockets-star', () => {
-    const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-websockets-star'
+  it('p2p-websocket-star', () => {
+    const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-websocket-star'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
