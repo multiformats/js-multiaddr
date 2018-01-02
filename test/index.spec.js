@@ -564,7 +564,7 @@ describe('helpers', () => {
   describe('resolvable multiaddrs', () => {
     describe('.isName', () => {
       it('valid name dns', () => {
-        const str = '/dns/ipfs.io'
+        const str = '/dnsaddr/ipfs.io'
         const addr = multiaddr(str)
         expect(multiaddr.isName(addr)).to.equal(true)
       })
