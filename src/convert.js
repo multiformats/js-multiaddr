@@ -62,12 +62,12 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
     case 421: // ipfs
       return mh2buf(str)
     default:
-      return new Buffer(str, 'hex') // no clue. convert from hex
+      return Buffer.from(str, 'hex') // no clue. convert from hex
   }
 }
 
 function port2buf (port) {
-  const buf = new Buffer(2)
+  const buf = Buffer.alloc(2)
   buf.writeUInt16BE(port, 0)
   return buf
 }
@@ -77,8 +77,8 @@ function buf2port (buf) {
 }
 
 function str2buf (str) {
-  const buf = new Buffer(str)
-  const size = new Buffer(varint.encode(buf.length))
+  const buf = Buffer.from(str)
+  const size = Buffer.from(varint.encode(buf.length))
   return Buffer.concat([size, buf])
 }
 
@@ -95,8 +95,8 @@ function buf2str (buf) {
 
 function mh2buf (hash) {
   // the address is a varint prefixed multihash string representation
-  const mh = new Buffer(bs58.decode(hash))
-  const size = new Buffer(varint.encode(mh.length))
+  const mh = Buffer.from(bs58.decode(hash))
+  const size = Buffer.from(varint.encode(mh.length))
   return Buffer.concat([size, mh])
 }
 

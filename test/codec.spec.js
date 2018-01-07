@@ -23,8 +23,8 @@ describe('codec', () => {
     it('handles non array tuples', () => {
       expect(
         codec.stringTuplesToTuples([['ip4', '0.0.0.0'], 'utp'])
-      ).to.be.eql(
-        [[4, new Buffer([0, 0, 0, 0])], [302]]
+      ).to.eql(
+        [[4, Buffer.from([0, 0, 0, 0])], [302]]
       )
     })
   })
@@ -33,7 +33,7 @@ describe('codec', () => {
     it('single element tuples', () => {
       expect(
         codec.tuplesToStringTuples([[302]])
-      ).to.be.eql(
+      ).to.eql(
         [[302]]
       )
     })
@@ -42,7 +42,7 @@ describe('codec', () => {
   describe('.bufferToTuples', () => {
     it('throws on invalid address', () => {
       expect(
-        () => codec.bufferToTuples(codec.tuplesToBuffer([[4, new Buffer('192')]]))
+        () => codec.bufferToTuples(codec.tuplesToBuffer([[4, Buffer.from('192')]]))
       ).to.throw(
         /Invalid address buffer/
       )
@@ -52,7 +52,7 @@ describe('codec', () => {
   describe('.fromBuffer', () => {
     it('throws on invalid buffer', () => {
       expect(
-        () => codec.fromBuffer(new Buffer('hello/world'))
+        () => codec.fromBuffer(Buffer.from('hello/world'))
       ).to.throw()
     })
   })
@@ -60,18 +60,14 @@ describe('codec', () => {
   describe('.isValidBuffer', () => {
     it('returns true for valid buffers', () => {
       expect(
-        codec.isValidBuffer(new Buffer(varint.encode(302)))
-      ).to.be.eql(
-        true
-      )
+        codec.isValidBuffer(Buffer.from(varint.encode(302)))
+      ).to.equal(true)
     })
 
     it('returns false for invalid buffers', () => {
       expect(
-        codec.isValidBuffer(new Buffer(varint.encode(1234)))
-      ).to.be.eql(
-        false
-      )
+        codec.isValidBuffer(Buffer.from(varint.encode(1234)))
+      ).to.equal(false)
     })
   })
 })

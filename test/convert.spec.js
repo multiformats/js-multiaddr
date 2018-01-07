@@ -10,8 +10,8 @@ chai.use(dirtyChai)
 describe('convert', () => {
   it('handles buffers', () => {
     expect(
-      convert('ip4', new Buffer('c0a80001', 'hex'))
-    ).to.be.eql(
+      convert('ip4', Buffer.from('c0a80001', 'hex'))
+    ).to.eql(
       '192.168.0.1'
     )
   })
@@ -19,8 +19,8 @@ describe('convert', () => {
   it('handles strings', () => {
     expect(
       convert('ip4', '192.168.0.1')
-    ).to.be.eql(
-      new Buffer('c0a80001', 'hex')
+    ).to.eql(
+      Buffer.from('c0a80001', 'hex')
     )
   })
 
@@ -28,15 +28,15 @@ describe('convert', () => {
     it('defaults to hex conversion', () => {
       expect(
         convert.toBuffer('ws', 'c0a80001')
-      ).to.be.eql(
-        new Buffer([192, 168, 0, 1])
+      ).to.eql(
+        Buffer.from([192, 168, 0, 1])
       )
     })
   })
 
   describe('.toString', () => {
     it('throws on inconsistent ipfs links', () => {
-      const valid = new Buffer('03221220d52ebb89d85b02a284948203a62ff28389c57c9f42beec4ec20db76a68911c0b', 'hex')
+      const valid = Buffer.from('03221220d52ebb89d85b02a284948203a62ff28389c57c9f42beec4ec20db76a68911c0b', 'hex')
       expect(
         () => convert.toString('ipfs', valid.slice(0, valid.length - 8))
       ).to.throw(
@@ -46,8 +46,8 @@ describe('convert', () => {
 
     it('defaults to hex conversion', () => {
       expect(
-        convert.toString('ws', new Buffer([192, 168, 0, 1]))
-      ).to.be.eql(
+        convert.toString('ws', Buffer.from([192, 168, 0, 1]))
+      ).to.eql(
         'c0a80001'
       )
     })

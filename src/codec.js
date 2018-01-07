@@ -103,7 +103,7 @@ function tuplesToStringTuples (tuples) {
 function tuplesToBuffer (tuples) {
   return fromBuffer(Buffer.concat(map(tuples, function (tup) {
     const proto = protoFromTuple(tup)
-    let buf = new Buffer(varint.encode(proto.code))
+    let buf = Buffer.from(varint.encode(proto.code))
 
     if (tup.length > 1) {
       buf = Buffer.concat([buf, tup[1]]) // add address buffer
@@ -182,7 +182,7 @@ function fromString (str) {
 function fromBuffer (buf) {
   const err = validateBuffer(buf)
   if (err) throw err
-  return new Buffer(buf) // copy
+  return Buffer.from(buf) // copy
 }
 
 function validateBuffer (buf) {

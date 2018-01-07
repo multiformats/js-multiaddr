@@ -404,7 +404,7 @@ describe('helpers', () => {
       expect(
         () => multiaddr('/ip4/127.0.0.1').decapsulate('/ip4/198.168.0.0')
       ).to.throw(
-          /does not contain subaddress/
+        /does not contain subaddress/
       )
     })
   })
@@ -430,7 +430,7 @@ describe('helpers', () => {
       expect(
         () => multiaddr('/ip4/192.168.0.1/utp').nodeAddress()
       ).to.throw(
-          /thin waist/
+        /thin waist/
       )
     })
 
@@ -450,7 +450,7 @@ describe('helpers', () => {
       expect(
         () => multiaddr.fromNodeAddress()
       ).to.throw(
-          /requires node address/
+        /requires node address/
       )
     })
 
@@ -458,7 +458,7 @@ describe('helpers', () => {
       expect(
         () => multiaddr.fromNodeAddress({address: '0.0.0.0'})
       ).to.throw(
-          /requires transport protocol/
+        /requires transport protocol/
       )
     })
 
@@ -489,9 +489,7 @@ describe('helpers', () => {
             multiaddr(
               `${family}/${addresses[family]}/${transport}/1234`
             ).isThinWaistAddress()
-          ).to.be.eql(
-            true
-          )
+          ).to.equal(true)
         })
       })
     })
@@ -499,19 +497,17 @@ describe('helpers', () => {
     it('returns false for two protocols not using {IPv4, IPv6}/{TCP, UDP}', () => {
       expect(
         multiaddr('/ip4/192.168.0.1/utp').isThinWaistAddress()
-      ).to.be.eql(
-        false
-      )
+      ).to.equal(false)
 
       expect(
         multiaddr('/sctp/192.168.0.1/tcp/1234').isThinWaistAddress()
-      ).to.be.eql(
+      ).to.eql(
         false
       )
 
       expect(
         multiaddr('/http/utp').isThinWaistAddress()
-      ).to.be.eql(
+      ).to.eql(
         false
       )
     })
@@ -519,7 +515,7 @@ describe('helpers', () => {
     it('returns false for more than two protocols', () => {
       expect(
         multiaddr('/ip4/0.0.0.0/tcp/1234/utp').isThinWaistAddress()
-      ).to.be.eql(
+      ).to.equal(
         false
       )
     })
@@ -527,11 +523,7 @@ describe('helpers', () => {
 
   describe('.fromStupidString', () => {
     it('parses an address in the format <proto><IPv>://<IP Addr>[:<proto port>]', () => {
-      expect(
-        () => multiaddr('/').fromStupidString()
-      ).to.throw(
-          /Not Implemented/
-      )
+      expect(() => multiaddr('/').fromStupidString()).to.throw(/Not Implemented/)
     })
   })
 
@@ -557,7 +549,7 @@ describe('helpers', () => {
       expect(multiaddr.isMultiaddr('/')).to.be.eql(false)
       expect(multiaddr.isMultiaddr(123)).to.be.eql(false)
 
-      expect(multiaddr.isMultiaddr(Buffer('/hello'))).to.be.eql(false)
+      expect(multiaddr.isMultiaddr(Buffer.from('/hello'))).to.be.eql(false)
     })
   })
 
