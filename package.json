@@ -4,17 +4,17 @@
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "main": "src/index.js",
   "scripts": {
-    "lint": "aegir-lint",
-    "test": "aegir-test",
-    "test:node": "aegir-test node",
-    "test:browser": "aegir-test browser",
-    "build": "aegir-build",
-    "release": "aegir-release",
-    "release-minor": "aegir-release --type minor",
-    "release-major": "aegir-release --type major",
-    "coverage": "aegir-coverage",
-    "coverage-publish": "aegir-coverage publish",
-    "docs": "aegir-docs"
+    "lint": "aegir lint",
+    "test": "aegir test",
+    "test:node": "aegir test -t node",
+    "test:browser": "aegir test -t browser",
+    "build": "aegir build",
+    "release": "aegir release",
+    "release-minor": "aegir release --type minor",
+    "release-major": "aegir release --type major",
+    "coverage": "aegir coverage",
+    "coverage-publish": "aegir coverage publish",
+    "docs": "aegir docs"
   },
   "pre-commit": [
     "lint",
@@ -44,7 +44,7 @@
     "xtend": "^4.0.1"
   },
   "devDependencies": {
-    "aegir": "^11.0.2",
+    "aegir": "^12.3.0",
     "buffer-loader": "0.0.1",
     "chai": "^4.1.2",
     "dirty-chai": "^2.0.1",
