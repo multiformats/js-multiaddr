@@ -1,0 +1,49 @@
+// @flow
+
+import type { Callback } from "callback.flow"
+import type { Protocol, Code } from "./protocols-table"
+import protocols from "./protocols-table"
+export opaque type String: string = string
+export type { Protocol, Code, Callback }
+
+export type Options = {
+  family: string,
+  host: string,
+  transport: string,
+  port: string
+}
+
+export type NodeAddress = {
+  family: string,
+  address: string,
+  port: string
+}
+
+export interface Multiaddr {
+  buffer: Buffer;
+  toString(): String;
+  toOptions(): Options;
+  inspect(): string;
+  protos(): Protocol[];
+  protoCodes(): Code[];
+  protoNames(): string[];
+  tuples(): Array<[Code, Buffer]>;
+  stringTuples(): Array<[Code, string | number]>;
+  encapsulate(string | Buffer | Multiaddr): Multiaddr;
+  decapsulate(string | Buffer | Multiaddr): Multiaddr;
+  getPeerId(): ?string;
+  equals(Multiaddr): boolean;
+  nodeAddress(): NodeAddress;
+  isThinWaistAddress(Multiaddr): boolean;
+  fromStupidString(string): empty;
+}
+
+declare export default {
+  Buffer: typeof Buffer,
+  protocols: typeof protocols,
+  (string | Buffer | Multiaddr): Multiaddr,
+  fromNodeAddress(NodeAddress, transport: string): Multiaddr,
+  isMultiaddr(mixed): boolean,
+  isName(mixed): boolean,
+  resolve(mixed, Callback<Error, void>): void
+}

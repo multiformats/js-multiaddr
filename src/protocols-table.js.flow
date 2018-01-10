@@ -1,0 +1,21 @@
+// @flow
+
+export opaque type Code: number = number
+export type Size = number
+
+export type Protocol = {
+  code: Code,
+  size: Size,
+  name: string,
+  resolvable: boolean
+}
+
+declare export default {
+  (string | number): Protocol,
+  lengthPrefixedVarSize: number,
+  V: number,
+  table: Array<[number, number, string]>,
+  names: { [string]: Protocol },
+  codes: { [number]: Protocol },
+  object(Code, Size, string, boolean): Protocol
+}

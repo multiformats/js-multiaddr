@@ -1,0 +1,13 @@
+// @flow
+
+import type { Protocol, Code } from "./protocols-table"
+export type { Protocol, Code }
+
+declare export default {
+  // So this just flips the type it seems, I wish there were two different named
+  // functions instead.
+  (Protocol, Buffer): string,
+  (Protocol, string): Buffer,
+  toString(Protocol, Buffer): string,
+  toBuffer(Protocol, string): Buffer
+}

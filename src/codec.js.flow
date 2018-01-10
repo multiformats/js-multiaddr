@@ -1,0 +1,32 @@
+// @flow
+
+import type { Protocol } from "./protocols-table.js"
+
+export type Name$Address = [string, string]
+export type Code$Buffer = [number, Buffer]
+export type { Protocol }
+export class ParseError extends Error {}
+
+declare export default {
+  stringToStringTuples(string): Name$Address[],
+  stringTuplesToString(Name$Address[]): string,
+  tuplesToStringTuples(Code$Buffer[]): Name$Address[],
+  stringTuplesToTuples(Name$Address[]): Code$Buffer[],
+
+  bufferToTuples(Buffer): Code$Buffer[],
+  tuplesToBuffer(Code$Buffer[]): Buffer,
+
+  bufferToString(Buffer): string,
+  stringToBuffer(string): Buffer,
+
+  fromString(string): Buffer,
+  fromBuffer(Buffer): Buffer,
+  validateBuffer(mixed): void,
+  isValidBuffer(mixed): boolean,
+  cleanPath(string): string,
+
+  ParseError(string): ParseError,
+  protoFromTuple(Name$Address | Code$Buffer): Protocol,
+
+  sizeForAddr(Protocol, Buffer): number
+}
