@@ -40,8 +40,25 @@ describe('construction', () => {
     expect(multiaddr('').toString()).to.equal('/')
   })
 
-  it('throws on non string or buffer', () => {
-    expect(() => multiaddr({})).to.throw(/addr must be a string/)
+  it('null/undefined construct still works', () => {
+    expect(multiaddr().toString()).to.equal('/')
+    expect(multiaddr(null).toString()).to.equal('/')
+    expect(multiaddr(undefined).toString()).to.equal('/')
+  })
+
+  it('throws on truthy non string or buffer', () => {
+    const errRegex = /addr must be a string/
+    expect(() => multiaddr({})).to.throw(errRegex)
+    expect(() => multiaddr([])).to.throw(errRegex)
+    expect(() => multiaddr(138)).to.throw(errRegex)
+    expect(() => multiaddr(true)).to.throw(errRegex)
+  })
+
+  it('throws on falsy non string or buffer', () => {
+    const errRegex = /addr must be a string/
+    expect(() => multiaddr(NaN)).to.throw(errRegex)
+    expect(() => multiaddr(false)).to.throw(errRegex)
+    expect(() => multiaddr(0)).to.throw(errRegex)
   })
 })
 
