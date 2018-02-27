@@ -28,7 +28,9 @@ function Multiaddr (addr) {
   }
 
   // default
-  addr = addr == null ? '' : addr
+  if (addr == null) {
+    addr = ''
+  }
 
   if (addr instanceof Buffer) {
     /**
