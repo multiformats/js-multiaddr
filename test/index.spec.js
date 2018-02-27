@@ -43,6 +43,13 @@ describe('construction', () => {
   it('throws on non string or buffer', () => {
     expect(() => multiaddr({})).to.throw(/addr must be a string/)
   })
+
+  it('throws on falsy non string or buffer', () => {
+    const errRegex = /addr must be a string/
+    expect(() => multiaddr(NaN)).to.throw(errRegex)
+    expect(() => multiaddr(false)).to.throw(errRegex)
+    expect(() => multiaddr(0)).to.throw(errRegex)
+  })
 })
 
 describe('requiring varint', () => {
