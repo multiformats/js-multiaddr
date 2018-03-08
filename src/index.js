@@ -415,7 +415,7 @@ Multiaddr.protocols = protocols
  */
 Multiaddr.isMultiaddr = function isMultiaddr (addr) {
   if (addr.constructor && addr.constructor.name) {
-    return addr.constructor.name === 'Multiaddr'
+    return (addr instanceof Multiaddr)
   }
 
   return Boolean(
