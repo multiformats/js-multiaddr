@@ -29,9 +29,9 @@ Convert.toString = function convertToString (proto, buf) {
     case 132: // sctp
       return buf2port(buf)
 
-    case 53: // dns
     case 54: // dns4
     case 55: // dns6
+    case 56: // dnsaddr
       return buf2str(buf)
 
     case 421: // ipfs
@@ -54,9 +54,9 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
     case 132: // sctp
       return port2buf(parseInt(str, 10))
 
-    case 53: // dns
     case 54: // dns4
     case 55: // dns6
+    case 56: // dnsaddr
       return str2buf(str)
 
     case 421: // ipfs
