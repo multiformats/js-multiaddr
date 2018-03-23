@@ -1,3 +1,14 @@
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/multiformats/js-multiaddr/compare/v3.0.2...v3.1.0) (2018-03-23)
+
+
+### Bug Fixes
+
+* avoid constructor.name pattern ([e386738](https://github.com/multiformats/js-multiaddr/commit/e386738))
+* use consistent /dnsaddr code ([#59](https://github.com/multiformats/js-multiaddr/issues/59)) ([67fef56](https://github.com/multiformats/js-multiaddr/commit/67fef56))
+
+
+
 <a name="3.0.2"></a>
 ## [3.0.2](https://github.com/multiformats/js-multiaddr/compare/v3.0.1...v3.0.2) (2018-01-07)
 
