@@ -51,16 +51,20 @@
     "pre-commit": "^1.2.2"
   },
   "contributors": [
+    "Alan Shaw <alan@tableflip.io>",
     "David Dias <daviddias.p@gmail.com>",
     "Dmitriy Ryajov <dryajov@gmail.com>",
     "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
     "Juan Batiz-Benet <juan@benet.ai>",
+    "Lars Gierth <lgierth@users.noreply.github.com>",
     "Maciej Krüger <mkg20001@gmail.com>",
     "Richard Littauer <richard.littauer@gmail.com>",
     "Sid Harder <sideharder@gmail.com>",
     "Stephen Whitmore <stephen.whitmore@gmail.com>",
     "Trond Arne Bråthen <tabrath@gmail.com>",
     "Victor Bjelkholm <victorbjelkholm@gmail.com>",
+    "Volker Mische <volker.mische@gmail.com>",
+    "Yahya <ya7yaz@gmail.com>",
     "greenkeeper[bot] <greenkeeper[bot]@users.noreply.github.com>",
     "npm-to-cdn-bot (by Forbes Lindesay) <npmcdn-to-unpkg-bot@users.noreply.github.com>"
   ]
