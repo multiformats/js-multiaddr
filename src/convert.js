@@ -1,6 +1,7 @@
 'use strict'
 
 const ip = require('ip')
+const ipAddress = require('ip-address')
 const protocols = require('./protocols-table')
 const bs58 = require('bs58')
 const varint = require('varint')
@@ -45,8 +46,9 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
   proto = protocols(proto)
   switch (proto.code) {
     case 4: // ipv4
+      return ip2buf(new ipAddress.Address4(str))
     case 41: // ipv6
-      return ip.toBuffer(str)
+      return ip2buf(new ipAddress.Address6(str))
 
     case 6: // tcp
     case 17: // udp
@@ -64,6 +66,11 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
     default:
       return Buffer.from(str, 'hex') // no clue. convert from hex
   }
+}
+
+function ip2buf (ipaddr) {
+  if (!ipaddr.isValid()) throw new Error('invalid ip address')
+  return ip.toBuffer(ipaddr.address)
 }
 
 function port2buf (port) {

@@ -38,6 +38,7 @@
   "dependencies": {
     "bs58": "^4.0.1",
     "ip": "^1.1.5",
+    "ip-address": "^5.8.9",
     "lodash.filter": "^4.6.0",
     "lodash.map": "^4.6.0",
     "varint": "^5.0.0",
