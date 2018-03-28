@@ -6,10 +6,9 @@ const codec = require('./codec')
 const protocols = require('./protocols-table')
 const varint = require('varint')
 const bs58 = require('bs58')
+const withIs = require('class-is')
 
 const NotImplemented = new Error('Sorry, Not Implemented Yet.')
-
-exports = module.exports = Multiaddr
 
 /**
  * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
@@ -22,7 +21,7 @@ exports = module.exports = Multiaddr
  * Multiaddr('/ip4/127.0.0.1/tcp/4001')
  * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
  */
-function Multiaddr (addr) {
+const Multiaddr = withIs.proto(function (addr) {
   if (!(this instanceof Multiaddr)) {
     return new Multiaddr(addr)
   }
@@ -44,7 +43,7 @@ function Multiaddr (addr) {
   } else {
     throw new Error('addr must be a string, Buffer, or another Multiaddr')
   }
-}
+}, { className: 'Multiaddr', symbolName: '@multiformats/js-multiaddr/multiaddr' })
 
 /**
  * Returns Multiaddr as a String
@@ -403,28 +402,6 @@ Multiaddr.prototype.fromStupidString = function fromStupidString (str) {
 Multiaddr.protocols = protocols
 
 /**
- * Returns if something is a Multiaddr or not
- *
- * @param {Multiaddr} addr
- * @return {Bool} isMultiaddr
- * @example
- * Multiaddr.isMultiaddr(Multiaddr('/ip4/127.0.0.1/tcp/4001'))
- * // true
- * Multiaddr.isMultiaddr('/ip4/127.0.0.1/tcp/4001')
- * // false
- */
-Multiaddr.isMultiaddr = function isMultiaddr (addr) {
-  if (addr.constructor && addr.constructor.name) {
-    return addr.constructor.name === 'Multiaddr'
-  }
-
-  return Boolean(
-    addr.fromStupidString &&
-    addr.protos
-  )
-}
-
-/**
  * Returns if something is a Multiaddr that is a name
  *
  * @param {Multiaddr} addr
@@ -459,3 +436,5 @@ Multiaddr.resolve = function resolve (addr, callback) {
    */
   return callback(new Error('not implemented yet'))
 }
+
+exports = module.exports = Multiaddr
