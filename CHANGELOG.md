@@ -1,3 +1,14 @@
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/multiformats/js-multiaddr/compare/v3.1.0...v3.2.0) (2018-04-05)
+
+
+### Features
+
+* add ip validations to ip addr formats ([#60](https://github.com/multiformats/js-multiaddr/issues/60)) ([70c138b](https://github.com/multiformats/js-multiaddr/commit/70c138b))
+* use class-is module for type checks ([b097af9](https://github.com/multiformats/js-multiaddr/commit/b097af9))
+
+
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/multiformats/js-multiaddr/compare/v3.0.2...v3.1.0) (2018-03-23)
 
