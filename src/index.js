@@ -37,6 +37,9 @@ const Multiaddr = withIs.proto(function (addr) {
      */
     this.buffer = codec.fromBuffer(addr)
   } else if (typeof addr === 'string' || addr instanceof String) {
+    if (addr.length > 0 && addr.charAt(0) !== '/') {
+      throw new Error(`multiaddr "${addr}" must start with a "/"`)
+    }
     this.buffer = codec.fromString(addr)
   } else if (addr.buffer && addr.protos && addr.protoCodes) { // Multiaddr
     this.buffer = codec.fromBuffer(addr.buffer) // validate + copy buffer
@@ -297,14 +300,20 @@ Multiaddr.prototype.equals = function equals (addr) {
  * // {family: 'IPv4', address: '127.0.0.1', port: '4001'}
  */
 Multiaddr.prototype.nodeAddress = function nodeAddress () {
-  if (!this.isThinWaistAddress()) {
-    throw new Error('Multiaddr must be "thin waist" address for nodeAddress.')
+  const codes = this.protoCodes()
+  const names = this.protoNames()
+  const parts = this.toString().split('/').slice(1)
+
+  if (parts.length < 4) {
+    throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6}/{address}/{tcp, udp}/{port}".')
+  } else if (codes[0] !== 4 && codes[0] !== 41 && codes[0] !== 54 && codes[0] !== 55) {
+    throw new Error(`no protocol with name: "'${names[0]}'". Must have a valid family name: "{ip4, ip6, dns4, dns6}".`)
+  } else if (parts[2] !== 'tcp' && parts[2] !== 'udp') {
+    throw new Error(`no protocol with name: "'${names[1]}'". Must have a valid transport protocol: "{tcp, udp}".`)
   }
 
-  const codes = this.protoCodes()
-  const parts = this.toString().split('/').slice(1)
   return {
-    family: (codes[0] === 41) ? 'IPv6' : 'IPv4',
+    family: (codes[0] === 41 || codes[0] === 55) ? 6 : 4,
     address: parts[1], // ip addr
     port: parts[3] // tcp or udp port
   }

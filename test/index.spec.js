@@ -443,11 +443,11 @@ describe('helpers', () => {
   })
 
   describe('.nodeAddress', () => {
-    it('throws on non thinWaistAddress', () => {
+    it('throws on an invalid node address', () => {
       expect(
         () => multiaddr('/ip4/192.168.0.1/utp').nodeAddress()
       ).to.throw(
-        /thin waist/
+        /multiaddr must have a valid format/
       )
     })
 
@@ -456,9 +456,43 @@ describe('helpers', () => {
         multiaddr('/ip4/192.168.0.1/tcp/1234').nodeAddress()
       ).to.be.eql({
         address: '192.168.0.1',
-        family: 'IPv4',
+        family: 4,
         port: '1234'
       })
+    })
+
+    it('returns a node friendly address with dns', () => {
+      expect(
+        multiaddr('/dns4/wss0.bootstrap.libp2p.io/tcp/443').nodeAddress()
+      ).to.be.eql({
+        address: 'wss0.bootstrap.libp2p.io',
+        family: 4,
+        port: '443'
+      })
+    })
+
+    it('throws on an invalid format address when the addr is not prefixed with a /', () => {
+      expect(
+        () => multiaddr('ip4/192.168.0.1/udp').nodeAddress()
+      ).to.throw(
+        /must start with a/
+      )
+    })
+
+    it('throws on an invalid protocol name when the addr has an invalid one', () => {
+      expect(
+        () => multiaddr('/ip5/127.0.0.1/udp/5000')
+      ).to.throw(
+        /no protocol with name/
+      )
+    })
+
+    it('throws on an invalid protocol name when the transport protocol is not valid', () => {
+      expect(
+        () => multiaddr('/ip4/127.0.0.1/utp/5000')
+      ).to.throw(
+        /no protocol with name/
+      )
     })
   })
 
@@ -501,10 +535,10 @@ describe('helpers', () => {
     }
     families.forEach((family) => {
       transports.forEach((transport) => {
-        it(`returns true for ${family}-${transport}`, () => {
+        it(`returns true for /${family}-${transport}`, () => {
           expect(
             multiaddr(
-              `${family}/${addresses[family]}/${transport}/1234`
+              `/${family}/${addresses[family]}/${transport}/1234`
             ).isThinWaistAddress()
           ).to.equal(true)
         })
