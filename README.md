@@ -107,6 +107,7 @@ $ node
   {code: 17, name: 'udp', size: 16}
 ]
 
+// gives you an object that is friendly with what Node.js core modules expect for addresses
 > addr.nodeAddress()
 {
   family: "4",
