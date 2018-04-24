@@ -1,3 +1,13 @@
+<a name="5.0.0"></a>
+# [5.0.0](https://github.com/multiformats/js-multiaddr/compare/v4.0.0...v5.0.0) (2018-04-24)
+
+
+### Features
+
+* Add support for multiaddr node with dns ([5d6b93a](https://github.com/multiformats/js-multiaddr/commit/5d6b93a))
+
+
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/multiformats/js-multiaddr/compare/v3.2.0...v4.0.0) (2018-04-05)
 

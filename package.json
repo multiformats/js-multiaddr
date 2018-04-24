@@ -1,6 +1,6 @@
 {
   "name": "multiaddr",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "main": "src/index.js",
   "scripts": {
