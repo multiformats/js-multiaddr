@@ -13,6 +13,10 @@ js-multiaddr
 
 > JavaScript implementation of [multiaddr](https://github.com/multiformats/multiaddr).
 
+## Lead Maintainer
+
+[Victor Bjelkholm](https://github.com/VictorBjelkholm)
+
 ## Table of Contents
 
 - [Background](#background)
@@ -122,10 +126,6 @@ $ node
 ## API
 
 https://multiformats.github.io/js-multiaddr/
-
-## Maintainers
-
-Captain: [@diasdavid](https://github.com/diasdavid).
 
 ## Contribute
 
