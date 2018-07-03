@@ -37,6 +37,8 @@ Protocols.table = [
   // all of the below use varint for size
   [302, 0, 'utp'],
   [421, Protocols.lengthPrefixedVarSize, 'ipfs'],
+  // preferred name for 421 (added below ipfs, p2p takes precedence during table population)
+  [421, Protocols.lengthPrefixedVarSize, 'p2p'],
   [480, 0, 'http'],
   [443, 0, 'https'],
   [477, 0, 'ws'],
