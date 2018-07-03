@@ -211,15 +211,15 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
-  it('ip4 + ipfs', () => {
-    const str = '/ip4/127.0.0.1/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
+  it('ip4 + p2p', () => {
+    const str = '/ip4/127.0.0.1/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
 
-  it('ip6 + ipfs', () => {
-    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
+  it('ip6 + p2p', () => {
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
@@ -288,36 +288,36 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
-  it('ip6 + tcp + websockets + ipfs', () => {
-    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+  it('ip6 + tcp + websockets + p2p', () => {
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
 
-  it('ipfs', () => {
-    const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+  it('p2p', () => {
+    const str = '/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
 
   it('p2p-circuit', () => {
-    const str = '/p2p-circuit/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const str = '/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
 
-  it('p2p-circuit ipfs', () => {
-    const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/p2p-circuit'
+  it('p2p-circuit p2p', () => {
+    const str = '/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/p2p-circuit'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
 
   it('p2p-webrtc-star', () => {
-    const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-webrtc-star/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
@@ -374,7 +374,7 @@ describe('helpers', () => {
         }])
     })
 
-    it('works with ipfs', () => {
+    it('works with ipfs/p2p', () => {
       expect(
         multiaddr('/ip4/0.0.0.0/utp/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').protos()
       ).to.be.eql([{
@@ -389,7 +389,7 @@ describe('helpers', () => {
         resolvable: false
       }, {
         code: 421,
-        name: 'ipfs',
+        name: 'p2p',
         size: -1,
         resolvable: false
       }])
@@ -581,7 +581,7 @@ describe('helpers', () => {
   describe('.getPeerId should parse id from multiaddr', () => {
     it('parses extracts the peer Id from a multiaddr', () => {
       expect(
-        multiaddr('/p2p-circuit/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPeerId()
+        multiaddr('/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPeerId()
       ).to.equal('QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
     })
   })
