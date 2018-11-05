@@ -39,6 +39,7 @@ Protocols.table = [
   [421, Protocols.lengthPrefixedVarSize, 'ipfs'],
   [480, 0, 'http'],
   [443, 0, 'https'],
+  [460, 0, 'quic'],
   [477, 0, 'ws'],
   [478, 0, 'wss'],
   [479, 0, 'p2p-websocket-star'],
