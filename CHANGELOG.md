@@ -1,3 +1,13 @@
+<a name="5.0.1"></a>
+## [5.0.1](https://github.com/multiformats/js-multiaddr/compare/v5.0.0...v5.0.1) (2018-11-05)
+
+
+### Features
+
+* add support for quic addresses ([9238d0d](https://github.com/multiformats/js-multiaddr/commit/9238d0d))
+
+
+
 <a name="5.0.0"></a>
 # [5.0.0](https://github.com/multiformats/js-multiaddr/compare/v4.0.0...v5.0.0) (2018-04-24)
 
