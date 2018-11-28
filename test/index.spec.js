@@ -98,15 +98,15 @@ describe('requiring varint', () => {
 describe('manipulation', () => {
   it('basic', () => {
     const udpAddrStr = '/ip4/127.0.0.1/udp/1234'
-    const udpAddrBuf = Buffer.from('047f0000011104d2', 'hex')
+    const udpAddrBuf = Buffer.from('047f000001910204d2', 'hex')
     const udpAddr = multiaddr(udpAddrStr)
 
     expect(udpAddr.toString()).to.equal(udpAddrStr)
     expect(udpAddr.buffer).to.deep.equal(udpAddrBuf)
 
-    expect(udpAddr.protoCodes()).to.deep.equal([4, 17])
+    expect(udpAddr.protoCodes()).to.deep.equal([4, 273])
     expect(udpAddr.protoNames()).to.deep.equal(['ip4', 'udp'])
-    expect(udpAddr.protos()).to.deep.equal([multiaddr.protocols.codes[4], multiaddr.protocols.codes[17]])
+    expect(udpAddr.protos()).to.deep.equal([multiaddr.protocols.codes[4], multiaddr.protocols.codes[273]])
     expect(udpAddr.protos()[0] === multiaddr.protocols.codes[4]).to.equal(false)
 
     const udpAddrBuf2 = udpAddr.encapsulate('/udp/5678')
@@ -514,7 +514,7 @@ describe('helpers', () => {
 
     it('throws on missing transport', () => {
       expect(
-        () => multiaddr.fromNodeAddress({address: '0.0.0.0'})
+        () => multiaddr.fromNodeAddress({ address: '0.0.0.0' })
       ).to.throw(
         /requires transport protocol/
       )

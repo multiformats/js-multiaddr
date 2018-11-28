@@ -25,7 +25,7 @@ Convert.toString = function convertToString (proto, buf) {
       return ip.toString(buf)
 
     case 6: // tcp
-    case 17: // udp
+    case 273: // udp
     case 33: // dccp
     case 132: // sctp
       return buf2port(buf)
@@ -51,7 +51,7 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
       return ip2buf(new ipAddress.Address6(str))
 
     case 6: // tcp
-    case 17: // udp
+    case 273: // udp
     case 33: // dccp
     case 132: // sctp
       return port2buf(parseInt(str, 10))

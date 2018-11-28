@@ -27,7 +27,7 @@ Protocols.V = V
 Protocols.table = [
   [4, 32, 'ip4'],
   [6, 16, 'tcp'],
-  [17, 16, 'udp'],
+  [273, 16, 'udp'],
   [33, 16, 'dccp'],
   [41, 128, 'ip6'],
   [54, V, 'dns4', 'resolvable'],

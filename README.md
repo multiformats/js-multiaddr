@@ -107,7 +107,7 @@ $ node
 > addr.protos()
 [
   {code: 4, name: 'ip4', size: 32},
-  {code: 17, name: 'udp', size: 16}
+  {code: 273, name: 'udp', size: 16}
 ]
 
 // gives you an object that is friendly with what Node.js core modules expect for addresses
