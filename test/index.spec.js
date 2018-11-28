@@ -514,7 +514,7 @@ describe('helpers', () => {
 
     it('throws on missing transport', () => {
       expect(
-        () => multiaddr.fromNodeAddress({address: '0.0.0.0'})
+        () => multiaddr.fromNodeAddress({ address: '0.0.0.0' })
       ).to.throw(
         /requires transport protocol/
       )

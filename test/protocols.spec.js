@@ -27,7 +27,7 @@ describe('protocols', () => {
 
     it('else', () => {
       expect(
-        () => protocols({hi: 34})
+        () => protocols({ hi: 34 })
       ).to.throw(
         /invalid protocol id type/
       )
