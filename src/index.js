@@ -1,7 +1,5 @@
 'use strict'
 
-const map = require('lodash.map')
-const extend = require('xtend')
 const codec = require('./codec')
 const protocols = require('./protocols-table')
 const varint = require('varint')
@@ -108,10 +106,7 @@ Multiaddr.prototype.inspect = function inspect () {
  * //   { code: 6, size: 16, name: 'tcp' } ]
  */
 Multiaddr.prototype.protos = function protos () {
-  return map(this.protoCodes(), function (code) {
-    return extend(protocols(code))
-    // copy to prevent users from modifying the internal objs.
-  })
+  return this.protoCodes().map(code => Object.assign({}, protocols(code)))
 }
 
 /**
@@ -151,9 +146,7 @@ Multiaddr.prototype.protoCodes = function protoCodes () {
  * // [ 'ip4', 'tcp' ]
  */
 Multiaddr.prototype.protoNames = function protoNames () {
-  return map(this.protos(), function (proto) {
-    return proto.name
-  })
+  return this.protos().map(proto => proto.name)
 }
 
 /**
@@ -251,7 +244,7 @@ Multiaddr.prototype.getPeerId = function getPeerId () {
   let b58str = null
   try {
     b58str = this.stringTuples().filter((tuple) => {
-      if (tuple[0] === protocols.names['ipfs'].code) {
+      if (tuple[0] === protocols.names.ipfs.code) {
         return true
       }
     })[0][1]

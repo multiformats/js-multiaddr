@@ -1,7 +1,7 @@
 'use strict'
 
 const ip = require('ip')
-const ipAddress = require('ip-address')
+const isIp = require('is-ip')
 const protocols = require('./protocols-table')
 const bs58 = require('bs58')
 const varint = require('varint')
@@ -22,7 +22,7 @@ Convert.toString = function convertToString (proto, buf) {
   switch (proto.code) {
     case 4: // ipv4
     case 41: // ipv6
-      return ip.toString(buf)
+      return buf2ip(buf)
 
     case 6: // tcp
     case 273: // udp
@@ -46,9 +46,9 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
   proto = protocols(proto)
   switch (proto.code) {
     case 4: // ipv4
-      return ip2buf(new ipAddress.Address4(str))
+      return ip2buf(str)
     case 41: // ipv6
-      return ip2buf(new ipAddress.Address6(str))
+      return ip2buf(str)
 
     case 6: // tcp
     case 273: // udp
@@ -68,9 +68,19 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
   }
 }
 
-function ip2buf (ipaddr) {
-  if (!ipaddr.isValid()) throw new Error('invalid ip address')
-  return ip.toBuffer(ipaddr.address)
+function ip2buf (ipString) {
+  if (!isIp(ipString)) {
+    throw new Error('invalid ip address')
+  }
+  return ip.toBuffer(ipString)
+}
+
+function buf2ip (ipBuff) {
+  const ipString = ip.toString(ipBuff)
+  if (!isIp(ipString)) {
+    throw new Error('invalid ip address')
+  }
+  return ipString
 }
 
 function port2buf (port) {
