@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "aegir": "ipfs/aegir#fix/babel",
-    "bundlesize": "^0.17.0",
+    "bundlesize": "~0.17.0",
     "chai": "^4.1.2",
     "dirty-chai": "^2.0.1"
   },
