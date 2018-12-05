@@ -16,7 +16,7 @@
     "coverage": "aegir coverage",
     "coverage-publish": "aegir coverage publish",
     "docs": "aegir docs",
-    "size": "bundlesize -f dist/index.min.js -s 39kB"
+    "size": "bundlesize -f dist/index.min.js -s 13kB"
   },
   "files": [
     "src",
