@@ -40,11 +40,9 @@
   },
   "devDependencies": {
     "aegir": "ipfs/aegir#fix/babel",
-    "buffer-loader": "0.0.1",
     "bundlesize": "^0.17.0",
     "chai": "^4.1.2",
-    "dirty-chai": "^2.0.1",
-    "pre-commit": "^1.2.2"
+    "dirty-chai": "^2.0.1"
   },
   "contributors": [
     "Alan Shaw <alan@tableflip.io>",
