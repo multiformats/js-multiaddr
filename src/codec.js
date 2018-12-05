@@ -1,7 +1,5 @@
 'use strict'
 
-const map = require('lodash.map')
-const filter = require('lodash.filter')
 const convert = require('./convert')
 const protocols = require('./protocols-table')
 const varint = require('varint')
@@ -63,7 +61,7 @@ function stringToStringTuples (str) {
 // [[str name, str addr]... ] -> string
 function stringTuplesToString (tuples) {
   const parts = []
-  map(tuples, function (tup) {
+  tuples.map(tup => {
     const proto = protoFromTuple(tup)
     parts.push(proto.name)
     if (tup.length > 1) {
@@ -76,7 +74,7 @@ function stringTuplesToString (tuples) {
 
 // [[str name, str addr]... ] -> [[int code, Buffer]... ]
 function stringTuplesToTuples (tuples) {
-  return map(tuples, function (tup) {
+  return tuples.map(tup => {
     if (!Array.isArray(tup)) {
       tup = [tup]
     }
@@ -90,7 +88,7 @@ function stringTuplesToTuples (tuples) {
 
 // [[int code, Buffer]... ] -> [[str name, str addr]... ]
 function tuplesToStringTuples (tuples) {
-  return map(tuples, function (tup) {
+  return tuples.map(tup => {
     const proto = protoFromTuple(tup)
     if (tup.length > 1) {
       return [proto.code, convert.toString(proto.code, tup[1])]
@@ -101,7 +99,7 @@ function tuplesToStringTuples (tuples) {
 
 // [[int code, Buffer ]... ] -> Buffer
 function tuplesToBuffer (tuples) {
-  return fromBuffer(Buffer.concat(map(tuples, function (tup) {
+  return fromBuffer(Buffer.concat(tuples.map(tup => {
     const proto = protoFromTuple(tup)
     let buf = Buffer.from(varint.encode(proto.code))
 
@@ -198,7 +196,7 @@ function isValidBuffer (buf) {
 }
 
 function cleanPath (str) {
-  return '/' + filter(str.trim().split('/')).join('/')
+  return '/' + str.trim().split('/').filter(a => a).join('/')
 }
 
 function ParseError (str) {

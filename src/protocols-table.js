@@ -1,7 +1,5 @@
 'use strict'
 
-const map = require('lodash.map')
-
 function Protocols (proto) {
   if (typeof (proto) === 'number') {
     if (Protocols.codes[proto]) {
@@ -58,7 +56,7 @@ Protocols.names = {}
 Protocols.codes = {}
 
 // populate tables
-map(Protocols.table, function (row) {
+Protocols.table.map(row => {
   const proto = p.apply(null, row)
   Protocols.codes[proto.code] = proto
   Protocols.names[proto.name] = proto
