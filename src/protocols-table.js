@@ -27,7 +27,7 @@ Protocols.V = V
 Protocols.table = [
   [4, 32, 'ip4'],
   [6, 16, 'tcp'],
-  [17, 16, 'udp'],
+  [273, 16, 'udp'],
   [33, 16, 'dccp'],
   [41, 128, 'ip6'],
   [54, V, 'dns4', 'resolvable'],
@@ -41,6 +41,7 @@ Protocols.table = [
   [421, Protocols.lengthPrefixedVarSize, 'p2p'],
   [480, 0, 'http'],
   [443, 0, 'https'],
+  [460, 0, 'quic'],
   [477, 0, 'ws'],
   [478, 0, 'wss'],
   [479, 0, 'p2p-websocket-star'],

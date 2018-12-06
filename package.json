@@ -1,6 +1,6 @@
 {
   "name": "multiaddr",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "leadMaintainer": "Victor Bjelkholm <victorbjelkholm@gmail.com>",
   "main": "src/index.js",
@@ -42,7 +42,7 @@
     "xtend": "^4.0.1"
   },
   "devDependencies": {
-    "aegir": "^13.1.0",
+    "aegir": "^17.1.1",
     "buffer-loader": "0.0.1",
     "chai": "^4.1.2",
     "dirty-chai": "^2.0.1",
@@ -57,9 +57,11 @@
     "Juan Batiz-Benet <juan@benet.ai>",
     "Lars Gierth <lgierth@users.noreply.github.com>",
     "Maciej Krüger <mkg20001@gmail.com>",
+    "Marcin Rataj <lidel@lidel.org>",
     "Richard Littauer <richard.littauer@gmail.com>",
     "Sid Harder <sideharder@gmail.com>",
     "Stephen Whitmore <stephen.whitmore@gmail.com>",
+    "Steven Allen <steven@stebalien.com>",
     "Trond Arne Bråthen <tabrath@gmail.com>",
     "Vasco Santos <vasco.santos@moxy.studio>",
     "Victor Bjelkholm <victorbjelkholm@gmail.com>",
@@ -67,6 +69,7 @@
     "Yahya <ya7yaz@gmail.com>",
     "Zane Starr <zcstarr@gmail.com>",
     "greenkeeper[bot] <greenkeeper[bot]@users.noreply.github.com>",
-    "npm-to-cdn-bot (by Forbes Lindesay) <npmcdn-to-unpkg-bot@users.noreply.github.com>"
+    "npm-to-cdn-bot (by Forbes Lindesay) <npmcdn-to-unpkg-bot@users.noreply.github.com>",
+    "victorbjelkholm <victor@protocol.ai>"
   ]
 }

@@ -1,3 +1,41 @@
+<a name="6.0.0"></a>
+# [6.0.0](https://github.com/multiformats/js-multiaddr/compare/v5.0.0...v6.0.0) (2018-11-28)
+
+
+### Bug Fixes
+
+* change UDP code ([e8c3d7d](https://github.com/multiformats/js-multiaddr/commit/e8c3d7d)), closes [#17](https://github.com/multiformats/js-multiaddr/issues/17)
+
+
+### Features
+
+* add support for quic addresses ([9238d0d](https://github.com/multiformats/js-multiaddr/commit/9238d0d))
+
+
+### BREAKING CHANGES
+
+* The UDP code was changed in the multicodec table
+
+The UDP code is now `273` instead of `17`. For the full discussion of this change
+please see https://github.com/multiformats/multicodec/pull/16.
+
+
+
+<a name="5.0.2"></a>
+## [5.0.2](https://github.com/multiformats/js-multiaddr/compare/v5.0.1...v5.0.2) (2018-11-05)
+
+
+
+<a name="5.0.1"></a>
+## [5.0.1](https://github.com/multiformats/js-multiaddr/compare/v5.0.0...v5.0.1) (2018-11-05)
+
+
+### Features
+
+* add support for quic addresses ([9238d0d](https://github.com/multiformats/js-multiaddr/commit/9238d0d))
+
+
+
 <a name="5.0.0"></a>
 # [5.0.0](https://github.com/multiformats/js-multiaddr/compare/v4.0.0...v5.0.0) (2018-04-24)
 

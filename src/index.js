@@ -372,7 +372,7 @@ Multiaddr.prototype.isThinWaistAddress = function isThinWaistAddress (addr) {
   if (protos[0].code !== 4 && protos[0].code !== 41) {
     return false
   }
-  if (protos[1].code !== 6 && protos[1].code !== 17) {
+  if (protos[1].code !== 6 && protos[1].code !== 273) {
     return false
   }
   return true
