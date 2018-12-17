@@ -36,9 +36,11 @@ Protocols.table = [
   [132, 16, 'sctp'],
   // all of the below use varint for size
   [302, 0, 'utp'],
-  [421, Protocols.lengthPrefixedVarSize, 'ipfs'],
-  // preferred name for 421 (added below ipfs, p2p takes precedence during table population)
   [421, Protocols.lengthPrefixedVarSize, 'p2p'],
+  // preferred name for 421 (added below p2p, ipfs takes precedence during table population)
+  // this enables us to support p2p but allow for better backwards support of ipfs multiaddrs
+  // while migration happens to using p2p as the default
+  [421, Protocols.lengthPrefixedVarSize, 'ipfs'],
   [480, 0, 'http'],
   [443, 0, 'https'],
   [460, 0, 'quic'],
