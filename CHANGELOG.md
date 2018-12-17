@@ -1,3 +1,13 @@
+<a name="6.0.2"></a>
+## [6.0.2](https://github.com/multiformats/js-multiaddr/compare/v6.0.1...v6.0.2) (2018-12-17)
+
+
+### Bug Fixes
+
+* make ipfs the default 421 proto name ([#77](https://github.com/multiformats/js-multiaddr/issues/77)) ([bab6edb](https://github.com/multiformats/js-multiaddr/commit/bab6edb))
+
+
+
 <a name="6.0.1"></a>
 ## [6.0.1](https://github.com/multiformats/js-multiaddr/compare/v6.0.0...v6.0.1) (2018-12-17)
 
