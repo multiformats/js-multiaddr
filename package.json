@@ -39,7 +39,7 @@
     "varint": "^5.0.0"
   },
   "devDependencies": {
-    "aegir": "ipfs/aegir#fix/babel",
+    "aegir": "^18.0.2",
     "bundlesize": "~0.17.0",
     "chai": "^4.1.2",
     "dirty-chai": "^2.0.1"
