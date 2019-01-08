@@ -39,9 +39,9 @@
     "varint": "^5.0.0"
   },
   "devDependencies": {
-    "aegir": "^18.0.2",
+    "aegir": "^18.0.3",
     "bundlesize": "~0.17.0",
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "dirty-chai": "^2.0.1"
   },
   "contributors": [
