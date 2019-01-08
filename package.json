@@ -1,6 +1,6 @@
 {
   "name": "multiaddr",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "leadMaintainer": "Victor Bjelkholm <victorbjelkholm@gmail.com>",
   "main": "src/index.js",
@@ -50,6 +50,7 @@
     "Diogo Silva <fsdiogo@gmail.com>",
     "Dmitriy Ryajov <dryajov@gmail.com>",
     "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
+    "Hugo Dias <hugomrdias@gmail.com>",
     "Jacob Heun <jacobheun@gmail.com>",
     "Juan Batiz-Benet <juan@benet.ai>",
     "Lars Gierth <lgierth@users.noreply.github.com>",
