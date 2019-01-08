@@ -1,3 +1,16 @@
+<a name="6.0.3"></a>
+## [6.0.3](https://github.com/multiformats/js-multiaddr/compare/v6.0.2...v6.0.3) (2019-01-08)
+
+
+### Bug Fixes
+
+* clean up repo and bundle size reduction ([136315a](https://github.com/multiformats/js-multiaddr/commit/136315a))
+* increase bundle size limit ([b7fc015](https://github.com/multiformats/js-multiaddr/commit/b7fc015))
+* remove unused deps ([3d8cb42](https://github.com/multiformats/js-multiaddr/commit/3d8cb42))
+* update max bundle size ([116f227](https://github.com/multiformats/js-multiaddr/commit/116f227))
+
+
+
 <a name="6.0.2"></a>
 ## [6.0.2](https://github.com/multiformats/js-multiaddr/compare/v6.0.1...v6.0.2) (2018-12-17)
 
