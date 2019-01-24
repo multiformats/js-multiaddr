@@ -26,12 +26,7 @@ js-multiaddr
     - [Browser: Browserify, Webpack, other bundlers](#browser-browserify-webpack-other-bundlers)
     - [Browser: `<script>` Tag](#browser-script-tag)
 - [Usage](#usage)
-- [API](#api)
-  - [Create](#create)
-  - [Protocols](#protocols)
-  - [Node-Friendly Addresses](#node-friendly-addresses)
-  - [En/decapsulate](#endecapsulate)
-  - [Tunneling](#tunneling)
+- [API](#api) - https://multiformats.github.io/js-multiaddr/
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
