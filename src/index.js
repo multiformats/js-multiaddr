@@ -6,8 +6,6 @@ const varint = require('varint')
 const bs58 = require('bs58')
 const withIs = require('class-is')
 
-const NotImplemented = new Error('Sorry, Not Implemented Yet.')
-
 /**
  * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
  * a Buffer, String or another Multiaddr instance
@@ -369,25 +367,6 @@ Multiaddr.prototype.isThinWaistAddress = function isThinWaistAddress (addr) {
     return false
   }
   return true
-}
-
-// TODO rename this to something else than "stupid string"
-/**
- * Converts a "stupid string" into a Multiaddr.
- *
- * Stupid string format:
- * ```
- * <proto><IPv>://<IP Addr>[:<proto port>]
- * udp4://1.2.3.4:5678
- * ```
- *
- * @param {String} [str] - String in the "stupid" format
- * @throws {NotImplemented}
- * @returns {undefined}
- * @todo Not Implemented yet
- */
-Multiaddr.prototype.fromStupidString = function fromStupidString (str) {
-  throw NotImplemented
 }
 
 /**

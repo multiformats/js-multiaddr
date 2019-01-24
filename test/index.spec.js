@@ -642,12 +642,6 @@ describe('helpers', () => {
     })
   })
 
-  describe('.fromStupidString', () => {
-    it('parses an address in the format <proto><IPv>://<IP Addr>[:<proto port>]', () => {
-      expect(() => multiaddr('/').fromStupidString()).to.throw(/Not Implemented/)
-    })
-  })
-
   describe('.getPeerId should parse id from multiaddr', () => {
     it('parses extracts the peer Id from a multiaddr, p2p', () => {
       expect(
