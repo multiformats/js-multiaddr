@@ -2,7 +2,7 @@
   "name": "multiaddr",
   "version": "6.0.4",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
-  "leadMaintainer": "Victor Bjelkholm <victorbjelkholm@gmail.com>",
+  "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "main": "src/index.js",
   "scripts": {
     "lint": "aegir lint",
