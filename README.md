@@ -14,7 +14,7 @@ js-multiaddr
 
 ## Lead Maintainer
 
-[Victor Bjelkholm](https://github.com/VictorBjelkholm)
+[Jacob Heun](https://github.com/jacobheun)
 
 ## Table of Contents
 
