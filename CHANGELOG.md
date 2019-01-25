@@ -1,3 +1,13 @@
+<a name="6.0.4"></a>
+## [6.0.4](https://github.com/multiformats/js-multiaddr/compare/v6.0.3...v6.0.4) (2019-01-25)
+
+
+### Features
+
+* add /p2p-stardust ([#78](https://github.com/multiformats/js-multiaddr/issues/78)) ([54e6837](https://github.com/multiformats/js-multiaddr/commit/54e6837)), closes [libp2p/js-libp2p-websocket-star#70](https://github.com/libp2p/js-libp2p-websocket-star/issues/70)
+
+
+
 <a name="6.0.3"></a>
 ## [6.0.3](https://github.com/multiformats/js-multiaddr/compare/v6.0.2...v6.0.3) (2019-01-08)
 
