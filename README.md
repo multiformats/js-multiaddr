@@ -7,7 +7,7 @@ js-multiaddr
 [![Dependency Status](https://david-dm.org/multiformats/js-multiaddr.svg?style=flat-square)](https://david-dm.org/multiformats/js-multiaddr)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 [![](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-[![Build Status](https://img.shields.io/jenkins/s/https/ci.ipfs.team/job/multiformats/job/js-multiaddr/job/master.svg?style=flat-square)](https://ci.ipfs.team/job/multiformats/job/js-multiaddr/job/master)
+[![](https://img.shields.io/travis/multiformats/js-multiaddr.svg?style=flat-square)](https://travis-ci.com/multiformats/js-multiaddr)
 [![codecov](https://img.shields.io/codecov/c/github/multiformats/js-multiaddr.svg?style=flat-square)](https://codecov.io/gh/multiformats/js-multiaddr)
 
 > JavaScript implementation of [multiaddr](https://github.com/multiformats/multiaddr).

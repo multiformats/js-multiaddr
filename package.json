@@ -13,8 +13,6 @@
     "release": "aegir release",
     "release-minor": "aegir release --type minor",
     "release-major": "aegir release --type major",
-    "coverage": "aegir coverage",
-    "coverage-publish": "aegir coverage publish",
     "docs": "aegir docs",
     "size": "bundlesize -f dist/index.min.js -s 14kB"
   },
@@ -39,7 +37,7 @@
     "varint": "^5.0.0"
   },
   "devDependencies": {
-    "aegir": "^18.0.3",
+    "aegir": "^18.2.0",
     "bundlesize": "~0.17.0",
     "chai": "^4.2.0",
     "dirty-chai": "^2.0.1"
