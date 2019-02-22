@@ -40,7 +40,7 @@ Protocols.table = [
   [290, 0, 'p2p-circuit'],
   [301, 0, 'udt'],
   [302, 0, 'utp'],
-  [400, V, 'unix'],
+  [400, V, 'unix', false, 'path'],
   // `p2p` is the preferred name for 421
   [421, V, 'p2p'],
   // `ipfs` has been added after `p2p` so that it is used by default.
@@ -71,12 +71,13 @@ Protocols.table.map(row => {
 
 Protocols.object = p
 
-function p (code, size, name, resolvable) {
+function p (code, size, name, resolvable, path) {
   return {
     code: code,
     size: size,
     name: name,
-    resolvable: Boolean(resolvable)
+    resolvable: Boolean(resolvable),
+    path: Boolean(path)
   }
 }
 
