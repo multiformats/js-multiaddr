@@ -275,7 +275,6 @@ Multiaddr.prototype.getPath = function getPath () {
         return true
       }
     })[0][1]
-
   } catch (e) {
     path = null
   }
