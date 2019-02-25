@@ -260,8 +260,22 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('ip4 + tcp + unix', () => {
+    const str = '/ip4/127.0.0.1/tcp/80/unix/a/b/c/d/e/f'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it('ip6 + tcp + http', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/http'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('ip6 + tcp + unix', () => {
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/unix/a/b/c/d/e/f'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
@@ -321,6 +335,13 @@ describe('variants', () => {
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
+  })
+
+  it('unix', () => {
+    const str = '/unix/a/b/c/d/e'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
   })
 
   it('p2p', () => {
@@ -413,11 +434,13 @@ describe('helpers', () => {
         .to.eql([{
           code: 4,
           name: 'ip4',
+          path: false,
           size: 32,
           resolvable: false
         }, {
           code: 302,
           name: 'utp',
+          path: false,
           size: 0,
           resolvable: false
         }])
@@ -429,16 +452,19 @@ describe('helpers', () => {
       ).to.be.eql([{
         code: 4,
         name: 'ip4',
+        path: false,
         size: 32,
         resolvable: false
       }, {
         code: 302,
         name: 'utp',
+        path: false,
         size: 0,
         resolvable: false
       }, {
         code: 421,
         name: 'ipfs',
+        path: false,
         size: -1,
         resolvable: false
       }])
@@ -450,16 +476,43 @@ describe('helpers', () => {
       ).to.be.eql([{
         code: 4,
         name: 'ip4',
+        path: false,
         size: 32,
         resolvable: false
       }, {
         code: 302,
         name: 'utp',
+        path: false,
         size: 0,
         resolvable: false
       }, {
         code: 421,
         name: 'ipfs',
+        path: false,
+        size: -1,
+        resolvable: false
+      }])
+    })
+
+    it('works with unix', () => {
+      expect(
+        multiaddr('/ip4/0.0.0.0/tcp/8000/unix/tmp/p2p.sock').protos()
+      ).to.be.eql([{
+        code: 4,
+        name: 'ip4',
+        path: false,
+        size: 32,
+        resolvable: false
+      }, {
+        code: 6,
+        name: 'tcp',
+        path: false,
+        size: 16,
+        resolvable: false
+      }, {
+        code: 400,
+        name: 'unix',
+        path: true,
         size: -1,
         resolvable: false
       }])
@@ -663,6 +716,26 @@ describe('helpers', () => {
     })
   })
 
+  describe('.getPath', () => {
+    it('should return a path for unix', () => {
+      expect(
+        multiaddr('/unix/tmp/p2p.sock').getPath()
+      ).to.eql('/tmp/p2p.sock')
+    })
+
+    it('should return a path for unix when other protos exist', () => {
+      expect(
+        multiaddr('/ip4/0.0.0.0/tcp/1234/unix/tmp/p2p.sock').getPath()
+      ).to.eql('/tmp/p2p.sock')
+    })
+
+    it('should not return a path when no path proto exists', () => {
+      expect(
+        multiaddr('/ip4/0.0.0.0/tcp/1234/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPath()
+      ).to.eql(null)
+    })
+  })
+
   describe('multiaddr.isMultiaddr', () => {
     it('handles different inputs', () => {
       expect(multiaddr.isMultiaddr(multiaddr('/'))).to.be.eql(true)
@@ -676,6 +749,12 @@ describe('helpers', () => {
   describe('resolvable multiaddrs', () => {
     describe('.isName', () => {
       it('valid name dns', () => {
+        const str = '/dns/ipfs.io'
+        const addr = multiaddr(str)
+        expect(multiaddr.isName(addr)).to.equal(true)
+      })
+
+      it('valid name dnsaddr', () => {
         const str = '/dnsaddr/ipfs.io'
         const addr = multiaddr(str)
         expect(multiaddr.isName(addr)).to.equal(true)

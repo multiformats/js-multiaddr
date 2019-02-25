@@ -25,32 +25,38 @@ Protocols.V = V
 Protocols.table = [
   [4, 32, 'ip4'],
   [6, 16, 'tcp'],
-  [273, 16, 'udp'],
   [33, 16, 'dccp'],
   [41, 128, 'ip6'],
+  [42, V, 'ip6zone'],
+  [53, V, 'dns', 'resolvable'],
   [54, V, 'dns4', 'resolvable'],
   [55, V, 'dns6', 'resolvable'],
   [56, V, 'dnsaddr', 'resolvable'],
   [132, 16, 'sctp'],
-  // all of the below use varint for size
+  [273, 16, 'udp'],
+  [275, 0, 'p2p-webrtc-star'],
+  [276, 0, 'p2p-webrtc-direct'],
+  [277, 0, 'p2p-stardust'],
+  [290, 0, 'p2p-circuit'],
+  [301, 0, 'udt'],
   [302, 0, 'utp'],
+  [400, V, 'unix', false, 'path'],
   // `p2p` is the preferred name for 421
-  [421, Protocols.lengthPrefixedVarSize, 'p2p'],
+  [421, V, 'p2p'],
   // `ipfs` has been added after `p2p` so that it is used by default.
   // The reason for this is to provide better backwards support for
   // code bases that do not yet support the `p2p` proto name. Eventually
   // `p2p` should become the default.
-  [421, Protocols.lengthPrefixedVarSize, 'ipfs'],
-  [480, 0, 'http'],
+  [421, V, 'ipfs'],
   [443, 0, 'https'],
+  [444, 96, 'onion'],
+  [445, 296, 'onion3'],
+  [446, V, 'garlic64'],
   [460, 0, 'quic'],
   [477, 0, 'ws'],
   [478, 0, 'wss'],
   [479, 0, 'p2p-websocket-star'],
-  [277, 0, 'p2p-stardust'],
-  [275, 0, 'p2p-webrtc-star'],
-  [276, 0, 'p2p-webrtc-direct'],
-  [290, 0, 'p2p-circuit']
+  [480, 0, 'http']
 ]
 
 Protocols.names = {}
@@ -65,12 +71,13 @@ Protocols.table.map(row => {
 
 Protocols.object = p
 
-function p (code, size, name, resolvable) {
+function p (code, size, name, resolvable, path) {
   return {
     code: code,
     size: size,
     name: name,
-    resolvable: Boolean(resolvable)
+    resolvable: Boolean(resolvable),
+    path: Boolean(path)
   }
 }
 

@@ -52,6 +52,18 @@ function stringToStringTuples (str) {
       throw ParseError('invalid address: ' + str)
     }
 
+    // if it's a path proto, take the rest
+    if (proto.path) {
+      tuples.push([
+        part,
+        // TODO: should we need to check each path part to see if it's a proto?
+        // This would allow for other protocols to be added after a unix path,
+        // however it would have issues if the path had a protocol name in the path
+        cleanPath(parts.slice(p).join('/'))
+      ])
+      break
+    }
+
     tuples.push([part, parts[p]])
   }
 
@@ -69,7 +81,7 @@ function stringTuplesToString (tuples) {
     }
   })
 
-  return '/' + parts.join('/')
+  return cleanPath(parts.join('/'))
 }
 
 // [[str name, str addr]... ] -> [[int code, Buffer]... ]

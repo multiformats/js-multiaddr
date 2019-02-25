@@ -256,6 +256,33 @@ Multiaddr.prototype.getPeerId = function getPeerId () {
 }
 
 /**
+ * Extract the path if the multiaddr contains one
+ *
+ * @return {String|null} path - The path of the multiaddr, or null if no path protocol is present
+ * @example
+ * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock')
+ * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock>
+ *
+ * // should return utf8 string or null if the id is missing or invalid
+ * const path = mh1.getPath()
+ */
+Multiaddr.prototype.getPath = function getPath () {
+  let path = null
+  try {
+    path = this.stringTuples().filter((tuple) => {
+      const proto = protocols(tuple[0])
+      if (proto.path) {
+        return true
+      }
+    })[0][1]
+  } catch (e) {
+    path = null
+  }
+
+  return path
+}
+
+/**
  * Checks if two Multiaddrs are the same
  *
  * @param {Multiaddr} addr
