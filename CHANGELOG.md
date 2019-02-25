@@ -1,3 +1,13 @@
+<a name="6.0.5"></a>
+## [6.0.5](https://github.com/multiformats/js-multiaddr/compare/v6.0.4...v6.0.5) (2019-02-25)
+
+
+### Features
+
+* add unix protocol support and update protocol table ([#84](https://github.com/multiformats/js-multiaddr/issues/84)) ([d4d3d9b](https://github.com/multiformats/js-multiaddr/commit/d4d3d9b))
+
+
+
 <a name="6.0.4"></a>
 ## [6.0.4](https://github.com/multiformats/js-multiaddr/compare/v6.0.3...v6.0.4) (2019-01-25)
 
