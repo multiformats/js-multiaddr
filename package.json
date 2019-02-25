@@ -1,6 +1,6 @@
 {
   "name": "multiaddr",
-  "version": "6.0.4",
+  "version": "6.0.5",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "main": "src/index.js",
@@ -54,6 +54,7 @@
     "Lars Gierth <lgierth@users.noreply.github.com>",
     "Maciej Krüger <mkg20001@gmail.com>",
     "Marcin Rataj <lidel@lidel.org>",
+    "Oli Evans <oli@tableflip.io>",
     "Richard Littauer <richard.littauer@gmail.com>",
     "Sid Harder <sideharder@gmail.com>",
     "Stephen Whitmore <stephen.whitmore@gmail.com>",
