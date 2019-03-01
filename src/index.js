@@ -64,7 +64,7 @@ Multiaddr.prototype.toString = function toString () {
  * JSON.stringify(Multiaddr('/ip4/127.0.0.1/tcp/4001'))
  * // '/ip4/127.0.0.1/tcp/4001'
  */
-Multiaddr.prototype.toJSON = Multiaddr.prototype.toString;
+Multiaddr.prototype.toJSON = Multiaddr.prototype.toString
 
 /**
  * Returns Multiaddr as a convinient options object to be used with net.createConnection
