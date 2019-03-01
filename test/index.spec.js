@@ -36,6 +36,11 @@ describe('construction', () => {
     expect(multiaddr(udpAddr).buffer).to.deep.equal(udpAddr.buffer)
   })
 
+  it('reconstruct with JSON', () => {
+    expect(multiaddr(JSON.parse(JSON.stringify(udpAddr))).buffer === udpAddr.buffer).to.equal(false)
+    expect(multiaddr(JSON.parse(JSON.stringify(udpAddr))).buffer).to.deep.equal(udpAddr.buffer)
+  })
+
   it('empty construct still works', () => {
     expect(multiaddr('').toString()).to.equal('/')
   })
