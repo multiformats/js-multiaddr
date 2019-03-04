@@ -1,3 +1,13 @@
+<a name="6.0.6"></a>
+## [6.0.6](https://github.com/multiformats/js-multiaddr/compare/v6.0.5...v6.0.6) (2019-03-04)
+
+
+### Bug Fixes
+
+* json round trip works as expected ([#85](https://github.com/multiformats/js-multiaddr/issues/85)) ([1977874](https://github.com/multiformats/js-multiaddr/commit/1977874))
+
+
+
 <a name="6.0.5"></a>
 ## [6.0.5](https://github.com/multiformats/js-multiaddr/compare/v6.0.4...v6.0.5) (2019-02-25)
 
