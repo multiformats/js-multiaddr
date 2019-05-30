@@ -80,7 +80,7 @@ Multiaddr.prototype.toOptions = function toOptions () {
   opts.family = parsed[1] === 'ip4' ? 'ipv4' : 'ipv6'
   opts.host = parsed[2]
   opts.transport = parsed[3]
-  opts.port = parsed[4]
+  opts.port = parseInt(parsed[4])
   return opts
 }
 
@@ -343,7 +343,7 @@ Multiaddr.prototype.nodeAddress = function nodeAddress () {
   return {
     family: (codes[0] === 41 || codes[0] === 55) ? 6 : 4,
     address: parts[1], // ip addr
-    port: parts[3] // tcp or udp port
+    port: parseInt(parts[3]) // tcp or udp port
   }
 }
 
