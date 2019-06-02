@@ -421,7 +421,7 @@ describe('helpers', () => {
           family: 'ipv4',
           host: '0.0.0.0',
           transport: 'tcp',
-          port: '1234'
+          port: 1234
         })
     })
   })
@@ -585,7 +585,7 @@ describe('helpers', () => {
       ).to.be.eql({
         address: '192.168.0.1',
         family: 4,
-        port: '1234'
+        port: 1234
       })
     })
 
@@ -595,7 +595,7 @@ describe('helpers', () => {
       ).to.be.eql({
         address: 'wss0.bootstrap.libp2p.io',
         family: 4,
-        port: '443'
+        port: 443
       })
     })
 

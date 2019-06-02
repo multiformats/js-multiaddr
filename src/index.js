@@ -69,10 +69,10 @@ Multiaddr.prototype.toJSON = Multiaddr.prototype.toString
 /**
  * Returns Multiaddr as a convinient options object to be used with net.createConnection
  *
- * @returns {{family: String, host: String, transport: String, port: String}}
+ * @returns {{family: String, host: String, transport: String, port: Number}}
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001').toOptions()
- * // { family: 'ipv4', host: '127.0.0.1', transport: 'tcp', port: '4001' }
+ * // { family: 'ipv4', host: '127.0.0.1', transport: 'tcp', port: 4001 }
  */
 Multiaddr.prototype.toOptions = function toOptions () {
   const opts = {}
@@ -321,7 +321,7 @@ Multiaddr.prototype.equals = function equals (addr) {
  *
  * Has to be a ThinWaist Address, otherwise throws error
  *
- * @returns {{family: String, address: String, port: String}}
+ * @returns {{family: String, address: String, port: Number}}
  * @throws {Error} Throws error if Multiaddr is not a Thin Waist address
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001').nodeAddress()
