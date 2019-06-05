@@ -40,9 +40,9 @@ Convert.toString = function convertToString (proto, buf) {
 
     case 421: // ipfs
       return buf2mh(buf)
-    case 444: //onion
+    case 444: // onion
       return buf2onion(buf)
-    case 445: //onion3
+    case 445: // onion3
       return buf2onion(buf)
     default:
       return buf.toString('hex') // no clue. convert to hex
@@ -72,9 +72,9 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
 
     case 421: // ipfs
       return mh2buf(str)
-    case 444: //onion
+    case 444: // onion
       return onion2buf(str)
-    case 445: //onion3
+    case 445: // onion3
       return onion32buf(str)
     default:
       return Buffer.from(str, 'hex') // no clue. convert from hex
@@ -141,48 +141,47 @@ function buf2mh (buf) {
   return bs58.encode(address)
 }
 
+function onion2buf (str) {
+  const addr = str.split(':')
+  if (addr.length !== 2) {
+    throw new Error('failed to parse onion addr: ' + addr + ' does not contain a port number')
+  }
+  if (addr[0].length !== 16) {
+    throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion address.')
+  }
+  const buf = Buffer.from(base32.decode.asBytes(addr[0].toUpperCase()))
 
-function onion2buf(str) {
-    const addr = str.split(':')
-    if (addr.length !== 2) {
-        throw new Error('failed to parse onion addr: ' + addr + ' does not contain a port number')
-    }
-    if (addr[0].length !== 16) {
-        throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion address.')
-    }
-    const buf = Buffer.from(base32.decode.asBytes(addr[0].toUpperCase()))
-
-    //onion port number
-    const port = parseInt(addr[1], 10);
-    if (port < 1 || port > 65536) {
-        throw new Error("Port number is not in range(1, 65536)")
-    }
-    const portBuf = port2buf(port)
-    return Buffer.concat([buf, portBuf])
+  // onion port number
+  const port = parseInt(addr[1], 10)
+  if (port < 1 || port > 65536) {
+    throw new Error('Port number is not in range(1, 65536)')
+  }
+  const portBuf = port2buf(port)
+  return Buffer.concat([buf, portBuf])
 }
 
-function onion32buf(str) {
+function onion32buf (str) {
     const addr = str.split(':')
     if (addr.length !== 2) {
-        throw new Error('failed to parse onion addr: ' + addr + ' does not contain a port number')
+    throw new Error('failed to parse onion addr: ' + addr + ' does not contain a port number')
     }
     if (addr[0].length !== 56) {
-        throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion3 address.')
+    throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion3 address.')
     }
     const buf = Buffer.from(base32.decode.asBytes(addr[0].toUpperCase()))
 
     //onion port number
-    const port = parseInt(addr[1], 10);
+    const port = parseInt(addr[1], 10)
     if (port < 1 || port > 65536) {
-        throw new Error("Port number is not in range(1, 65536)")
+    throw new Error('Port number is not in range(1, 65536)')
     }
     const portBuf = port2buf(port)
     return Buffer.concat([buf, portBuf])
 }
 
-function buf2onion(buf) {
-    const addr_bytes = buf.slice(0,buf.length-2)
-    const port_bytes = buf.slice(buf.length-2)
+function buf2onion (buf) {
+    const addr_bytes = buf.slice(0,buf.length - 2)
+    const port_bytes = buf.slice(buf.length - 2)
     const addr = base32.encode(addr_bytes).toString('ascii').toLowerCase()
     const port = buf2port(port_bytes)
     return addr + ':' + port
