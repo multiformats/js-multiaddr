@@ -1,3 +1,13 @@
+<a name="6.1.0"></a>
+# [6.1.0](https://github.com/multiformats/js-multiaddr/compare/v6.0.6...v6.1.0) (2019-06-05)
+
+
+### Features
+
+* add onion and onion3 support ([#89](https://github.com/multiformats/js-multiaddr/issues/89)) ([b606df3](https://github.com/multiformats/js-multiaddr/commit/b606df3))
+
+
+
 <a name="6.0.6"></a>
 ## [6.0.6](https://github.com/multiformats/js-multiaddr/compare/v6.0.5...v6.0.6) (2019-03-04)
 
