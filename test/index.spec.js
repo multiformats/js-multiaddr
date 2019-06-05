@@ -363,6 +363,20 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('onion', () => {
+    const str = '/onion/timaq4ygg2iegci7:1234'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('onion3', () => {
+    const str = '/onion3/vww6ybal4bd7szmgncyruucpgfkqahzddi37ktceo3ah7ngmcopnpyyd:1234'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it('p2p-circuit', () => {
     const str = '/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
