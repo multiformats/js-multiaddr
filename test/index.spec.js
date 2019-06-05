@@ -370,11 +370,41 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('onion bad length', () => {
+    const str = '/onion/timaq4ygg2iegci:80'
+    expect(() => multiaddr(str)).to.throw()
+  })
+
+  it('onion bad port', () => {
+    const str = '/onion/timaq4ygg2iegci7:-1'
+    expect(() => multiaddr(str)).to.throw()
+  })
+
+  it('onion no port', () => {
+    const str = '/onion/timaq4ygg2iegci7'
+    expect(() => multiaddr(str)).to.throw()
+  })
+
   it('onion3', () => {
     const str = '/onion3/vww6ybal4bd7szmgncyruucpgfkqahzddi37ktceo3ah7ngmcopnpyyd:1234'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
+  })
+
+  it('onion3 bad length', () => {
+    const str = '/onion3/vww6ybal4bd7szmgncyruucpgfkqahzddi37ktceo3ah7ngmcopyyd:1234'
+    expect(() => multiaddr(str)).to.throw()
+  })
+
+  it('onion3 bad port', () => {
+    const str = '/onion3/vww6ybal4bd7szmgncyruucpgfkqahzddi37ktceo3ah7ngmcopnpyyd:-1'
+    expect(() => multiaddr(str)).to.throw()
+  })
+
+  it('onion3 no port', () => {
+    const str = '/onion3/vww6ybal4bd7szmgncyruucpgfkqahzddi37ktceo3ah7ngmcopnpyyd'
+    expect(() => multiaddr(str)).to.throw()
   })
 
   it('p2p-circuit', () => {
