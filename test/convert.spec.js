@@ -59,7 +59,7 @@ describe('convert', () => {
   describe('.toBuffer', () => {
     it('defaults to hex conversion', () => {
       expect(
-        convert.toBuffer('ws', 'c0a80001')
+        convert.toBuffer('p2p-webrtc-star', 'c0a80001')
       ).to.eql(
         Buffer.from([192, 168, 0, 1])
       )
@@ -78,7 +78,7 @@ describe('convert', () => {
 
     it('defaults to hex conversion', () => {
       expect(
-        convert.toString('ws', Buffer.from([192, 168, 0, 1]))
+        convert.toString('p2p-webrtc-star', Buffer.from([192, 168, 0, 1]))
       ).to.eql(
         'c0a80001'
       )

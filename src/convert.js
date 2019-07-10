@@ -36,6 +36,8 @@ Convert.toString = function convertToString (proto, buf) {
     case 55: // dns6
     case 56: // dnsaddr
     case 400: // unix
+    case 477: // websocket
+    case 478: // websocket secure
       return buf2str(buf)
 
     case 421: // ipfs
@@ -68,6 +70,8 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
     case 55: // dns6
     case 56: // dnsaddr
     case 400: // unix
+    case 477: // websocket
+    case 478: // websocket secure
       return str2buf(str)
 
     case 421: // ipfs

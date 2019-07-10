@@ -127,7 +127,7 @@ describe('manipulation', () => {
     const ipfsAddr = multiaddr('/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
     const ip6Addr = multiaddr('/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095')
     const tcpAddr = multiaddr('/tcp/8000')
-    const webAddr = multiaddr('/ws')
+    const webAddr = multiaddr('/ws/libp2pEndpoint')
 
     expect(
       multiaddr('/')
@@ -301,28 +301,28 @@ describe('variants', () => {
   })
 
   it('ip4 + tcp + websockets', () => {
-    const str = '/ip4/127.0.0.1/tcp/8000/ws'
+    const str = '/ip4/127.0.0.1/tcp/8000/ws/libp2pEndpoint'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + tcp + websockets', () => {
-    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws'
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/libp2pEndpoint'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + tcp + websockets + ipfs', () => {
-    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/libp2pEndpoint/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + tcp + websockets + p2p', () => {
-    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/libp2pEndpoint/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
@@ -429,14 +429,14 @@ describe('variants', () => {
   })
 
   it('p2p-webrtc-star', () => {
-    const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const str = '/ip4/127.0.0.1/tcp/9090/ws/meetPoint/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
   })
 
   it('p2p-webrtc-star ipfs', () => {
-    const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-webrtc-star/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const str = '/ip4/127.0.0.1/tcp/9090/ws/meetPoint/p2p-webrtc-star/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
@@ -450,7 +450,7 @@ describe('variants', () => {
   })
 
   it('p2p-websocket-star', () => {
-    const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-websocket-star'
+    const str = '/ip4/127.0.0.1/tcp/9090/ws/meetPoint/p2p-websocket-star'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
