@@ -293,6 +293,41 @@ Multiaddr.prototype.getPath = function getPath () {
 }
 
 /**
+ * Extract the value of a protocol.
+ *
+ * @param {code} code
+ * @return {[]|null} Value - If the value doesn't have a params return null.
+ * @example
+ * const mh = Multiaddr('/ip4/8.8.8.8/tcp/1080/ws/findMeHere/p2p-webrtc-star')
+ *
+ * // should return a list of the asked values in order finded in the Multiaddr.
+ * mh.getValue(Multiaddr.protocols.names.ws.code)
+ * // ["findMeHere"]
+ *
+ * // should return an empty list if the asked protocol isn't present.
+ * mh.getValue(Multiaddr.protocols.names.udp.code)
+ * // []
+ *
+ * // should return null if the asked value havn't any value or isn't existing.
+ * mh.getValue(Multiaddr.protocols.names["p2p-webrtc-star"].code)
+ * // null
+ */
+Multiaddr.prototype.getValue = function getValue (code) {
+  let proto = Multiaddr.protocols.codes[code]
+  if (proto === 'undefined' || proto.size === 0) {
+    return null
+  }
+  let value = []
+  this.stringTuples().forEach(tuple => {
+    if (tuple[0] === code) {
+      value.push(tuple[1])
+    }
+  })
+
+  return value
+}
+
+/**
  * Checks if two Multiaddrs are the same
  *
  * @param {Multiaddr} addr
