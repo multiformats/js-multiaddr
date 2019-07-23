@@ -79,7 +79,7 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
     case 445: // onion3
       return onion32buf(str)
     case 4096: // zeronet
-      return zeronet2buf(buf)
+      return zeronet2buf(str)
     default:
       return Buffer.from(str, 'hex') // no clue. convert from hex
   }
