@@ -455,6 +455,13 @@ describe('variants', () => {
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
+
+  it('zeronet', () => {
+    const str = '/zeronet/1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
 })
 
 describe('helpers', () => {

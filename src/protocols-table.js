@@ -56,7 +56,8 @@ Protocols.table = [
   [477, 0, 'ws'],
   [478, 0, 'wss'],
   [479, 0, 'p2p-websocket-star'],
-  [480, 0, 'http']
+  [480, 0, 'http'],
+  [4096, V, 'zeronet']
 ]
 
 Protocols.names = {}

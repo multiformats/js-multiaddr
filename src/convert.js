@@ -44,6 +44,8 @@ Convert.toString = function convertToString (proto, buf) {
       return buf2onion(buf)
     case 445: // onion3
       return buf2onion(buf)
+    case 4096: // zeronet
+      return buf2zeronet(buf)
     default:
       return buf.toString('hex') // no clue. convert to hex
   }
@@ -76,6 +78,8 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
       return onion2buf(str)
     case 445: // onion3
       return onion32buf(str)
+    case 4096: // zeronet
+      return zeronet2buf(buf)
     default:
       return Buffer.from(str, 'hex') // no clue. convert from hex
   }
@@ -185,4 +189,22 @@ function buf2onion (buf) {
   const addr = base32.encode(addrBytes).toString('ascii').toLowerCase()
   const port = buf2port(portBytes)
   return addr + ':' + port
+}
+
+function zeronet2buf (hash) {
+  const mh = Buffer.from(bs58.decode(hash))
+  const size = Buffer.from(varint.encode(mh.length))
+
+  return Buffer.concat([size, mh])
+}
+
+function buf2zeronet (buf) {
+  const size = varint.decode(buf)
+  const address = buf.slice(varint.decode.bytes)
+
+  if (address.length !== size) {
+    throw new Error('inconsistent lengths')
+  }
+
+  return bs58.encode(address)
 }
