@@ -251,11 +251,14 @@ Multiaddr.prototype.decapsulate = function decapsulate (addr) {
 Multiaddr.prototype.getPeerId = function getPeerId () {
   let b58str = null
   try {
-    b58str = this.stringTuples().filter((tuple) => {
+    const tuples = this.stringTuples().filter((tuple) => {
       if (tuple[0] === protocols.names.ipfs.code) {
         return true
       }
-    })[0][1]
+    })
+
+    // Get the last id
+    b58str = tuples.pop()[1]
 
     bs58.decode(b58str)
   } catch (e) {
