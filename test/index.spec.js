@@ -220,21 +220,21 @@ describe('variants', () => {
     const str = '/ip4/127.0.0.1/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
+    expect(addr.toString()).to.equal(str)
   })
 
   it('ip4 + ipfs', () => {
     const str = '/ip4/127.0.0.1/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str)
+    expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('ip6 + p2p', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
+    expect(addr.toString()).to.equal(str)
   })
 
   it.skip('ip4 + dccp', () => {})
@@ -318,28 +318,28 @@ describe('variants', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str)
+    expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('ip6 + tcp + websockets + p2p', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
+    expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + udp + quic + ipfs', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str)
+    expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('ip6 + udp + quic + p2p', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
+    expect(addr.toString()).to.equal(str)
   })
 
   it('unix', () => {
@@ -353,14 +353,14 @@ describe('variants', () => {
     const str = '/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
+    expect(addr.toString()).to.equal(str)
   })
 
   it('ipfs', () => {
     const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str)
+    expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('onion', () => {
@@ -411,35 +411,35 @@ describe('variants', () => {
     const str = '/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
+    expect(addr.toString()).to.equal(str)
   })
 
   it('p2p-circuit p2p', () => {
     const str = '/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/p2p-circuit'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
+    expect(addr.toString()).to.equal(str)
   })
 
   it('p2p-circuit ipfs', () => {
     const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/p2p-circuit'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str)
+    expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('p2p-webrtc-star', () => {
     const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str.replace('/p2p/', '/ipfs/'))
+    expect(addr.toString()).to.equal(str)
   })
 
   it('p2p-webrtc-star ipfs', () => {
     const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-webrtc-star/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
     expect(addr).to.have.property('buffer')
-    expect(addr.toString()).to.equal(str)
+    expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('p2p-webrtc-direct', () => {
@@ -512,7 +512,7 @@ describe('helpers', () => {
         resolvable: false
       }, {
         code: 421,
-        name: 'ipfs',
+        name: 'p2p',
         path: false,
         size: -1,
         resolvable: false
@@ -536,7 +536,7 @@ describe('helpers', () => {
         resolvable: false
       }, {
         code: 421,
-        name: 'ipfs',
+        name: 'p2p',
         path: false,
         size: -1,
         resolvable: false
