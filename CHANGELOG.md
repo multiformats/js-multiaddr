@@ -1,3 +1,14 @@
+<a name="7.0.0"></a>
+# [7.0.0](https://github.com/multiformats/js-multiaddr/compare/v6.1.0...v7.0.0) (2019-09-03)
+
+
+### Bug Fixes
+
+* make getPeerId resolve the last id ([#95](https://github.com/multiformats/js-multiaddr/issues/95)) ([c32071d](https://github.com/multiformats/js-multiaddr/commit/c32071d))
+* return ports as ints not strings ([#87](https://github.com/multiformats/js-multiaddr/issues/87)) ([2a170c3](https://github.com/multiformats/js-multiaddr/commit/2a170c3))
+
+
+
 <a name="6.1.0"></a>
 # [6.1.0](https://github.com/multiformats/js-multiaddr/compare/v6.0.6...v6.1.0) (2019-06-05)
 
