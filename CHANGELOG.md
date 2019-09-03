@@ -1,3 +1,13 @@
+<a name="6.1.1"></a>
+## [6.1.1](https://github.com/multiformats/js-multiaddr/compare/v6.1.0...v6.1.1) (2019-09-03)
+
+
+### Bug Fixes
+
+* make getPeerId resolve the last id ([#95](https://github.com/multiformats/js-multiaddr/issues/95)) ([10a6984](https://github.com/multiformats/js-multiaddr/commit/10a6984))
+
+
+
 <a name="6.1.0"></a>
 # [6.1.0](https://github.com/multiformats/js-multiaddr/compare/v6.0.6...v6.1.0) (2019-06-05)
 
