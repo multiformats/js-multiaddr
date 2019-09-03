@@ -440,14 +440,13 @@ Multiaddr.isName = function isName (addr) {
 /**
  * Returns an array of multiaddrs, by resolving the multiaddr that is a name
  *
+ * @async
  * @param {Multiaddr} addr
- *
- * @param {Function} callback
- * @return {Bool} isName
+ * @return {Multiaddr[]}
  */
-Multiaddr.resolve = function resolve (addr, callback) {
+Multiaddr.resolve = function resolve (addr) {
   if (!Multiaddr.isMultiaddr(addr) || !Multiaddr.isName(addr)) {
-    return callback(new Error('not a valid name'))
+    return Promise.reject(Error('not a valid name'))
   }
 
   /*
@@ -455,7 +454,7 @@ Multiaddr.resolve = function resolve (addr, callback) {
    *   - what to return
    *   - how to achieve it in the browser?
    */
-  return callback(new Error('not implemented yet'))
+  return Promise.reject(new Error('not implemented yet'))
 }
 
 exports = module.exports = Multiaddr
