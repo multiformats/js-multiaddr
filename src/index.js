@@ -239,7 +239,7 @@ Multiaddr.prototype.decapsulate = function decapsulate (addr) {
 
 /**
  * A more reliable version of `decapsulate` if you are targeting a
- * specific code, such as 421 (this /p2p code). The last index of the code
+ * specific code, such as 421 (the `p2p` protocol code). The last index of the code
  * will be removed from the `Multiaddr`, and a new instance will be returned.
  * If the code is not present, the original `Multiaddr` is returned.
  *
