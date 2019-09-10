@@ -1,3 +1,13 @@
+<a name="7.1.0"></a>
+# [7.1.0](https://github.com/multiformats/js-multiaddr/compare/v7.0.0...v7.1.0) (2019-09-10)
+
+
+### Features
+
+* add decapsulateCode method ([#98](https://github.com/multiformats/js-multiaddr/issues/98)) ([19a3940](https://github.com/multiformats/js-multiaddr/commit/19a3940))
+
+
+
 <a name="7.0.0"></a>
 # [7.0.0](https://github.com/multiformats/js-multiaddr/compare/v6.1.0...v7.0.0) (2019-09-03)
 
