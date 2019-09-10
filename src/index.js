@@ -238,6 +238,34 @@ Multiaddr.prototype.decapsulate = function decapsulate (addr) {
 }
 
 /**
+ * A more reliable version of `decapsulate` if you are targeting a
+ * specific code, such as 421 (the `p2p` protocol code). The last index of the code
+ * will be removed from the `Multiaddr`, and a new instance will be returned.
+ * If the code is not present, the original `Multiaddr` is returned.
+ *
+ * @param {Number} code The code of the protocol to decapsulate from this Multiaddr
+ * @return {Multiaddr}
+ * @example
+ * const addr = Multiaddr('/ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
+ * // <Multiaddr 0400... - /ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC>
+ *
+ * addr.decapsulateCode(421).toString()
+ * // '/ip4/0.0.0.0/tcp/8080'
+ *
+ * Multiaddr('/ip4/127.0.0.1/tcp/8080').decapsulateCode(421).toString()
+ * // '/ip4/127.0.0.1/tcp/8080'
+ */
+Multiaddr.prototype.decapsulateCode = function decapsulateCode (code) {
+  const tuples = this.tuples()
+  for (let i = tuples.length - 1; i >= 0; i--) {
+    if (tuples[i][0] === code) {
+      return Multiaddr(codec.tuplesToBuffer(tuples.slice(0, i)))
+    }
+  }
+  return this
+}
+
+/**
  * Extract the peerId if the multiaddr contains one
  *
  * @return {String|null} peerId - The id of the peer or null if invalid or missing from the ma
