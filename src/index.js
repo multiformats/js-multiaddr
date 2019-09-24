@@ -381,7 +381,7 @@ Multiaddr.prototype.nodeAddress = function nodeAddress () {
 /**
  * Creates a Multiaddr from a node-friendly address object
  *
- * @param {Object} addr
+ * @param {{family: String, address: String, port: Number}} addr
  * @param {String} transport
  * @returns {Multiaddr} multiaddr
  * @throws {Error} Throws error if addr is not truthy
