@@ -1,3 +1,13 @@
+<a name="7.2.0"></a>
+# [7.2.0](https://github.com/multiformats/js-multiaddr/compare/v7.1.0...v7.2.0) (2019-10-28)
+
+
+### Features
+
+* support Peer ID represented as CID ([#102](https://github.com/multiformats/js-multiaddr/issues/102)) ([eead174](https://github.com/multiformats/js-multiaddr/commit/eead174))
+
+
+
 <a name="7.1.0"></a>
 # [7.1.0](https://github.com/multiformats/js-multiaddr/compare/v7.0.0...v7.1.0) (2019-09-10)
 
