@@ -4,6 +4,7 @@ const codec = require('./codec')
 const protocols = require('./protocols-table')
 const varint = require('varint')
 const bs58 = require('bs58')
+const CID = require('cids')
 const withIs = require('class-is')
 
 /**
@@ -287,8 +288,8 @@ Multiaddr.prototype.getPeerId = function getPeerId () {
 
     // Get the last id
     b58str = tuples.pop()[1]
-
-    bs58.decode(b58str)
+    // Get multihash, unwrap from CID if needed
+    b58str = bs58.encode(new CID(b58str).multihash)
   } catch (e) {
     b58str = null
   }
