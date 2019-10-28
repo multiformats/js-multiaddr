@@ -1,6 +1,6 @@
 {
   "name": "multiaddr",
-  "version": "7.1.0",
+  "version": "7.2.0",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "main": "src/index.js",
@@ -71,6 +71,7 @@
     "Yahya <ya7yaz@gmail.com>",
     "Zane Starr <zcstarr@gmail.com>",
     "greenkeeper[bot] <greenkeeper[bot]@users.noreply.github.com>",
+    "nijynot <nijynot@gmail.com>",
     "npm-to-cdn-bot (by Forbes Lindesay) <npmcdn-to-unpkg-bot@users.noreply.github.com>",
     "victorbjelkholm <victor@protocol.ai>"
   ]
