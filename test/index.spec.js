@@ -356,6 +356,13 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('p2p', () => {
+    const str = '/p2p/bafzbeidt255unskpefjmqb2rc27vjuyxopkxgaylxij6pw35hhys4vnyp4'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal('/p2p/QmW8rAgaaA6sRydK1k6vonShQME47aDxaFidbtMevWs73t')
+  })
+
   it('ipfs', () => {
     const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)

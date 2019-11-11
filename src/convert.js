@@ -126,7 +126,7 @@ function buf2str (buf) {
 
 function mh2buf (hash) {
   // the address is a varint prefixed multihash string representation
-  const mh = bs58.decode((new CID(hash)).toString('base58btc'))
+  const mh = new CID(hash).multihash
   const size = Buffer.from(varint.encode(mh.length))
   return Buffer.concat([size, mh])
 }
