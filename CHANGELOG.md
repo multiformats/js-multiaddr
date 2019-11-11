@@ -1,3 +1,13 @@
+<a name="7.2.1"></a>
+## [7.2.1](https://github.com/multiformats/js-multiaddr/compare/v7.2.0...v7.2.1) (2019-11-11)
+
+
+### Bug Fixes
+
+* ensure b58 can decode hash ([#103](https://github.com/multiformats/js-multiaddr/issues/103)) ([ac440cb](https://github.com/multiformats/js-multiaddr/commit/ac440cb))
+
+
+
 <a name="7.2.0"></a>
 # [7.2.0](https://github.com/multiformats/js-multiaddr/compare/v7.1.0...v7.2.0) (2019-10-28)
 
