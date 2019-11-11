@@ -761,7 +761,7 @@ describe('helpers', () => {
   })
 
   describe('.getPeerId should parse id from multiaddr', () => {
-    it('parses extracts the peer Id from a multiaddr, p2p', () => {
+    it('extracts the peer Id from a multiaddr, p2p', () => {
       expect(
         multiaddr('/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPeerId()
       ).to.equal('QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
@@ -771,17 +771,17 @@ describe('helpers', () => {
         multiaddr('/ip4/0.0.0.0/tcp/8080/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPeerId()
       ).to.equal('QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
     })
-    it('parses extracts the peer Id from a multiaddr, ipfs', () => {
+    it('extracts the peer Id from a multiaddr, ipfs', () => {
       expect(
         multiaddr('/p2p-circuit/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPeerId()
       ).to.equal('QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
     })
-    it('parses extracts the peer Id from a multiaddr, p2p and CIDv1 Base32', () => {
+    it('extracts the peer Id from a multiaddr, p2p and CIDv1 Base32', () => {
       expect(
         multiaddr('/p2p-circuit/p2p/bafzbeigweq4zr4x4ky2dvv7nanbkw6egutvrrvzw6g3h2rftp7gidyhtt4').getPeerId()
       ).to.equal('QmckZzdVd72h9QUFuJJpQqhsZqGLwjhh81qSvZ9BhB2FQi')
     })
-    it('parses extracts the peer Id from a multiaddr, p2p and CIDv1 Base32, where Id contains non b58 chars', () => {
+    it('extracts the peer Id from a multiaddr, p2p and CIDv1 Base32, where Id contains non b58 chars', () => {
       expect(
         multiaddr('/p2p-circuit/p2p/bafzbeidt255unskpefjmqb2rc27vjuyxopkxgaylxij6pw35hhys4vnyp4').getPeerId()
       ).to.equal('QmW8rAgaaA6sRydK1k6vonShQME47aDxaFidbtMevWs73t')
