@@ -4,6 +4,7 @@ const ip = require('ip')
 const isIp = require('is-ip')
 const protocols = require('./protocols-table')
 const bs58 = require('bs58')
+const CID = require('cids')
 const base32 = require('hi-base32')
 const varint = require('varint')
 
@@ -125,7 +126,7 @@ function buf2str (buf) {
 
 function mh2buf (hash) {
   // the address is a varint prefixed multihash string representation
-  const mh = Buffer.from(bs58.decode(hash))
+  const mh = new CID(hash).multihash
   const size = Buffer.from(varint.encode(mh.length))
   return Buffer.concat([size, mh])
 }
