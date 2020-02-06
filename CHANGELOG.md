@@ -1,3 +1,13 @@
+<a name="7.3.0"></a>
+# [7.3.0](https://github.com/multiformats/js-multiaddr/compare/v7.2.1...v7.3.0) (2020-02-06)
+
+
+### Features
+
+* add typescript types + type tests ([#105](https://github.com/multiformats/js-multiaddr/issues/105)) ([1900490](https://github.com/multiformats/js-multiaddr/commit/1900490))
+
+
+
 <a name="7.2.1"></a>
 ## [7.2.1](https://github.com/multiformats/js-multiaddr/compare/v7.2.0...v7.2.1) (2019-11-11)
 
