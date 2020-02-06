@@ -9,6 +9,7 @@
     "test": "aegir test",
     "test:node": "aegir test -t node",
     "test:browser": "aegir test -t browser",
+    "test:types": "npx tsc",
     "build": "aegir build",
     "release": "aegir release",
     "release-minor": "aegir release --type minor",
@@ -39,6 +40,10 @@
     "varint": "^5.0.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.8",
+    "@types/dirty-chai": "^2.0.2",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^13.7.0",
     "aegir": "^20.0.0",
     "bundlesize": "~0.18.0",
     "chai": "^4.2.0",

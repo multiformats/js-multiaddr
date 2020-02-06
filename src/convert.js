@@ -183,7 +183,7 @@ function onion32buf (str) {
 function buf2onion (buf) {
   const addrBytes = buf.slice(0, buf.length - 2)
   const portBytes = buf.slice(buf.length - 2)
-  const addr = base32.encode(addrBytes).toString('ascii').toLowerCase()
+  const addr = base32.encode(addrBytes).toLowerCase()
   const port = buf2port(portBytes)
   return addr + ':' + port
 }
