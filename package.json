@@ -1,6 +1,6 @@
 {
   "name": "multiaddr",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "main": "src/index.js",
@@ -70,6 +70,7 @@
     "Sid Harder <sideharder@gmail.com>",
     "Stephen Whitmore <stephen.whitmore@gmail.com>",
     "Steven Allen <steven@stebalien.com>",
+    "Tony Jin <nijynot@gmail.com>",
     "Trond Arne Bråthen <tabrath@gmail.com>",
     "Vasco Santos <vasco.santos@moxy.studio>",
     "Victor Bjelkholm <victorbjelkholm@gmail.com>",
@@ -77,7 +78,6 @@
     "Yahya <ya7yaz@gmail.com>",
     "Zane Starr <zcstarr@gmail.com>",
     "greenkeeper[bot] <greenkeeper[bot]@users.noreply.github.com>",
-    "nijynot <nijynot@gmail.com>",
     "npm-to-cdn-bot (by Forbes Lindesay) <npmcdn-to-unpkg-bot@users.noreply.github.com>",
     "victorbjelkholm <victor@protocol.ai>"
   ]
