@@ -1,3 +1,13 @@
+<a name="7.3.1"></a>
+## [7.3.1](https://github.com/multiformats/js-multiaddr/compare/v7.3.0...v7.3.1) (2020-02-13)
+
+
+### Bug Fixes
+
+* inspect deprecation warning ([#109](https://github.com/multiformats/js-multiaddr/issues/109)) ([a79a7af](https://github.com/multiformats/js-multiaddr/commit/a79a7af))
+
+
+
 <a name="7.3.0"></a>
 # [7.3.0](https://github.com/multiformats/js-multiaddr/compare/v7.2.1...v7.3.0) (2020-02-06)
 
