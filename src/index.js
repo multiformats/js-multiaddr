@@ -6,6 +6,7 @@ const varint = require('varint')
 const bs58 = require('bs58')
 const CID = require('cids')
 const withIs = require('class-is')
+const inspect = Symbol.for('nodejs.util.inspect.custom')
 
 /**
  * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
@@ -86,7 +87,25 @@ Multiaddr.prototype.toOptions = function toOptions () {
 }
 
 /**
- * Returns Multiaddr as a human-readable string
+ * Returns Multiaddr as a human-readable string.
+ * For post Node.js v10.0.0.
+ * https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect
+ *
+ * @returns {String}
+ * @example
+ * console.log(Multiaddr('/ip4/127.0.0.1/tcp/4001'))
+ * // '<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>'
+ */
+Multiaddr.prototype[inspect] = function inspectCustom () {
+  return '<Multiaddr ' +
+    this.buffer.toString('hex') + ' - ' +
+    codec.bufferToString(this.buffer) + '>'
+}
+
+/**
+ * Returns Multiaddr as a human-readable string.
+ * Fallback for pre Node.js v10.0.0.
+ * https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect
  *
  * @returns {String}
  * @example
