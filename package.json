@@ -45,7 +45,7 @@
     "@types/dirty-chai": "^2.0.2",
     "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.0",
-    "aegir": "^20.0.0",
+    "aegir": "^21.0.2",
     "bundlesize": "~0.18.0",
     "chai": "^4.2.0",
     "dirty-chai": "^2.0.1"
