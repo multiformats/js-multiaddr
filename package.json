@@ -4,6 +4,7 @@
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "lint": "aegir lint",
     "test": "aegir test",
