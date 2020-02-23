@@ -1,34 +1,44 @@
-/// <reference types="node" />
-
-declare interface NetOptions {
-  family: 'ipv4' | 'ipv6';
+declare type NetOptions = {
+  family: "ipv4" | "ipv6";
   host: string;
-  transport: string;
+  transport: "tcp" | "udp";
   port: number;
-}
+};
 
-declare interface Protocol {
+declare type Protocol = {
   code: number;
   size: number;
   name: string;
-  resolvable: boolean;
-  path: boolean;
-}
+  resolvable: boolean | undefined;
+  path: boolean | undefined;
+};
 
 declare interface Protocols {
-  table: [number, number, string, boolean?, boolean?][];
-  names: Record<string, Protocol>;
-  codes: Record<number, Protocol>;
-  object(code: number, size: number, name: string, resolvable?: any, path?: any): Protocol;
+  table: {
+    [index: number]: Protocol;
+  };
+  names: {
+    [index: string]: Protocol;
+  };
+  codes: {
+    [index: number]: Protocol;
+  };
+  object(
+    code: number,
+    size: number,
+    name: string,
+    resolvable?: any,
+    path?: any
+  ): Protocol;
 }
 
-declare interface NodeAddress {
-  family: 4 | 6;
+declare type NodeAddress = {
+  family: "IPv4" | "IPv6";
   address: string;
-  port: number;
-}
+  port: string;
+};
 
-declare type MultiaddrInput = string | Buffer | Multiaddr;
+declare type MultiaddrInput = string | Buffer | Multiaddr | null;
 
 declare class Multiaddr {
   /**
@@ -39,6 +49,8 @@ declare class Multiaddr {
    * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
    */
   constructor(addr?: MultiaddrInput);
+
+  buffer: Buffer;
 
   /**
    * Returns Multiaddr as a String
@@ -142,20 +154,11 @@ declare class Multiaddr {
   isThinWaistAddress(addr?: Multiaddr): boolean;
 }
 
-declare interface MultiaddrClass {
-  /**
-   * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
-   * a Buffer, String or another Multiaddr instance
-   * public key.
-   * @param addr - If String or Buffer, needs to adhere
-   * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
-   */
-  (addr?: MultiaddrInput): Multiaddr;
-
+declare namespace Multiaddr {
   /**
    * Creates a Multiaddr from a node-friendly address object
    */
-  fromNodeAddress(addr: NodeAddress, transport: string): Multiaddr;
+  function fromNodeAddress(addr: NodeAddress, transport: string): Multiaddr;
 
   /**
    * Object containing table, names and codes of all supported protocols.
@@ -164,22 +167,31 @@ declare interface MultiaddrClass {
    * [`.protoCodes()`](#multiaddrprotocodes) or
    * [`.protoNames()`](#multiaddrprotonames)
    */
-  protocols: Protocols;
+  const protocols: Protocols;
 
   /**
    * Returns if something is a Multiaddr
    */
-  isMultiaddr(addr: unknown): addr is Multiaddr;
+  function isMultiaddr(addr: unknown): addr is Multiaddr;
 
   /**
    * Returns if something is a Multiaddr that is a name
    */
-  isName(addr: Multiaddr): boolean;
+  function isName(addr: Multiaddr): boolean;
 
   /**
    * Returns an array of multiaddrs, by resolving the multiaddr that is a name
    */
-  resolve(addr: Multiaddr): Promise<Multiaddr[]>
+  function resolve(addr: Multiaddr): Promise<Multiaddr[]>;
 }
 
-export = MultiaddrClass;
+/**
+ * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
+ * a Buffer, String or another Multiaddr instance
+ * public key.
+ * @param addr - If String or Buffer, needs to adhere
+ * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
+ */
+declare function Multiaddr(input?: MultiaddrInput): Multiaddr;
+
+export = Multiaddr;

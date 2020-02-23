@@ -14,5 +14,5 @@
     "noEmit": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/index.d.ts", "test/**/*.spec.js"],
+  "include": ["src/index.d.ts", "test/**/*.spec.js", "test/**/*.spec.ts"],
 }
