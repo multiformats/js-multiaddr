@@ -413,7 +413,17 @@ Multiaddr.prototype.nodeAddress = function nodeAddress () {
 Multiaddr.fromNodeAddress = function fromNodeAddress (addr, transport) {
   if (!addr) throw new Error('requires node address object')
   if (!transport) throw new Error('requires transport protocol')
-  const ip = (addr.family === 'IPv6') ? 'ip6' : 'ip4'
+  let ip
+  switch (addr.family) {
+    case 'IPv4':
+      ip = 'ip4'
+      break
+    case 'IPv6':
+      ip = 'ip6'
+      break
+    default:
+      throw Error(`Invalid addr family. Got '${addr.family}' instead of 'IPv4' or 'IPv6'`)
+  }
   return Multiaddr('/' + [ip, addr.address, transport, addr.port].join('/'))
 }
 

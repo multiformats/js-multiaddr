@@ -53,16 +53,23 @@ describe('construction', () => {
 
   it('throws on truthy non string or buffer', () => {
     const errRegex = /addr must be a string/
+    // @ts-ignore
     expect(() => multiaddr({})).to.throw(errRegex)
+    // @ts-ignore
     expect(() => multiaddr([])).to.throw(errRegex)
+    // @ts-ignore
     expect(() => multiaddr(138)).to.throw(errRegex)
+    // @ts-ignore
     expect(() => multiaddr(true)).to.throw(errRegex)
   })
 
   it('throws on falsy non string or buffer', () => {
     const errRegex = /addr must be a string/
+    // @ts-ignore
     expect(() => multiaddr(NaN)).to.throw(errRegex)
+    // @ts-ignore
     expect(() => multiaddr(false)).to.throw(errRegex)
+    // @ts-ignore
     expect(() => multiaddr(0)).to.throw(errRegex)
   })
 })
@@ -694,6 +701,7 @@ describe('helpers', () => {
   describe('.fromNodeAddress', () => {
     it('throws on missing address object', () => {
       expect(
+        // @ts-ignore
         () => multiaddr.fromNodeAddress()
       ).to.throw(
         /requires node address/
@@ -702,6 +710,7 @@ describe('helpers', () => {
 
     it('throws on missing transport', () => {
       expect(
+        // @ts-ignore
         () => multiaddr.fromNodeAddress({ address: '0.0.0.0' })
       ).to.throw(
         /requires transport protocol/
