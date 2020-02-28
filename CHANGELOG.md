@@ -1,3 +1,13 @@
+<a name="7.4.0"></a>
+# [7.4.0](https://github.com/multiformats/js-multiaddr/compare/v7.3.1...v7.4.0) (2020-02-28)
+
+
+### Bug Fixes
+
+* update typings and add type test ([#112](https://github.com/multiformats/js-multiaddr/issues/112)) ([87aa7b0](https://github.com/multiformats/js-multiaddr/commit/87aa7b0))
+
+
+
 <a name="7.3.1"></a>
 ## [7.3.1](https://github.com/multiformats/js-multiaddr/compare/v7.3.0...v7.3.1) (2020-02-13)
 
