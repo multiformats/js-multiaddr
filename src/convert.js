@@ -150,6 +150,7 @@ function onion2buf (str) {
     throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion address.')
   }
 
+  // onion addresses do not include the multibase prefix, add it before decoding
   const buf = multibase.decode('b' + addr[0])
 
   // onion port number
