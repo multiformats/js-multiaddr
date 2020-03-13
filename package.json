@@ -32,12 +32,12 @@
   "bugs": "https://github.com/multiformats/js-multiaddr/issues",
   "homepage": "https://github.com/multiformats/js-multiaddr",
   "dependencies": {
-    "bs58": "^4.0.1",
+    "buffer": "^5.5.0",
     "cids": "~0.7.1",
     "class-is": "^1.1.0",
-    "hi-base32": "~0.5.0",
     "ip": "^1.1.5",
     "is-ip": "^3.1.0",
+    "multibase": "^0.6.0",
     "varint": "^5.0.0"
   },
   "devDependencies": {

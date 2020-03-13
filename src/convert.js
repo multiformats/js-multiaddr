@@ -1,11 +1,11 @@
 'use strict'
 
 const ip = require('ip')
+const { Buffer } = require('buffer')
 const isIp = require('is-ip')
 const protocols = require('./protocols-table')
-const bs58 = require('bs58')
 const CID = require('cids')
-const base32 = require('hi-base32')
+const multibase = require('multibase')
 const varint = require('varint')
 
 module.exports = Convert
@@ -138,8 +138,7 @@ function buf2mh (buf) {
   if (address.length !== size) {
     throw new Error('inconsistent lengths')
   }
-
-  return bs58.encode(address)
+  return multibase.encode('base58btc', address).toString().slice(1)
 }
 
 function onion2buf (str) {
@@ -150,7 +149,8 @@ function onion2buf (str) {
   if (addr[0].length !== 16) {
     throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion address.')
   }
-  const buf = Buffer.from(base32.decode.asBytes(addr[0].toUpperCase()))
+
+  const buf = multibase.decode('b' + addr[0])
 
   // onion port number
   const port = parseInt(addr[1], 10)
@@ -169,7 +169,7 @@ function onion32buf (str) {
   if (addr[0].length !== 56) {
     throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion3 address.')
   }
-  const buf = Buffer.from(base32.decode.asBytes(addr[0].toUpperCase()))
+  const buf = multibase.decode('b' + addr[0])
 
   // onion port number
   const port = parseInt(addr[1], 10)
@@ -183,7 +183,7 @@ function onion32buf (str) {
 function buf2onion (buf) {
   const addrBytes = buf.slice(0, buf.length - 2)
   const portBytes = buf.slice(buf.length - 2)
-  const addr = base32.encode(addrBytes).toLowerCase()
+  const addr = multibase.encode('base32', addrBytes).toString().slice(1)
   const port = buf2port(portBytes)
   return addr + ':' + port
 }
