@@ -170,6 +170,7 @@ function onion32buf (str) {
   if (addr[0].length !== 56) {
     throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion3 address.')
   }
+  // onion addresses do not include the multibase prefix, add it before decoding
   const buf = multibase.decode('b' + addr[0])
 
   // onion port number
