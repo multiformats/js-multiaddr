@@ -1,8 +1,7 @@
 'use strict'
 
-const ip = require('ip')
 const { Buffer } = require('buffer')
-const isIp = require('is-ip')
+const ip = require('./ip')
 const protocols = require('./protocols-table')
 const CID = require('cids')
 const multibase = require('multibase')
@@ -83,7 +82,7 @@ Convert.toBuffer = function convertToBuffer (proto, str) {
 }
 
 function ip2buf (ipString) {
-  if (!isIp(ipString)) {
+  if (!ip.isIP(ipString)) {
     throw new Error('invalid ip address')
   }
   return ip.toBuffer(ipString)
@@ -91,7 +90,7 @@ function ip2buf (ipString) {
 
 function buf2ip (ipBuff) {
   const ipString = ip.toString(ipBuff)
-  if (!isIp(ipString)) {
+  if (!ip.isIP(ipString)) {
     throw new Error('invalid ip address')
   }
   return ipString
