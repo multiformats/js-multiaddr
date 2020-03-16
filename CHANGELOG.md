@@ -1,3 +1,13 @@
+<a name="7.4.1"></a>
+## [7.4.1](https://github.com/multiformats/js-multiaddr/compare/v7.4.0...v7.4.1) (2020-03-16)
+
+
+### Bug Fixes
+
+* use multibase, add buffer, remove ip dep ([#113](https://github.com/multiformats/js-multiaddr/issues/113)) ([f245744](https://github.com/multiformats/js-multiaddr/commit/f245744))
+
+
+
 <a name="7.4.0"></a>
 # [7.4.0](https://github.com/multiformats/js-multiaddr/compare/v7.3.1...v7.4.0) (2020-02-28)
 
