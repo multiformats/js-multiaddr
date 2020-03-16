@@ -1,5 +1,6 @@
 'use strict'
 
+const { Buffer } = require('buffer')
 const convert = require('./convert')
 const protocols = require('./protocols-table')
 const varint = require('varint')
