@@ -1,6 +1,6 @@
 {
   "name": "multiaddr",
-  "version": "7.4.1",
+  "version": "7.4.2",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "main": "src/index.js",
@@ -55,8 +55,8 @@
     "victorbjelkholm <victorbjelkholm@gmail.com>",
     "Juan Batiz-Benet <juan@benet.ai>",
     "Volker Mische <volker.mische@gmail.com>",
-    "dignifiedquire <dignifiedquire@gmail.com>",
     "Hugo Dias <hugomrdias@gmail.com>",
+    "dignifiedquire <dignifiedquire@gmail.com>",
     "Dmitriy Ryajov <dryajov@gmail.com>",
     "Richard Littauer <richard.littauer@gmail.com>",
     "Robert Kiel <robert.kiel@validitylabs.org>",
@@ -66,16 +66,16 @@
     "Alan Shaw <alan@tableflip.io>",
     "Steven Allen <steven@stebalien.com>",
     "Tony Jin <nijynot@gmail.com>",
+    "Sid Harder <sideharder@gmail.com>",
     "Cayman <caymannava@gmail.com>",
-    "Stephen Whitmore <stephen.whitmore@gmail.com>",
-    "Alessandro Ricottone <ricott2@gmail.com>",
     "Trond Arne Bråthen <tabrath@gmail.com>",
     "Vasco Santos <vasco.santos@moxy.studio>",
     "KuhnChris <kuhnchris@kuhnchris.eu>",
     "Diogo Silva <fsdiogo@gmail.com>",
     "Yahya <ya7yaz@gmail.com>",
     "Zane Starr <zcstarr@gmail.com>",
+    "Alessandro Ricottone <ricott2@gmail.com>",
     "Chris Anderson <jchris@gmail.com>",
-    "Sid Harder <sideharder@gmail.com>"
+    "Stephen Whitmore <stephen.whitmore@gmail.com>"
   ]
 }
