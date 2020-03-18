@@ -1,3 +1,13 @@
+<a name="7.4.2"></a>
+## [7.4.2](https://github.com/multiformats/js-multiaddr/compare/v7.4.1...v7.4.2) (2020-03-18)
+
+
+### Bug Fixes
+
+* add buffer to ip ([#115](https://github.com/multiformats/js-multiaddr/issues/115)) ([deb7c9f](https://github.com/multiformats/js-multiaddr/commit/deb7c9f))
+
+
+
 <a name="7.4.1"></a>
 ## [7.4.1](https://github.com/multiformats/js-multiaddr/compare/v7.4.0...v7.4.1) (2020-03-16)
 
