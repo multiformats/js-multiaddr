@@ -1,5 +1,6 @@
 'use strict'
 
+const { Buffer } = require('buffer')
 const isIp = require('is-ip')
 
 const isIP = isIp
