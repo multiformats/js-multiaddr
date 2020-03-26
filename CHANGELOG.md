@@ -1,3 +1,8 @@
+<a name="7.4.3"></a>
+## [7.4.3](https://github.com/multiformats/js-multiaddr/compare/v7.4.2...v7.4.3) (2020-03-26)
+
+
+
 <a name="7.4.2"></a>
 ## [7.4.2](https://github.com/multiformats/js-multiaddr/compare/v7.4.1...v7.4.2) (2020-03-18)
 
