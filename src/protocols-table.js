@@ -72,9 +72,9 @@ Protocols.object = p
 
 function p (code, size, name, resolvable, path) {
   return {
-    code: code,
-    size: size,
-    name: name,
+    code,
+    size,
+    name,
     resolvable: Boolean(resolvable),
     path: Boolean(path)
   }
