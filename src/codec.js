@@ -7,28 +7,28 @@ const varint = require('varint')
 
 // export codec
 module.exports = {
-  stringToStringTuples: stringToStringTuples,
-  stringTuplesToString: stringTuplesToString,
+  stringToStringTuples,
+  stringTuplesToString,
 
-  tuplesToStringTuples: tuplesToStringTuples,
-  stringTuplesToTuples: stringTuplesToTuples,
+  tuplesToStringTuples,
+  stringTuplesToTuples,
 
-  bufferToTuples: bufferToTuples,
-  tuplesToBuffer: tuplesToBuffer,
+  bufferToTuples,
+  tuplesToBuffer,
 
-  bufferToString: bufferToString,
-  stringToBuffer: stringToBuffer,
+  bufferToString,
+  stringToBuffer,
 
-  fromString: fromString,
-  fromBuffer: fromBuffer,
-  validateBuffer: validateBuffer,
-  isValidBuffer: isValidBuffer,
-  cleanPath: cleanPath,
+  fromString,
+  fromBuffer,
+  validateBuffer,
+  isValidBuffer,
+  cleanPath,
 
-  ParseError: ParseError,
-  protoFromTuple: protoFromTuple,
+  ParseError,
+  protoFromTuple,
 
-  sizeForAddr: sizeForAddr
+  sizeForAddr
 }
 
 // string -> [[str name, str addr]... ]
