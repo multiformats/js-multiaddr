@@ -47,7 +47,8 @@
     "aegir": "^22.0.0",
     "bundlesize": "~0.18.0",
     "chai": "^4.2.0",
-    "dirty-chai": "^2.0.1"
+    "dirty-chai": "^2.0.1",
+    "typescript": "^3.9.5"
   },
   "contributors": [
     "David Dias <daviddias.p@gmail.com>",
