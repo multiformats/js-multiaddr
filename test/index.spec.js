@@ -883,6 +883,7 @@ describe('helpers', () => {
         const addr = multiaddr(str)
 
         return multiaddr.resolve(addr)
+          // @ts-ignore
           .then(expect.fail, (err) => {
             expect(err).to.exist()
             expect(err.message).to.eql('not a valid name')

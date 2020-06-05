@@ -90,7 +90,7 @@ function ip2buf (ipString) {
 
 function buf2ip (ipBuff) {
   const ipString = ip.toString(ipBuff)
-  if (!ip.isIP(ipString)) {
+  if (!ipString || !ip.isIP(ipString)) {
     throw new Error('invalid ip address')
   }
   return ipString

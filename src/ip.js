@@ -42,7 +42,7 @@ const toBuffer = function (ip, buff, offset) {
       while (sections.length < 8) sections.push('0')
     } else if (sections.length < 8) {
       for (i = 0; i < sections.length && sections[i] !== ''; i++);
-      var argv = [i, 1]
+      var argv = [i, '1']
       for (i = 9 - sections.length; i > 0; i--) {
         argv.push('0')
       }
@@ -70,23 +70,24 @@ const toString = function (buff, offset, length) {
   length = length || (buff.length - offset)
 
   var result = []
+  var string
   if (length === 4) {
     // IPv4
     for (let i = 0; i < length; i++) {
       result.push(buff[offset + i])
     }
-    result = result.join('.')
+    string = result.join('.')
   } else if (length === 16) {
     // IPv6
     for (let i = 0; i < length; i += 2) {
       result.push(buff.readUInt16BE(offset + i).toString(16))
     }
-    result = result.join(':')
-    result = result.replace(/(^|:)0(:0)*:0(:|$)/, '$1::$3')
-    result = result.replace(/:{3,4}/, '::')
+    string = result.join(':')
+    string = string.replace(/(^|:)0(:0)*:0(:|$)/, '$1::$3')
+    string = string.replace(/:{3,4}/, '::')
   }
 
-  return result
+  return string
 }
 
 module.exports = {
