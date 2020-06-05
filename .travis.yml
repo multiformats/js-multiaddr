@@ -24,6 +24,7 @@ jobs:
       script:
         - npx aegir dep-check
         - npm run lint
+        - npm run test:types
 
     - stage: test
       name: chrome
