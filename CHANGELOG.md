@@ -1,3 +1,13 @@
+<a name="7.5.0"></a>
+# [7.5.0](https://github.com/multiformats/js-multiaddr/compare/v7.4.3...v7.5.0) (2020-06-25)
+
+
+### Features
+
+* add new memory protocol for testing and other simulation scenarios ([bba22d2](https://github.com/multiformats/js-multiaddr/commit/bba22d2))
+
+
+
 <a name="7.4.3"></a>
 ## [7.4.3](https://github.com/multiformats/js-multiaddr/compare/v7.4.2...v7.4.3) (2020-03-26)
 
