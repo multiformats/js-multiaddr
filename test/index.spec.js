@@ -469,6 +469,13 @@ describe('variants', () => {
     expect(addr).to.have.property('buffer')
     expect(addr.toString()).to.equal(str)
   })
+
+  it('memory + p2p', () => {
+    const str = '/memory/test/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('buffer')
+    expect(addr.toString()).to.equal(str)
+  })
 })
 
 describe('helpers', () => {
@@ -576,6 +583,24 @@ describe('helpers', () => {
         code: 400,
         name: 'unix',
         path: true,
+        size: -1,
+        resolvable: false
+      }])
+    })
+
+    it('works with memory', () => {
+      expect(
+        multiaddr('/memory/test/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6').protos()
+      ).to.be.eql([{
+        code: 777,
+        name: 'memory',
+        path: false,
+        size: -1,
+        resolvable: false
+      }, {
+        code: 421,
+        name: 'p2p',
+        path: false,
         size: -1,
         resolvable: false
       }])
