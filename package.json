@@ -7,9 +7,9 @@
   "types": "src/index.d.ts",
   "scripts": {
     "lint": "aegir lint",
-    "test": "aegir test",
-    "test:node": "aegir test -t node",
-    "test:browser": "aegir test -t browser",
+    "test": "aegir test --ts",
+    "test:node": "aegir test --ts -t node",
+    "test:browser": "aegir test --ts -t browser",
     "test:types": "npx tsc",
     "build": "aegir build",
     "release": "aegir release",
