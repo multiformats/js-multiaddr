@@ -7,9 +7,9 @@
   "types": "src/index.d.ts",
   "scripts": {
     "lint": "aegir lint",
-    "test": "aegir test --ts",
+    "test": "npm run test:node && npm run test:browser",
     "test:node": "aegir test --ts -t node",
-    "test:browser": "aegir test --ts -t browser",
+    "test:browser": "aegir test -t browser",
     "test:types": "npx tsc",
     "build": "aegir build",
     "release": "aegir release",
