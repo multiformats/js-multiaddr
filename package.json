@@ -16,7 +16,7 @@
     "release-minor": "aegir release --type minor",
     "release-major": "aegir release --type major",
     "docs": "aegir docs",
-    "size": "bundlesize -f dist/index.min.js -s 14kB"
+    "size": "aegir build -b"
   },
   "files": [
     "src",
@@ -32,22 +32,19 @@
   "bugs": "https://github.com/multiformats/js-multiaddr/issues",
   "homepage": "https://github.com/multiformats/js-multiaddr",
   "dependencies": {
-    "buffer": "^5.5.0",
-    "cids": "~0.8.0",
+    "cids": "^1.0.0",
     "class-is": "^1.1.0",
     "is-ip": "^3.1.0",
-    "multibase": "^0.7.0",
+    "multibase": "^3.0.0",
+    "uint8arrays": "^1.1.0",
     "varint": "^5.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.8",
     "@types/dirty-chai": "^2.0.2",
-    "@types/mocha": "^7.0.1",
+    "@types/mocha": "^8.0.1",
     "@types/node": "^14.0.11",
-    "aegir": "^22.0.0",
-    "bundlesize": "~0.18.0",
-    "chai": "^4.2.0",
-    "dirty-chai": "^2.0.1",
+    "aegir": "^25.0.0",
     "typescript": "^3.9.5"
   },
   "contributors": [

@@ -2,15 +2,13 @@
 'use strict'
 
 const convert = require('../src/convert')
-const chai = require('chai')
-const dirtyChai = require('dirty-chai')
-const expect = chai.expect
-chai.use(dirtyChai)
+const { expect } = require('aegir/utils/chai')
+const uint8ArrayFromString = require('uint8arrays/from-string')
 
 describe('convert', () => {
   it('handles ip4 buffers', () => {
     expect(
-      convert('ip4', Buffer.from('c0a80001', 'hex'))
+      convert('ip4', uint8ArrayFromString('c0a80001', 'base16'))
     ).to.eql(
       '192.168.0.1'
     )
@@ -18,7 +16,7 @@ describe('convert', () => {
 
   it('handles ip6 buffers', () => {
     expect(
-      convert('ip6', Buffer.from('abcd0000000100020003000400050006', 'hex'))
+      convert('ip6', uint8ArrayFromString('abcd0000000100020003000400050006', 'base16'))
     ).to.eql(
       'abcd:0:1:2:3:4:5:6'
     )
@@ -28,7 +26,7 @@ describe('convert', () => {
     expect(
       convert('ip6', 'ABCD::1:2:3:4:5:6')
     ).to.eql(
-      Buffer.from('ABCD0000000100020003000400050006', 'hex')
+      uint8ArrayFromString('ABCD0000000100020003000400050006', 'base16upper')
     )
   })
 
@@ -36,7 +34,7 @@ describe('convert', () => {
     expect(
       convert('ip4', '192.168.0.1')
     ).to.eql(
-      Buffer.from('c0a80001', 'hex')
+      uint8ArrayFromString('c0a80001', 'base16')
     )
   })
 
@@ -56,19 +54,19 @@ describe('convert', () => {
     )
   })
 
-  describe('.toBuffer', () => {
+  describe('.toBytes', () => {
     it('defaults to hex conversion', () => {
       expect(
-        convert.toBuffer('ws', 'c0a80001')
+        convert.toBytes('ws', 'c0a80001')
       ).to.eql(
-        Buffer.from([192, 168, 0, 1])
+        Uint8Array.from([192, 168, 0, 1])
       )
     })
   })
 
   describe('.toString', () => {
     it('throws on inconsistent ipfs links', () => {
-      const valid = Buffer.from('03221220d52ebb89d85b02a284948203a62ff28389c57c9f42beec4ec20db76a68911c0b', 'hex')
+      const valid = uint8ArrayFromString('03221220d52ebb89d85b02a284948203a62ff28389c57c9f42beec4ec20db76a68911c0b', 'base16')
       expect(
         () => convert.toString('ipfs', valid.slice(0, valid.length - 8))
       ).to.throw(
@@ -78,7 +76,7 @@ describe('convert', () => {
 
     it('defaults to hex conversion', () => {
       expect(
-        convert.toString('ws', Buffer.from([192, 168, 0, 1]))
+        convert.toString('ws', Uint8Array.from([192, 168, 0, 1]))
       ).to.eql(
         'c0a80001'
       )

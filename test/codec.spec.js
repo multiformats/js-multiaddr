@@ -3,10 +3,8 @@
 
 const codec = require('../src/codec')
 const varint = require('varint')
-const chai = require('chai')
-const dirtyChai = require('dirty-chai')
-const expect = chai.expect
-chai.use(dirtyChai)
+const { expect } = require('aegir/utils/chai')
+const uint8ArrayFromString = require('uint8arrays/from-string')
 
 describe('codec', () => {
   describe('.stringToStringTuples', () => {
@@ -24,7 +22,7 @@ describe('codec', () => {
       expect(
         codec.stringTuplesToTuples([['ip4', '0.0.0.0'], 'utp'])
       ).to.eql(
-        [[4, Buffer.from([0, 0, 0, 0])], [302]]
+        [[4, Uint8Array.from([0, 0, 0, 0])], [302]]
       )
     })
   })
@@ -39,34 +37,34 @@ describe('codec', () => {
     })
   })
 
-  describe('.bufferToTuples', () => {
+  describe('.bytesToTuples', () => {
     it('throws on invalid address', () => {
       expect(
-        () => codec.bufferToTuples(codec.tuplesToBuffer([[4, Buffer.from('192')]]))
+        () => codec.bytesToTuples(codec.tuplesToBytes([[4, uint8ArrayFromString('192')]]))
       ).to.throw(
-        /Invalid address buffer/
+        /Invalid address/
       )
     })
   })
 
-  describe('.fromBuffer', () => {
+  describe('.fromBytes', () => {
     it('throws on invalid buffer', () => {
       expect(
-        () => codec.fromBuffer(Buffer.from('hello/world'))
+        () => codec.fromBytes(uint8ArrayFromString('hello/world'))
       ).to.throw()
     })
   })
 
-  describe('.isValidBuffer', () => {
+  describe('.isValidBytes', () => {
     it('returns true for valid buffers', () => {
       expect(
-        codec.isValidBuffer(Buffer.from(varint.encode(302)))
+        codec.isValidBytes(Uint8Array.from(varint.encode(302)))
       ).to.equal(true)
     })
 
     it('returns false for invalid buffers', () => {
       expect(
-        codec.isValidBuffer(Buffer.from(varint.encode(1234)))
+        codec.isValidBytes(Uint8Array.from(varint.encode(1234)))
       ).to.equal(false)
     })
   })
