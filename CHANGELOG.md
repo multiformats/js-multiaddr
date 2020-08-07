@@ -1,3 +1,21 @@
+<a name="8.0.0"></a>
+# [8.0.0](https://github.com/multiformats/js-multiaddr/compare/v7.5.0...v8.0.0) (2020-08-07)
+
+
+### Bug Fixes
+
+* replace node buffers with uint8arrays ([#140](https://github.com/multiformats/js-multiaddr/issues/140)) ([53398f5](https://github.com/multiformats/js-multiaddr/commit/53398f5))
+
+
+### BREAKING CHANGES
+
+* - Where node Buffers were returned, now Uint8Arrays are
+- The `.buffer` property has been renamed `.bytes` similar to cid@1.0.0
+
+* chore: downgrade aegir
+
+
+
 <a name="7.5.0"></a>
 # [7.5.0](https://github.com/multiformats/js-multiaddr/compare/v7.4.3...v7.5.0) (2020-06-25)
 
