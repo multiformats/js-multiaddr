@@ -1,9 +1,10 @@
 'use strict'
 
-const { Buffer } = require('buffer')
 const convert = require('./convert')
 const protocols = require('./protocols-table')
 const varint = require('varint')
+const uint8ArrayConcat = require('uint8arrays/concat')
+const uint8ArrayToString = require('uint8arrays/to-string')
 
 // export codec
 module.exports = {
@@ -13,16 +14,16 @@ module.exports = {
   tuplesToStringTuples,
   stringTuplesToTuples,
 
-  bufferToTuples,
-  tuplesToBuffer,
+  bytesToTuples,
+  tuplesToBytes,
 
-  bufferToString,
-  stringToBuffer,
+  bytesToString,
+  stringToBytes,
 
   fromString,
-  fromBuffer,
-  validateBuffer,
-  isValidBuffer,
+  fromBytes,
+  validateBytes,
+  isValidBytes,
   cleanPath,
 
   ParseError,
@@ -85,7 +86,7 @@ function stringTuplesToString (tuples) {
   return cleanPath(parts.join('/'))
 }
 
-// [[str name, str addr]... ] -> [[int code, Buffer]... ]
+// [[str name, str addr]... ] -> [[int code, Uint8Array]... ]
 function stringTuplesToTuples (tuples) {
   return tuples.map(tup => {
     if (!Array.isArray(tup)) {
@@ -93,13 +94,13 @@ function stringTuplesToTuples (tuples) {
     }
     const proto = protoFromTuple(tup)
     if (tup.length > 1) {
-      return [proto.code, convert.toBuffer(proto.code, tup[1])]
+      return [proto.code, convert.toBytes(proto.code, tup[1])]
     }
     return [proto.code]
   })
 }
 
-// [[int code, Buffer]... ] -> [[str name, str addr]... ]
+// [[int code, Uint8Array]... ] -> [[str name, str addr]... ]
 function tuplesToStringTuples (tuples) {
   return tuples.map(tup => {
     const proto = protoFromTuple(tup)
@@ -110,14 +111,14 @@ function tuplesToStringTuples (tuples) {
   })
 }
 
-// [[int code, Buffer ]... ] -> Buffer
-function tuplesToBuffer (tuples) {
-  return fromBuffer(Buffer.concat(tuples.map(tup => {
+// [[int code, Uint8Array ]... ] -> Uint8Array
+function tuplesToBytes (tuples) {
+  return fromBytes(uint8ArrayConcat(tuples.map(tup => {
     const proto = protoFromTuple(tup)
-    let buf = Buffer.from(varint.encode(proto.code))
+    let buf = Uint8Array.from(varint.encode(proto.code))
 
     if (tup.length > 1) {
-      buf = Buffer.concat([buf, tup[1]]) // add address buffer
+      buf = uint8ArrayConcat([buf, tup[1]]) // add address buffer
     }
 
     return buf
@@ -135,8 +136,8 @@ function sizeForAddr (p, addr) {
   }
 }
 
-// Buffer -> [[int code, Buffer ]... ]
-function bufferToTuples (buf) {
+// Uint8Array -> [[int code, Uint8Array ]... ]
+function bytesToTuples (buf) {
   const tuples = []
   let i = 0
   while (i < buf.length) {
@@ -158,7 +159,7 @@ function bufferToTuples (buf) {
     i += (size + n)
 
     if (i > buf.length) { // did not end _exactly_ at buffer.length
-      throw ParseError('Invalid address buffer: ' + buf.toString('hex'))
+      throw ParseError('Invalid address Uint8Array: ' + uint8ArrayToString(buf, 'base16'))
     }
 
     // ok, tuple seems good.
@@ -168,44 +169,44 @@ function bufferToTuples (buf) {
   return tuples
 }
 
-// Buffer -> String
-function bufferToString (buf) {
-  const a = bufferToTuples(buf)
+// Uint8Array -> String
+function bytesToString (buf) {
+  const a = bytesToTuples(buf)
   const b = tuplesToStringTuples(a)
   return stringTuplesToString(b)
 }
 
-// String -> Buffer
-function stringToBuffer (str) {
+// String -> Uint8Array
+function stringToBytes (str) {
   str = cleanPath(str)
   const a = stringToStringTuples(str)
   const b = stringTuplesToTuples(a)
 
-  return tuplesToBuffer(b)
+  return tuplesToBytes(b)
 }
 
-// String -> Buffer
+// String -> Uint8Array
 function fromString (str) {
-  return stringToBuffer(str)
+  return stringToBytes(str)
 }
 
-// Buffer -> Buffer
-function fromBuffer (buf) {
-  const err = validateBuffer(buf)
+// Uint8Array -> Uint8Array
+function fromBytes (buf) {
+  const err = validateBytes(buf)
   if (err) throw err
-  return Buffer.from(buf) // copy
+  return Uint8Array.from(buf) // copy
 }
 
-function validateBuffer (buf) {
+function validateBytes (buf) {
   try {
-    bufferToTuples(buf) // try to parse. will throw if breaks
+    bytesToTuples(buf) // try to parse. will throw if breaks
   } catch (err) {
     return err
   }
 }
 
-function isValidBuffer (buf) {
-  return validateBuffer(buf) === undefined
+function isValidBytes (buf) {
+  return validateBytes(buf) === undefined
 }
 
 function cleanPath (str) {

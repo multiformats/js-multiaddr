@@ -1,20 +1,20 @@
 'use strict'
 
 const codec = require('./codec')
-const { Buffer } = require('buffer')
 const protocols = require('./protocols-table')
 const varint = require('varint')
-const multibase = require('multibase')
 const CID = require('cids')
 const withIs = require('class-is')
 const inspect = Symbol.for('nodejs.util.inspect.custom')
+const uint8ArrayToString = require('uint8arrays/to-string')
+const uint8ArrayEquals = require('uint8arrays/equals')
 
 /**
  * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
- * a Buffer, String or another Multiaddr instance
+ * a Uint8Array, String or another Multiaddr instance
  * public key.
  * @class Multiaddr
- * @param {(String|Buffer|Multiaddr)} addr - If String or Buffer, needs to adhere
+ * @param {(String|Uint8Array|Multiaddr)} addr - If String or Uint8Array, needs to adhere
  * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001')
@@ -30,18 +30,18 @@ const Multiaddr = withIs.proto(function (addr) {
     addr = ''
   }
 
-  if (addr instanceof Buffer) {
+  if (addr instanceof Uint8Array) {
     /**
-     * @type {Buffer} - The raw bytes representing this multiaddress
+     * @type {Uint8Array} - The raw bytes representing this multiaddress
      */
-    this.buffer = codec.fromBuffer(addr)
+    this.bytes = codec.fromBytes(addr)
   } else if (typeof addr === 'string' || addr instanceof String) {
     if (addr.length > 0 && addr.charAt(0) !== '/') {
       throw new Error(`multiaddr "${addr}" must start with a "/"`)
     }
-    this.buffer = codec.fromString(addr)
-  } else if (addr.buffer && addr.protos && addr.protoCodes) { // Multiaddr
-    this.buffer = codec.fromBuffer(addr.buffer) // validate + copy buffer
+    this.bytes = codec.fromString(addr)
+  } else if (addr.bytes && addr.protos && addr.protoCodes) { // Multiaddr
+    this.bytes = codec.fromBytes(addr.bytes) // validate + copy buffer
   } else {
     throw new Error('addr must be a string, Buffer, or another Multiaddr')
   }
@@ -56,7 +56,7 @@ const Multiaddr = withIs.proto(function (addr) {
  * // '/ip4/127.0.0.1/tcp/4001'
  */
 Multiaddr.prototype.toString = function toString () {
-  return codec.bufferToString(this.buffer)
+  return codec.bytesToString(this.bytes)
 }
 
 /**
@@ -99,8 +99,8 @@ Multiaddr.prototype.toOptions = function toOptions () {
  */
 Multiaddr.prototype[inspect] = function inspectCustom () {
   return '<Multiaddr ' +
-    this.buffer.toString('hex') + ' - ' +
-    codec.bufferToString(this.buffer) + '>'
+    uint8ArrayToString(this.bytes, 'base16') + ' - ' +
+    codec.bytesToString(this.bytes) + '>'
 }
 
 /**
@@ -115,8 +115,8 @@ Multiaddr.prototype[inspect] = function inspectCustom () {
  */
 Multiaddr.prototype.inspect = function inspect () {
   return '<Multiaddr ' +
-    this.buffer.toString('hex') + ' - ' +
-    codec.bufferToString(this.buffer) + '>'
+    uint8ArrayToString(this.bytes, 'base16') + ' - ' +
+    codec.bytesToString(this.bytes) + '>'
 }
 
 /**
@@ -149,7 +149,7 @@ Multiaddr.prototype.protos = function protos () {
  */
 Multiaddr.prototype.protoCodes = function protoCodes () {
   const codes = []
-  const buf = this.buffer
+  const buf = this.bytes
   let i = 0
   while (i < buf.length) {
     const code = varint.decode(buf, i)
@@ -189,7 +189,7 @@ Multiaddr.prototype.protoNames = function protoNames () {
  * // [ [ 4, <Buffer 7f 00 00 01> ], [ 6, <Buffer 0f a1> ] ]
  */
 Multiaddr.prototype.tuples = function tuples () {
-  return codec.bufferToTuples(this.buffer)
+  return codec.bytesToTuples(this.bytes)
 }
 
 /**
@@ -203,7 +203,7 @@ Multiaddr.prototype.tuples = function tuples () {
  * // [ [ 4, '127.0.0.1' ], [ 6, 4001 ] ]
  */
 Multiaddr.prototype.stringTuples = function stringTuples () {
-  const t = codec.bufferToTuples(this.buffer)
+  const t = codec.bytesToTuples(this.bytes)
   return codec.tuplesToStringTuples(t)
 }
 
@@ -280,7 +280,7 @@ Multiaddr.prototype.decapsulateCode = function decapsulateCode (code) {
   const tuples = this.tuples()
   for (let i = tuples.length - 1; i >= 0; i--) {
     if (tuples[i][0] === code) {
-      return Multiaddr(codec.tuplesToBuffer(tuples.slice(0, i)))
+      return Multiaddr(codec.tuplesToBytes(tuples.slice(0, i)))
     }
   }
   return this
@@ -309,7 +309,7 @@ Multiaddr.prototype.getPeerId = function getPeerId () {
     // Get the last id
     b58str = tuples.pop()[1]
     // Get multihash, unwrap from CID if needed
-    b58str = multibase.encode('base58btc', new CID(b58str).multihash).toString().slice(1)
+    b58str = uint8ArrayToString(new CID(b58str).multihash, 'base58btc')
   } catch (e) {
     b58str = null
   }
@@ -363,7 +363,7 @@ Multiaddr.prototype.getPath = function getPath () {
  * // false
  */
 Multiaddr.prototype.equals = function equals (addr) {
-  return this.buffer.equals(addr.buffer)
+  return uint8ArrayEquals(this.bytes, addr.bytes)
 }
 
 /**

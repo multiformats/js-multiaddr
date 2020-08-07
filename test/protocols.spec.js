@@ -2,10 +2,7 @@
 'use strict'
 
 const protocols = require('../src/protocols-table')
-const chai = require('chai')
-const dirtyChai = require('dirty-chai')
-const expect = chai.expect
-chai.use(dirtyChai)
+const { expect } = require('aegir/utils/chai')
 
 describe('protocols', () => {
   describe('throws on non existent protocol', () => {

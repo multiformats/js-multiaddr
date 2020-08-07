@@ -2,14 +2,14 @@ JavaScript implementation of [Multiaddr](https://github.com/multiformats/multiad
 
 ## What is multiaddr?
 
-Multiaddr is a standard way to represent addresses that: 
+Multiaddr is a standard way to represent addresses that:
 - Support any standard network protocols.
 - Self-describe (include protocols).
 - Have a binary packed format.
 - Have a nice string representation.
 - Encapsulate well.
 
-You can read more about what Multiaddr is in the language-independent Github repository: 
+You can read more about what Multiaddr is in the language-independent Github repository:
 https://github.com/multiformats/multiaddr
 
 Multiaddr is a part of a group of values called [Multiformats](https://github.com/multiformats/multiformats)
@@ -22,8 +22,8 @@ var Multiaddr = require('multiaddr')
 var home = new Multiaddr('/ip4/127.0.0.1/tcp/80')
 // <Multiaddr 047f000001060050 - /ip4/127.0.0.1/tcp/80>
 
-home.buffer
-// <Buffer 04 7f 00 00 01 06 00 50>
+home.bytes
+// <Uint8Array 04 7f 00 00 01 06 00 50>
 
 home.toString()
 // '/ip4/127.0.0.1/tcp/80'

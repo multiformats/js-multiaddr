@@ -5,9 +5,9 @@ var log = console.log
 
 var addr = multiaddr('/ip4/127.0.0.1/udp/1234')
 log(addr)
-log(addr.buffer)
+log(addr.bytes)
 log(addr.toString())
-log(multiaddr(addr.buffer))
+log(multiaddr(addr.bytes))
 
 log(addr.protoCodes())
 log(addr.protoNames())
