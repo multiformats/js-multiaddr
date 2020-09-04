@@ -77,8 +77,6 @@ the global namespace.
 
 ```html
 <script src="https://unpkg.com/multiaddr/dist/index.min.js"></script>
-<!-- OR -->
-<script src="https://unpkg.com/multiaddr/dist/index.js"></script>
 ```
 
 ## Usage
