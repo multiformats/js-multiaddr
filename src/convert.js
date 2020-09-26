@@ -110,7 +110,7 @@ function port2bytes (port) {
 
 function bytes2port (buf) {
   const view = new DataView(buf.buffer)
-  return view.getUint16(0)
+  return view.getUint16(buf.byteOffset)
 }
 
 function str2bytes (str) {
