@@ -5,6 +5,7 @@ const protocols = require('./protocols-table')
 const varint = require('varint')
 const CID = require('cids')
 const withIs = require('class-is')
+const errCode = require('err-code')
 const inspect = Symbol.for('nodejs.util.inspect.custom')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const uint8ArrayEquals = require('uint8arrays/equals')
@@ -45,6 +46,8 @@ const Multiaddr = withIs.proto(function (addr) {
   } else {
     throw new Error('addr must be a string, Buffer, or another Multiaddr')
   }
+
+  this.resolvers = new Map()
 }, { className: 'Multiaddr', symbolName: '@multiformats/js-multiaddr/multiaddr' })
 
 /**
@@ -364,6 +367,51 @@ Multiaddr.prototype.getPath = function getPath () {
  */
 Multiaddr.prototype.equals = function equals (addr) {
   return uint8ArrayEquals(this.bytes, addr.bytes)
+}
+
+/**
+ * Resolve multiaddr if containing resolvable hostname.
+ *
+ * @param {object} options
+ * @param {bool} [options.recursive = true] recursive resolve until no resolvable multiaddr reached
+ * @returns {Promise<Array<Multiaddr>>}
+ * @example
+ * const mh1 = Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
+ * mh1.resolvers.set('dnsaddr', resolverFunction)
+ * const resolvedMultiaddrs = await mh1.resolve()
+ * // [
+ * //   <Multiaddr 04934b5353060fa1a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>,
+ * //   <Multiaddr 04934b53530601bbde03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/443/wss/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>,
+ * //   <Multiaddr 04934b535391020fa1cc03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/udp/4001/quic/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>
+ * // ]
+ */
+Multiaddr.prototype.resolve = async function resolve ({ recursive = true } = {}) {
+  const resolvableProto = this.protos().find((p) => p.resolvable)
+
+  // Multiaddr is not resolvable?
+  if (!resolvableProto) {
+    return this
+  }
+
+  const resolver = this.resolvers.get(resolvableProto.name)
+  if (!resolver) {
+    throw errCode(new Error(`no available resolver for ${resolvableProto.name}`), 'ERR_NO_AVAILABLE_RESOLVER')
+  }
+
+  const addresses = await resolver(this)
+  const newMultiaddrs = addresses.map(a => Multiaddr(a))
+
+  if (!recursive) {
+    return newMultiaddrs
+  }
+
+  // Inject Resolvers and resolve
+  const recursiveMultiaddrs = await Promise.all(newMultiaddrs.map((nm) => {
+    nm.resolvers = this.resolvers
+    return nm.resolve()
+  }))
+
+  return recursiveMultiaddrs.flat()
 }
 
 /**

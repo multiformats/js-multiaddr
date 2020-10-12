@@ -52,6 +52,8 @@ declare class Multiaddr {
 
   bytes: Uint8Array;
 
+  resolvers: Map<string, (addr: Multiaddr) => Promise<Array<string>>>
+
   /**
    * Returns Multiaddr as a String
    */
@@ -152,6 +154,11 @@ declare class Multiaddr {
    * `{IPv4, IPv6}/{TCP, UDP}`
    */
   isThinWaistAddress(addr?: Multiaddr): boolean;
+
+  /**
+   * Resolve multiaddr if containing resolvable hostname.
+   */
+  resolve(options?: object): Promise<Array<Multiaddr>>
 }
 
 declare namespace Multiaddr {
