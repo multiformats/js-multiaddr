@@ -373,7 +373,6 @@ Multiaddr.prototype.equals = function equals (addr) {
  * Resolve multiaddr if containing resolvable hostname.
  *
  * @param {object} options
- * @param {bool} [options.recursive = true] recursive resolve until no resolvable multiaddr reached
  * @returns {Promise<Array<Multiaddr>>}
  * @example
  * const mh1 = Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
@@ -385,12 +384,12 @@ Multiaddr.prototype.equals = function equals (addr) {
  * //   <Multiaddr 04934b535391020fa1cc03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/udp/4001/quic/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>
  * // ]
  */
-Multiaddr.prototype.resolve = async function resolve ({ recursive = true } = {}) {
+Multiaddr.prototype.resolve = async function resolve () {
   const resolvableProto = this.protos().find((p) => p.resolvable)
 
   // Multiaddr is not resolvable?
   if (!resolvableProto) {
-    return this
+    return [this]
   }
 
   const resolver = this.resolvers.get(resolvableProto.name)
@@ -399,19 +398,7 @@ Multiaddr.prototype.resolve = async function resolve ({ recursive = true } = {})
   }
 
   const addresses = await resolver(this)
-  const newMultiaddrs = addresses.map(a => Multiaddr(a))
-
-  if (!recursive) {
-    return newMultiaddrs
-  }
-
-  // Inject Resolvers and resolve
-  const recursiveMultiaddrs = await Promise.all(newMultiaddrs.map((nm) => {
-    nm.resolvers = this.resolvers
-    return nm.resolve()
-  }))
-
-  return recursiveMultiaddrs.flat()
+  return addresses.map(a => Multiaddr(a))
 }
 
 /**

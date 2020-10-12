@@ -158,7 +158,7 @@ declare class Multiaddr {
   /**
    * Resolve multiaddr if containing resolvable hostname.
    */
-  resolve(options?: object): Promise<Array<Multiaddr>>
+  resolve(): Promise<Array<Multiaddr>>
 }
 
 declare namespace Multiaddr {
