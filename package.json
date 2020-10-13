@@ -37,7 +37,7 @@
   "dependencies": {
     "cids": "^1.0.0",
     "class-is": "^1.1.0",
-    "dns-over-http-resolver": "vasco-santos/dns-over-http-resolver#feat/initial-implementation",
+    "dns-over-http-resolver": "^1.0.0",
     "err-code": "^2.0.3",
     "is-ip": "^3.1.0",
     "multibase": "^3.0.0",
