@@ -18,9 +18,6 @@
     "docs": "aegir docs",
     "size": "aegir build -b"
   },
-  "browser": {
-    "./src/resolvers/dns.js": "./src/resolvers/dns.browser.js"
-  },
   "files": [
     "src",
     "dist"

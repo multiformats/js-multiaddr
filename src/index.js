@@ -10,6 +10,8 @@ const inspect = Symbol.for('nodejs.util.inspect.custom')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const uint8ArrayEquals = require('uint8arrays/equals')
 
+const resolvers = new Map()
+
 /**
  * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
  * a Uint8Array, String or another Multiaddr instance
@@ -46,8 +48,6 @@ const Multiaddr = withIs.proto(function (addr) {
   } else {
     throw new Error('addr must be a string, Buffer, or another Multiaddr')
   }
-
-  this.resolvers = new Map()
 }, { className: 'Multiaddr', symbolName: '@multiformats/js-multiaddr/multiaddr' })
 
 /**
@@ -375,8 +375,8 @@ Multiaddr.prototype.equals = function equals (addr) {
  * @param {object} options
  * @returns {Promise<Array<Multiaddr>>}
  * @example
+ * Multiaddr.resolvers.set('dnsaddr', resolverFunction)
  * const mh1 = Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
- * mh1.resolvers.set('dnsaddr', resolverFunction)
  * const resolvedMultiaddrs = await mh1.resolve()
  * // [
  * //   <Multiaddr 04934b5353060fa1a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>,
@@ -392,7 +392,7 @@ Multiaddr.prototype.resolve = async function resolve () {
     return [this]
   }
 
-  const resolver = this.resolvers.get(resolvableProto.name)
+  const resolver = resolvers.get(resolvableProto.name)
   if (!resolver) {
     throw errCode(new Error(`no available resolver for ${resolvableProto.name}`), 'ERR_NO_AVAILABLE_RESOLVER')
   }
@@ -551,4 +551,5 @@ Multiaddr.resolve = function resolve (addr) {
   return Promise.reject(new Error('not implemented yet'))
 }
 
+Multiaddr.resolvers = resolvers
 exports = module.exports = Multiaddr

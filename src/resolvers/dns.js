@@ -1,3 +1,11 @@
 'use strict'
 
-module.exports = require('dns').promises
+let dns
+
+try {
+  dns = require('dns').promises
+} catch (err) {
+  dns = require('dns-over-http-resolver')
+}
+
+module.exports = dns

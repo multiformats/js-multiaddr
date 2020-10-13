@@ -30,6 +30,7 @@ js-multiaddr
       - [Browser: `<script>` Tag](#browser-script-tag)
   - [Usage](#usage)
   - [API](#api)
+  - [Resolvers](#resolvers)
   - [Contribute](#contribute)
   - [License](#license)
 
@@ -116,6 +117,25 @@ $ node
 ## API
 
 https://multiformats.github.io/js-multiaddr/
+
+## Resolvers
+
+`multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own. To provide multiaddr resolvers you can do:
+
+```js
+const multiaddr = require('multiaddr')
+const resolvers = require('multiaddr/src/resolvers')
+
+multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+```
+
+The available resolvers are:
+
+|     Name    | type | Description |
+|-------------|------|-------------|
+| `dnsaddrResolver` | `dnsaddr` | dnsaddr resolution with TXT Records |
+
+A resolver receives a `Multiaddr` as a parameter and returns a `Promise<Array<string>>`.
 
 ## Contribute
 

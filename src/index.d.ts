@@ -52,8 +52,6 @@ declare class Multiaddr {
 
   bytes: Uint8Array;
 
-  resolvers: Map<string, (addr: Multiaddr) => Promise<Array<string>>>
-
   /**
    * Returns Multiaddr as a String
    */
@@ -162,6 +160,8 @@ declare class Multiaddr {
 }
 
 declare namespace Multiaddr {
+  const resolvers: Map < string, (addr: Multiaddr) => Promise < Array < string >>>
+
   /**
    * Creates a Multiaddr from a node-friendly address object
    */

@@ -1,6 +1,9 @@
 'use strict'
 
 const Multiaddr = require('..') // eslint-disable-line  no-unused-vars
+const protocols = require('../protocols-table')
+
+const { code: dnsaddrCode } = protocols('dnsaddr')
 
 /**
  * Resolver for dnsaddr addresses.
@@ -13,7 +16,7 @@ async function dnsaddrResolver (addr) {
   const resolver = new Resolver()
 
   const peerId = addr.getPeerId()
-  const hostname = addr.toString().split('dnsaddr')[1].split('/')[1]
+  const [, hostname] = addr.stringTuples().find(([proto]) => proto === dnsaddrCode) || []
 
   const records = await resolver.resolveTxt(`_dnsaddr.${hostname}`)
   // @ts-ignore

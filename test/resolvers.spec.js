@@ -27,17 +27,22 @@ const dnsaddrStub2 = [
 ]
 
 describe('multiaddr resolve', () => {
+  it('should throw if no resolver is available', async () => {
+    const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
+
+    // Resolve
+    await expect(ma.resolve()).to.eventually.be.rejected()
+      .and.to.have.property('code', 'ERR_NO_AVAILABLE_RESOLVER')
+  })
+
   describe('dnsaddr', () => {
-    afterEach(() => {
-      sinon.restore()
+    before(() => {
+      // Set resolvers
+      multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
     })
 
-    it('should throw if no resolver is available', async () => {
-      const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
-
-      // Resolve
-      await expect(ma.resolve()).to.eventually.be.rejected()
-        .and.to.have.property('code', 'ERR_NO_AVAILABLE_RESOLVER')
+    afterEach(() => {
+      sinon.restore()
     })
 
     it('can resolve dnsaddr without no peerId', async () => {
@@ -47,7 +52,7 @@ describe('multiaddr resolve', () => {
       stub.onCall(0).returns(Promise.resolve(dnsaddrStub1))
 
       // Set resolvers
-      ma.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+      // ma.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 
       // Resolve
       const resolvedMas = await ma.resolve()
@@ -68,7 +73,7 @@ describe('multiaddr resolve', () => {
       stub.onCall(1).returns(Promise.resolve(dnsaddrStub2))
 
       // Set resolvers
-      ma.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+      // ma.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 
       // Resolve
       const resolvedMas = await ma.resolve()
@@ -85,12 +90,12 @@ describe('multiaddr resolve', () => {
       stub.onCall(1).returns(Promise.resolve(dnsaddrStub2))
 
       // Set resolvers
-      ma.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+      // ma.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 
       // Resolve
       const resolvedInitialMas = await ma.resolve()
       const resolvedSecondMas = await Promise.all(resolvedInitialMas.map(nm => {
-        nm.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+        //  nm.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
         return nm.resolve()
       }))
       // @ts-ignore
