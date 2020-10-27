@@ -16,8 +16,9 @@ const resolvers = new Map()
  * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
  * a Uint8Array, String or another Multiaddr instance
  * public key.
+ *
  * @class Multiaddr
- * @param {(String|Uint8Array|Multiaddr)} addr - If String or Uint8Array, needs to adhere
+ * @param {(string | Uint8Array | Multiaddr)} addr - If String or Uint8Array, needs to adhere
  * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001')
@@ -53,7 +54,7 @@ const Multiaddr = withIs.proto(function (addr) {
 /**
  * Returns Multiaddr as a String
  *
- * @returns {String}
+ * @returns {string}
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001').toString()
  * // '/ip4/127.0.0.1/tcp/4001'
@@ -65,7 +66,7 @@ Multiaddr.prototype.toString = function toString () {
 /**
  * Returns Multiaddr as a JSON encoded object
  *
- * @returns {String}
+ * @returns {string}
  * @example
  * JSON.stringify(Multiaddr('/ip4/127.0.0.1/tcp/4001'))
  * // '/ip4/127.0.0.1/tcp/4001'
@@ -75,7 +76,7 @@ Multiaddr.prototype.toJSON = Multiaddr.prototype.toString
 /**
  * Returns Multiaddr as a convinient options object to be used with net.createConnection
  *
- * @returns {{family: String, host: String, transport: String, port: Number}}
+ * @returns {{family: string, host: string, transport: string, port: number}}
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001').toOptions()
  * // { family: 'ipv4', host: '127.0.0.1', transport: 'tcp', port: 4001 }
@@ -95,7 +96,7 @@ Multiaddr.prototype.toOptions = function toOptions () {
  * For post Node.js v10.0.0.
  * https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect
  *
- * @returns {String}
+ * @returns {string}
  * @example
  * console.log(Multiaddr('/ip4/127.0.0.1/tcp/4001'))
  * // '<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>'
@@ -111,7 +112,7 @@ Multiaddr.prototype[inspect] = function inspectCustom () {
  * Fallback for pre Node.js v10.0.0.
  * https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect
  *
- * @returns {String}
+ * @returns {string}
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001').inspect()
  * // '<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>'
@@ -123,15 +124,21 @@ Multiaddr.prototype.inspect = function inspect () {
 }
 
 /**
+ * @typedef {object} protocol
+ * @property {number} code
+ * @property {number} size
+ * @property {string} name
+ * @property {boolean} [resolvable]
+ * @property {boolean} [path]
+ */
+
+/**
  * Returns the protocols the Multiaddr is defined with, as an array of objects, in
  * left-to-right order. Each object contains the protocol code, protocol name,
  * and the size of its address space in bits.
  * [See list of protocols](https://github.com/multiformats/multiaddr/blob/master/protocols.csv)
  *
- * @returns {Array.<Object>} protocols - All the protocols the address is composed of
- * @returns {Number} protocols[].code
- * @returns {Number} protocols[].size
- * @returns {String} protocols[].name
+ * @returns {protocol[]} protocols - All the protocols the address is composed of
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001').protos()
  * // [ { code: 4, size: 32, name: 'ip4' },
@@ -145,7 +152,7 @@ Multiaddr.prototype.protos = function protos () {
  * Returns the codes of the protocols in left-to-right order.
  * [See list of protocols](https://github.com/multiformats/multiaddr/blob/master/protocols.csv)
  *
- * @returns {Array.<Number>} protocol codes
+ * @returns {Array<number>} protocol codes
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001').protoCodes()
  * // [ 4, 6 ]
@@ -172,7 +179,7 @@ Multiaddr.prototype.protoCodes = function protoCodes () {
  * Returns the names of the protocols in left-to-right order.
  * [See list of protocols](https://github.com/multiformats/multiaddr/blob/master/protocols.csv)
  *
- * @return {Array.<String>} protocol names
+ * @returns {Array.<string>} protocol names
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001').protoNames()
  * // [ 'ip4', 'tcp' ]
@@ -184,9 +191,7 @@ Multiaddr.prototype.protoNames = function protoNames () {
 /**
  * Returns a tuple of parts
  *
- * @return {Array.<Array>} tuples
- * @return {Number} tuples[].0 code of protocol
- * @return {Buffer} tuples[].1 contents of address
+ * @returns {[number, Uint8Array][]} tuples
  * @example
  * Multiaddr("/ip4/127.0.0.1/tcp/4001").tuples()
  * // [ [ 4, <Buffer 7f 00 00 01> ], [ 6, <Buffer 0f a1> ] ]
@@ -197,10 +202,10 @@ Multiaddr.prototype.tuples = function tuples () {
 
 /**
  * Returns a tuple of string/number parts
+ * - tuples[][0] = code of protocol
+ * - tuples[][1] = contents of address
  *
- * @return {Array.<Array>} tuples
- * @return {Number} tuples[].0 code of protocol
- * @return {(String|Number)} tuples[].1 contents of address
+ * @returns {[number, string|number][]} tuples
  * @example
  * Multiaddr("/ip4/127.0.0.1/tcp/4001").stringTuples()
  * // [ [ 4, '127.0.0.1' ], [ 6, 4001 ] ]
@@ -214,7 +219,7 @@ Multiaddr.prototype.stringTuples = function stringTuples () {
  * Encapsulates a Multiaddr in another Multiaddr
  *
  * @param {Multiaddr} addr - Multiaddr to add into this Multiaddr
- * @return {Multiaddr}
+ * @returns {Multiaddr}
  * @example
  * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
  * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
@@ -237,7 +242,7 @@ Multiaddr.prototype.encapsulate = function encapsulate (addr) {
  * Decapsulates a Multiaddr from another Multiaddr
  *
  * @param {Multiaddr} addr - Multiaddr to remove from this Multiaddr
- * @return {Multiaddr}
+ * @returns {Multiaddr}
  * @example
  * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
  * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
@@ -267,8 +272,8 @@ Multiaddr.prototype.decapsulate = function decapsulate (addr) {
  * will be removed from the `Multiaddr`, and a new instance will be returned.
  * If the code is not present, the original `Multiaddr` is returned.
  *
- * @param {Number} code The code of the protocol to decapsulate from this Multiaddr
- * @return {Multiaddr}
+ * @param {number} code - The code of the protocol to decapsulate from this Multiaddr
+ * @returns {Multiaddr}
  * @example
  * const addr = Multiaddr('/ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
  * // <Multiaddr 0400... - /ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC>
@@ -292,7 +297,7 @@ Multiaddr.prototype.decapsulateCode = function decapsulateCode (code) {
 /**
  * Extract the peerId if the multiaddr contains one
  *
- * @return {String|null} peerId - The id of the peer or null if invalid or missing from the ma
+ * @returns {string | null} peerId - The id of the peer or null if invalid or missing from the ma
  * @example
  * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string')
  * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string>
@@ -323,7 +328,7 @@ Multiaddr.prototype.getPeerId = function getPeerId () {
 /**
  * Extract the path if the multiaddr contains one
  *
- * @return {String|null} path - The path of the multiaddr, or null if no path protocol is present
+ * @returns {string | null} path - The path of the multiaddr, or null if no path protocol is present
  * @example
  * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock')
  * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock>
@@ -351,7 +356,7 @@ Multiaddr.prototype.getPath = function getPath () {
  * Checks if two Multiaddrs are the same
  *
  * @param {Multiaddr} addr
- * @return {Bool}
+ * @returns {Bool}
  * @example
  * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
  * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
@@ -372,7 +377,6 @@ Multiaddr.prototype.equals = function equals (addr) {
 /**
  * Resolve multiaddr if containing resolvable hostname.
  *
- * @param {object} options
  * @returns {Promise<Array<Multiaddr>>}
  * @example
  * Multiaddr.resolvers.set('dnsaddr', resolverFunction)
@@ -408,7 +412,7 @@ Multiaddr.prototype.resolve = async function resolve () {
  *
  * Has to be a ThinWaist Address, otherwise throws error
  *
- * @returns {{family: String, address: String, port: Number}}
+ * @returns {{family: string, address: string, port: number}}
  * @throws {Error} Throws error if Multiaddr is not a Thin Waist address
  * @example
  * Multiaddr('/ip4/127.0.0.1/tcp/4001').nodeAddress()
@@ -437,8 +441,8 @@ Multiaddr.prototype.nodeAddress = function nodeAddress () {
 /**
  * Creates a Multiaddr from a node-friendly address object
  *
- * @param {{family: String, address: String, port: Number}} addr
- * @param {String} transport
+ * @param {{family: string, address: string, port: number}} addr
+ * @param {string} transport
  * @returns {Multiaddr} multiaddr
  * @throws {Error} Throws error if addr is not truthy
  * @throws {Error} Throws error if transport is not truthy
@@ -472,7 +476,7 @@ Multiaddr.fromNodeAddress = function fromNodeAddress (addr, transport) {
  * `{IPv4, IPv6}/{TCP, UDP}`
  *
  * @param {Multiaddr} [addr] - Defaults to using `this` instance
- * @returns {Boolean} isThinWaistAddress
+ * @returns {boolean} isThinWaistAddress
  * @example
  * const mh1 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
  * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
@@ -520,7 +524,7 @@ Multiaddr.protocols = protocols
  * Returns if something is a Multiaddr that is a name
  *
  * @param {Multiaddr} addr
- * @return {Bool} isName
+ * @returns {Bool} isName
  */
 Multiaddr.isName = function isName (addr) {
   if (!Multiaddr.isMultiaddr(addr)) {
@@ -536,7 +540,7 @@ Multiaddr.isName = function isName (addr) {
  *
  * @async
  * @param {Multiaddr} addr
- * @return {Multiaddr[]}
+ * @returns {Multiaddr[]}
  */
 Multiaddr.resolve = function resolve (addr) {
   if (!Multiaddr.isMultiaddr(addr) || !Multiaddr.isName(addr)) {
