@@ -201,10 +201,6 @@ Multiaddr.prototype.tuples = function tuples () {
 }
 
 /**
- *
- */
-
-/**
  * Returns a tuple of string/number parts
  * - tuples[][0] = code of protocol
  * - tuples[][1] = contents of address
