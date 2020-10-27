@@ -12,9 +12,10 @@
     "test:browser": "aegir test -t browser",
     "test:types": "npx tsc",
     "build": "aegir build",
-    "release": "aegir release",
-    "release-minor": "aegir release --type minor",
-    "release-major": "aegir release --type major",
+    "prerelease": "npm run test:node && npm run test:browser",
+    "release": "aegir release --no-test",
+    "release-minor": "aegir release --type minor --no-test",
+    "release-major": "aegir release --type major --no-test",
     "docs": "aegir docs",
     "size": "aegir build -b"
   },
