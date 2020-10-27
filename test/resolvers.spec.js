@@ -51,9 +51,6 @@ describe('multiaddr resolve', () => {
       const stub = sinon.stub(Resolver.prototype, 'resolveTxt')
       stub.onCall(0).returns(Promise.resolve(dnsaddrStub1))
 
-      // Set resolvers
-      // ma.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
-
       // Resolve
       const resolvedMas = await ma.resolve()
 
@@ -72,9 +69,6 @@ describe('multiaddr resolve', () => {
       stub.onCall(0).returns(Promise.resolve(dnsaddrStub1))
       stub.onCall(1).returns(Promise.resolve(dnsaddrStub2))
 
-      // Set resolvers
-      // ma.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
-
       // Resolve
       const resolvedMas = await ma.resolve()
 
@@ -88,9 +82,6 @@ describe('multiaddr resolve', () => {
       const stub = sinon.stub(Resolver.prototype, 'resolveTxt')
       stub.onCall(0).returns(Promise.resolve(dnsaddrStub1))
       stub.onCall(1).returns(Promise.resolve(dnsaddrStub2))
-
-      // Set resolvers
-      // ma.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 
       // Resolve
       const resolvedInitialMas = await ma.resolve()

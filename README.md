@@ -120,7 +120,8 @@ https://multiformats.github.io/js-multiaddr/
 
 ## Resolvers
 
-`multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own. To provide multiaddr resolvers you can do:
+`multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree. 
+To provide multiaddr resolvers you can do:
 
 ```js
 const multiaddr = require('multiaddr')
