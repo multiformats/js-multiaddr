@@ -5,9 +5,12 @@ const protocols = require('./protocols-table')
 const varint = require('varint')
 const CID = require('cids')
 const withIs = require('class-is')
+const errCode = require('err-code')
 const inspect = Symbol.for('nodejs.util.inspect.custom')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const uint8ArrayEquals = require('uint8arrays/equals')
+
+const resolvers = new Map()
 
 /**
  * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
@@ -367,6 +370,38 @@ Multiaddr.prototype.equals = function equals (addr) {
 }
 
 /**
+ * Resolve multiaddr if containing resolvable hostname.
+ *
+ * @param {object} options
+ * @returns {Promise<Array<Multiaddr>>}
+ * @example
+ * Multiaddr.resolvers.set('dnsaddr', resolverFunction)
+ * const mh1 = Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
+ * const resolvedMultiaddrs = await mh1.resolve()
+ * // [
+ * //   <Multiaddr 04934b5353060fa1a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>,
+ * //   <Multiaddr 04934b53530601bbde03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/443/wss/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>,
+ * //   <Multiaddr 04934b535391020fa1cc03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/udp/4001/quic/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>
+ * // ]
+ */
+Multiaddr.prototype.resolve = async function resolve () {
+  const resolvableProto = this.protos().find((p) => p.resolvable)
+
+  // Multiaddr is not resolvable?
+  if (!resolvableProto) {
+    return [this]
+  }
+
+  const resolver = resolvers.get(resolvableProto.name)
+  if (!resolver) {
+    throw errCode(new Error(`no available resolver for ${resolvableProto.name}`), 'ERR_NO_AVAILABLE_RESOLVER')
+  }
+
+  const addresses = await resolver(this)
+  return addresses.map(a => Multiaddr(a))
+}
+
+/**
  * Gets a Multiaddrs node-friendly address object. Note that protocol information
  * is left out: in Node (and most network systems) the protocol is unknowable
  * given only the address.
@@ -516,4 +551,5 @@ Multiaddr.resolve = function resolve (addr) {
   return Promise.reject(new Error('not implemented yet'))
 }
 
+Multiaddr.resolvers = resolvers
 exports = module.exports = Multiaddr

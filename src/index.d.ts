@@ -152,9 +152,16 @@ declare class Multiaddr {
    * `{IPv4, IPv6}/{TCP, UDP}`
    */
   isThinWaistAddress(addr?: Multiaddr): boolean;
+
+  /**
+   * Resolve multiaddr if containing resolvable hostname.
+   */
+  resolve(): Promise<Array<Multiaddr>>
 }
 
 declare namespace Multiaddr {
+  const resolvers: Map < string, (addr: Multiaddr) => Promise < Array < string >>>
+
   /**
    * Creates a Multiaddr from a node-friendly address object
    */
