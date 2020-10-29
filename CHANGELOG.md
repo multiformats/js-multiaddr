@@ -1,3 +1,12 @@
+# [8.1.0](https://github.com/multiformats/js-multiaddr/compare/v8.0.0...v8.1.0) (2020-10-29)
+
+
+### Features
+
+* resolve multiaddrs ([#149](https://github.com/multiformats/js-multiaddr/issues/149)) ([525268b](https://github.com/multiformats/js-multiaddr/commit/525268b3727bb9413e58322059d6ece7ec65e7f7))
+
+
+
 <a name="8.0.0"></a>
 # [8.0.0](https://github.com/multiformats/js-multiaddr/compare/v7.5.0...v8.0.0) (2020-08-07)
 
