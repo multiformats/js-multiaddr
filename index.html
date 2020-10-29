@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>multiaddr 8.0.0 | Documentation</title>
+  <title>multiaddr 8.1.0 | Documentation</title>
   <meta name='description' content='multiaddr implementation (binary + string representation of network addresses)'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>multiaddr</h3>
-          <div class='mb1'><code>8.0.0</code></div>
+          <div class='mb1'><code>8.1.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -177,6 +177,12 @@
                       </a></li>
                       
                       <li><a
+                        href='#multiaddrresolve'
+                        class='regular pre-open'>
+                        #resolve
+                      </a></li>
+                      
+                      <li><a
                         href='#multiaddrnodeaddress'
                         class='regular pre-open'>
                         #nodeAddress
@@ -201,6 +207,16 @@
                   href='#bytes'
                   class="">
                   bytes
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#protocol'
+                  class="">
+                  protocol
                   
                 </a>
                 
@@ -297,7 +313,7 @@ the global namespace.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L23-L48'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L27-L52'>
       <span>src/index.js</span>
       </a>
     
@@ -308,7 +324,7 @@ the global namespace.</p>
 a Uint8Array, String or another Multiaddr instance
 public key.</p>
 
-    <div class='pre p1 fill-light mt0'>new Multiaddr(addr: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a> | <a href="#multiaddr">Multiaddr</a>))</div>
+    <div class='pre p1 fill-light mt0'>new Multiaddr(addr: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a> | <a href="#multiaddr">Multiaddr</a>))</div>
   
   
 
@@ -325,7 +341,7 @@ public key.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>addr</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a> | <a href="#multiaddr">Multiaddr</a>))</code>
+            <span class='code bold'>addr</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a> | <a href="#multiaddr">Multiaddr</a>))</code>
 	    If String or Uint8Array, needs to adhere
 to the address format of a 
 <a href="https://github.com/multiformats/multiaddr#string-format">multiaddr</a>
@@ -372,7 +388,7 @@ to the address format of a
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L414-L429'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L453-L468'>
       <span>src/index.js</span>
       </a>
     
@@ -381,7 +397,7 @@ to the address format of a
 
   <p>Creates a Multiaddr from a node-friendly address object</p>
 
-    <div class='pre p1 fill-light mt0'>fromNodeAddress(addr: {family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>}, transport: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="#multiaddr">Multiaddr</a></div>
+    <div class='pre p1 fill-light mt0'>fromNodeAddress(addr: {family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}, transport: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="#multiaddr">Multiaddr</a></div>
   
   
 
@@ -398,7 +414,7 @@ to the address format of a
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>addr</span> <code class='quiet'>({family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>})</code>
+            <span class='code bold'>addr</span> <code class='quiet'>({family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>})</code>
 	    
           </div>
           
@@ -406,7 +422,7 @@ to the address format of a
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>transport</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+            <span class='code bold'>transport</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
 	    
           </div>
           
@@ -477,7 +493,7 @@ to the address format of a
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L482-L482'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L521-L521'>
       <span>src/index.js</span>
       </a>
     
@@ -547,7 +563,7 @@ To get the protocol values from a Multiaddr, you can use
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L490-L497'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L529-L536'>
       <span>src/index.js</span>
       </a>
     
@@ -626,7 +642,7 @@ To get the protocol values from a Multiaddr, you can use
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L506-L517'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L545-L556'>
       <span>src/index.js</span>
       </a>
     
@@ -713,7 +729,7 @@ To get the protocol values from a Multiaddr, you can use
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L58-L60'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L62-L64'>
       <span>src/index.js</span>
       </a>
     
@@ -722,7 +738,7 @@ To get the protocol values from a Multiaddr, you can use
 
   <p>Returns Multiaddr as a String</p>
 
-    <div class='pre p1 fill-light mt0'>toString(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></div>
+    <div class='pre p1 fill-light mt0'>toString(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
   
   
 
@@ -740,7 +756,7 @@ To get the protocol values from a Multiaddr, you can use
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
         
 
       
@@ -786,7 +802,7 @@ To get the protocol values from a Multiaddr, you can use
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L70-L70'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L74-L74'>
       <span>src/index.js</span>
       </a>
     
@@ -813,7 +829,7 @@ To get the protocol values from a Multiaddr, you can use
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
         
 
       
@@ -859,7 +875,7 @@ To get the protocol values from a Multiaddr, you can use
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L80-L88'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L84-L92'>
       <span>src/index.js</span>
       </a>
     
@@ -868,7 +884,7 @@ To get the protocol values from a Multiaddr, you can use
 
   <p>Returns Multiaddr as a convinient options object to be used with net.createConnection</p>
 
-    <div class='pre p1 fill-light mt0'>toOptions(): {family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, host: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, transport: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>}</div>
+    <div class='pre p1 fill-light mt0'>toOptions(): {family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, host: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, transport: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}</div>
   
   
 
@@ -886,7 +902,7 @@ To get the protocol values from a Multiaddr, you can use
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>{family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, host: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, transport: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>}</code>:
+      <code>{family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, host: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, transport: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}</code>:
         
 
       
@@ -932,7 +948,7 @@ To get the protocol values from a Multiaddr, you can use
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L100-L104'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L104-L108'>
       <span>src/index.js</span>
       </a>
     
@@ -943,7 +959,7 @@ To get the protocol values from a Multiaddr, you can use
 For post Node.js v10.0.0.
 <a href="https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect">https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect</a></p>
 
-    <div class='pre p1 fill-light mt0'>inspect(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></div>
+    <div class='pre p1 fill-light mt0'>inspect(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
   
   
 
@@ -961,7 +977,7 @@ For post Node.js v10.0.0.
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
         
 
       
@@ -1007,7 +1023,7 @@ For post Node.js v10.0.0.
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L116-L120'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L120-L124'>
       <span>src/index.js</span>
       </a>
     
@@ -1018,7 +1034,7 @@ For post Node.js v10.0.0.
 Fallback for pre Node.js v10.0.0.
 <a href="https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect">https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect</a></p>
 
-    <div class='pre p1 fill-light mt0'>inspect(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></div>
+    <div class='pre p1 fill-light mt0'>inspect(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
   
   
 
@@ -1036,7 +1052,7 @@ Fallback for pre Node.js v10.0.0.
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
         
 
       
@@ -1082,7 +1098,7 @@ Fallback for pre Node.js v10.0.0.
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L137-L139'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L147-L149'>
       <span>src/index.js</span>
       </a>
     
@@ -1094,7 +1110,7 @@ left-to-right order. Each object contains the protocol code, protocol name,
 and the size of its address space in bits.
 <a href="https://github.com/multiformats/multiaddr/blob/master/protocols.csv">See list of protocols</a></p>
 
-    <div class='pre p1 fill-light mt0'>protos(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>></div>
+    <div class='pre p1 fill-light mt0'>protos(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#protocol">protocol</a>></div>
   
   
 
@@ -1112,26 +1128,8 @@ and the size of its address space in bits.
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#protocol">protocol</a>></code>:
         protocols - All the protocols the address is composed of
-
-      
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
-        protocols[].code
-
-      
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
-        protocols[].size
-
-      
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
-        protocols[].name
 
       
     
@@ -1177,7 +1175,7 @@ and the size of its address space in bits.
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L150-L166'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L160-L176'>
       <span>src/index.js</span>
       </a>
     
@@ -1187,7 +1185,7 @@ and the size of its address space in bits.
   <p>Returns the codes of the protocols in left-to-right order.
 <a href="https://github.com/multiformats/multiaddr/blob/master/protocols.csv">See list of protocols</a></p>
 
-    <div class='pre p1 fill-light mt0'>protoCodes(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>></div>
+    <div class='pre p1 fill-light mt0'>protoCodes(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>></div>
   
   
 
@@ -1205,7 +1203,7 @@ and the size of its address space in bits.
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>></code>:
         protocol codes
 
       
@@ -1251,7 +1249,7 @@ and the size of its address space in bits.
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L177-L179'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L187-L189'>
       <span>src/index.js</span>
       </a>
     
@@ -1261,7 +1259,7 @@ and the size of its address space in bits.
   <p>Returns the names of the protocols in left-to-right order.
 <a href="https://github.com/multiformats/multiaddr/blob/master/protocols.csv">See list of protocols</a></p>
 
-    <div class='pre p1 fill-light mt0'>protoNames(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></div>
+    <div class='pre p1 fill-light mt0'>protoNames(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></div>
   
   
 
@@ -1279,7 +1277,7 @@ and the size of its address space in bits.
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>:
         protocol names
 
       
@@ -1325,7 +1323,7 @@ and the size of its address space in bits.
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L191-L193'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L199-L201'>
       <span>src/index.js</span>
       </a>
     
@@ -1334,7 +1332,7 @@ and the size of its address space in bits.
 
   <p>Returns a tuple of parts</p>
 
-    <div class='pre p1 fill-light mt0'>tuples(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>></div>
+    <div class='pre p1 fill-light mt0'>tuples(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;[<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>]></div>
   
   
 
@@ -1352,20 +1350,8 @@ and the size of its address space in bits.
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;[<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>]></code>:
         tuples
-
-      
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
-        tuples[].0 code of protocol
-
-      
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://nodejs.org/api/buffer.html">Buffer</a></code>:
-        tuples[].1 contents of address
 
       
     
@@ -1410,7 +1396,7 @@ and the size of its address space in bits.
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L205-L208'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L213-L216'>
       <span>src/index.js</span>
       </a>
     
@@ -1418,42 +1404,26 @@ and the size of its address space in bits.
   
 
   <p>Returns a tuple of string/number parts</p>
+<ul>
+<li>tuples[][0] = code of protocol</li>
+<li>tuples[][1] = contents of address</li>
+</ul>
 
-    <div class='pre p1 fill-light mt0'>stringTuples(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>></div>
-  
-  
-
-  
-  
-  
-  
+    <div class='pre p1 fill-light mt0'>stringTuples()</div>
   
   
 
   
-
+  
+  
+  
+  
   
 
   
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>></code>:
-        tuples
 
-      
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
-        tuples[].0 code of protocol
+  
 
-      
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>:
-        tuples[].1 contents of address
-
-      
-    
   
 
   
@@ -1495,7 +1465,7 @@ and the size of its address space in bits.
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L228-L231'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L236-L239'>
       <span>src/index.js</span>
       </a>
     
@@ -1591,7 +1561,7 @@ mh3.toString()
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L251-L259'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L259-L267'>
       <span>src/index.js</span>
       </a>
     
@@ -1687,7 +1657,7 @@ mh3.decapsulate(mh2).toString()
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L279-L287'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L287-L295'>
       <span>src/index.js</span>
       </a>
     
@@ -1699,7 +1669,7 @@ specific code, such as 421 (the <code>p2p</code> protocol code). The last index 
 will be removed from the <code>Multiaddr</code>, and a new instance will be returned.
 If the code is not present, the original <code>Multiaddr</code> is returned.</p>
 
-    <div class='pre p1 fill-light mt0'>decapsulateCode(code: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="#multiaddr">Multiaddr</a></div>
+    <div class='pre p1 fill-light mt0'>decapsulateCode(code: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="#multiaddr">Multiaddr</a></div>
   
   
 
@@ -1716,7 +1686,7 @@ If the code is not present, the original <code>Multiaddr</code> is returned.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>code</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+            <span class='code bold'>code</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
 	    The code of the protocol to decapsulate from this Multiaddr
 
           </div>
@@ -1783,7 +1753,7 @@ Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/8080'</span>).decapsulat
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L300-L318'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L308-L326'>
       <span>src/index.js</span>
       </a>
     
@@ -1792,7 +1762,7 @@ Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/8080'</span>).decapsulat
 
   <p>Extract the peerId if the multiaddr contains one</p>
 
-    <div class='pre p1 fill-light mt0'>getPeerId(): (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | null)</div>
+    <div class='pre p1 fill-light mt0'>getPeerId(): (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null)</div>
   
   
 
@@ -1810,7 +1780,7 @@ Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/8080'</span>).decapsulat
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | null)</code>:
+      <code>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null)</code>:
         peerId - The id of the peer or null if invalid or missing from the ma
 
       
@@ -1859,7 +1829,7 @@ Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/8080'</span>).decapsulat
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L331-L345'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L339-L353'>
       <span>src/index.js</span>
       </a>
     
@@ -1868,7 +1838,7 @@ Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/8080'</span>).decapsulat
 
   <p>Extract the path if the multiaddr contains one</p>
 
-    <div class='pre p1 fill-light mt0'>getPath(): (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | null)</div>
+    <div class='pre p1 fill-light mt0'>getPath(): (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null)</div>
   
   
 
@@ -1886,7 +1856,7 @@ Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/8080'</span>).decapsulat
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | null)</code>:
+      <code>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null)</code>:
         path - The path of the multiaddr, or null if no path protocol is present
 
       
@@ -1935,7 +1905,7 @@ Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/8080'</span>).decapsulat
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L365-L367'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L373-L375'>
       <span>src/index.js</span>
       </a>
     
@@ -2016,11 +1986,11 @@ mh1.equals(mh2)
       </div>
     </div>
   
-    <div class='border-bottom' id='multiaddrnodeaddress'>
+    <div class='border-bottom' id='multiaddrresolve'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>nodeAddress()</span>
+            <span class='code strong strong truncate'>resolve()</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2030,19 +2000,16 @@ mh1.equals(mh2)
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L382-L400'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L391-L406'>
       <span>src/index.js</span>
       </a>
     
   </div>
   
 
-  <p>Gets a Multiaddrs node-friendly address object. Note that protocol information
-is left out: in Node (and most network systems) the protocol is unknowable
-given only the address.</p>
-<p>Has to be a ThinWaist Address, otherwise throws error</p>
+  <p>Resolve multiaddr if containing resolvable hostname.</p>
 
-    <div class='pre p1 fill-light mt0'>nodeAddress(): {family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>}</div>
+    <div class='pre p1 fill-light mt0'>resolve(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#multiaddr">Multiaddr</a>>></div>
   
   
 
@@ -2060,7 +2027,89 @@ given only the address.</p>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>{family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>}</code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#multiaddr">Multiaddr</a>>></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>Multiaddr.resolvers.set(<span class="hljs-string">'dnsaddr'</span>, resolverFunction)
+<span class="hljs-keyword">const</span> mh1 = Multiaddr(<span class="hljs-string">'/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb'</span>)
+<span class="hljs-keyword">const</span> resolvedMultiaddrs = <span class="hljs-keyword">await</span> mh1.resolve()
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//   &lt;Multiaddr 04934b5353060fa1a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb&gt;,</span>
+<span class="hljs-comment">//   &lt;Multiaddr 04934b53530601bbde03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/443/wss/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb&gt;,</span>
+<span class="hljs-comment">//   &lt;Multiaddr 04934b535391020fa1cc03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/udp/4001/quic/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb&gt;</span>
+<span class="hljs-comment">// ]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='multiaddrnodeaddress'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>nodeAddress()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L421-L439'>
+      <span>src/index.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Gets a Multiaddrs node-friendly address object. Note that protocol information
+is left out: in Node (and most network systems) the protocol is unknowable
+given only the address.</p>
+<p>Has to be a ThinWaist Address, otherwise throws error</p>
+
+    <div class='pre p1 fill-light mt0'>nodeAddress(): {family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>{family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}</code>:
         
 
       
@@ -2114,7 +2163,7 @@ given only the address.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L455-L469'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L494-L508'>
       <span>src/index.js</span>
       </a>
     
@@ -2125,7 +2174,7 @@ given only the address.</p>
 <p>Thin Waist is if a Multiaddr adheres to the standard combination of:</p>
 <p><code>{IPv4, IPv6}/{TCP, UDP}</code></p>
 
-    <div class='pre p1 fill-light mt0'>isThinWaistAddress(addr: <a href="#multiaddr">Multiaddr</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></div>
+    <div class='pre p1 fill-light mt0'>isThinWaistAddress(addr: <a href="#multiaddr">Multiaddr</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -2159,7 +2208,7 @@ given only the address.</p>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
         isThinWaistAddress
 
       
@@ -2223,7 +2272,7 @@ mh3.isThinWaistAddress()
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/f9b7af1a1720aed8368244947a1642cf57591df2/src/index.js#L37-L37'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L41-L41'>
       <span>src/index.js</span>
       </a>
     
@@ -2249,6 +2298,99 @@ mh3.isThinWaistAddress()
 
   
 
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='protocol'>
+      protocol
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/6e88cd4f64db3a57508ece6283a717cab77dfc88/src/index.js#L126-L133'>
+      <span>src/index.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+    <div class='pre p1 fill-light mt0'>protocol</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>code</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>size</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>resolvable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?)</code>
+          
+          
+        </div>
+      
+    </div>
   
 
   
