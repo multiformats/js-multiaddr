@@ -1,3 +1,12 @@
+## [8.1.1](https://github.com/multiformats/js-multiaddr/compare/v8.1.0...v8.1.1) (2020-10-30)
+
+
+### Bug Fixes
+
+* dns require ([#155](https://github.com/multiformats/js-multiaddr/issues/155)) ([4c89dcf](https://github.com/multiformats/js-multiaddr/commit/4c89dcf8ddf38afe6f36827abde22307f8650fe6))
+
+
+
 # [8.1.0](https://github.com/multiformats/js-multiaddr/compare/v8.0.0...v8.1.0) (2020-10-29)
 
 
