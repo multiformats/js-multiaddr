@@ -100,11 +100,18 @@ function stringTuplesToTuples (tuples) {
   })
 }
 
-// [[int code, Uint8Array]... ] -> [[str name, str addr]... ]
+/**
+ * Convert tuples to string tuples
+ *
+ * [[int code, Uint8Array]... ] -> [[int code, str addr]... ]
+ *
+ * @param {Array<[number, Uint8Array?]>} tuples
+ * @returns {Array<[number, string?]>}
+ */
 function tuplesToStringTuples (tuples) {
   return tuples.map(tup => {
     const proto = protoFromTuple(tup)
-    if (tup.length > 1) {
+    if (tup.length > 1 && tup[1]) {
       return [proto.code, convert.toString(proto.code, tup[1])]
     }
     return [proto.code]
@@ -137,7 +144,14 @@ function sizeForAddr (p, addr) {
 }
 
 // Uint8Array -> [[int code, Uint8Array ]... ]
+
+/**
+ *
+ * @param {Uint8Array} buf
+ * @returns {Array<[number, Uint8Array?]>}
+ */
 function bytesToTuples (buf) {
+  /** @type {Array<[number, Uint8Array?]>} */
   const tuples = []
   let i = 0
   while (i < buf.length) {
