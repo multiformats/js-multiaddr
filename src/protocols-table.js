@@ -1,10 +1,11 @@
 'use strict'
+/** @typedef {import("./types").Protocol} Protocol */
 
 /**
  * Protocols
  *
  * @param {number | string | string} proto
- * @returns {import("./types").Protocol}
+ * @returns {Protocol}
  */
 function Protocols (proto) {
   if (typeof (proto) === 'number') {
@@ -66,9 +67,9 @@ Protocols.table = [
   [777, V, 'memory']
 ]
 
-/** @type {Record<string,import("./types").Protocol>} */
+/** @type {Record<string,Protocol>} */
 Protocols.names = {}
-/** @type {Record<number,import("./types").Protocol>} */
+/** @type {Record<number,Protocol>} */
 Protocols.codes = {}
 
 // populate tables
@@ -89,7 +90,7 @@ Protocols.object = p
  * @param {string} name
  * @param {any} [resolvable]
  * @param {any} [path]
- * @returns {import("./types").Protocol}
+ * @returns {Protocol}
  */
 function p (code, size, name, resolvable, path) {
   return {

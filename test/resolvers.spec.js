@@ -6,7 +6,7 @@ const sinon = require('sinon')
 
 const multiaddr = require('../src')
 const resolvers = require('../src/resolvers')
-const { Resolver } = require('../src/resolvers/dns')
+const Resolver = require('../src/resolvers/dns')
 
 const dnsaddrStub1 = [
   ['dnsaddr=/dnsaddr/ams-1.bootstrap.libp2p.io/p2p/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd'],

@@ -1,14 +1,14 @@
 'use strict'
 
-const Multiaddr = require('..') // eslint-disable-line  no-unused-vars
 const protocols = require('../protocols-table')
 
 const { code: dnsaddrCode } = protocols('dnsaddr')
 
+// TODO `addr` type needs https://github.com/microsoft/TypeScript/issues/41672
 /**
  * Resolver for dnsaddr addresses.
  *
- * @param {Multiaddr} addr
+ * @param {any} addr
  * @returns {Promise<Array<string>>}
  */
 async function dnsaddrResolver (addr) {
@@ -19,7 +19,6 @@ async function dnsaddrResolver (addr) {
   const [, hostname] = addr.stringTuples().find(([proto]) => proto === dnsaddrCode) || []
 
   const records = await resolver.resolveTxt(`_dnsaddr.${hostname}`)
-  // @ts-ignore
   let addresses = records.flat().map((a) => a.split('=')[1])
 
   if (peerId) {

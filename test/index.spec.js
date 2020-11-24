@@ -11,7 +11,7 @@ describe('construction', () => {
 
   it('create multiaddr', () => {
     udpAddr = multiaddr('/ip4/127.0.0.1/udp/1234')
-    expect(udpAddr instanceof multiaddr).to.equal(true)
+    expect(udpAddr instanceof multiaddr.Multiaddr).to.equal(true)
   })
 
   it('clone multiaddr', () => {
@@ -77,7 +77,7 @@ describe('requiring varint', () => {
 
   it('create multiaddr', () => {
     uTPAddr = multiaddr('/ip4/127.0.0.1/udp/1234/utp')
-    expect(uTPAddr instanceof multiaddr).to.equal(true)
+    expect(uTPAddr instanceof multiaddr.Multiaddr).to.equal(true)
   })
 
   it('clone multiaddr', () => {
@@ -119,13 +119,13 @@ describe('manipulation', () => {
     expect(udpAddr.protos()).to.deep.equal([multiaddr.protocols.codes[4], multiaddr.protocols.codes[273]])
     expect(udpAddr.protos()[0] === multiaddr.protocols.codes[4]).to.equal(false)
 
-    const udpAddrbytes2 = udpAddr.encapsulate('/udp/5678')
+    const udpAddrbytes2 = udpAddr.encapsulate(multiaddr('/udp/5678'))
     expect(udpAddrbytes2.toString()).to.equal('/ip4/127.0.0.1/udp/1234/udp/5678')
-    expect(udpAddrbytes2.decapsulate('/udp').toString()).to.equal('/ip4/127.0.0.1/udp/1234')
-    expect(udpAddrbytes2.decapsulate('/ip4').toString()).to.equal('/')
-    expect(function () { udpAddr.decapsulate('/').toString() }).to.throw()
+    expect(udpAddrbytes2.decapsulate(multiaddr('/udp/5678')).toString()).to.equal('/ip4/127.0.0.1/udp/1234')
+    expect(udpAddrbytes2.decapsulate(multiaddr('/ip4/127.0.0.1')).toString()).to.equal('/')
+    expect(function () { udpAddr.decapsulate(multiaddr('/')).toString() }).to.throw()
     expect(multiaddr('/').encapsulate(udpAddr).toString()).to.equal(udpAddr.toString())
-    expect(multiaddr('/').decapsulate('/').toString()).to.equal('/')
+    expect(multiaddr('/').decapsulate(multiaddr('/')).toString()).to.equal('/')
   })
 
   it('ipfs', () => {
@@ -628,7 +628,7 @@ describe('helpers', () => {
   describe('.decapsulate', () => {
     it('throws on address with no matching subaddress', () => {
       expect(
-        () => multiaddr('/ip4/127.0.0.1').decapsulate('/ip4/198.168.0.0')
+        () => multiaddr('/ip4/127.0.0.1').decapsulate(multiaddr('/ip4/198.168.0.0'))
       ).to.throw(
         /does not contain subaddress/
       )
@@ -638,7 +638,7 @@ describe('helpers', () => {
   describe('.decapsulateCode', () => {
     it('removes the last occurrence of the code from the multiaddr', () => {
       const relayTCP = multiaddr('/ip4/0.0.0.0/tcp/8080')
-      const relay = relayTCP.encapsulate('/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6/p2p-circuit')
+      const relay = relayTCP.encapsulate(multiaddr('/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6/p2p-circuit'))
       const target = multiaddr('/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
       const original = relay.encapsulate(target)
       expect(original.decapsulateCode(421)).to.eql(relay)
@@ -906,7 +906,6 @@ describe('helpers', () => {
         const addr = multiaddr(str)
 
         return multiaddr.resolve(addr)
-          // @ts-ignore
           .then(expect.fail, (err) => {
             expect(err).to.exist()
             expect(err.message).to.eql('not a valid name')
