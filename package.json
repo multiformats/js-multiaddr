@@ -4,13 +4,21 @@
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "types": "dist/src/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "src/*": [
+        "dist/src/*",
+        "dist/src/*/index"
+      ]
+    }
+  },
   "scripts": {
     "lint": "aegir lint",
-    "test": "npm run test:node && npm run test:browser",
-    "test:node": "aegir test --ts -t node",
+    "test": "aegir test",
+    "test:node": "aegir test -t node",
     "test:browser": "aegir test -t browser",
-    "test:types": "npx tsc",
+    "test:types": "aegir ts -p check",
     "build": "aegir build",
     "release": "aegir release",
     "release-minor": "aegir release --type minor",
@@ -42,16 +50,14 @@
     "is-ip": "^3.1.0",
     "multibase": "^3.0.0",
     "uint8arrays": "^1.1.0",
-    "varint": "^5.0.0"
+    "varint": "^6.0.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.8",
-    "@types/dirty-chai": "^2.0.2",
-    "@types/mocha": "^8.0.1",
-    "@types/node": "^14.0.11",
     "aegir": "^29.0.1",
-    "sinon": "^9.2.0",
-    "typescript": "^3.9.5"
+    "sinon": "^9.2.0"
+  },
+  "eslintConfig": {
+    "extends": "ipfs"
   },
   "contributors": [
     "David Dias <daviddias.p@gmail.com>",

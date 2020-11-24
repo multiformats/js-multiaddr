@@ -1,18 +1,10 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "lib": ["es6"],
-    "target": "ES5",
-    "noImplicitAny": false,
-    "noImplicitThis": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/index.d.ts", "test/**/*.spec.js", "test/**/*.spec.ts"]
+    "extends": "./node_modules/aegir/src/config/tsconfig.aegir.json",
+    "compilerOptions": {
+        "outDir": "dist"
+    },
+    "include": [
+      "test", // remove this line if you don't want to type-check tests
+      "src"
+    ]
 }
