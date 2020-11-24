@@ -3,7 +3,7 @@
 let dns
 
 try {
-  dns = require('dns').promises
+  dns = require('dns').Resolver
   if (!dns) {
     throw new Error('no dns available')
   }

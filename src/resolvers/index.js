@@ -12,7 +12,7 @@ const { code: dnsaddrCode } = protocols('dnsaddr')
  * @returns {Promise<Array<string>>}
  */
 async function dnsaddrResolver (addr) {
-  const { Resolver } = require('./dns')
+  const Resolver = require('./dns')
   const resolver = new Resolver()
 
   const peerId = addr.getPeerId()
