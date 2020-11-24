@@ -20,9 +20,16 @@ function Convert (proto, a) {
   }
 }
 
-Convert.toString = function convertToString (proto, buf) {
-  proto = protocols(proto)
-  switch (proto.code) {
+/**
+ * Convert [code,Uint8Array] to string
+ *
+ * @param {number|string} proto
+ * @param {Uint8Array} buf
+ * @returns {string}
+ */
+Convert.toString = function (proto, buf) {
+  const protocol = protocols(proto)
+  switch (protocol.code) {
     case 4: // ipv4
     case 41: // ipv6
       return bytes2ip(buf)
@@ -31,7 +38,7 @@ Convert.toString = function convertToString (proto, buf) {
     case 273: // udp
     case 33: // dccp
     case 132: // sctp
-      return bytes2port(buf)
+      return bytes2port(buf).toString()
 
     case 53: // dns
     case 54: // dns4
@@ -137,6 +144,12 @@ function mh2bytes (hash) {
   return uint8ArrayConcat([size, mh], size.length + mh.length)
 }
 
+/**
+ * Converts bytes to bas58btc string
+ *
+ * @param {Uint8Array} buf
+ * @returns {string} bas58btc string
+ */
 function bytes2mh (buf) {
   const size = varint.decode(buf)
   const address = buf.slice(varint.decode.bytes)
