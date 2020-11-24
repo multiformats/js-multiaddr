@@ -1,38 +1,30 @@
-js-multiaddr
+js-multiaddr <!-- omit in toc -->
 ============
 
-[![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)
-[![](https://img.shields.io/badge/project-multiformats-blue.svg?style=flat-square)](https://github.com/multiformats/multiformats)
-[![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](https://webchat.freenode.net/?channels=%23ipfs)
-[![Dependency Status](https://david-dm.org/multiformats/js-multiaddr.svg?style=flat-square)](https://david-dm.org/multiformats/js-multiaddr)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
-[![](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-[![](https://img.shields.io/travis/multiformats/js-multiaddr.svg?style=flat-square)](https://travis-ci.com/multiformats/js-multiaddr)
+[![pl](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](https://protocol.ai)
+[![project](https://img.shields.io/badge/project-multiformats-blue.svg?style=flat-square)](https://github.com/multiformats/multiformats)
+[![irc](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](https://webchat.freenode.net/?channels=%23ipfs)
 [![codecov](https://img.shields.io/codecov/c/github/multiformats/js-multiaddr.svg?style=flat-square)](https://codecov.io/gh/multiformats/js-multiaddr)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/multiformats/js-multiaddr/ci?label=ci&style=flat-square)](https://github.com/multiformats/js-multiaddr/actions?query=branch%3Amaster+workflow%3Aci+)
 
 > JavaScript implementation of [multiaddr](https://github.com/multiformats/multiaddr).
 
-## Lead Maintainer
+## Lead Maintainer <!-- omit in toc -->
 
 [Jacob Heun](https://github.com/jacobheun)
 
-## Table of Contents
+## Table of Contents<!-- omit in toc -->
 
-- [js-multiaddr](#js-multiaddr)
-  - [Lead Maintainer](#lead-maintainer)
-  - [Table of Contents](#table-of-contents)
-  - [Background](#background)
-    - [What is multiaddr?](#what-is-multiaddr)
-  - [Install](#install)
-    - [Setup](#setup)
-      - [Node.js](#nodejs)
-      - [Browser: Browserify, Webpack, other bundlers](#browser-browserify-webpack-other-bundlers)
-      - [Browser: `<script>` Tag](#browser-script-tag)
-  - [Usage](#usage)
-  - [API](#api)
-  - [Resolvers](#resolvers)
-  - [Contribute](#contribute)
-  - [License](#license)
+- [Background](#background)
+  - [What is multiaddr?](#what-is-multiaddr)
+- [Install](#install)
+  - [NPM](#npm)
+  - [Browser: `<script>` Tag](#browser-script-tag)
+- [Usage](#usage)
+- [API](#api)
+- [Resolvers](#resolvers)
+- [Contribute](#contribute)
+- [License](#license)
 
 ## Background
 
@@ -51,27 +43,13 @@ A standard way to represent addresses that
 ```sh
 npm i multiaddr
 ```
-
-### Setup
-
-#### Node.js
+### NPM
 
 ```js
 const multiaddr = require('multiaddr')
 ```
 
-#### Browser: Browserify, Webpack, other bundlers
-
-The code published to npm that gets loaded on require is in fact a ES5
-transpiled version with the right shims added. This means that you can require
-it and use with your favourite bundler without having to adjust asset management
-process.
-
-```js
-const multiaddr = require('multiaddr')
-```
-
-#### Browser: `<script>` Tag
+### Browser: `<script>` Tag
 
 Loading this module through a script tag will make the `Multiaddr` obj available in
 the global namespace.
