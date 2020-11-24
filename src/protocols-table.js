@@ -1,5 +1,11 @@
 'use strict'
 
+/**
+ * Protocols
+ *
+ * @param {number | string | string} proto
+ * @returns {import("./types").Protocol}
+ */
 function Protocols (proto) {
   if (typeof (proto) === 'number') {
     if (Protocols.codes[proto]) {
@@ -7,7 +13,7 @@ function Protocols (proto) {
     }
 
     throw new Error('no protocol with code: ' + proto)
-  } else if (typeof (proto) === 'string' || proto instanceof String) {
+  } else if (typeof (proto) === 'string') {
     if (Protocols.names[proto]) {
       return Protocols.names[proto]
     }
@@ -22,6 +28,7 @@ const V = -1
 Protocols.lengthPrefixedVarSize = V
 Protocols.V = V
 
+/** @type {Array<[number, number, string, (string|boolean)?, string?]>} */
 Protocols.table = [
   [4, 32, 'ip4'],
   [6, 16, 'tcp'],
@@ -59,7 +66,9 @@ Protocols.table = [
   [777, V, 'memory']
 ]
 
+/** @type {Record<string,import("./types").Protocol>} */
 Protocols.names = {}
+/** @type {Record<number,import("./types").Protocol>} */
 Protocols.codes = {}
 
 // populate tables
@@ -71,6 +80,17 @@ Protocols.table.map(row => {
 
 Protocols.object = p
 
+/**
+ *
+ * Create a protocol
+ *
+ * @param {number} code
+ * @param {number} size
+ * @param {string} name
+ * @param {any} [resolvable]
+ * @param {any} [path]
+ * @returns {import("./types").Protocol}
+ */
 function p (code, size, name, resolvable, path) {
   return {
     code,
