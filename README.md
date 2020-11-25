@@ -105,7 +105,7 @@ $ node
 // gives you an object that is friendly with what Node.js core modules expect for addresses
 > addr.nodeAddress()
 {
-  family: "4",
+  family: 4,
   port: 1234,
   address: "127.0.0.1"
 }
