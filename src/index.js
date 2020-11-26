@@ -208,7 +208,7 @@ class Multiaddr {
    * @example
    * ```js
    * Multiaddr("/ip4/127.0.0.1/tcp/4001").stringTuples()
-   * // [ [ 4, '127.0.0.1' ], [ 6, 4001 ] ]
+   * // [ [ 4, '127.0.0.1' ], [ 6, '4001' ] ]
    * ```
    */
   stringTuples () {
