@@ -4,7 +4,7 @@
 /**
  * Protocols
  *
- * @param {number | string | string} proto
+ * @param {number | string} proto
  * @returns {Protocol}
  */
 function Protocols (proto) {
