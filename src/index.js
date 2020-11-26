@@ -551,26 +551,6 @@ class Multiaddr {
   }
 
   /**
-   * Returns an array of multiaddrs, by resolving the multiaddr that is a name
-   *
-   * @async
-   * @param {Multiaddr} addr
-   * @returns {Promise<Multiaddr[]>}
-   */
-  static resolve (addr) {
-    if (!Multiaddr.isMultiaddr(addr) || !Multiaddr.isName(addr)) {
-      return Promise.reject(Error('not a valid name'))
-    }
-
-    /*
-     * Needs more consideration from spec design:
-     *   - what to return
-     *   - how to achieve it in the browser?
-     */
-    return Promise.reject(new Error('not implemented yet'))
-  }
-
-  /**
    * Check if object is a CID instance
    *
    * @param {any} value
@@ -604,7 +584,6 @@ MultiaddrFactory.protocols = protocols
 MultiaddrFactory.resolvers = resolvers
 MultiaddrFactory.Multiaddr = Multiaddr
 MultiaddrFactory.isMultiaddr = Multiaddr.isMultiaddr
-MultiaddrFactory.resolve = Multiaddr.resolve
 MultiaddrFactory.isName = Multiaddr.isName
 MultiaddrFactory.fromNodeAddress = Multiaddr.fromNodeAddress
 
