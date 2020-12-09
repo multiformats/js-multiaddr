@@ -63,9 +63,9 @@ the global namespace.
 ```js
 $ node
 
-> const multiaddr = require('multiaddr')
+> const Multiaddr = require('multiaddr')
 
-> const addr = multiaddr("/ip4/127.0.0.1/udp/1234")
+> const addr = new Multiaddr("/ip4/127.0.0.1/udp/1234")
 <Multiaddr /ip4/127.0.0.1/udp/1234>
 
 > addr.bytes
@@ -102,10 +102,10 @@ https://multiformats.github.io/js-multiaddr/
 To provide multiaddr resolvers you can do:
 
 ```js
-const multiaddr = require('multiaddr')
+const Multiaddr = require('multiaddr')
 const resolvers = require('multiaddr/src/resolvers')
 
-multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+Multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 ```
 
 The available resolvers are:

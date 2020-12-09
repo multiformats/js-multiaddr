@@ -12,6 +12,10 @@ const resolvers = new Map()
 const symbol = Symbol.for('@multiformats/js-multiaddr/multiaddr')
 
 /**
+ * @typedef {import('./types').Protocol}Protocol
+ */
+
+/**
  * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
  * a Uint8Array, String or another Multiaddr instance
  * public key.
@@ -22,7 +26,7 @@ class Multiaddr {
    * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
    * @example
    * ```js
-   * Multiaddr('/ip4/127.0.0.1/tcp/4001')
+   * new Multiaddr('/ip4/127.0.0.1/tcp/4001')
    * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
    * ```
    */
@@ -57,7 +61,7 @@ class Multiaddr {
    * @returns {string}
    * @example
    * ```js
-   * Multiaddr('/ip4/127.0.0.1/tcp/4001').toString()
+   * new Multiaddr('/ip4/127.0.0.1/tcp/4001').toString()
    * // '/ip4/127.0.0.1/tcp/4001'
    * ```
    */
@@ -71,7 +75,7 @@ class Multiaddr {
    * @returns {string}
    * @example
    * ```js
-   * JSON.stringify(Multiaddr('/ip4/127.0.0.1/tcp/4001'))
+   * JSON.stringify(new Multiaddr('/ip4/127.0.0.1/tcp/4001'))
    * // '/ip4/127.0.0.1/tcp/4001'
    * ```
    */
@@ -85,7 +89,7 @@ class Multiaddr {
    * @returns {{family: string, host: string, transport: string, port: number}}
    * @example
    * ```js
-   * Multiaddr('/ip4/127.0.0.1/tcp/4001').toOptions()
+   * new Multiaddr('/ip4/127.0.0.1/tcp/4001').toOptions()
    * // { family: 'ipv4', host: '127.0.0.1', transport: 'tcp', port: 4001 }
    * ```
    */
@@ -107,7 +111,7 @@ class Multiaddr {
    * @returns {string}
    * @example
    * ```js
-   * Multiaddr('/ip4/127.0.0.1/tcp/4001').inspect()
+   * new Multiaddr('/ip4/127.0.0.1/tcp/4001').inspect()
    * // '<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>'
    * ```
    */
@@ -129,10 +133,10 @@ class Multiaddr {
    * and the size of its address space in bits.
    * [See list of protocols](https://github.com/multiformats/multiaddr/blob/master/protocols.csv)
    *
-   * @returns {import('./types').Protocol[]} protocols - All the protocols the address is composed of
+   * @returns {Protocol[]} protocols - All the protocols the address is composed of
    * @example
    * ```js
-   * Multiaddr('/ip4/127.0.0.1/tcp/4001').protos()
+   * new Multiaddr('/ip4/127.0.0.1/tcp/4001').protos()
    * // [ { code: 4, size: 32, name: 'ip4' },
    * //   { code: 6, size: 16, name: 'tcp' } ]
    * ```
@@ -148,7 +152,7 @@ class Multiaddr {
    * @returns {Array<number>} protocol codes
    * @example
    * ```js
-   * Multiaddr('/ip4/127.0.0.1/tcp/4001').protoCodes()
+   * new Multiaddr('/ip4/127.0.0.1/tcp/4001').protoCodes()
    * // [ 4, 6 ]
    * ```
    */
@@ -177,7 +181,7 @@ class Multiaddr {
    * @returns {Array.<string>} protocol names
    * @example
    * ```js
-   * Multiaddr('/ip4/127.0.0.1/tcp/4001').protoNames()
+   * new Multiaddr('/ip4/127.0.0.1/tcp/4001').protoNames()
    * // [ 'ip4', 'tcp' ]
    * ```
    */
@@ -191,7 +195,7 @@ class Multiaddr {
    * @returns {[number, (Uint8Array | undefined)?][]} tuples
    * @example
    * ```js
-   * Multiaddr("/ip4/127.0.0.1/tcp/4001").tuples()
+   * new Multiaddr("/ip4/127.0.0.1/tcp/4001").tuples()
    * // [ [ 4, <Buffer 7f 00 00 01> ], [ 6, <Buffer 0f a1> ] ]
    * ```
    */
@@ -207,7 +211,7 @@ class Multiaddr {
    * @returns {[number, string?][]} tuples
    * @example
    * ```js
-   * Multiaddr("/ip4/127.0.0.1/tcp/4001").stringTuples()
+   * new Multiaddr("/ip4/127.0.0.1/tcp/4001").stringTuples()
    * // [ [ 4, '127.0.0.1' ], [ 6, '4001' ] ]
    * ```
    */
@@ -223,10 +227,10 @@ class Multiaddr {
    * @returns {Multiaddr}
    * @example
    * ```js
-   * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
+   * const mh1 = new Multiaddr('/ip4/8.8.8.8/tcp/1080')
    * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
    *
-   * const mh2 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
+   * const mh2 = new Multiaddr('/ip4/127.0.0.1/tcp/4001')
    * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
    *
    * const mh3 = mh1.encapsulate(mh2)
@@ -248,10 +252,10 @@ class Multiaddr {
    * @returns {Multiaddr}
    * @example
    * ```js
-   * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
+   * const mh1 = new Multiaddr('/ip4/8.8.8.8/tcp/1080')
    * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
    *
-   * const mh2 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
+   * const mh2 = new Multiaddr('/ip4/127.0.0.1/tcp/4001')
    * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
    *
    * const mh3 = mh1.encapsulate(mh2)
@@ -281,13 +285,13 @@ class Multiaddr {
    * @returns {Multiaddr}
    * @example
    * ```js
-   * const addr = Multiaddr('/ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
+   * const addr = new Multiaddr('/ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
    * // <Multiaddr 0400... - /ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC>
    *
    * addr.decapsulateCode(421).toString()
    * // '/ip4/0.0.0.0/tcp/8080'
    *
-   * Multiaddr('/ip4/127.0.0.1/tcp/8080').decapsulateCode(421).toString()
+   * new Multiaddr('/ip4/127.0.0.1/tcp/8080').decapsulateCode(421).toString()
    * // '/ip4/127.0.0.1/tcp/8080'
    * ```
    */
@@ -307,7 +311,7 @@ class Multiaddr {
    * @returns {string | null} peerId - The id of the peer or null if invalid or missing from the ma
    * @example
    * ```js
-   * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string')
+   * const mh1 = new Multiaddr('/ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string')
    * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string>
    *
    * // should return QmValidBase58string or null if the id is missing or invalid
@@ -341,7 +345,7 @@ class Multiaddr {
    * @returns {string | null} path - The path of the multiaddr, or null if no path protocol is present
    * @example
    * ```js
-   * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock')
+   * const mh1 = new Multiaddr('/ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock')
    * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock>
    *
    * // should return utf8 string or null if the id is missing or invalid
@@ -375,10 +379,10 @@ class Multiaddr {
    * @returns {boolean}
    * @example
    * ```js
-   * const mh1 = Multiaddr('/ip4/8.8.8.8/tcp/1080')
+   * const mh1 = new Multiaddr('/ip4/8.8.8.8/tcp/1080')
    * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
    *
-   * const mh2 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
+   * const mh2 = new Multiaddr('/ip4/127.0.0.1/tcp/4001')
    * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
    *
    * mh1.equals(mh1)
@@ -399,7 +403,7 @@ class Multiaddr {
    * @example
    * ```js
    * Multiaddr.resolvers.set('dnsaddr', resolverFunction)
-   * const mh1 = Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
+   * const mh1 = new Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
    * const resolvedMultiaddrs = await mh1.resolve()
    * // [
    * //   <Multiaddr 04934b5353060fa1a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>,
@@ -437,7 +441,7 @@ class Multiaddr {
    * @example
    *
    * ```js
-   * Multiaddr('/ip4/127.0.0.1/tcp/4001').nodeAddress()
+   * new Multiaddr('/ip4/127.0.0.1/tcp/4001').nodeAddress()
    * // {family: 4, address: '127.0.0.1', port: '4001'}
    * ```
    *
@@ -462,7 +466,6 @@ class Multiaddr {
     }
   }
 
-  // TODO find a better example, not sure about it's good enough
   /**
    * Returns if a Multiaddr is a Thin Waist address or not.
    *
@@ -474,17 +477,21 @@ class Multiaddr {
    * @returns {boolean} isThinWaistAddress
    * @example
    * ```js
-   * const mh1 = Multiaddr('/ip4/127.0.0.1/tcp/4001')
+   * const mh1 = new Multiaddr('/ip4/127.0.0.1/tcp/4001')
    * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
-   * const mh2 = Multiaddr('/ip4/192.168.2.1/tcp/5001')
+   * const mh2 = new Multiaddr('/ip4/192.168.2.1/tcp/5001')
    * // <Multiaddr 04c0a80201061389 - /ip4/192.168.2.1/tcp/5001>
    * const mh3 = mh1.encapsulate(mh2)
    * // <Multiaddr 047f000001060fa104c0a80201061389 - /ip4/127.0.0.1/tcp/4001/ip4/192.168.2.1/tcp/5001>
+   * const mh4 = new Multiaddr('/ip4/127.0.0.1/tcp/2000/wss/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSooo2a')
+   * // <Multiaddr 047f0000010607d0de039302a503221220d52ebb89d85b02a284948203a62ff28389c57c9f42beec4ec20db76a64835843 - /ip4/127.0.0.1/tcp/2000/wss/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSooo2a>
    * mh1.isThinWaistAddress()
    * // true
    * mh2.isThinWaistAddress()
    * // true
    * mh3.isThinWaistAddress()
+   * // false
+   * mh4.isThinWaistAddress()
    * // false
    * ```
    */
@@ -559,32 +566,20 @@ class Multiaddr {
   static isMultiaddr (value) {
     return value instanceof Multiaddr || Boolean(value && value[symbol])
   }
+
+  /**
+   * Static factory method
+   *
+   * @param {string | Uint8Array | Multiaddr | null} [addr] - If String or Uint8Array, needs to adhere
+   * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
+   */
+  static multiaddr (addr) {
+    return new Multiaddr(addr)
+  }
 }
 
 Multiaddr.protocols = protocols
 
 Multiaddr.resolvers = resolvers
 
-/**
- * Callable Multiaddr factory function
- *
- * @param {string | Uint8Array | Multiaddr | null} [addr] - If String or Uint8Array, needs to adhere
- * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
- * @example
- * ```js
- * Multiaddr('/ip4/127.0.0.1/tcp/4001')
- * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
- * ```
- */
-const MultiaddrFactory = (addr) => {
-  return new Multiaddr(addr)
-}
-
-MultiaddrFactory.protocols = protocols
-MultiaddrFactory.resolvers = resolvers
-MultiaddrFactory.Multiaddr = Multiaddr
-MultiaddrFactory.isMultiaddr = Multiaddr.isMultiaddr
-MultiaddrFactory.isName = Multiaddr.isName
-MultiaddrFactory.fromNodeAddress = Multiaddr.fromNodeAddress
-
-module.exports = MultiaddrFactory
+module.exports = Multiaddr

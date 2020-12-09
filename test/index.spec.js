@@ -2,16 +2,18 @@
 /* eslint-env mocha */
 'use strict'
 
-const multiaddr = require('../src')
+const Multiaddr = require('../src')
 const { expect } = require('aegir/utils/chai')
 const uint8ArrayFromString = require('uint8arrays/from-string')
+
+const multiaddr = Multiaddr.multiaddr
 
 describe('construction', () => {
   let udpAddr
 
   it('create multiaddr', () => {
     udpAddr = multiaddr('/ip4/127.0.0.1/udp/1234')
-    expect(udpAddr instanceof multiaddr.Multiaddr).to.equal(true)
+    expect(udpAddr instanceof Multiaddr).to.equal(true)
   })
 
   it('clone multiaddr', () => {
@@ -77,7 +79,7 @@ describe('requiring varint', () => {
 
   it('create multiaddr', () => {
     uTPAddr = multiaddr('/ip4/127.0.0.1/udp/1234/utp')
-    expect(uTPAddr instanceof multiaddr.Multiaddr).to.equal(true)
+    expect(uTPAddr instanceof Multiaddr).to.equal(true)
   })
 
   it('clone multiaddr', () => {
@@ -116,8 +118,8 @@ describe('manipulation', () => {
 
     expect(udpAddr.protoCodes()).to.deep.equal([4, 273])
     expect(udpAddr.protoNames()).to.deep.equal(['ip4', 'udp'])
-    expect(udpAddr.protos()).to.deep.equal([multiaddr.protocols.codes[4], multiaddr.protocols.codes[273]])
-    expect(udpAddr.protos()[0] === multiaddr.protocols.codes[4]).to.equal(false)
+    expect(udpAddr.protos()).to.deep.equal([Multiaddr.protocols.codes[4], Multiaddr.protocols.codes[273]])
+    expect(udpAddr.protos()[0] === Multiaddr.protocols.codes[4]).to.equal(false)
 
     const udpAddrbytes2 = udpAddr.encapsulate(multiaddr('/udp/5678'))
     expect(udpAddrbytes2.toString()).to.equal('/ip4/127.0.0.1/udp/1234/udp/5678')
@@ -725,7 +727,7 @@ describe('helpers', () => {
     it('throws on missing address object', () => {
       expect(
         // @ts-ignore
-        () => multiaddr.fromNodeAddress()
+        () => Multiaddr.fromNodeAddress()
       ).to.throw(
         /requires node address/
       )
@@ -734,7 +736,7 @@ describe('helpers', () => {
     it('throws on missing transport', () => {
       expect(
         // @ts-ignore
-        () => multiaddr.fromNodeAddress({ address: '0.0.0.0' })
+        () => Multiaddr.fromNodeAddress({ address: '0.0.0.0' })
       ).to.throw(
         /requires transport protocol/
       )
@@ -742,7 +744,7 @@ describe('helpers', () => {
 
     it('parses a node address', () => {
       expect(
-        multiaddr.fromNodeAddress({
+        Multiaddr.fromNodeAddress({
           address: '192.168.0.1',
           family: 'IPv4',
           port: '1234'
@@ -857,11 +859,11 @@ describe('helpers', () => {
 
   describe('multiaddr.isMultiaddr', () => {
     it('handles different inputs', () => {
-      expect(multiaddr.isMultiaddr(multiaddr('/'))).to.be.eql(true)
-      expect(multiaddr.isMultiaddr('/')).to.be.eql(false)
-      expect(multiaddr.isMultiaddr(123)).to.be.eql(false)
+      expect(Multiaddr.isMultiaddr(multiaddr('/'))).to.be.eql(true)
+      expect(Multiaddr.isMultiaddr('/')).to.be.eql(false)
+      expect(Multiaddr.isMultiaddr(123)).to.be.eql(false)
 
-      expect(multiaddr.isMultiaddr(uint8ArrayFromString('/hello'))).to.be.eql(false)
+      expect(Multiaddr.isMultiaddr(uint8ArrayFromString('/hello'))).to.be.eql(false)
     })
   })
 
@@ -870,31 +872,31 @@ describe('helpers', () => {
       it('valid name dns', () => {
         const str = '/dns/ipfs.io'
         const addr = multiaddr(str)
-        expect(multiaddr.isName(addr)).to.equal(true)
+        expect(Multiaddr.isName(addr)).to.equal(true)
       })
 
       it('valid name dnsaddr', () => {
         const str = '/dnsaddr/ipfs.io'
         const addr = multiaddr(str)
-        expect(multiaddr.isName(addr)).to.equal(true)
+        expect(Multiaddr.isName(addr)).to.equal(true)
       })
 
       it('valid name dns4', () => {
         const str = '/dns4/ipfs.io'
         const addr = multiaddr(str)
-        expect(multiaddr.isName(addr)).to.equal(true)
+        expect(Multiaddr.isName(addr)).to.equal(true)
       })
 
       it('valid name dns6', () => {
         const str = '/dns6/ipfs.io'
         const addr = multiaddr(str)
-        expect(multiaddr.isName(addr)).to.equal(true)
+        expect(Multiaddr.isName(addr)).to.equal(true)
       })
 
       it('invalid name', () => {
         const str = '/ip4/127.0.0.1'
         const addr = multiaddr(str)
-        expect(multiaddr.isName(addr)).to.equal(false)
+        expect(Multiaddr.isName(addr)).to.equal(false)
       })
     })
   })
