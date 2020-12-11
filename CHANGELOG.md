@@ -1,3 +1,12 @@
+## [8.1.2](https://github.com/multiformats/js-multiaddr/compare/v8.1.1...v8.1.2) (2020-12-11)
+
+
+### Bug Fixes
+
+* tell bundlers to return false for node dns module ([#163](https://github.com/multiformats/js-multiaddr/issues/163)) ([0ac20ba](https://github.com/multiformats/js-multiaddr/commit/0ac20bab74d23b459c144e69b138f58a8bd7201b))
+
+
+
 ## [8.1.1](https://github.com/multiformats/js-multiaddr/compare/v8.1.0...v8.1.1) (2020-10-30)
 
 
