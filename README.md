@@ -17,6 +17,7 @@ js-multiaddr <!-- omit in toc -->
 
 - [Background](#background)
   - [What is multiaddr?](#what-is-multiaddr)
+- [Migrate to 0.9](#migrate-to-09)
 - [Install](#install)
   - [NPM](#npm)
   - [Browser: `<script>` Tag](#browser-script-tag)
@@ -37,6 +38,45 @@ A standard way to represent addresses that
 - have a binary packed format
 - have a nice string representation
 - encapsulate well
+
+## Migrate to 0.9
+Before 0.9 `multiaddr` would return an constructor function.
+```js
+const multiaddr = require('multiaddr')
+
+const mh1 = multiaddr('/ip4/127.0.0.1/udp/1234')
+
+const mh2 = new multiaddr('/ip4/127.0.0.1/udp/1234')
+// both mh1 and mh2 were multiaddr instances
+
+multiaddr.isName()
+multiaddr.protocols
+// etc 
+
+```
+In 0.9 `multiaddr` returns a class.
+```js
+const Multiaddr = require('multiaddr')
+// you need to use `new` to create and instance
+const mh1 = new Multiaddr('/ip4/127.0.0.1/udp/1234') 
+```
+
+```js
+// The Multiaddr class has a factory method to help migration
+const { multiaddr } = require('multiaddr')
+
+const mh1 = multiaddr('/ip4/127.0.0.1/udp/1234')
+```
+```js
+// In case you are using the static methods/getters `fromNodeAddress`, `isName` , `isMultiaddr`, `protocols` and `resolvers`
+// You will need to do a couple more changes
+const Multiaddr = require('multiaddr')
+const { multiaddr, isName } = Multiaddr
+
+// multiaddr.isName() will not work anymore, only the default export has those methods/getters
+Multiaddr.isName() // or just `isName()`
+
+```
 
 ## Install
 

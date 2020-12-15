@@ -12,7 +12,7 @@ const resolvers = new Map()
 const symbol = Symbol.for('@multiformats/js-multiaddr/multiaddr')
 
 /**
- * @typedef {import('./types').Protocol}Protocol
+ * @typedef {import('./types').Protocol} Protocol
  */
 
 /**
@@ -561,7 +561,7 @@ class Multiaddr {
    * Check if object is a CID instance
    *
    * @param {any} value
-   * @returns {boolean}
+   * @returns {value is Multiaddr}
    */
   static isMultiaddr (value) {
     return value instanceof Multiaddr || Boolean(value && value[symbol])
