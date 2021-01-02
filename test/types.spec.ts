@@ -12,11 +12,11 @@ export const maFromConstructorFunction: Multiaddr = Multiaddr.fromNodeAddress(
   {
     family: 'IPv4',
     address: '127.0.0.1',
-    port: '12345'
+    port: 12345
   },
   'udp'
 )
 
-export function doSthWithMa (ma: Multiaddr): void {
+export function doSthWithMa(ma: Multiaddr): void {
   ma.toOptions()
 }

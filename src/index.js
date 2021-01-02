@@ -84,7 +84,16 @@ Multiaddr.prototype.toJSON = Multiaddr.prototype.toString
 Multiaddr.prototype.toOptions = function toOptions () {
   const opts = {}
   const parsed = this.toString().split('/')
-  opts.family = parsed[1] === 'ip4' ? 'ipv4' : 'ipv6'
+  switch (parsed[1]) {
+    case 'ip4':
+      opts.family = 'ipv4'
+      break
+    case 'ip6':
+      opts.family = 'ipv6'
+      break
+    default:
+      throw new Error(`Invalid addr family. Got '${parsed[1]}' instead of 'ip4' or 'ip6'`)
+  }
   opts.host = parsed[2]
   opts.transport = parsed[3]
   opts.port = parseInt(parsed[4])
@@ -462,7 +471,7 @@ Multiaddr.fromNodeAddress = function fromNodeAddress (addr, transport) {
       ip = 'ip6'
       break
     default:
-      throw Error(`Invalid addr family. Got '${addr.family}' instead of 'IPv4' or 'IPv6'`)
+      throw new Error(`Invalid addr family. Got '${addr.family}' instead of 'IPv4' or 'IPv6'`)
   }
   return Multiaddr('/' + [ip, addr.address, transport, addr.port].join('/'))
 }

@@ -51,7 +51,7 @@
     "@types/node": "^14.0.11",
     "aegir": "^29.0.1",
     "sinon": "^9.2.0",
-    "typescript": "^3.9.5"
+    "typescript": "^4.1"
   },
   "contributors": [
     "David Dias <daviddias.p@gmail.com>",
@@ -66,7 +66,7 @@
     "Richard Littauer <richard.littauer@gmail.com>",
     "Dmitriy Ryajov <dryajov@gmail.com>",
     "Marcin Rataj <lidel@lidel.org>",
-    "Robert Kiel <robert.kiel@validitylabs.org>",
+    "Robert Kiel <robert.kiel@hoprnet.org>",
     "Maciej Krüger <mkg20001@gmail.com>",
     "Oli Evans <oli@tableflip.io>",
     "Alan Shaw <alan@tableflip.io>",

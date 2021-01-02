@@ -35,7 +35,7 @@ declare interface Protocols {
 declare type NodeAddress = {
   family: "IPv4" | "IPv6";
   address: string;
-  port: string;
+  port: number;
 };
 
 declare type MultiaddrInput = string | Uint8Array | Multiaddr | null;
@@ -95,12 +95,12 @@ declare class Multiaddr {
   /**
    * Returns a tuple of parts
    */
-  tuples(): [number, Uint8Array][];
+  tuples(): [code: number, value: Uint8Array][];
 
   /**
    * Returns a tuple of string/number parts
    */
-  stringTuples(): [number, string | number][];
+  stringTuples(): [code: number, value: string | number][];
 
   /**
    * Encapsulates a Multiaddr in another Multiaddr
@@ -123,7 +123,7 @@ declare class Multiaddr {
   /**
    * Extract the peerId if the multiaddr contains one
    */
-  getPeerId(): string;
+  getPeerId(): string | null;
 
   /**
    * Extract the path if the multiaddr contains one
@@ -156,11 +156,11 @@ declare class Multiaddr {
   /**
    * Resolve multiaddr if containing resolvable hostname.
    */
-  resolve(): Promise<Array<Multiaddr>>
+  resolve(): Promise<Multiaddr[]>
 }
 
 declare namespace Multiaddr {
-  const resolvers: Map < string, (addr: Multiaddr) => Promise < Array < string >>>
+  const resolvers: Map<string, (addr: Multiaddr) => Promise<string[]>>
 
   /**
    * Creates a Multiaddr from a node-friendly address object

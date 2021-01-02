@@ -486,6 +486,9 @@ describe('helpers', () => {
           transport: 'tcp',
           port: 1234
         })
+
+      const errRegex = /Invalid addr family/
+      expect(() => multiaddr('/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').toOptions()).to.throw(errRegex)
     })
   })
 
@@ -745,7 +748,7 @@ describe('helpers', () => {
         multiaddr.fromNodeAddress({
           address: '192.168.0.1',
           family: 'IPv4',
-          port: '1234'
+          port: 1234
         }, 'tcp').toString()
       ).to.be.eql(
         '/ip4/192.168.0.1/tcp/1234'
