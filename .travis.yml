@@ -6,7 +6,8 @@ stages:
   - cov
 
 node_js:
-  - '10'
+  - 'lts/*'
+  - 'stable'
 
 os:
   - linux
@@ -24,6 +25,7 @@ jobs:
       script:
         - npx aegir dep-check
         - npm run lint
+        - npm run test:types
 
     - stage: test
       name: chrome

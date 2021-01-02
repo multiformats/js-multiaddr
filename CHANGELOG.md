@@ -1,3 +1,93 @@
+## [8.1.2](https://github.com/multiformats/js-multiaddr/compare/v8.1.1...v8.1.2) (2020-12-11)
+
+
+### Bug Fixes
+
+* tell bundlers to return false for node dns module ([#163](https://github.com/multiformats/js-multiaddr/issues/163)) ([0ac20ba](https://github.com/multiformats/js-multiaddr/commit/0ac20bab74d23b459c144e69b138f58a8bd7201b))
+
+
+
+## [8.1.1](https://github.com/multiformats/js-multiaddr/compare/v8.1.0...v8.1.1) (2020-10-30)
+
+
+### Bug Fixes
+
+* dns require ([#155](https://github.com/multiformats/js-multiaddr/issues/155)) ([4c89dcf](https://github.com/multiformats/js-multiaddr/commit/4c89dcf8ddf38afe6f36827abde22307f8650fe6))
+
+
+
+# [8.1.0](https://github.com/multiformats/js-multiaddr/compare/v8.0.0...v8.1.0) (2020-10-29)
+
+
+### Features
+
+* resolve multiaddrs ([#149](https://github.com/multiformats/js-multiaddr/issues/149)) ([525268b](https://github.com/multiformats/js-multiaddr/commit/525268b3727bb9413e58322059d6ece7ec65e7f7))
+
+
+
+<a name="8.0.0"></a>
+# [8.0.0](https://github.com/multiformats/js-multiaddr/compare/v7.5.0...v8.0.0) (2020-08-07)
+
+
+### Bug Fixes
+
+* replace node buffers with uint8arrays ([#140](https://github.com/multiformats/js-multiaddr/issues/140)) ([53398f5](https://github.com/multiformats/js-multiaddr/commit/53398f5))
+
+
+### BREAKING CHANGES
+
+* - Where node Buffers were returned, now Uint8Arrays are
+- The `.buffer` property has been renamed `.bytes` similar to cid@1.0.0
+
+* chore: downgrade aegir
+
+
+
+<a name="7.5.0"></a>
+# [7.5.0](https://github.com/multiformats/js-multiaddr/compare/v7.4.3...v7.5.0) (2020-06-25)
+
+
+### Features
+
+* add new memory protocol for testing and other simulation scenarios ([bba22d2](https://github.com/multiformats/js-multiaddr/commit/bba22d2))
+
+
+
+<a name="7.4.3"></a>
+## [7.4.3](https://github.com/multiformats/js-multiaddr/compare/v7.4.2...v7.4.3) (2020-03-26)
+
+
+
+<a name="7.4.2"></a>
+## [7.4.2](https://github.com/multiformats/js-multiaddr/compare/v7.4.1...v7.4.2) (2020-03-18)
+
+
+### Bug Fixes
+
+* add buffer to ip ([#115](https://github.com/multiformats/js-multiaddr/issues/115)) ([deb7c9f](https://github.com/multiformats/js-multiaddr/commit/deb7c9f))
+
+
+
+<a name="7.4.1"></a>
+## [7.4.1](https://github.com/multiformats/js-multiaddr/compare/v7.4.0...v7.4.1) (2020-03-16)
+
+
+### Bug Fixes
+
+* use multibase, add buffer, remove ip dep ([#113](https://github.com/multiformats/js-multiaddr/issues/113)) ([f245744](https://github.com/multiformats/js-multiaddr/commit/f245744))
+
+
+
+<a name="7.4.0"></a>
+# [7.4.0](https://github.com/multiformats/js-multiaddr/compare/v7.3.1...v7.4.0) (2020-02-28)
+
+
+### Bug Fixes
+
+* update typings and add type test ([#112](https://github.com/multiformats/js-multiaddr/issues/112)) ([87aa7b0](https://github.com/multiformats/js-multiaddr/commit/87aa7b0))
+
+
+
 <a name="7.3.1"></a>
 ## [7.3.1](https://github.com/multiformats/js-multiaddr/compare/v7.3.0...v7.3.1) (2020-02-13)
 

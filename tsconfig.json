@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "lib": ["es6"],
+    "lib": [
+      "es6"
+    ],
     "target": "ES5",
     "noImplicitAny": false,
     "noImplicitThis": true,
@@ -14,5 +16,9 @@
     "noEmit": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/index.d.ts", "test/**/*.spec.js", "test/**/*.spec.ts"],
+  "include": [
+    "src/index.d.ts",
+    "test/**/*.spec.js",
+    "test/**/*.spec.ts"
+  ]
 }

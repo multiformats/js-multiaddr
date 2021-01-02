@@ -1,22 +1,22 @@
-import Multiaddr from "../src";
+import Multiaddr from '../src'
 
-const testStr: string = "/ip4/127.0.0.1";
+const testStr = '/ip4/127.0.0.1'
 
-const maFromFunctionConstructor: Multiaddr = Multiaddr(testStr);
+export const maFromFunctionConstructor: Multiaddr = Multiaddr(testStr)
 
-const maFromClassConstructor: Multiaddr = new Multiaddr(testStr);
+export const maFromClassConstructor: Multiaddr = new Multiaddr(testStr)
 
-const maFromMa: Multiaddr = Multiaddr(new Multiaddr(testStr));
+export const maFromMa: Multiaddr = Multiaddr(new Multiaddr(testStr))
 
-const maFromConstructorFunction: Multiaddr = Multiaddr.fromNodeAddress(
+export const maFromConstructorFunction: Multiaddr = Multiaddr.fromNodeAddress(
   {
-    family: "IPv4",
-    address: "127.0.0.1",
-    port: "12345"
+    family: 'IPv4',
+    address: '127.0.0.1',
+    port: '12345'
   },
-  "udp"
-);
+  'udp'
+)
 
-function doSthWithMa(ma: Multiaddr): void {
-  ma.toOptions();
+export function doSthWithMa (ma: Multiaddr): void {
+  ma.toOptions()
 }

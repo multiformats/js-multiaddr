@@ -38,19 +38,19 @@ declare type NodeAddress = {
   port: string;
 };
 
-declare type MultiaddrInput = string | Buffer | Multiaddr | null;
+declare type MultiaddrInput = string | Uint8Array | Multiaddr | null;
 
 declare class Multiaddr {
   /**
    * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
-   * a Buffer, String or another Multiaddr instance
+   * a Uint8Array, String or another Multiaddr instance
    * public key.
-   * @param addr - If String or Buffer, needs to adhere
+   * @param addr - If String or Uint8Array, needs to adhere
    * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
    */
   constructor(addr?: MultiaddrInput);
 
-  buffer: Buffer;
+  bytes: Uint8Array;
 
   /**
    * Returns Multiaddr as a String
@@ -95,7 +95,7 @@ declare class Multiaddr {
   /**
    * Returns a tuple of parts
    */
-  tuples(): [number, Buffer][];
+  tuples(): [number, Uint8Array][];
 
   /**
    * Returns a tuple of string/number parts
@@ -152,9 +152,16 @@ declare class Multiaddr {
    * `{IPv4, IPv6}/{TCP, UDP}`
    */
   isThinWaistAddress(addr?: Multiaddr): boolean;
+
+  /**
+   * Resolve multiaddr if containing resolvable hostname.
+   */
+  resolve(): Promise<Array<Multiaddr>>
 }
 
 declare namespace Multiaddr {
+  const resolvers: Map < string, (addr: Multiaddr) => Promise < Array < string >>>
+
   /**
    * Creates a Multiaddr from a node-friendly address object
    */
@@ -187,9 +194,9 @@ declare namespace Multiaddr {
 
 /**
  * Creates a [multiaddr](https://github.com/multiformats/multiaddr) from
- * a Buffer, String or another Multiaddr instance
+ * a Uint8Array, String or another Multiaddr instance
  * public key.
- * @param addr - If String or Buffer, needs to adhere
+ * @param addr - If String or Uint8Array, needs to adhere
  * to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)
  */
 declare function Multiaddr(input?: MultiaddrInput): Multiaddr;

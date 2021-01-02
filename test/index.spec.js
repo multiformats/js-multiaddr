@@ -3,10 +3,8 @@
 'use strict'
 
 const multiaddr = require('../src')
-const chai = require('chai')
-const dirtyChai = require('dirty-chai')
-chai.use(dirtyChai)
-const expect = chai.expect
+const { expect } = require('aegir/utils/chai')
+const uint8ArrayFromString = require('uint8arrays/from-string')
 
 describe('construction', () => {
   let udpAddr
@@ -22,23 +20,23 @@ describe('construction', () => {
   })
 
   it('reconstruct with buffer', () => {
-    expect(multiaddr(udpAddr.buffer).buffer === udpAddr.buffer).to.equal(false)
-    expect(multiaddr(udpAddr.buffer).buffer).to.deep.equal(udpAddr.buffer)
+    expect(multiaddr(udpAddr.bytes).bytes === udpAddr.bytes).to.equal(false)
+    expect(multiaddr(udpAddr.bytes).bytes).to.deep.equal(udpAddr.bytes)
   })
 
   it('reconstruct with string', () => {
-    expect(multiaddr(udpAddr.toString()).buffer === udpAddr.buffer).to.equal(false)
-    expect(multiaddr(udpAddr.toString()).buffer).to.deep.equal(udpAddr.buffer)
+    expect(multiaddr(udpAddr.toString()).bytes === udpAddr.bytes).to.equal(false)
+    expect(multiaddr(udpAddr.toString()).bytes).to.deep.equal(udpAddr.bytes)
   })
 
   it('reconstruct with object', () => {
-    expect(multiaddr(udpAddr).buffer === udpAddr.buffer).to.equal(false)
-    expect(multiaddr(udpAddr).buffer).to.deep.equal(udpAddr.buffer)
+    expect(multiaddr(udpAddr).bytes === udpAddr.bytes).to.equal(false)
+    expect(multiaddr(udpAddr).bytes).to.deep.equal(udpAddr.bytes)
   })
 
   it('reconstruct with JSON', () => {
-    expect(multiaddr(JSON.parse(JSON.stringify(udpAddr))).buffer === udpAddr.buffer).to.equal(false)
-    expect(multiaddr(JSON.parse(JSON.stringify(udpAddr))).buffer).to.deep.equal(udpAddr.buffer)
+    expect(multiaddr(JSON.parse(JSON.stringify(udpAddr))).bytes === udpAddr.bytes).to.equal(false)
+    expect(multiaddr(JSON.parse(JSON.stringify(udpAddr))).bytes).to.deep.equal(udpAddr.bytes)
   })
 
   it('empty construct still works', () => {
@@ -88,18 +86,18 @@ describe('requiring varint', () => {
   })
 
   it('reconstruct with buffer', () => {
-    expect(multiaddr(uTPAddr.buffer).buffer === uTPAddr.buffer).to.equal(false)
-    expect(multiaddr(uTPAddr.buffer).buffer).to.deep.equal(uTPAddr.buffer)
+    expect(multiaddr(uTPAddr.bytes).bytes === uTPAddr.bytes).to.equal(false)
+    expect(multiaddr(uTPAddr.bytes).bytes).to.deep.equal(uTPAddr.bytes)
   })
 
   it('reconstruct with string', () => {
-    expect(multiaddr(uTPAddr.toString()).buffer === uTPAddr.buffer).to.equal(false)
-    expect(multiaddr(uTPAddr.toString()).buffer).to.deep.equal(uTPAddr.buffer)
+    expect(multiaddr(uTPAddr.toString()).bytes === uTPAddr.bytes).to.equal(false)
+    expect(multiaddr(uTPAddr.toString()).bytes).to.deep.equal(uTPAddr.bytes)
   })
 
   it('reconstruct with object', () => {
-    expect(multiaddr(uTPAddr).buffer === uTPAddr.buffer).to.equal(false)
-    expect(multiaddr(uTPAddr).buffer).to.deep.equal(uTPAddr.buffer)
+    expect(multiaddr(uTPAddr).bytes === uTPAddr.bytes).to.equal(false)
+    expect(multiaddr(uTPAddr).bytes).to.deep.equal(uTPAddr.bytes)
   })
 
   it('empty construct still works', () => {
@@ -110,21 +108,21 @@ describe('requiring varint', () => {
 describe('manipulation', () => {
   it('basic', () => {
     const udpAddrStr = '/ip4/127.0.0.1/udp/1234'
-    const udpAddrBuf = Buffer.from('047f000001910204d2', 'hex')
+    const udpAddrBuf = uint8ArrayFromString('047f000001910204d2', 'base16')
     const udpAddr = multiaddr(udpAddrStr)
 
     expect(udpAddr.toString()).to.equal(udpAddrStr)
-    expect(udpAddr.buffer).to.deep.equal(udpAddrBuf)
+    expect(udpAddr.bytes).to.deep.equal(udpAddrBuf)
 
     expect(udpAddr.protoCodes()).to.deep.equal([4, 273])
     expect(udpAddr.protoNames()).to.deep.equal(['ip4', 'udp'])
     expect(udpAddr.protos()).to.deep.equal([multiaddr.protocols.codes[4], multiaddr.protocols.codes[273]])
     expect(udpAddr.protos()[0] === multiaddr.protocols.codes[4]).to.equal(false)
 
-    const udpAddrBuf2 = udpAddr.encapsulate('/udp/5678')
-    expect(udpAddrBuf2.toString()).to.equal('/ip4/127.0.0.1/udp/1234/udp/5678')
-    expect(udpAddrBuf2.decapsulate('/udp').toString()).to.equal('/ip4/127.0.0.1/udp/1234')
-    expect(udpAddrBuf2.decapsulate('/ip4').toString()).to.equal('/')
+    const udpAddrbytes2 = udpAddr.encapsulate('/udp/5678')
+    expect(udpAddrbytes2.toString()).to.equal('/ip4/127.0.0.1/udp/1234/udp/5678')
+    expect(udpAddrbytes2.decapsulate('/udp').toString()).to.equal('/ip4/127.0.0.1/udp/1234')
+    expect(udpAddrbytes2.decapsulate('/ip4').toString()).to.equal('/')
     expect(function () { udpAddr.decapsulate('/').toString() }).to.throw()
     expect(multiaddr('/').encapsulate(udpAddr).toString()).to.equal(udpAddr.toString())
     expect(multiaddr('/').decapsulate('/').toString()).to.equal('/')
@@ -184,63 +182,63 @@ describe('variants', () => {
   it('ip4', () => {
     const str = '/ip4/127.0.0.1'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip4 + tcp', () => {
     const str = '/ip4/127.0.0.1/tcp/5000'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + tcp', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/5000'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip4 + udp', () => {
     const str = '/ip4/127.0.0.1/udp/5000'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + udp', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/5000'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip4 + p2p', () => {
     const str = '/ip4/127.0.0.1/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip4 + ipfs', () => {
     const str = '/ip4/127.0.0.1/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('ip6 + p2p', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tcp/1234'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
@@ -253,14 +251,14 @@ describe('variants', () => {
   it('ip4 + udp + utp', () => {
     const str = '/ip4/127.0.0.1/udp/5000/utp'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + udp + utp', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/5000/utp'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.protoNames())
     expect(addr.toString()).to.equal(str)
   })
@@ -268,119 +266,119 @@ describe('variants', () => {
   it('ip4 + tcp + http', () => {
     const str = '/ip4/127.0.0.1/tcp/8000/http'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip4 + tcp + unix', () => {
     const str = '/ip4/127.0.0.1/tcp/80/unix/a/b/c/d/e/f'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + tcp + http', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/http'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + tcp + unix', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/unix/a/b/c/d/e/f'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip4 + tcp + https', () => {
     const str = '/ip4/127.0.0.1/tcp/8000/https'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + tcp + https', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/https'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip4 + tcp + websockets', () => {
     const str = '/ip4/127.0.0.1/tcp/8000/ws'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + tcp + websockets', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + tcp + websockets + ipfs', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('ip6 + tcp + websockets + p2p', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/tcp/8000/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip6 + udp + quic + ipfs', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('ip6 + udp + quic + p2p', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('unix', () => {
     const str = '/unix/a/b/c/d/e'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('p2p', () => {
     const str = '/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('p2p', () => {
     const str = '/p2p/bafzbeidt255unskpefjmqb2rc27vjuyxopkxgaylxij6pw35hhys4vnyp4'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal('/p2p/QmW8rAgaaA6sRydK1k6vonShQME47aDxaFidbtMevWs73t')
   })
 
   it('ipfs', () => {
     const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('onion', () => {
     const str = '/onion/timaq4ygg2iegci7:1234'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
@@ -402,7 +400,7 @@ describe('variants', () => {
   it('onion3', () => {
     const str = '/onion3/vww6ybal4bd7szmgncyruucpgfkqahzddi37ktceo3ah7ngmcopnpyyd:1234'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
@@ -424,49 +422,56 @@ describe('variants', () => {
   it('p2p-circuit', () => {
     const str = '/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('p2p-circuit p2p', () => {
     const str = '/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/p2p-circuit'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('p2p-circuit ipfs', () => {
     const str = '/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/p2p-circuit'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('p2p-webrtc-star', () => {
     const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('p2p-webrtc-star ipfs', () => {
     const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-webrtc-star/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
   it('p2p-webrtc-direct', () => {
     const str = '/ip4/127.0.0.1/tcp/9090/http/p2p-webrtc-direct'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('p2p-websocket-star', () => {
     const str = '/ip4/127.0.0.1/tcp/9090/ws/p2p-websocket-star'
     const addr = multiaddr(str)
-    expect(addr).to.have.property('buffer')
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('memory + p2p', () => {
+    const str = '/memory/test/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 })
@@ -580,13 +585,31 @@ describe('helpers', () => {
         resolvable: false
       }])
     })
+
+    it('works with memory', () => {
+      expect(
+        multiaddr('/memory/test/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6').protos()
+      ).to.be.eql([{
+        code: 777,
+        name: 'memory',
+        path: false,
+        size: -1,
+        resolvable: false
+      }, {
+        code: 421,
+        name: 'p2p',
+        path: false,
+        size: -1,
+        resolvable: false
+      }])
+    })
   })
 
   describe('.tuples', () => {
     it('returns the tuples', () => {
       expect(multiaddr('/ip4/0.0.0.0/utp').tuples())
         .to.eql([
-          [4, Buffer.from([0, 0, 0, 0])],
+          [4, Uint8Array.from([0, 0, 0, 0])],
           [302]
         ])
     })
@@ -838,7 +861,7 @@ describe('helpers', () => {
       expect(multiaddr.isMultiaddr('/')).to.be.eql(false)
       expect(multiaddr.isMultiaddr(123)).to.be.eql(false)
 
-      expect(multiaddr.isMultiaddr(Buffer.from('/hello'))).to.be.eql(false)
+      expect(multiaddr.isMultiaddr(uint8ArrayFromString('/hello'))).to.be.eql(false)
     })
   })
 
@@ -883,6 +906,7 @@ describe('helpers', () => {
         const addr = multiaddr(str)
 
         return multiaddr.resolve(addr)
+          // @ts-ignore
           .then(expect.fail, (err) => {
             expect(err).to.exist()
             expect(err.message).to.eql('not a valid name')

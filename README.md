@@ -18,18 +18,21 @@ js-multiaddr
 
 ## Table of Contents
 
-- [Background](#background)
-  - [What is multiaddr?](#what-is-multiaddr)
-- [Install](#install)
-  - [Setup](#setup)
-    - [Node.js](#nodejs)
-    - [Browser: Browserify, Webpack, other bundlers](#browser-browserify-webpack-other-bundlers)
-    - [Browser: `<script>` Tag](#browser-script-tag)
-- [Usage](#usage)
-- [API](#api) - https://multiformats.github.io/js-multiaddr/
-- [Maintainers](#maintainers)
-- [Contribute](#contribute)
-- [License](#license)
+- [js-multiaddr](#js-multiaddr)
+  - [Lead Maintainer](#lead-maintainer)
+  - [Table of Contents](#table-of-contents)
+  - [Background](#background)
+    - [What is multiaddr?](#what-is-multiaddr)
+  - [Install](#install)
+    - [Setup](#setup)
+      - [Node.js](#nodejs)
+      - [Browser: Browserify, Webpack, other bundlers](#browser-browserify-webpack-other-bundlers)
+      - [Browser: `<script>` Tag](#browser-script-tag)
+  - [Usage](#usage)
+  - [API](#api)
+  - [Resolvers](#resolvers)
+  - [Contribute](#contribute)
+  - [License](#license)
 
 ## Background
 
@@ -75,13 +78,7 @@ the global namespace.
 
 ```html
 <script src="https://unpkg.com/multiaddr/dist/index.min.js"></script>
-<!-- OR -->
-<script src="https://unpkg.com/multiaddr/dist/index.js"></script>
 ```
-
-**NOTE**: You will need access to the Node.js `Buffer` API. If you are running
-in the browser, you can access it with `multiaddr.Buffer` or you can install
-[feross/buffer](https://github.com/feross/buffer).
 
 ## Usage
 
@@ -93,8 +90,8 @@ $ node
 > const addr = multiaddr("/ip4/127.0.0.1/udp/1234")
 <Multiaddr /ip4/127.0.0.1/udp/1234>
 
-> addr.buffer
-<Buffer 04 7f 00 00 01 11 04 d2>
+> addr.bytes
+<Uint8Array 04 7f 00 00 01 11 04 d2>
 
 > addr.toString()
 '/ip4/127.0.0.1/udp/1234'
@@ -120,6 +117,26 @@ $ node
 ## API
 
 https://multiformats.github.io/js-multiaddr/
+
+## Resolvers
+
+`multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree. 
+To provide multiaddr resolvers you can do:
+
+```js
+const multiaddr = require('multiaddr')
+const resolvers = require('multiaddr/src/resolvers')
+
+multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+```
+
+The available resolvers are:
+
+|     Name    | type | Description |
+|-------------|------|-------------|
+| `dnsaddrResolver` | `dnsaddr` | dnsaddr resolution with TXT Records |
+
+A resolver receives a `Multiaddr` as a parameter and returns a `Promise<Array<string>>`.
 
 ## Contribute
 

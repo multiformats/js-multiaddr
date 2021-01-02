@@ -1,21 +1,22 @@
 'use strict'
 
-const ip = require('ip')
-const isIp = require('is-ip')
+const ip = require('./ip')
 const protocols = require('./protocols-table')
-const bs58 = require('bs58')
 const CID = require('cids')
-const base32 = require('hi-base32')
+const multibase = require('multibase')
 const varint = require('varint')
+const uint8ArrayToString = require('uint8arrays/to-string')
+const uint8ArrayFromString = require('uint8arrays/from-string')
+const uint8ArrayConcat = require('uint8arrays/concat')
 
 module.exports = Convert
 
 // converts (serializes) addresses
 function Convert (proto, a) {
-  if (a instanceof Buffer) {
+  if (a instanceof Uint8Array) {
     return Convert.toString(proto, a)
   } else {
-    return Convert.toBuffer(proto, a)
+    return Convert.toBytes(proto, a)
   }
 }
 
@@ -24,96 +25,101 @@ Convert.toString = function convertToString (proto, buf) {
   switch (proto.code) {
     case 4: // ipv4
     case 41: // ipv6
-      return buf2ip(buf)
+      return bytes2ip(buf)
 
     case 6: // tcp
     case 273: // udp
     case 33: // dccp
     case 132: // sctp
-      return buf2port(buf)
+      return bytes2port(buf)
 
     case 53: // dns
     case 54: // dns4
     case 55: // dns6
     case 56: // dnsaddr
     case 400: // unix
-      return buf2str(buf)
+    case 777: // memory
+      return bytes2str(buf)
 
     case 421: // ipfs
-      return buf2mh(buf)
+      return bytes2mh(buf)
     case 444: // onion
-      return buf2onion(buf)
+      return bytes2onion(buf)
     case 445: // onion3
-      return buf2onion(buf)
+      return bytes2onion(buf)
     default:
-      return buf.toString('hex') // no clue. convert to hex
+      return uint8ArrayToString(buf, 'base16') // no clue. convert to hex
   }
 }
 
-Convert.toBuffer = function convertToBuffer (proto, str) {
+Convert.toBytes = function convertToBytes (proto, str) {
   proto = protocols(proto)
   switch (proto.code) {
     case 4: // ipv4
-      return ip2buf(str)
+      return ip2bytes(str)
     case 41: // ipv6
-      return ip2buf(str)
+      return ip2bytes(str)
 
     case 6: // tcp
     case 273: // udp
     case 33: // dccp
     case 132: // sctp
-      return port2buf(parseInt(str, 10))
+      return port2bytes(parseInt(str, 10))
 
     case 53: // dns
     case 54: // dns4
     case 55: // dns6
     case 56: // dnsaddr
     case 400: // unix
-      return str2buf(str)
+    case 777: // memory
+      return str2bytes(str)
 
     case 421: // ipfs
-      return mh2buf(str)
+      return mh2bytes(str)
     case 444: // onion
-      return onion2buf(str)
+      return onion2bytes(str)
     case 445: // onion3
-      return onion32buf(str)
+      return onion32bytes(str)
     default:
-      return Buffer.from(str, 'hex') // no clue. convert from hex
+      return uint8ArrayFromString(str, 'base16') // no clue. convert from hex
   }
 }
 
-function ip2buf (ipString) {
-  if (!isIp(ipString)) {
+function ip2bytes (ipString) {
+  if (!ip.isIP(ipString)) {
     throw new Error('invalid ip address')
   }
-  return ip.toBuffer(ipString)
+  return ip.toBytes(ipString)
 }
 
-function buf2ip (ipBuff) {
+function bytes2ip (ipBuff) {
   const ipString = ip.toString(ipBuff)
-  if (!isIp(ipString)) {
+  if (!ipString || !ip.isIP(ipString)) {
     throw new Error('invalid ip address')
   }
   return ipString
 }
 
-function port2buf (port) {
-  const buf = Buffer.alloc(2)
-  buf.writeUInt16BE(port, 0)
-  return buf
+function port2bytes (port) {
+  const buf = new ArrayBuffer(2)
+  const view = new DataView(buf)
+  view.setUint16(0, port)
+
+  return new Uint8Array(buf)
 }
 
-function buf2port (buf) {
-  return buf.readUInt16BE(0)
+function bytes2port (buf) {
+  const view = new DataView(buf.buffer)
+  return view.getUint16(0)
 }
 
-function str2buf (str) {
-  const buf = Buffer.from(str)
-  const size = Buffer.from(varint.encode(buf.length))
-  return Buffer.concat([size, buf])
+function str2bytes (str) {
+  const buf = uint8ArrayFromString(str)
+  const size = Uint8Array.from(varint.encode(buf.length))
+  return uint8ArrayConcat([size, buf], size.length + buf.length)
 }
 
-function buf2str (buf) {
+function bytes2str (buf) {
   const size = varint.decode(buf)
   buf = buf.slice(varint.decode.bytes)
 
@@ -121,17 +127,17 @@ function buf2str (buf) {
     throw new Error('inconsistent lengths')
   }
 
-  return buf.toString()
+  return uint8ArrayToString(buf)
 }
 
-function mh2buf (hash) {
+function mh2bytes (hash) {
   // the address is a varint prefixed multihash string representation
   const mh = new CID(hash).multihash
-  const size = Buffer.from(varint.encode(mh.length))
-  return Buffer.concat([size, mh])
+  const size = Uint8Array.from(varint.encode(mh.length))
+  return uint8ArrayConcat([size, mh], size.length + mh.length)
 }
 
-function buf2mh (buf) {
+function bytes2mh (buf) {
   const size = varint.decode(buf)
   const address = buf.slice(varint.decode.bytes)
 
@@ -139,10 +145,10 @@ function buf2mh (buf) {
     throw new Error('inconsistent lengths')
   }
 
-  return bs58.encode(address)
+  return uint8ArrayToString(address, 'base58btc')
 }
 
-function onion2buf (str) {
+function onion2bytes (str) {
   const addr = str.split(':')
   if (addr.length !== 2) {
     throw new Error('failed to parse onion addr: ' + addr + ' does not contain a port number')
@@ -150,18 +156,20 @@ function onion2buf (str) {
   if (addr[0].length !== 16) {
     throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion address.')
   }
-  const buf = Buffer.from(base32.decode.asBytes(addr[0].toUpperCase()))
+
+  // onion addresses do not include the multibase prefix, add it before decoding
+  const buf = multibase.decode('b' + addr[0])
 
   // onion port number
   const port = parseInt(addr[1], 10)
   if (port < 1 || port > 65536) {
     throw new Error('Port number is not in range(1, 65536)')
   }
-  const portBuf = port2buf(port)
-  return Buffer.concat([buf, portBuf])
+  const portBuf = port2bytes(port)
+  return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
 }
 
-function onion32buf (str) {
+function onion32bytes (str) {
   const addr = str.split(':')
   if (addr.length !== 2) {
     throw new Error('failed to parse onion addr: ' + addr + ' does not contain a port number')
@@ -169,21 +177,22 @@ function onion32buf (str) {
   if (addr[0].length !== 56) {
     throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion3 address.')
   }
-  const buf = Buffer.from(base32.decode.asBytes(addr[0].toUpperCase()))
+  // onion addresses do not include the multibase prefix, add it before decoding
+  const buf = multibase.decode('b' + addr[0])
 
   // onion port number
   const port = parseInt(addr[1], 10)
   if (port < 1 || port > 65536) {
     throw new Error('Port number is not in range(1, 65536)')
   }
-  const portBuf = port2buf(port)
-  return Buffer.concat([buf, portBuf])
+  const portBuf = port2bytes(port)
+  return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
 }
 
-function buf2onion (buf) {
+function bytes2onion (buf) {
   const addrBytes = buf.slice(0, buf.length - 2)
   const portBytes = buf.slice(buf.length - 2)
-  const addr = base32.encode(addrBytes).toLowerCase()
-  const port = buf2port(portBytes)
+  const addr = uint8ArrayToString(addrBytes, 'base32')
+  const port = bytes2port(portBytes)
   return addr + ':' + port
 }
