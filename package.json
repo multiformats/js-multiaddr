@@ -49,7 +49,7 @@
     "@types/dirty-chai": "^2.0.2",
     "@types/mocha": "^8.0.1",
     "@types/node": "^14.0.11",
-    "aegir": "^29.0.1",
+    "aegir": "^32.1.0",
     "sinon": "^9.2.0",
     "typescript": "^3.9.5"
   },
