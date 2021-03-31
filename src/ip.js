@@ -8,22 +8,25 @@ const isV4 = isIp.v4
 const isV6 = isIp.v6
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L7
+// @ts-ignore
 const toBytes = function (ip, buff, offset) {
   offset = ~~offset
 
-  var result
+  let result
 
   if (isV4(ip)) {
     result = buff || new Uint8Array(offset + 4)
+    // @ts-ignore
+    // eslint-disable-next-line array-callback-return
     ip.split(/\./g).map(function (byte) {
       result[offset++] = parseInt(byte, 10) & 0xff
     })
   } else if (isV6(ip)) {
-    var sections = ip.split(':', 8)
+    const sections = ip.split(':', 8)
 
-    var i
+    let i
     for (i = 0; i < sections.length; i++) {
-      var isv4 = isV4(sections[i])
+      const isv4 = isV4(sections[i])
       var v4Buffer
 
       if (isv4) {
@@ -42,7 +45,7 @@ const toBytes = function (ip, buff, offset) {
       while (sections.length < 8) sections.push('0')
     } else if (sections.length < 8) {
       for (i = 0; i < sections.length && sections[i] !== ''; i++);
-      var argv = [i, '1']
+      const argv = [i, '1']
       for (i = 9 - sections.length; i > 0; i--) {
         argv.push('0')
       }
@@ -51,7 +54,7 @@ const toBytes = function (ip, buff, offset) {
 
     result = buff || new Uint8Array(offset + 16)
     for (i = 0; i < sections.length; i++) {
-      var word = parseInt(sections[i], 16)
+      const word = parseInt(sections[i], 16)
       result[offset++] = (word >> 8) & 0xff
       result[offset++] = word & 0xff
     }
@@ -65,12 +68,13 @@ const toBytes = function (ip, buff, offset) {
 }
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L63
+// @ts-ignore
 const toString = function (buff, offset, length) {
   offset = ~~offset
   length = length || (buff.length - offset)
 
-  var result = []
-  var string
+  const result = []
+  let string
   const view = new DataView(buff.buffer)
   if (length === 4) {
     // IPv4
