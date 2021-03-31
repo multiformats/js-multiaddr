@@ -50,7 +50,7 @@
   },
   "aegir": {
     "build": {
-      "bundlesizeMax": "14kB"
+      "bundlesizeMax": "22kB"
     }
   },
   "eslintConfig": {
