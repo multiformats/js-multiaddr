@@ -8,7 +8,7 @@ const isV4 = isIp.v4
 const isV6 = isIp.v6
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L7
-// @ts-ignore
+// @ts-ignore - this is copied from the link above better to keep it the same
 const toBytes = function (ip, buff, offset) {
   offset = ~~offset
 
@@ -68,7 +68,7 @@ const toBytes = function (ip, buff, offset) {
 }
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L63
-// @ts-ignore
+// @ts-ignore - this is copied from the link above better to keep it the same
 const toString = function (buff, offset, length) {
   offset = ~~offset
   length = length || (buff.length - offset)

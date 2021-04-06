@@ -48,7 +48,7 @@ class Multiaddr {
     if (addr instanceof Uint8Array) {
       /** @type {Uint8Array} - The raw bytes representing this multiaddress */
       this.bytes = codec.fromBytes(addr)
-    } else if (typeof addr === 'string' || addr instanceof String) {
+    } else if (typeof addr === 'string') {
       if (addr.length > 0 && addr.charAt(0) !== '/') {
         throw new Error(`multiaddr "${addr}" must start with a "/"`)
       }

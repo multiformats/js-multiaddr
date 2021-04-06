@@ -77,12 +77,12 @@ function stringToStringTuples (str) {
 
 // [[str name, str addr]... ] -> string
 /**
- * @param {any[]} tuples
+ * @param {[number, string?][]} tuples
  */
 function stringTuplesToString (tuples) {
-  /** @type {string[]} */
+  /** @type {Array<string | undefined>} */
   const parts = []
-  tuples.map((/** @type {any[]} */ tup) => {
+  tuples.map((tup) => {
     const proto = protoFromTuple(tup)
     parts.push(proto.name)
     if (tup.length > 1) {
@@ -96,10 +96,11 @@ function stringTuplesToString (tuples) {
 
 // [[str name, str addr]... ] -> [[int code, Uint8Array]... ]
 /**
- * @param {any[]} tuples
+ * @param {Array<string[] | string >} tuples
+ * @returns {[number , Uint8Array?][]}
  */
 function stringTuplesToTuples (tuples) {
-  return tuples.map((/** @type {string | any[]} */ tup) => {
+  return tuples.map((tup) => {
     if (!Array.isArray(tup)) {
       tup = [tup]
     }
@@ -132,7 +133,7 @@ function tuplesToStringTuples (tuples) {
 
 // [[int code, Uint8Array ]... ] -> Uint8Array
 /**
- * @param {any[]} tuples
+ * @param {[number, Uint8Array?][]} tuples
  */
 function tuplesToBytes (tuples) {
   return fromBytes(uint8ArrayConcat(tuples.map((/** @type {any[]} */ tup) => {
@@ -167,7 +168,6 @@ function sizeForAddr (p, addr) {
  * @param {Uint8Array} buf
  * @returns {Array<[number, Uint8Array?]>}
  */
-
 function bytesToTuples (buf) {
   /** @type {Array<[number, Uint8Array?]>} */
   const tuples = []
@@ -225,7 +225,7 @@ function stringToBytes (str) {
 
 // String -> Uint8Array
 /**
- * @param {any} str
+ * @param {string} str
  */
 function fromString (str) {
   return stringToBytes(str)
@@ -253,7 +253,7 @@ function validateBytes (buf) {
 }
 
 /**
- * @param {any} buf
+ * @param {Uint8Array} buf
  */
 function isValidBytes (buf) {
   return validateBytes(buf) === undefined
