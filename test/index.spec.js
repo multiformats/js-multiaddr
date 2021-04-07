@@ -898,21 +898,5 @@ describe('helpers', () => {
         expect(Multiaddr.isName(addr)).to.equal(false)
       })
     })
-
-    describe('.resolve', () => {
-      it.skip('valid and active DNS name', (done) => {})
-      it.skip('valid but inactive DNS name', () => {})
-      it('invalid DNS name', () => {
-        const str = '/ip4/127.0.0.1'
-        const addr = new Multiaddr(str)
-
-        return Multiaddr.resolve(addr)
-          // @ts-ignore
-          .then(expect.fail, (err) => {
-            expect(err).to.exist()
-            expect(err.message).to.eql('not a valid name')
-          })
-      })
-    })
   })
 })
