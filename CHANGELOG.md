@@ -1,3 +1,12 @@
+## [9.0.1](https://github.com/multiformats/js-multiaddr/compare/v9.0.0...v9.0.1) (2021-04-08)
+
+
+### Bug Fixes
+
+* types property ([#195](https://github.com/multiformats/js-multiaddr/issues/195)) ([54633f4](https://github.com/multiformats/js-multiaddr/commit/54633f493c2cbd85da7c49be200ac385394182b8))
+
+
+
 # [9.0.0](https://github.com/multiformats/js-multiaddr/compare/v8.1.2...v9.0.0) (2021-04-08)
 
 
