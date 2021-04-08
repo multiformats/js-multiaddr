@@ -1,2421 +1,276 @@
 <!doctype html>
-<html lang="en">
+<html class="default no-js">
 <head>
-  <meta charset='utf-8'>
-  <title>multiaddr 8.1.1 | Documentation</title>
-  <meta name='description' content='multiaddr implementation (binary + string representation of network addresses)'>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' rel='stylesheet'>
-  <link href='assets/style.css' rel='stylesheet'>
-  <link href='assets/github.css' rel='stylesheet'>
-  <link href='assets/split.css' rel='stylesheet'>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>multiaddr - v9.0.0</title>
+	<meta name="description" content="Documentation for multiaddr - v9.0.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
-<body class='documentation m0'>
-    <div class='flex'>
-      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
-        <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'>multiaddr</h3>
-          <div class='mb1'><code>8.1.1</code></div>
-          <input
-            placeholder='Filter'
-            id='filter-input'
-            class='col12 block input'
-            spellcheck='false'
-            autocapitalize='off'
-            autocorrect='off'
-            type='text' />
-          <div id='toc'>
-            <ul class='list-reset h5 py1-ul'>
-              
-                
-                <li><a
-                  href='#introduction'
-                  class="h5 bold black caps">
-                  Introduction
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#multiaddr'
-                  class=" toggle-sibling">
-                  Multiaddr
-                  <span class='icon'>▸</span>
-                </a>
-                
-                <div class='toggle-target display-none'>
-                  
-                  <ul class='list-reset py1-ul pl1'>
-                    <li class='h5'><span>Static members</span></li>
-                    
-                      <li><a
-                        href='#multiaddrfromnodeaddress'
-                        class='regular pre-open'>
-                        .fromNodeAddress
-                      </a></li>
-                    
-                      <li><a
-                        href='#multiaddrprotocols'
-                        class='regular pre-open'>
-                        .protocols
-                      </a></li>
-                    
-                      <li><a
-                        href='#multiaddrisname'
-                        class='regular pre-open'>
-                        .isName
-                      </a></li>
-                    
-                      <li><a
-                        href='#multiaddrresolve'
-                        class='regular pre-open'>
-                        .resolve
-                      </a></li>
-                    
-                    </ul>
-                  
-                  
-                    <ul class='list-reset py1-ul pl1'>
-                      <li class='h5'><span>Instance members</span></li>
-                      
-                      <li><a
-                        href='#multiaddrtostring'
-                        class='regular pre-open'>
-                        #toString
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrtojson'
-                        class='regular pre-open'>
-                        #toJSON
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrtooptions'
-                        class='regular pre-open'>
-                        #toOptions
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrinspect'
-                        class='regular pre-open'>
-                        #inspect
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrinspect'
-                        class='regular pre-open'>
-                        #inspect
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrprotos'
-                        class='regular pre-open'>
-                        #protos
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrprotocodes'
-                        class='regular pre-open'>
-                        #protoCodes
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrprotonames'
-                        class='regular pre-open'>
-                        #protoNames
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrtuples'
-                        class='regular pre-open'>
-                        #tuples
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrstringtuples'
-                        class='regular pre-open'>
-                        #stringTuples
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrencapsulate'
-                        class='regular pre-open'>
-                        #encapsulate
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrdecapsulate'
-                        class='regular pre-open'>
-                        #decapsulate
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrdecapsulatecode'
-                        class='regular pre-open'>
-                        #decapsulateCode
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrgetpeerid'
-                        class='regular pre-open'>
-                        #getPeerId
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrgetpath'
-                        class='regular pre-open'>
-                        #getPath
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrequals'
-                        class='regular pre-open'>
-                        #equals
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrresolve'
-                        class='regular pre-open'>
-                        #resolve
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddrnodeaddress'
-                        class='regular pre-open'>
-                        #nodeAddress
-                      </a></li>
-                      
-                      <li><a
-                        href='#multiaddristhinwaistaddress'
-                        class='regular pre-open'>
-                        #isThinWaistAddress
-                      </a></li>
-                      
-                    </ul>
-                  
-                  
-                  
-                </div>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#bytes'
-                  class="">
-                  bytes
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#protocol'
-                  class="">
-                  protocol
-                  
-                </a>
-                
-                </li>
-              
-            </ul>
-          </div>
-          <div class='mt1 h6 quiet'>
-            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
-          </div>
-        </div>
-      </div>
-      <div id='split-right' class='relative overflow-auto height-viewport-100'>
-        
-          
-            <div class='keyline-top-not py2'><section class='py2 clearfix'>
-
-  <h2 id='introduction' class='mt0'>
-    Introduction
-  </h2>
-
-  
-    <p>JavaScript implementation of <a href="https://github.com/multiformats/multiaddr">Multiaddr</a>.</p>
-<h2>What is multiaddr?</h2>
-<p>Multiaddr is a standard way to represent addresses that:</p>
-<ul>
-<li>Support any standard network protocols.</li>
-<li>Self-describe (include protocols).</li>
-<li>Have a binary packed format.</li>
-<li>Have a nice string representation.</li>
-<li>Encapsulate well.</li>
-</ul>
-<p>You can read more about what Multiaddr is in the language-independent Github repository:
-<a href="https://github.com/multiformats/multiaddr">https://github.com/multiformats/multiaddr</a></p>
-<p>Multiaddr is a part of a group of values called <a href="https://github.com/multiformats/multiformats">Multiformats</a></p>
-<h2>Example</h2>
-<pre class='hljs'><span class="hljs-keyword">var</span> Multiaddr = <span class="hljs-built_in">require</span>(<span class="hljs-string">'multiaddr'</span>)
-
-<span class="hljs-keyword">var</span> home = <span class="hljs-keyword">new</span> Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/80'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 047f000001060050 - /ip4/127.0.0.1/tcp/80&gt;</span>
-
-home.bytes
-<span class="hljs-comment">// &lt;Uint8Array 04 7f 00 00 01 06 00 50&gt;</span>
-
-home.toString()
-<span class="hljs-comment">// '/ip4/127.0.0.1/tcp/80'</span>
-
-home.protos()
-<span class="hljs-comment">// [ { code: 4, size: 32, name: 'ip4' },</span>
-<span class="hljs-comment">//   { code: 6, size: 16, name: 'tcp' } ]</span>
-
-home.nodeAddress()
-<span class="hljs-comment">// { family: 'IPv4', address: '127.0.0.1', port: '80' }</span>
-
-<span class="hljs-keyword">var</span> proxy = <span class="hljs-keyword">new</span> Multiaddr(<span class="hljs-string">'/ip4/192.168.2.1/tcp/3128'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 04c0a80201060c38 - /ip4/192.168.2.1/tcp/3128&gt;</span>
-
-<span class="hljs-keyword">var</span> full = proxy.encapsulate(home)
-<span class="hljs-comment">// &lt;Multiaddr 04c0a80201060c38047f000001060050 - /ip4/192.168.2.1/tcp/3128/ip4/127.0.0.1/tcp/80&gt;</span>
-
-full.toString()
-<span class="hljs-comment">// '/ip4/192.168.2.1/tcp/3128/ip4/127.0.0.1/tcp/80'</span></pre>
-<h2>Installation</h2>
-<h3>npm</h3>
-<pre class='hljs'>&gt; npm install multiaddr</pre>
-<h2>Setup</h2>
-<h3>Node.js</h3>
-<pre class='hljs'><span class="hljs-keyword">var</span> Multiaddr = <span class="hljs-built_in">require</span>(<span class="hljs-string">'multiaddr'</span>)</pre>
-<h3>Browser: Browserify, Webpack, other bundlers</h3>
-<p>The code published to npm that gets loaded on require is in fact a ES5
-transpiled version with the right shims added. This means that you can require
-it and use with your favourite bundler without having to adjust asset management
-process.</p>
-<pre class='hljs'><span class="hljs-keyword">var</span> Multiaddr = <span class="hljs-built_in">require</span>(<span class="hljs-string">'multiaddr'</span>)</pre>
-<h3>Browser: <code>&#x3C;script></code> Tag</h3>
-<p>Loading this module through a script tag will make the <code>Multiaddr</code> obj available in
-the global namespace.</p>
-<pre class='hljs'><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://unpkg.com/multiaddr/dist/index.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-<span class="hljs-comment">&lt;!-- OR --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://unpkg.com/multiaddr/dist/index.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></pre>
-
-  
-</section></div>
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='multiaddr'>
-      Multiaddr
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L27-L52'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Creates a <a href="https://github.com/multiformats/multiaddr">multiaddr</a> from
-a Uint8Array, String or another Multiaddr instance
-public key.</p>
-
-    <div class='pre p1 fill-light mt0'>new Multiaddr(addr: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a> | <a href="#multiaddr">Multiaddr</a>))</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>addr</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a> | <a href="#multiaddr">Multiaddr</a>))</code>
-	    If String or Uint8Array, needs to adhere
-to the address format of a 
-<a href="https://github.com/multiformats/multiaddr#string-format">multiaddr</a>
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001&gt;</span></pre>
-    
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Static Members</div>
-    <div class="clearfix">
-  
-    <div class='border-bottom' id='multiaddrfromnodeaddress'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>fromNodeAddress(addr, transport)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L453-L468'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Creates a Multiaddr from a node-friendly address object</p>
-
-    <div class='pre p1 fill-light mt0'>fromNodeAddress(addr: {family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}, transport: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="#multiaddr">Multiaddr</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>addr</span> <code class='quiet'>({family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>})</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>transport</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="#multiaddr">Multiaddr</a></code>:
-        multiaddr
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Throws</div>
-    <ul>
-      
-        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Throws error if addr is not truthy
-</li>
-      
-        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Throws error if transport is not truthy
-</li>
-      
-    </ul>
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr.fromNodeAddress({<span class="hljs-attr">address</span>: <span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-attr">port</span>: <span class="hljs-string">'4001'</span>}, <span class="hljs-string">'tcp'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001&gt;</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrprotocols'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>protocols</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L521-L521'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Object containing table, names and codes of all supported protocols.
-To get the protocol values from a Multiaddr, you can use
-<a href="#multiaddrprotos"><code>.protos()</code></a>,
-<a href="#multiaddrprotocodes"><code>.protoCodes()</code></a> or
-<a href="#multiaddrprotonames"><code>.protoNames()</code></a></p>
-
-    <div class='pre p1 fill-light mt0'>protocols</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>{table: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, names: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, codes: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>}</code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrisname'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>isName(addr)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L529-L536'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns if something is a Multiaddr that is a name</p>
-
-    <div class='pre p1 fill-light mt0'>isName(addr: <a href="#multiaddr">Multiaddr</a>): Bool</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>addr</span> <code class='quiet'>(<a href="#multiaddr">Multiaddr</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>Bool</code>:
-        isName
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrresolve'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>resolve(addr)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L545-L556'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns an array of multiaddrs, by resolving the multiaddr that is a name</p>
-
-    <div class='pre p1 fill-light mt0'>resolve(addr: <a href="#multiaddr">Multiaddr</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#multiaddr">Multiaddr</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>addr</span> <code class='quiet'>(<a href="#multiaddr">Multiaddr</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#multiaddr">Multiaddr</a>></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">multiaddr - v9.0.0</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>multiaddr - v9.0.0</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#js-multiaddr" id="js-multiaddr" style="color: inherit; text-decoration: none;">
+					<h1>js-multiaddr</h1>
+				</a>
+				<p><a href="http://ipn.io"><img src="https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square" alt=""></a>
+					<a href="https://github.com/multiformats/multiformats"><img src="https://img.shields.io/badge/project-multiformats-blue.svg?style=flat-square" alt=""></a>
+					<a href="https://webchat.freenode.net/?channels=%23ipfs"><img src="https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square" alt=""></a>
+					<a href="https://david-dm.org/multiformats/js-multiaddr"><img src="https://david-dm.org/multiformats/js-multiaddr.svg?style=flat-square" alt="Dependency Status"></a>
+					<a href="https://github.com/feross/standard"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square" alt="js-standard-style"></a>
+					<a href="https://github.com/RichardLitt/standard-readme"><img src="https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square" alt=""></a>
+					<a href="https://travis-ci.com/multiformats/js-multiaddr"><img src="https://img.shields.io/travis/multiformats/js-multiaddr.svg?style=flat-square" alt=""></a>
+				<a href="https://codecov.io/gh/multiformats/js-multiaddr"><img src="https://img.shields.io/codecov/c/github/multiformats/js-multiaddr.svg?style=flat-square" alt="codecov"></a></p>
+				<blockquote>
+					<p>JavaScript implementation of <a href="https://github.com/multiformats/multiaddr">multiaddr</a>.</p>
+				</blockquote>
+				<a href="#lead-maintainer" id="lead-maintainer" style="color: inherit; text-decoration: none;">
+					<h2>Lead Maintainer</h2>
+				</a>
+				<p><a href="https://github.com/jacobheun">Jacob Heun</a></p>
+				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+					<h2>Table of Contents</h2>
+				</a>
+				<ul>
+					<li><a href="#js-multiaddr">js-multiaddr</a><ul>
+							<li><a href="#lead-maintainer">Lead Maintainer</a></li>
+							<li><a href="#table-of-contents">Table of Contents</a></li>
+							<li><a href="#background">Background</a><ul>
+									<li><a href="#what-is-multiaddr">What is multiaddr?</a></li>
+								</ul>
+							</li>
+							<li><a href="#install">Install</a><ul>
+									<li><a href="#npm">NPM</a></li>
+									<li><a href="#browser-script-tag">Browser: <code>&lt;script&gt;</code> Tag</a></li>
+								</ul>
+							</li>
+							<li><a href="#usage">Usage</a></li>
+							<li><a href="#api">API</a></li>
+							<li><a href="#resolvers">Resolvers</a></li>
+							<li><a href="#contribute">Contribute</a></li>
+							<li><a href="#license">License</a></li>
+						</ul>
+					</li>
+				</ul>
+				<a href="#background" id="background" style="color: inherit; text-decoration: none;">
+					<h2>Background</h2>
+				</a>
+				<a href="#what-is-multiaddr" id="what-is-multiaddr" style="color: inherit; text-decoration: none;">
+					<h3>What is multiaddr?</h3>
+				</a>
+				<p>A standard way to represent addresses that</p>
+				<ul>
+					<li>support any standard network protocol</li>
+					<li>are self-describing</li>
+					<li>have a binary packed format</li>
+					<li>have a nice string representation</li>
+					<li>encapsulate well</li>
+				</ul>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<a href="#npm" id="npm" style="color: inherit; text-decoration: none;">
+					<h3>NPM</h3>
+				</a>
+				<pre><code class="language-sh"><span style="color: #000000">npm i multiaddr</span>
+</code></pre>
+				<a href="#browser-ltscriptgt-tag" id="browser-ltscriptgt-tag" style="color: inherit; text-decoration: none;">
+					<h3>Browser: <code>&lt;script&gt;</code> Tag</h3>
+				</a>
+				<p>Loading this module through a script tag will make the <code>Multiaddr</code> obj available in
+				the global namespace.</p>
+				<pre><code class="language-html"><span style="color: #800000">&lt;script</span><span style="color: #000000FF"> </span><span style="color: #FF0000">src</span><span style="color: #000000FF">=</span><span style="color: #0000FF">&quot;https://unpkg.com/multiaddr/dist/index.min.js&quot;</span><span style="color: #800000">&gt;&lt;/script&gt;</span>
+</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<pre><code class="language-js"><span style="color: #008000">// if we are coming from &lt;= 8.x you can use the factory function </span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">multiaddr</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;multiaddr&#039;</span><span style="color: #000000">)</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">addr</span><span style="color: #000000"> =  </span><span style="color: #795E26">multiaddr</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;/ip4/127.0.0.1/udp/1234&quot;</span><span style="color: #000000">)</span>
+<span style="color: #008000">// &lt;Multiaddr /ip4/127.0.0.1/udp/1234&gt;</span>
+
+<span style="color: #008000">// or just the class directly</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">Multiaddr</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;multiaddr&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">addr</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Multiaddr</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;/ip4/127.0.0.1/udp/1234&quot;</span><span style="color: #000000">)</span>
+<span style="color: #008000">// &lt;Multiaddr /ip4/127.0.0.1/udp/1234&gt;</span>
+
+<span style="color: #001080">addr</span><span style="color: #000000">.</span><span style="color: #001080">bytes</span>
+<span style="color: #008000">// &lt;Uint8Array 04 7f 00 00 01 11 04 d2&gt;</span>
+
+<span style="color: #001080">addr</span><span style="color: #000000">.</span><span style="color: #795E26">toString</span><span style="color: #000000">()</span>
+<span style="color: #008000">// &#039;/ip4/127.0.0.1/udp/1234&#039;</span>
+
+<span style="color: #001080">addr</span><span style="color: #000000">.</span><span style="color: #795E26">protos</span><span style="color: #000000">()</span>
+<span style="color: #008000">/* </span>
+<span style="color: #008000">[</span>
+<span style="color: #008000">  {code: 4, name: &#039;ip4&#039;, size: 32},</span>
+<span style="color: #008000">  {code: 273, name: &#039;udp&#039;, size: 16}</span>
+<span style="color: #008000">]</span>
+<span style="color: #008000">*/</span>
+
+<span style="color: #008000">// gives you an object that is friendly with what Node.js core modules expect for addresses</span>
+<span style="color: #001080">addr</span><span style="color: #000000">.</span><span style="color: #795E26">nodeAddress</span><span style="color: #000000">()</span>
+<span style="color: #008000">/*</span>
+<span style="color: #008000">{</span>
+<span style="color: #008000">  family: 4,</span>
+<span style="color: #008000">  port: 1234,</span>
+<span style="color: #008000">  address: &quot;127.0.0.1&quot;</span>
+<span style="color: #008000">}</span>
+<span style="color: #008000">*/</span>
+
+<span style="color: #001080">addr</span><span style="color: #000000">.</span><span style="color: #795E26">encapsulate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/sctp/5678&#039;</span><span style="color: #000000">)</span>
+<span style="color: #008000">// &lt;Multiaddr /ip4/127.0.0.1/udp/1234/sctp/5678&gt;</span>
+</code></pre>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<p><a href="https://multiformats.github.io/js-multiaddr/">https://multiformats.github.io/js-multiaddr/</a></p>
+				<a href="#resolvers" id="resolvers" style="color: inherit; text-decoration: none;">
+					<h2>Resolvers</h2>
+				</a>
+				<p><code>multiaddr</code> allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling <code>multiaddr.resolve()</code> to avoid conflicts if multiple versions of <code>multiaddr</code> are in your dependency tree.
+				To provide multiaddr resolvers you can do:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">Multiaddr</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;multiaddr&#039;</span><span style="color: #000000">)</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">resolvers</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;multiaddr/src/resolvers&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #001080">Multiaddr</span><span style="color: #000000">.</span><span style="color: #001080">resolvers</span><span style="color: #000000">.</span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;dnsaddr&#039;</span><span style="color: #000000">, </span><span style="color: #001080">resolvers</span><span style="color: #000000">.</span><span style="color: #001080">dnsaddrResolver</span><span style="color: #000000">)</span>
+</code></pre>
+				<p>The available resolvers are:</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><code>dnsaddrResolver</code></td>
+							<td><code>dnsaddr</code></td>
+							<td>dnsaddr resolution with TXT Records</td>
+						</tr>
+				</tbody></table>
+				<p>A resolver receives a <code>Multiaddr</code> as a parameter and returns a <code>Promise&lt;Array&lt;string&gt;&gt;</code>.</p>
+				<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+					<h2>Contribute</h2>
+				</a>
+				<p>Contributions welcome. Please check out <a href="https://github.com/multiformats/js-multiaddr/issues">the issues</a>.</p>
+				<p>Check out our <a href="https://github.com/multiformats/multiformats/blob/master/contributing.md">contributing document</a> for more information on how we work, and about contributing in general. Please be aware that all interactions related to multiformats are subject to the IPFS <a href="https://github.com/ipfs/community/blob/master/code-of-conduct.md">Code of Conduct</a>.</p>
+				<p>Small note: If editing the README, please conform to the <a href="https://github.com/RichardLitt/standard-readme">standard-readme</a> specification.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="LICENSE">MIT</a> © 2016 Protocol Labs Inc.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="modules/protocols.html">protocols</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/multiaddr.html" class="tsd-kind-icon">Multiaddr</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#multiaddrinput" class="tsd-kind-icon">Multiaddr<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#multiaddrobject" class="tsd-kind-icon">Multiaddr<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#protocol" class="tsd-kind-icon">Protocol</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#resolver" class="tsd-kind-icon">Resolver</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#resolvers" class="tsd-kind-icon">resolvers</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#multiaddr" class="tsd-kind-icon">multiaddr</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#protocols" class="tsd-kind-icon">protocols</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 </div>
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
-    <div class="clearfix">
-  
-    <div class='border-bottom' id='multiaddrtostring'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>toString()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L62-L64'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns Multiaddr as a String</p>
-
-    <div class='pre p1 fill-light mt0'>toString(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>).toString()
-<span class="hljs-comment">// '/ip4/127.0.0.1/tcp/4001'</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrtojson'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>toJSON</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L74-L74'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns Multiaddr as a JSON encoded object</p>
-
-    <div class='pre p1 fill-light mt0'>toJSON</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-built_in">JSON</span>.stringify(Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>))
-<span class="hljs-comment">// '/ip4/127.0.0.1/tcp/4001'</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrtooptions'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>toOptions()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L84-L92'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns Multiaddr as a convinient options object to be used with net.createConnection</p>
-
-    <div class='pre p1 fill-light mt0'>toOptions(): {family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, host: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, transport: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>{family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, host: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, transport: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}</code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>).toOptions()
-<span class="hljs-comment">// { family: 'ipv4', host: '127.0.0.1', transport: 'tcp', port: 4001 }</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrinspect'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>inspect()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L104-L108'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns Multiaddr as a human-readable string.
-For post Node.js v10.0.0.
-<a href="https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect">https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect</a></p>
-
-    <div class='pre p1 fill-light mt0'>inspect(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-built_in">console</span>.log(Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>))
-<span class="hljs-comment">// '&lt;Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001&gt;'</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrinspect'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>inspect()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L120-L124'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns Multiaddr as a human-readable string.
-Fallback for pre Node.js v10.0.0.
-<a href="https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect">https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect</a></p>
-
-    <div class='pre p1 fill-light mt0'>inspect(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>).inspect()
-<span class="hljs-comment">// '&lt;Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001&gt;'</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrprotos'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>protos()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L147-L149'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns the protocols the Multiaddr is defined with, as an array of objects, in
-left-to-right order. Each object contains the protocol code, protocol name,
-and the size of its address space in bits.
-<a href="https://github.com/multiformats/multiaddr/blob/master/protocols.csv">See list of protocols</a></p>
-
-    <div class='pre p1 fill-light mt0'>protos(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#protocol">protocol</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#protocol">protocol</a>></code>:
-        protocols - All the protocols the address is composed of
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>).protos()
-<span class="hljs-comment">// [ { code: 4, size: 32, name: 'ip4' },</span>
-<span class="hljs-comment">//   { code: 6, size: 16, name: 'tcp' } ]</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrprotocodes'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>protoCodes()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L160-L176'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns the codes of the protocols in left-to-right order.
-<a href="https://github.com/multiformats/multiaddr/blob/master/protocols.csv">See list of protocols</a></p>
-
-    <div class='pre p1 fill-light mt0'>protoCodes(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>></code>:
-        protocol codes
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>).protoCodes()
-<span class="hljs-comment">// [ 4, 6 ]</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrprotonames'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>protoNames()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L187-L189'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns the names of the protocols in left-to-right order.
-<a href="https://github.com/multiformats/multiaddr/blob/master/protocols.csv">See list of protocols</a></p>
-
-    <div class='pre p1 fill-light mt0'>protoNames(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>:
-        protocol names
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>).protoNames()
-<span class="hljs-comment">// [ 'ip4', 'tcp' ]</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrtuples'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>tuples()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L199-L201'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns a tuple of parts</p>
-
-    <div class='pre p1 fill-light mt0'>tuples(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;[<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>]></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;[<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>]></code>:
-        tuples
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">"/ip4/127.0.0.1/tcp/4001"</span>).tuples()
-<span class="hljs-comment">// [ [ 4, &lt;Buffer 7f 00 00 01&gt; ], [ 6, &lt;Buffer 0f a1&gt; ] ]</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrstringtuples'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>stringTuples()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L213-L216'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns a tuple of string/number parts</p>
-<ul>
-<li>tuples[][0] = code of protocol</li>
-<li>tuples[][1] = contents of address</li>
-</ul>
-
-    <div class='pre p1 fill-light mt0'>stringTuples()</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">"/ip4/127.0.0.1/tcp/4001"</span>).stringTuples()
-<span class="hljs-comment">// [ [ 4, '127.0.0.1' ], [ 6, 4001 ] ]</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrencapsulate'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>encapsulate(addr)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L236-L239'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Encapsulates a Multiaddr in another Multiaddr</p>
-
-    <div class='pre p1 fill-light mt0'>encapsulate(addr: <a href="#multiaddr">Multiaddr</a>): <a href="#multiaddr">Multiaddr</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>addr</span> <code class='quiet'>(<a href="#multiaddr">Multiaddr</a>)</code>
-	    Multiaddr to add into this Multiaddr
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="#multiaddr">Multiaddr</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> mh1 = Multiaddr(<span class="hljs-string">'/ip4/8.8.8.8/tcp/1080'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080&gt;</span>
-
-<span class="hljs-keyword">const</span> mh2 = Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001&gt;</span>
-
-<span class="hljs-keyword">const</span> mh3 = mh1.encapsulate(mh2)
-<span class="hljs-comment">// &lt;Multiaddr 0408080808060438047f000001060fa1 - /ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001&gt;</span>
-
-mh3.toString()
-<span class="hljs-comment">// '/ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001'</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrdecapsulate'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>decapsulate(addr)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L259-L267'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Decapsulates a Multiaddr from another Multiaddr</p>
-
-    <div class='pre p1 fill-light mt0'>decapsulate(addr: <a href="#multiaddr">Multiaddr</a>): <a href="#multiaddr">Multiaddr</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>addr</span> <code class='quiet'>(<a href="#multiaddr">Multiaddr</a>)</code>
-	    Multiaddr to remove from this Multiaddr
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="#multiaddr">Multiaddr</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> mh1 = Multiaddr(<span class="hljs-string">'/ip4/8.8.8.8/tcp/1080'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080&gt;</span>
-
-<span class="hljs-keyword">const</span> mh2 = Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001&gt;</span>
-
-<span class="hljs-keyword">const</span> mh3 = mh1.encapsulate(mh2)
-<span class="hljs-comment">// &lt;Multiaddr 0408080808060438047f000001060fa1 - /ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001&gt;</span>
-
-mh3.decapsulate(mh2).toString()
-<span class="hljs-comment">// '/ip4/8.8.8.8/tcp/1080'</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrdecapsulatecode'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>decapsulateCode(code)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L287-L295'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>A more reliable version of <code>decapsulate</code> if you are targeting a
-specific code, such as 421 (the <code>p2p</code> protocol code). The last index of the code
-will be removed from the <code>Multiaddr</code>, and a new instance will be returned.
-If the code is not present, the original <code>Multiaddr</code> is returned.</p>
-
-    <div class='pre p1 fill-light mt0'>decapsulateCode(code: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="#multiaddr">Multiaddr</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>code</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The code of the protocol to decapsulate from this Multiaddr
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="#multiaddr">Multiaddr</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> addr = Multiaddr(<span class="hljs-string">'/ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 0400... - /ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC&gt;</span>
-
-addr.decapsulateCode(<span class="hljs-number">421</span>).toString()
-<span class="hljs-comment">// '/ip4/0.0.0.0/tcp/8080'</span>
-
-Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/8080'</span>).decapsulateCode(<span class="hljs-number">421</span>).toString()
-<span class="hljs-comment">// '/ip4/127.0.0.1/tcp/8080'</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrgetpeerid'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getPeerId()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L308-L326'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Extract the peerId if the multiaddr contains one</p>
-
-    <div class='pre p1 fill-light mt0'>getPeerId(): (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null)</code>:
-        peerId - The id of the peer or null if invalid or missing from the ma
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> mh1 = Multiaddr(<span class="hljs-string">'/ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string&gt;</span>
-
-<span class="hljs-comment">// should return QmValidBase58string or null if the id is missing or invalid</span>
-<span class="hljs-keyword">const</span> peerId = mh1.getPeerId()</pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrgetpath'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getPath()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L339-L353'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Extract the path if the multiaddr contains one</p>
-
-    <div class='pre p1 fill-light mt0'>getPath(): (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null)</code>:
-        path - The path of the multiaddr, or null if no path protocol is present
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> mh1 = Multiaddr(<span class="hljs-string">'/ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock&gt;</span>
-
-<span class="hljs-comment">// should return utf8 string or null if the id is missing or invalid</span>
-<span class="hljs-keyword">const</span> path = mh1.getPath()</pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrequals'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>equals(addr)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L373-L375'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Checks if two Multiaddrs are the same</p>
-
-    <div class='pre p1 fill-light mt0'>equals(addr: <a href="#multiaddr">Multiaddr</a>): Bool</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>addr</span> <code class='quiet'>(<a href="#multiaddr">Multiaddr</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>Bool</code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> mh1 = Multiaddr(<span class="hljs-string">'/ip4/8.8.8.8/tcp/1080'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080&gt;</span>
-
-<span class="hljs-keyword">const</span> mh2 = Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001&gt;</span>
-
-mh1.equals(mh1)
-<span class="hljs-comment">// true</span>
-
-mh1.equals(mh2)
-<span class="hljs-comment">// false</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrresolve'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>resolve()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L391-L406'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Resolve multiaddr if containing resolvable hostname.</p>
-
-    <div class='pre p1 fill-light mt0'>resolve(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#multiaddr">Multiaddr</a>>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#multiaddr">Multiaddr</a>>></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr.resolvers.set(<span class="hljs-string">'dnsaddr'</span>, resolverFunction)
-<span class="hljs-keyword">const</span> mh1 = Multiaddr(<span class="hljs-string">'/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb'</span>)
-<span class="hljs-keyword">const</span> resolvedMultiaddrs = <span class="hljs-keyword">await</span> mh1.resolve()
-<span class="hljs-comment">// [</span>
-<span class="hljs-comment">//   &lt;Multiaddr 04934b5353060fa1a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb&gt;,</span>
-<span class="hljs-comment">//   &lt;Multiaddr 04934b53530601bbde03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/443/wss/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb&gt;,</span>
-<span class="hljs-comment">//   &lt;Multiaddr 04934b535391020fa1cc03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/udp/4001/quic/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb&gt;</span>
-<span class="hljs-comment">// ]</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddrnodeaddress'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>nodeAddress()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L421-L439'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Gets a Multiaddrs node-friendly address object. Note that protocol information
-is left out: in Node (and most network systems) the protocol is unknowable
-given only the address.</p>
-<p>Has to be a ThinWaist Address, otherwise throws error</p>
-
-    <div class='pre p1 fill-light mt0'>nodeAddress(): {family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>{family: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, address: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, port: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>}</code>:
-        
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Throws</div>
-    <ul>
-      
-        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Throws error if Multiaddr is not a Thin Waist address
-</li>
-      
-    </ul>
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>).nodeAddress()
-<span class="hljs-comment">// {family: 'IPv4', address: '127.0.0.1', port: '4001'}</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='multiaddristhinwaistaddress'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>isThinWaistAddress(addr?)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L494-L508'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Returns if a Multiaddr is a Thin Waist address or not.</p>
-<p>Thin Waist is if a Multiaddr adheres to the standard combination of:</p>
-<p><code>{IPv4, IPv6}/{TCP, UDP}</code></p>
-
-    <div class='pre p1 fill-light mt0'>isThinWaistAddress(addr: <a href="#multiaddr">Multiaddr</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>addr</span> <code class='quiet'>(<a href="#multiaddr">Multiaddr</a>?)</code>
-	    Defaults to using 
-<code>this</code>
- instance
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        isThinWaistAddress
-
-      
-    
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> mh1 = Multiaddr(<span class="hljs-string">'/ip4/127.0.0.1/tcp/4001'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001&gt;</span>
-<span class="hljs-keyword">const</span> mh2 = Multiaddr(<span class="hljs-string">'/ip4/192.168.2.1/tcp/5001'</span>)
-<span class="hljs-comment">// &lt;Multiaddr 04c0a80201061389 - /ip4/192.168.2.1/tcp/5001&gt;</span>
-<span class="hljs-keyword">const</span> mh3 = mh1.encapsulate(mh2)
-<span class="hljs-comment">// &lt;Multiaddr 047f000001060fa104c0a80201061389 - /ip4/127.0.0.1/tcp/4001/ip4/192.168.2.1/tcp/5001&gt;</span>
-mh1.isThinWaistAddress()
-<span class="hljs-comment">// true</span>
-mh2.isThinWaistAddress()
-<span class="hljs-comment">// true</span>
-mh3.isThinWaistAddress()
-<span class="hljs-comment">// false</span></pre>
-    
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-</div>
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='bytes'>
-      bytes
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L41-L41'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>bytes</div>
-  
-    <p>
-      Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='protocol'>
-      protocol
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-multiaddr/blob/449d49b94db902c1ecafa3372e211448274ce2f9/src/index.js#L126-L133'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>protocol</div>
-  
-    <p>
-      Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Properties</div>
-    <div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>code</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>size</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>resolvable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?)</code>
-          
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-      </div>
-    </div>
-  <script src='assets/anchor.js'></script>
-  <script src='assets/split.js'></script>
-  <script src='assets/site.js'></script>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
