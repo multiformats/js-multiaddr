@@ -24,6 +24,7 @@ describe('protocols', () => {
 
     it('else', () => {
       expect(
+        // @ts-expect-error
         () => protocols({ hi: 34 })
       ).to.throw(
         /invalid protocol id type/

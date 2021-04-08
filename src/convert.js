@@ -12,6 +12,10 @@ const uint8ArrayConcat = require('uint8arrays/concat')
 module.exports = Convert
 
 // converts (serializes) addresses
+/**
+ * @param {string} proto
+ * @param {string | Uint8Array} a
+ */
 function Convert (proto, a) {
   if (a instanceof Uint8Array) {
     return Convert.toString(proto, a)
@@ -20,9 +24,16 @@ function Convert (proto, a) {
   }
 }
 
+/**
+ * Convert [code,Uint8Array] to string
+ *
+ * @param {number|string} proto
+ * @param {Uint8Array} buf
+ * @returns {string}
+ */
 Convert.toString = function convertToString (proto, buf) {
-  proto = protocols(proto)
-  switch (proto.code) {
+  const protocol = protocols(proto)
+  switch (protocol.code) {
     case 4: // ipv4
     case 41: // ipv6
       return bytes2ip(buf)
@@ -31,7 +42,7 @@ Convert.toString = function convertToString (proto, buf) {
     case 273: // udp
     case 33: // dccp
     case 132: // sctp
-      return bytes2port(buf)
+      return bytes2port(buf).toString()
 
     case 53: // dns
     case 54: // dns4
@@ -52,9 +63,9 @@ Convert.toString = function convertToString (proto, buf) {
   }
 }
 
-Convert.toBytes = function convertToBytes (proto, str) {
-  proto = protocols(proto)
-  switch (proto.code) {
+Convert.toBytes = function convertToBytes (/** @type {string | number } */ proto, /** @type {string} */ str) {
+  const protocol = protocols(proto)
+  switch (protocol.code) {
     case 4: // ipv4
       return ip2bytes(str)
     case 41: // ipv6
@@ -85,6 +96,9 @@ Convert.toBytes = function convertToBytes (proto, str) {
   }
 }
 
+/**
+ * @param {string} ipString
+ */
 function ip2bytes (ipString) {
   if (!ip.isIP(ipString)) {
     throw new Error('invalid ip address')
@@ -92,6 +106,9 @@ function ip2bytes (ipString) {
   return ip.toBytes(ipString)
 }
 
+/**
+ * @param {Uint8Array} ipBuff
+ */
 function bytes2ip (ipBuff) {
   const ipString = ip.toString(ipBuff)
   if (!ipString || !ip.isIP(ipString)) {
@@ -100,6 +117,9 @@ function bytes2ip (ipBuff) {
   return ipString
 }
 
+/**
+ * @param {number} port
+ */
 function port2bytes (port) {
   const buf = new ArrayBuffer(2)
   const view = new DataView(buf)
@@ -108,17 +128,26 @@ function port2bytes (port) {
   return new Uint8Array(buf)
 }
 
+/**
+ * @param {Uint8Array} buf
+ */
 function bytes2port (buf) {
   const view = new DataView(buf.buffer)
   return view.getUint16(0)
 }
 
+/**
+ * @param {string} str
+ */
 function str2bytes (str) {
   const buf = uint8ArrayFromString(str)
   const size = Uint8Array.from(varint.encode(buf.length))
   return uint8ArrayConcat([size, buf], size.length + buf.length)
 }
 
+/**
+ * @param {Uint8Array} buf
+ */
 function bytes2str (buf) {
   const size = varint.decode(buf)
   buf = buf.slice(varint.decode.bytes)
@@ -130,6 +159,9 @@ function bytes2str (buf) {
   return uint8ArrayToString(buf)
 }
 
+/**
+ * @param {string | Uint8Array | CID} hash
+ */
 function mh2bytes (hash) {
   // the address is a varint prefixed multihash string representation
   const mh = new CID(hash).multihash
@@ -137,6 +169,12 @@ function mh2bytes (hash) {
   return uint8ArrayConcat([size, mh], size.length + mh.length)
 }
 
+/**
+ * Converts bytes to bas58btc string
+ *
+ * @param {Uint8Array} buf
+ * @returns {string} bas58btc string
+ */
 function bytes2mh (buf) {
   const size = varint.decode(buf)
   const address = buf.slice(varint.decode.bytes)
@@ -148,6 +186,9 @@ function bytes2mh (buf) {
   return uint8ArrayToString(address, 'base58btc')
 }
 
+/**
+ * @param {string} str
+ */
 function onion2bytes (str) {
   const addr = str.split(':')
   if (addr.length !== 2) {
@@ -169,6 +210,9 @@ function onion2bytes (str) {
   return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
 }
 
+/**
+ * @param {string} str
+ */
 function onion32bytes (str) {
   const addr = str.split(':')
   if (addr.length !== 2) {
@@ -189,6 +233,9 @@ function onion32bytes (str) {
   return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
 }
 
+/**
+ * @param {Uint8Array} buf
+ */
 function bytes2onion (buf) {
   const addrBytes = buf.slice(0, buf.length - 2)
   const portBytes = buf.slice(buf.length - 2)

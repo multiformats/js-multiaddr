@@ -1,18 +1,10 @@
 {
+  "extends": "aegir/src/config/tsconfig.aegir.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "lib": ["es6"],
-    "target": "ES5",
-    "noImplicitAny": false,
-    "noImplicitThis": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
-    "forceConsistentCasingInFileNames": true
+      "outDir": "dist"
   },
-  "include": ["src/index.d.ts", "test/**/*.spec.js", "test/**/*.spec.ts"]
+  "include": [
+    "test",
+    "src"
+  ]
 }

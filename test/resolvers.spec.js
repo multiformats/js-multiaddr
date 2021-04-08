@@ -4,9 +4,9 @@
 const { expect } = require('aegir/utils/chai')
 const sinon = require('sinon')
 
-const multiaddr = require('../src')
+const { Multiaddr } = require('../src')
 const resolvers = require('../src/resolvers')
-const { Resolver } = require('../src/resolvers/dns')
+const Resolver = require('../src/resolvers/dns')
 
 const dnsaddrStub1 = [
   ['dnsaddr=/dnsaddr/ams-1.bootstrap.libp2p.io/p2p/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd'],
@@ -28,7 +28,7 @@ const dnsaddrStub2 = [
 
 describe('multiaddr resolve', () => {
   it('should throw if no resolver is available', async () => {
-    const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
+    const ma = new Multiaddr('/dnsaddr/bootstrap.libp2p.io')
 
     // Resolve
     await expect(ma.resolve()).to.eventually.be.rejected()
@@ -38,7 +38,7 @@ describe('multiaddr resolve', () => {
   describe('dnsaddr', () => {
     before(() => {
       // Set resolvers
-      multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+      Multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
     })
 
     afterEach(() => {
@@ -46,7 +46,7 @@ describe('multiaddr resolve', () => {
     })
 
     it('can resolve dnsaddr without no peerId', async () => {
-      const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
+      const ma = new Multiaddr('/dnsaddr/bootstrap.libp2p.io')
 
       const stub = sinon.stub(Resolver.prototype, 'resolveTxt')
       stub.onCall(0).returns(Promise.resolve(dnsaddrStub1))
@@ -58,12 +58,12 @@ describe('multiaddr resolve', () => {
       resolvedMas.forEach((ma, index) => {
         const stubAddr = dnsaddrStub1[index][0].split('=')[1]
 
-        expect(ma.equals(multiaddr(stubAddr))).to.equal(true)
+        expect(ma.equals(new Multiaddr(stubAddr))).to.equal(true)
       })
     })
 
     it('can resolve dnsaddr with peerId', async () => {
-      const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
+      const ma = new Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
 
       const stub = sinon.stub(Resolver.prototype, 'resolveTxt')
       stub.onCall(0).returns(Promise.resolve(dnsaddrStub1))
@@ -73,11 +73,11 @@ describe('multiaddr resolve', () => {
       const resolvedMas = await ma.resolve()
 
       expect(resolvedMas).to.have.length(1)
-      expect(resolvedMas[0].equals(multiaddr('/dnsaddr/ams-2.bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb'))).to.eql(true)
+      expect(resolvedMas[0].equals(new Multiaddr('/dnsaddr/ams-2.bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb'))).to.eql(true)
     })
 
     it('can resolve dnsaddr with peerId two levels', async () => {
-      const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
+      const ma = new Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
 
       const stub = sinon.stub(Resolver.prototype, 'resolveTxt')
       stub.onCall(0).returns(Promise.resolve(dnsaddrStub1))
@@ -93,10 +93,11 @@ describe('multiaddr resolve', () => {
       const resolvedMas = resolvedSecondMas.flat()
 
       expect(resolvedMas).to.have.length(dnsaddrStub2.length)
-      resolvedMas.forEach((ma, index) => {
+
+      resolvedMas.forEach((/** @type {Multiaddr} */ma, /** @type {number} */ index) => {
         const stubAddr = dnsaddrStub2[index][0].split('=')[1]
 
-        expect(ma.equals(multiaddr(stubAddr))).to.equal(true)
+        expect(ma.equals(new Multiaddr(stubAddr))).to.equal(true)
       })
     })
   })

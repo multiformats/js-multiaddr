@@ -24,10 +24,8 @@ js-multiaddr
   - [Background](#background)
     - [What is multiaddr?](#what-is-multiaddr)
   - [Install](#install)
-    - [Setup](#setup)
-      - [Node.js](#nodejs)
-      - [Browser: Browserify, Webpack, other bundlers](#browser-browserify-webpack-other-bundlers)
-      - [Browser: `<script>` Tag](#browser-script-tag)
+    - [NPM](#npm)
+    - [Browser: `<script>` Tag](#browser-script-tag)
   - [Usage](#usage)
   - [API](#api)
   - [Resolvers](#resolvers)
@@ -48,30 +46,12 @@ A standard way to represent addresses that
 
 ## Install
 
+### NPM
 ```sh
 npm i multiaddr
 ```
 
-### Setup
-
-#### Node.js
-
-```js
-const multiaddr = require('multiaddr')
-```
-
-#### Browser: Browserify, Webpack, other bundlers
-
-The code published to npm that gets loaded on require is in fact a ES5
-transpiled version with the right shims added. This means that you can require
-it and use with your favourite bundler without having to adjust asset management
-process.
-
-```js
-const multiaddr = require('multiaddr')
-```
-
-#### Browser: `<script>` Tag
+### Browser: `<script>` Tag
 
 Loading this module through a script tag will make the `Multiaddr` obj available in
 the global namespace.
@@ -83,35 +63,43 @@ the global namespace.
 ## Usage
 
 ```js
-$ node
+// if we are coming from <= 8.x you can use the factory function 
+const { multiaddr } = require('multiaddr')
+const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
+// <Multiaddr /ip4/127.0.0.1/udp/1234>
 
-> const multiaddr = require('multiaddr')
+// or just the class directly
+const { Multiaddr } = require('multiaddr')
 
-> const addr = multiaddr("/ip4/127.0.0.1/udp/1234")
-<Multiaddr /ip4/127.0.0.1/udp/1234>
+const addr = new Multiaddr("/ip4/127.0.0.1/udp/1234")
+// <Multiaddr /ip4/127.0.0.1/udp/1234>
 
-> addr.bytes
-<Uint8Array 04 7f 00 00 01 11 04 d2>
+addr.bytes
+// <Uint8Array 04 7f 00 00 01 11 04 d2>
 
-> addr.toString()
-'/ip4/127.0.0.1/udp/1234'
+addr.toString()
+// '/ip4/127.0.0.1/udp/1234'
 
-> addr.protos()
+addr.protos()
+/* 
 [
   {code: 4, name: 'ip4', size: 32},
   {code: 273, name: 'udp', size: 16}
 ]
+*/
 
 // gives you an object that is friendly with what Node.js core modules expect for addresses
-> addr.nodeAddress()
+addr.nodeAddress()
+/*
 {
-  family: "4",
+  family: 4,
   port: 1234,
   address: "127.0.0.1"
 }
+*/
 
-> addr.encapsulate('/sctp/5678')
-<Multiaddr /ip4/127.0.0.1/udp/1234/sctp/5678>
+addr.encapsulate('/sctp/5678')
+// <Multiaddr /ip4/127.0.0.1/udp/1234/sctp/5678>
 ```
 
 ## API
@@ -124,10 +112,10 @@ https://multiformats.github.io/js-multiaddr/
 To provide multiaddr resolvers you can do:
 
 ```js
-const multiaddr = require('multiaddr')
+const { Multiaddr } = require('multiaddr')
 const resolvers = require('multiaddr/src/resolvers')
 
-multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+Multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 ```
 
 The available resolvers are:
