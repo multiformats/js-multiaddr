@@ -6,6 +6,52 @@
 * add types ([#189](https://github.com/multiformats/js-multiaddr/issues/189)) ([7d284e4](https://github.com/multiformats/js-multiaddr/commit/7d284e4ce9285b448cd1287af9702a62ff696d68))
 
 
+### BREAKING CHANGES
+
+* entry point uses named exports
+
+```js
+// before
+
+const multiaddr = require('multiaddr')
+multiaddr.resolvers
+multiaddr.protocols
+
+// after
+
+const {multiaddr , Multiaddr, protocols, resolvers} = = require('multiaddr')
+Multiaddr.resolvers
+Multiaddr.protocols
+```
+- Multiaddr is a normal class now
+- `toOptions` output changed to match node 
+```js
+// before
+multiaddr('/ip4/127.0.0.1/tcp/4001').toOptions()
+{ family: 'ipv4', host: '127.0.0.1', transport: 'tcp', port: 4001 }
+
+// after
+new Multiaddr('/ip4/127.0.0.1/tcp/4001').toOptions()
+{ family: 4, host: '127.0.0.1', transport: 'tcp', port: 4001 }
+```
+- `fromNodeAddress` and `nodeAddress` inputs/outputs now match
+```js
+// before the family type was not the same between them
+multiaddr('/ip4/127.0.0.1/tcp/4001').nodeAddress()
+{family: 4, address: '127.0.0.1', port: '4001'}
+
+multiaddr.fromNodeAddress({family: 'IPv4', address: '127.0.0.1', port: '4001'}, 'tcp')
+<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
+
+// after 
+new Multiaddr('/ip4/127.0.0.1/tcp/4001').nodeAddress()
+{family: 4, address: '127.0.0.1', port: 4001}
+
+Multiaddr.fromNodeAddress({family: 4, address: '127.0.0.1', port: '4001'}, 'tcp')
+<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
+```
+
+
 
 ## [8.1.2](https://github.com/multiformats/js-multiaddr/compare/v8.1.1...v8.1.2) (2020-12-11)
 
