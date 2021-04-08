@@ -1,3 +1,12 @@
+# [9.0.0](https://github.com/multiformats/js-multiaddr/compare/v8.1.2...v9.0.0) (2021-04-08)
+
+
+### Features
+
+* add types ([#189](https://github.com/multiformats/js-multiaddr/issues/189)) ([7d284e4](https://github.com/multiformats/js-multiaddr/commit/7d284e4ce9285b448cd1287af9702a62ff696d68))
+
+
+
 ## [8.1.2](https://github.com/multiformats/js-multiaddr/compare/v8.1.1...v8.1.2) (2020-12-11)
 
 
