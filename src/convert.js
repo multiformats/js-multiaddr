@@ -2,8 +2,8 @@
 
 const ip = require('./ip')
 const protocols = require('./protocols-table')
-const CID = require('cids')
-const multibase = require('multibase')
+const { CID } = require('multiformats/cid')
+const { base32 } = require('multiformats/bases/base32')
 const varint = require('varint')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const uint8ArrayFromString = require('uint8arrays/from-string')
@@ -163,8 +163,22 @@ function bytes2str (buf) {
  * @param {string | Uint8Array | CID} hash
  */
 function mh2bytes (hash) {
+  let cid
+
+  if (typeof hash === 'string') {
+    cid = CID.parse(hash)
+  } else if (hash instanceof Uint8Array) {
+    cid = CID.decode(hash)
+  } else {
+    cid = CID.asCID(cid)
+  }
+
+  if (!cid) {
+    throw new Error('Invalid CID')
+  }
+
   // the address is a varint prefixed multihash string representation
-  const mh = new CID(hash).multihash
+  const mh = cid.multihash.bytes
   const size = Uint8Array.from(varint.encode(mh.length))
   return uint8ArrayConcat([size, mh], size.length + mh.length)
 }
@@ -199,7 +213,7 @@ function onion2bytes (str) {
   }
 
   // onion addresses do not include the multibase prefix, add it before decoding
-  const buf = multibase.decode('b' + addr[0])
+  const buf = base32.decode('b' + addr[0])
 
   // onion port number
   const port = parseInt(addr[1], 10)
@@ -222,7 +236,7 @@ function onion32bytes (str) {
     throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion3 address.')
   }
   // onion addresses do not include the multibase prefix, add it before decoding
-  const buf = multibase.decode('b' + addr[0])
+  const buf = base32.decode('b' + addr[0])
 
   // onion port number
   const port = parseInt(addr[1], 10)

@@ -3,7 +3,7 @@
 const codec = require('./codec')
 const protocols = require('./protocols-table')
 const varint = require('varint')
-const CID = require('cids')
+const { CID } = require('multiformats/cid')
 const errCode = require('err-code')
 const inspect = Symbol.for('nodejs.util.inspect.custom')
 const uint8ArrayToString = require('uint8arrays/to-string')
@@ -314,7 +314,7 @@ class Multiaddr {
       const tuple = tuples.pop()
       if (tuple && tuple[1]) {
         // Get multihash, unwrap from CID if needed
-        return uint8ArrayToString(new CID(tuple[1]).multihash, 'base58btc')
+        return uint8ArrayToString(CID.parse(tuple[1]).multihash.bytes, 'base58btc')
       } else {
         return null
       }
