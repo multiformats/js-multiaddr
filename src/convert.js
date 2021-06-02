@@ -4,6 +4,8 @@ const ip = require('./ip')
 const protocols = require('./protocols-table')
 const { CID } = require('multiformats/cid')
 const { base32 } = require('multiformats/bases/base32')
+const { base58btc } = require('multiformats/bases/base58')
+const Digest = require('multiformats/hashes/digest')
 const varint = require('varint')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const uint8ArrayFromString = require('uint8arrays/from-string')
@@ -160,25 +162,18 @@ function bytes2str (buf) {
 }
 
 /**
- * @param {string | Uint8Array | CID} hash
+ * @param {string} hash - base58btc string
  */
 function mh2bytes (hash) {
-  let cid
+  let mh
 
-  if (typeof hash === 'string') {
-    cid = CID.parse(hash)
-  } else if (hash instanceof Uint8Array) {
-    cid = CID.decode(hash)
+  if (hash[0] === 'Q' || hash[0] === '1') {
+    mh = Digest.decode(base58btc.decode(`z${hash}`)).bytes
   } else {
-    cid = CID.asCID(cid)
-  }
-
-  if (!cid) {
-    throw new Error('Invalid CID')
+    mh = CID.parse(hash).multihash.bytes
   }
 
   // the address is a varint prefixed multihash string representation
-  const mh = cid.multihash.bytes
   const size = Uint8Array.from(varint.encode(mh.length))
   return uint8ArrayConcat([size, mh], size.length + mh.length)
 }
@@ -187,7 +182,7 @@ function mh2bytes (hash) {
  * Converts bytes to bas58btc string
  *
  * @param {Uint8Array} buf
- * @returns {string} bas58btc string
+ * @returns {string} base58btc string
  */
 function bytes2mh (buf) {
   const size = varint.decode(buf)
