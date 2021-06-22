@@ -81,5 +81,12 @@ describe('convert', () => {
         'c0a80001'
       )
     })
+
+    it('respects byteoffset during conversion', () => {
+      const bytes = convert.toBytes('sctp', '1234')
+      const buffer = new Uint8Array(bytes.byteLength + 5)
+      buffer.set(bytes, 5)
+      expect(convert.toString('sctp', buffer.subarray(5))).to.equal('1234')
+    })
   })
 })
