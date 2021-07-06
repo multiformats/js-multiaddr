@@ -27,7 +27,7 @@ const toBytes = function (ip, buff, offset) {
     let i
     for (i = 0; i < sections.length; i++) {
       const isv4 = isV4(sections[i])
-      var v4Buffer
+      let v4Buffer
 
       if (isv4) {
         v4Buffer = toBytes(sections[i])

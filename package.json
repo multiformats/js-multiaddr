@@ -10,7 +10,7 @@
     "test": "npm run test:node && npm run test:browser",
     "test:node": "aegir test --ts -t node",
     "test:browser": "aegir test -t browser",
-    "build": "aegir build",
+    "prepare": "aegir build",
     "release": "aegir release",
     "release-minor": "aegir release --type minor",
     "release-major": "aegir release --type major",
@@ -34,11 +34,10 @@
     "./src/resolvers/dns.js": "./src/resolvers/dns.browser.js"
   },
   "dependencies": {
-    "cids": "^1.0.0",
     "dns-over-http-resolver": "^1.0.0",
     "err-code": "^3.0.1",
     "is-ip": "^3.1.0",
-    "multibase": "^4.0.2",
+    "multiformats": "^9.0.2",
     "uint8arrays": "^2.1.3",
     "varint": "^6.0.0"
   },

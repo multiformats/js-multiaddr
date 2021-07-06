@@ -826,6 +826,11 @@ describe('helpers', () => {
         new Multiaddr('/p2p-circuit/p2p/bafzbeidt255unskpefjmqb2rc27vjuyxopkxgaylxij6pw35hhys4vnyp4').getPeerId()
       ).to.equal('QmW8rAgaaA6sRydK1k6vonShQME47aDxaFidbtMevWs73t')
     })
+    it('extracts the peer Id from a multiaddr, p2p and base58btc encoded identity multihash', () => {
+      expect(
+        new Multiaddr('/p2p-circuit/p2p/12D3KooWNvSZnPi3RrhrTwEY4LuuBeB6K6facKUCJcyWG1aoDd2p').getPeerId()
+      ).to.equal('12D3KooWNvSZnPi3RrhrTwEY4LuuBeB6K6facKUCJcyWG1aoDd2p')
+    })
   })
 
   describe('.getPeerId should return null on missing peer id in multiaddr', () => {
