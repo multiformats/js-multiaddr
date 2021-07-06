@@ -1,3 +1,17 @@
+# [10.0.0](https://github.com/multiformats/js-multiaddr/compare/v9.0.2...v10.0.0) (2021-07-06)
+
+
+### chore
+
+* update to new multiformats ([#200](https://github.com/multiformats/js-multiaddr/issues/200)) ([7e3aff9](https://github.com/multiformats/js-multiaddr/commit/7e3aff9a24218eb1c5a7df0f7b8e9e378796431c))
+
+
+### BREAKING CHANGES
+
+* uses the CID class from the new multiformats module
+
+
+
 ## [9.0.2](https://github.com/multiformats/js-multiaddr/compare/v9.0.1...v9.0.2) (2021-06-23)
 
 
