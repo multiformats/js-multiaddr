@@ -7,9 +7,9 @@ const { base32 } = require('multiformats/bases/base32')
 const { base58btc } = require('multiformats/bases/base58')
 const Digest = require('multiformats/hashes/digest')
 const varint = require('varint')
-const uint8ArrayToString = require('uint8arrays/to-string')
-const uint8ArrayFromString = require('uint8arrays/from-string')
-const uint8ArrayConcat = require('uint8arrays/concat')
+const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
+const { fromString: uint8ArrayFromString } = require('uint8arrays/from-string')
+const { concat: uint8ArrayConcat } = require('uint8arrays/concat')
 
 module.exports = Convert
 

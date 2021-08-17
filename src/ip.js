@@ -1,7 +1,7 @@
 'use strict'
 
 const isIp = require('is-ip')
-const uint8ArrayToString = require('uint8arrays/to-string')
+const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
 
 const isIP = isIp
 const isV4 = isIp.v4
