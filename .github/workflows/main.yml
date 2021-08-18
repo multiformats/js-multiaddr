@@ -17,7 +17,7 @@ jobs:
             - run: npx aegir ts -p check
             - run: npx aegir build
             - run: npx aegir dep-check
-            - uses: ipfs/aegir/actions/bundle-size@try-flag
+            - uses: ipfs/aegir/actions/bundle-size@try-docker
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
     test-node:
