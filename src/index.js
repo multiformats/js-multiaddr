@@ -7,8 +7,8 @@ const { CID } = require('multiformats/cid')
 const { base58btc } = require('multiformats/bases/base58')
 const errCode = require('err-code')
 const inspect = Symbol.for('nodejs.util.inspect.custom')
-const uint8ArrayToString = require('uint8arrays/to-string')
-const uint8ArrayEquals = require('uint8arrays/equals')
+const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
+const { equals: uint8ArrayEquals } = require('uint8arrays/equals')
 
 /**
  * @typedef {(addr: Multiaddr) => Promise<string[]>} Resolver

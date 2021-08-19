@@ -3,7 +3,7 @@
 
 const convert = require('../src/convert')
 const { expect } = require('aegir/utils/chai')
-const uint8ArrayFromString = require('uint8arrays/from-string')
+const { fromString: uint8ArrayFromString } = require('uint8arrays/from-string')
 
 describe('convert', () => {
   it('handles ip4 buffers', () => {
