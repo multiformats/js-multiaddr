@@ -1,3 +1,7 @@
+## [10.0.1](https://github.com/multiformats/js-multiaddr/compare/v10.0.0...v10.0.1) (2021-08-19)
+
+
+
 # [10.0.0](https://github.com/multiformats/js-multiaddr/compare/v9.0.2...v10.0.0) (2021-07-06)
 
 
