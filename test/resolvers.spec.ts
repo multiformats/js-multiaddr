@@ -1,12 +1,9 @@
 /* eslint-env mocha */
-'use strict'
-
-const { expect } = require('aegir/utils/chai')
-const sinon = require('sinon')
-
-const { Multiaddr } = require('../src')
-const resolvers = require('../src/resolvers')
-const Resolver = require('../src/resolvers/dns')
+import { expect } from 'aegir/utils/chai.js'
+import sinon from 'sinon'
+import { Multiaddr } from '../src/index.js'
+import * as resolvers from '../src/resolvers/index.js'
+import Resolver from '../src/resolvers/dns.js'
 
 const dnsaddrStub1 = [
   ['dnsaddr=/dnsaddr/ams-1.bootstrap.libp2p.io/p2p/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd'],
@@ -85,11 +82,11 @@ describe('multiaddr resolve', () => {
 
       // Resolve
       const resolvedInitialMas = await ma.resolve()
-      const resolvedSecondMas = await Promise.all(resolvedInitialMas.map(nm => {
+      const resolvedSecondMas = await Promise.all(resolvedInitialMas.map(async nm => {
         //  nm.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
-        return nm.resolve()
+        return await nm.resolve()
       }))
-      // @ts-ignore
+
       const resolvedMas = resolvedSecondMas.flat()
 
       expect(resolvedMas).to.have.length(dnsaddrStub2.length)

@@ -1,24 +1,19 @@
-'use strict'
+import isIp from 'is-ip'
+import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 
-const isIp = require('is-ip')
-const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
-
-const isIP = isIp
-const isV4 = isIp.v4
-const isV6 = isIp.v6
+export const isIP = isIp
+export const isV4 = isIp.v4
+export const isV6 = isIp.v6
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L7
-// @ts-ignore - this is copied from the link above better to keep it the same
-const toBytes = function (ip, buff, offset) {
-  offset = ~~offset
-
+// but with buf/offset args removed because we don't use them
+export const toBytes = function (ip: string): Uint8Array {
+  let offset = 0
   let result
 
   if (isV4(ip)) {
-    result = buff || new Uint8Array(offset + 4)
-    // @ts-ignore
-    // eslint-disable-next-line array-callback-return
-    ip.split(/\./g).map(function (byte) {
+    result = new Uint8Array(offset + 4)
+    ip.split(/\./g).forEach((byte) => {
       result[offset++] = parseInt(byte, 10) & 0xff
     })
   } else if (isV6(ip)) {
@@ -27,14 +22,14 @@ const toBytes = function (ip, buff, offset) {
     let i
     for (i = 0; i < sections.length; i++) {
       const isv4 = isV4(sections[i])
-      let v4Buffer
+      let v4Buffer: Uint8Array | undefined
 
       if (isv4) {
         v4Buffer = toBytes(sections[i])
         sections[i] = uint8ArrayToString(v4Buffer.slice(0, 2), 'base16')
       }
 
-      if (v4Buffer && ++i < 8) {
+      if (v4Buffer != null && ++i < 8) {
         sections.splice(i, 0, uint8ArrayToString(v4Buffer.slice(2, 4), 'base16'))
       }
     }
@@ -45,14 +40,14 @@ const toBytes = function (ip, buff, offset) {
       while (sections.length < 8) sections.push('0')
     } else if (sections.length < 8) {
       for (i = 0; i < sections.length && sections[i] !== ''; i++);
-      const argv = [i, '1']
+      const argv: [number, number, ...string[]] = [i, 1]
       for (i = 9 - sections.length; i > 0; i--) {
         argv.push('0')
       }
       sections.splice.apply(sections, argv)
     }
 
-    result = buff || new Uint8Array(offset + 16)
+    result = new Uint8Array(offset + 16)
     for (i = 0; i < sections.length; i++) {
       const word = parseInt(sections[i], 16)
       result[offset++] = (word >> 8) & 0xff
@@ -60,7 +55,7 @@ const toBytes = function (ip, buff, offset) {
     }
   }
 
-  if (!result) {
+  if (result == null) {
     throw Error('Invalid ip address: ' + ip)
   }
 
@@ -68,18 +63,17 @@ const toBytes = function (ip, buff, offset) {
 }
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L63
-// @ts-ignore - this is copied from the link above better to keep it the same
-const toString = function (buff, offset, length) {
+export const toString = function (buf: Uint8Array, offset: number, length: number) {
   offset = ~~offset
-  length = length || (buff.length - offset)
+  length = length ?? (buf.length - offset)
 
   const result = []
-  let string
-  const view = new DataView(buff.buffer)
+  let string = ''
+  const view = new DataView(buf.buffer)
   if (length === 4) {
     // IPv4
     for (let i = 0; i < length; i++) {
-      result.push(buff[offset + i])
+      result.push(buf[offset + i])
     }
     string = result.join('.')
   } else if (length === 16) {
@@ -93,12 +87,4 @@ const toString = function (buff, offset, length) {
   }
 
   return string
-}
-
-module.exports = {
-  isIP,
-  isV4,
-  isV6,
-  toBytes,
-  toString
 }

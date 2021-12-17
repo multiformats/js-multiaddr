@@ -1,14 +1,12 @@
 /* eslint-env mocha */
-'use strict'
-
-const protocols = require('../src/protocols-table')
-const { expect } = require('aegir/utils/chai')
+import { getProtocol } from '../src/protocols-table.js'
+import { expect } from 'aegir/utils/chai.js'
 
 describe('protocols', () => {
   describe('throws on non existent protocol', () => {
     it('number', () => {
       expect(
-        () => protocols(1234)
+        () => getProtocol(1234)
       ).to.throw(
         /no protocol with code/
       )
@@ -16,7 +14,7 @@ describe('protocols', () => {
 
     it('string', () => {
       expect(
-        () => protocols('hello')
+        () => getProtocol('hello')
       ).to.throw(
         /no protocol with name/
       )
@@ -25,7 +23,7 @@ describe('protocols', () => {
     it('else', () => {
       expect(
         // @ts-expect-error
-        () => protocols({ hi: 34 })
+        () => getProtocol({ hi: 34 })
       ).to.throw(
         /invalid protocol id type/
       )

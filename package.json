@@ -2,25 +2,35 @@
   "name": "multiaddr",
   "version": "10.0.1",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
-  "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
-  "main": "src/index.js",
-  "types": "dist/src/index.d.ts",
-  "scripts": {
-    "lint": "aegir lint",
-    "test": "npm run test:node && npm run test:browser",
-    "test:node": "aegir test --ts -t node",
-    "test:browser": "aegir test -t browser",
-    "prepare": "aegir build",
-    "release": "aegir release",
-    "release-minor": "aegir release --type minor",
-    "release-major": "aegir release --type major",
-    "docs": "aegir docs",
-    "size": "aegir build -b"
-  },
+  "type": "module",
+  "types": "./dist/src/index.d.ts",
   "files": [
     "src",
-    "dist"
+    "dist/src",
+    "!**/*.tsbuildinfo"
   ],
+  "eslintConfig": {
+    "extends": "ipfs",
+    "parserOptions": {
+      "sourceType": "module"
+    }
+  },
+  "scripts": {
+    "pretest": "npm run build",
+    "test": "aegir test -f ./dist/test/**/*.js",
+    "test:browser": "aegir test -t browser -f ./dist/test/**/*.js",
+    "test:node": "aegir test -t node -f ./dist/test/**/*.js",
+    "test:electron": "aegir test -t electron-main -f ./dist/test/**/*.js",
+    "lint": "aegir ts -p check && aegir lint",
+    "release": "aegir release --docs",
+    "release-minor": "aegir release --target node --type minor --docs",
+    "release-major": "aegir release --type major --docs",
+    "build": "tsc",
+    "dep-check": "aegir dep-check dist/src/**/*.js dist/test/**/*.js"
+  },
+  "browser": {
+    "./dist/src/resolvers/dns.js": "./dist/src/resolvers/dns.browser.js"
+  },
   "repository": "github:multiformats/js-multiaddr",
   "keywords": [
     "multiaddr",
@@ -30,11 +40,8 @@
   "license": "MIT",
   "bugs": "https://github.com/multiformats/js-multiaddr/issues",
   "homepage": "https://github.com/multiformats/js-multiaddr",
-  "browser": {
-    "./src/resolvers/dns.js": "./src/resolvers/dns.browser.js"
-  },
   "dependencies": {
-    "dns-over-http-resolver": "^1.2.3",
+    "dns-over-http-resolver": "^2.0.1",
     "err-code": "^3.0.1",
     "is-ip": "^3.1.0",
     "multiformats": "^9.4.5",
@@ -43,17 +50,9 @@
   },
   "devDependencies": {
     "@types/varint": "^6.0.0",
-    "aegir": "^35.0.1",
-    "sinon": "^11.1.1",
+    "aegir": "^36.1.1",
+    "sinon": "^12.0.1",
     "util": "^0.12.3"
-  },
-  "aegir": {
-    "build": {
-      "bundlesizeMax": "22kB"
-    }
-  },
-  "eslintConfig": {
-    "extends": "ipfs"
   },
   "contributors": [
     "David Dias <daviddias.p@gmail.com>",

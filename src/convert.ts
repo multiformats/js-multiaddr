@@ -1,40 +1,31 @@
-'use strict'
 
-const ip = require('./ip')
-const protocols = require('./protocols-table')
-const { CID } = require('multiformats/cid')
-const { base32 } = require('multiformats/bases/base32')
-const { base58btc } = require('multiformats/bases/base58')
-const Digest = require('multiformats/hashes/digest')
-const varint = require('varint')
-const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
-const { fromString: uint8ArrayFromString } = require('uint8arrays/from-string')
-const { concat: uint8ArrayConcat } = require('uint8arrays/concat')
+import * as ip from './ip.js'
+import { getProtocol } from './protocols-table.js'
+import { CID } from 'multiformats/cid'
+import { base32 } from 'multiformats/bases/base32'
+import { base58btc } from 'multiformats/bases/base58'
+import * as Digest from 'multiformats/hashes/digest'
+import varint from 'varint'
+import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
+import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
+import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 
-module.exports = Convert
-
-// converts (serializes) addresses
 /**
- * @param {string} proto
- * @param {string | Uint8Array} a
+ * converts (serializes) addresses
  */
-function Convert (proto, a) {
+export function convert (proto: string, a: string | Uint8Array) {
   if (a instanceof Uint8Array) {
-    return Convert.toString(proto, a)
+    return convertToString(proto, a)
   } else {
-    return Convert.toBytes(proto, a)
+    return convertToBytes(proto, a)
   }
 }
 
 /**
  * Convert [code,Uint8Array] to string
- *
- * @param {number|string} proto
- * @param {Uint8Array} buf
- * @returns {string}
  */
-Convert.toString = function convertToString (proto, buf) {
-  const protocol = protocols(proto)
+export function convertToString (proto: number | string, buf: Uint8Array) {
+  const protocol = getProtocol(proto)
   switch (protocol.code) {
     case 4: // ipv4
     case 41: // ipv6
@@ -65,8 +56,8 @@ Convert.toString = function convertToString (proto, buf) {
   }
 }
 
-Convert.toBytes = function convertToBytes (/** @type {string | number } */ proto, /** @type {string} */ str) {
-  const protocol = protocols(proto)
+export function convertToBytes (proto: string | number, str: string) {
+  const protocol = getProtocol(proto)
   switch (protocol.code) {
     case 4: // ipv4
       return ip2bytes(str)
@@ -98,31 +89,22 @@ Convert.toBytes = function convertToBytes (/** @type {string | number } */ proto
   }
 }
 
-/**
- * @param {string} ipString
- */
-function ip2bytes (ipString) {
+function ip2bytes (ipString: string) {
   if (!ip.isIP(ipString)) {
     throw new Error('invalid ip address')
   }
   return ip.toBytes(ipString)
 }
 
-/**
- * @param {Uint8Array} ipBuff
- */
-function bytes2ip (ipBuff) {
-  const ipString = ip.toString(ipBuff)
-  if (!ipString || !ip.isIP(ipString)) {
+function bytes2ip (ipBuff: Uint8Array) {
+  const ipString = ip.toString(ipBuff, 0, ipBuff.length)
+  if (ipString == null || !ip.isIP(ipString)) {
     throw new Error('invalid ip address')
   }
   return ipString
 }
 
-/**
- * @param {number} port
- */
-function port2bytes (port) {
+function port2bytes (port: number) {
   const buf = new ArrayBuffer(2)
   const view = new DataView(buf)
   view.setUint16(0, port)
@@ -130,27 +112,18 @@ function port2bytes (port) {
   return new Uint8Array(buf)
 }
 
-/**
- * @param {Uint8Array} buf
- */
-function bytes2port (buf) {
+function bytes2port (buf: Uint8Array) {
   const view = new DataView(buf.buffer)
   return view.getUint16(buf.byteOffset)
 }
 
-/**
- * @param {string} str
- */
-function str2bytes (str) {
+function str2bytes (str: string) {
   const buf = uint8ArrayFromString(str)
   const size = Uint8Array.from(varint.encode(buf.length))
   return uint8ArrayConcat([size, buf], size.length + buf.length)
 }
 
-/**
- * @param {Uint8Array} buf
- */
-function bytes2str (buf) {
+function bytes2str (buf: Uint8Array) {
   const size = varint.decode(buf)
   buf = buf.slice(varint.decode.bytes)
 
@@ -161,10 +134,7 @@ function bytes2str (buf) {
   return uint8ArrayToString(buf)
 }
 
-/**
- * @param {string} hash - base58btc string
- */
-function mh2bytes (hash) {
+function mh2bytes (hash: string) {
   let mh
 
   if (hash[0] === 'Q' || hash[0] === '1') {
@@ -180,11 +150,8 @@ function mh2bytes (hash) {
 
 /**
  * Converts bytes to bas58btc string
- *
- * @param {Uint8Array} buf
- * @returns {string} base58btc string
  */
-function bytes2mh (buf) {
+function bytes2mh (buf: Uint8Array) {
   const size = varint.decode(buf)
   const address = buf.slice(varint.decode.bytes)
 
@@ -195,16 +162,13 @@ function bytes2mh (buf) {
   return uint8ArrayToString(address, 'base58btc')
 }
 
-/**
- * @param {string} str
- */
-function onion2bytes (str) {
+function onion2bytes (str: string) {
   const addr = str.split(':')
   if (addr.length !== 2) {
-    throw new Error('failed to parse onion addr: ' + addr + ' does not contain a port number')
+    throw new Error(`failed to parse onion addr: ["'${addr.join('", "')}'"]' does not contain a port number`)
   }
   if (addr[0].length !== 16) {
-    throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion address.')
+    throw new Error(`failed to parse onion addr: ${addr[0]} not a Tor onion address.`)
   }
 
   // onion addresses do not include the multibase prefix, add it before decoding
@@ -219,19 +183,16 @@ function onion2bytes (str) {
   return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
 }
 
-/**
- * @param {string} str
- */
-function onion32bytes (str) {
+function onion32bytes (str: string) {
   const addr = str.split(':')
   if (addr.length !== 2) {
-    throw new Error('failed to parse onion addr: ' + addr + ' does not contain a port number')
+    throw new Error(`failed to parse onion addr: ["'${addr.join('", "')}'"]' does not contain a port number`)
   }
   if (addr[0].length !== 56) {
-    throw new Error('failed to parse onion addr: ' + addr[0] + ' not a Tor onion3 address.')
+    throw new Error(`failed to parse onion addr: ${addr[0]} not a Tor onion3 address.`)
   }
   // onion addresses do not include the multibase prefix, add it before decoding
-  const buf = base32.decode('b' + addr[0])
+  const buf = base32.decode(`b${addr[0]}`)
 
   // onion port number
   const port = parseInt(addr[1], 10)
@@ -242,13 +203,10 @@ function onion32bytes (str) {
   return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
 }
 
-/**
- * @param {Uint8Array} buf
- */
-function bytes2onion (buf) {
+function bytes2onion (buf: Uint8Array) {
   const addrBytes = buf.slice(0, buf.length - 2)
   const portBytes = buf.slice(buf.length - 2)
   const addr = uint8ArrayToString(addrBytes, 'base32')
   const port = bytes2port(portBytes)
-  return addr + ':' + port
+  return `${addr}:${port}`
 }
