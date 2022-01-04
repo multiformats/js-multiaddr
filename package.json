@@ -24,11 +24,9 @@
     "test:electron-main": "aegir test -t electron-main -f ./dist/test/**/*.js",
     "test:electron-renderer": "aegir test -t electron-renderer -f ./dist/test/**/*.js",
     "lint": "aegir ts -p check && aegir lint",
-    "release": "aegir release --docs",
-    "release-minor": "aegir release --target node --type minor --docs",
-    "release-major": "aegir release --type major --docs",
     "build": "tsc",
-    "dep-check": "aegir dep-check dist/src/**/*.js dist/test/**/*.js"
+    "dep-check": "aegir dep-check dist/src/**/*.js dist/test/**/*.js",
+    "release": "semantic-release"
   },
   "browser": {
     "./dist/src/resolvers/dns.js": "./dist/src/resolvers/dns.browser.js"
@@ -52,7 +50,7 @@
   },
   "devDependencies": {
     "@types/varint": "^6.0.0",
-    "aegir": "^36.1.1",
+    "aegir": "^36.1.2",
     "sinon": "^12.0.1",
     "util": "^0.12.3"
   }
