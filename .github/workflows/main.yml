@@ -23,14 +23,16 @@ jobs:
       with:
         path: |
           ~/.npm
-          ./node_modules
           ./dist
+          ./node_modules
+          ./packages/*/dist
+          ./packages/*/node_modules
         key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
     - name: Install Dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
           npm install
-          npm run build
+          npm run --if-present build
     - run: npm run --if-present lint
     - run: npm run --if-present dep-check
 
@@ -54,14 +56,16 @@ jobs:
         with:
           path: |
             ~/.npm
-            ./node_modules
             ./dist
+            ./node_modules
+            ./packages/*/dist
+            ./packages/*/node_modules
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
             npm install
-            npm run build
+            npm run --if-present build
       - run: npm run --if-present test:node -- --bail --cov
       - uses: codecov/codecov-action@v1
 
@@ -80,14 +84,16 @@ jobs:
         with:
           path: |
             ~/.npm
-            ./node_modules
             ./dist
+            ./node_modules
+            ./packages/*/dist
+            ./packages/*/node_modules
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
             npm install
-            npm run build
+            npm run --if-present build
       - run: npm run --if-present test:browser -- -t browser -t webworker --bail
 
   test-firefox:
@@ -105,14 +111,16 @@ jobs:
         with:
           path: |
             ~/.npm
-            ./node_modules
             ./dist
+            ./node_modules
+            ./packages/*/dist
+            ./packages/*/node_modules
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
             npm install
-            npm run build
+            npm run --if-present build
       - run: npm run --if-present test:browser -- -t browser -t webworker --bail -- --browser firefox
 
   test-electron-main:
@@ -130,14 +138,16 @@ jobs:
         with:
           path: |
             ~/.npm
-            ./node_modules
             ./dist
+            ./node_modules
+            ./packages/*/dist
+            ./packages/*/node_modules
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
             npm install
-            npm run build
+            npm run --if-present build
       - run: npx xvfb-maybe npm run --if-present test:electron-main --bail
 
   # test-electron-renderer:
@@ -162,7 +172,7 @@ jobs:
   #     - name: Install Dependencies
   #       if: steps.cache.outputs.cache-hit != 'true'
   #       run: |
-  #           npm run build
+  #           npm run --if-present build
   #           npm install
   #     - run: npx xvfb-maybe npm run --if-present test:electron-renderer --bail
 
@@ -184,25 +194,19 @@ jobs:
         with:
           path: |
             ~/.npm
-            ./node_modules
             ./dist
+            ./node_modules
+            ./packages/*/dist
+            ./packages/*/node_modules
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
             npm install
-            npm run build
-      - run: |
-          npm install --no-progress --no-package-lock --no-save \
-            @semantic-release/commit-analyzer \
-            conventional-changelog-conventionalcommits \
-            @semantic-release/release-notes-generator \
-            @semantic-release/npm \
-            @semantic-release/github \
-            @semantic-release/git \
-            @semantic-release/changelog \
-            --no-progress --no-package-lock --no-save
-      - run: npx semantic-release
+            npm run --if-present build
+      - run: npm run --if-present release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
