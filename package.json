@@ -45,7 +45,7 @@
   "dependencies": {
     "dns-over-http-resolver": "^2.0.1",
     "err-code": "^3.0.1",
-    "is-ip": "^3.1.0",
+    "is-ip": "^4.0.0",
     "multiformats": "^9.4.5",
     "uint8arrays": "^3.0.0",
     "varint": "^6.0.0"
