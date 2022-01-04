@@ -7,6 +7,7 @@
   "files": [
     "src",
     "dist/src",
+    "!dist/test",
     "!**/*.tsbuildinfo"
   ],
   "eslintConfig": {
@@ -20,7 +21,8 @@
     "test": "aegir test -f ./dist/test/**/*.js",
     "test:browser": "aegir test -t browser -f ./dist/test/**/*.js",
     "test:node": "aegir test -t node -f ./dist/test/**/*.js",
-    "test:electron": "aegir test -t electron-main -f ./dist/test/**/*.js",
+    "test:electron-main": "aegir test -t electron-main -f ./dist/test/**/*.js",
+    "test:electron-renderer": "aegir test -t electron-renderer -f ./dist/test/**/*.js",
     "lint": "aegir ts -p check && aegir lint",
     "release": "aegir release --docs",
     "release-minor": "aegir release --target node --type minor --docs",
@@ -53,39 +55,5 @@
     "aegir": "^36.1.1",
     "sinon": "^12.0.1",
     "util": "^0.12.3"
-  },
-  "contributors": [
-    "David Dias <daviddias.p@gmail.com>",
-    "Jacob Heun <jacobheun@gmail.com>",
-    "Vasco Santos <vasco.santos@moxy.studio>",
-    "victorbjelkholm <victorbjelkholm@gmail.com>",
-    "Juan Batiz-Benet <juan@benet.ai>",
-    "Hugo Dias <hugomrdias@gmail.com>",
-    "Volker Mische <volker.mische@gmail.com>",
-    "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
-    "Alex Potsides <alex@achingbrain.net>",
-    "Richard Littauer <richard.littauer@gmail.com>",
-    "Marcin Rataj <lidel@lidel.org>",
-    "Dmitriy Ryajov <dryajov@gmail.com>",
-    "Steven Allen <steven@stebalien.com>",
-    "Alan Shaw <alan@tableflip.io>",
-    "Robert Kiel <robert.kiel@validitylabs.org>",
-    "Maciej Krüger <mkg20001@gmail.com>",
-    "Oli Evans <oli@tableflip.io>",
-    "Tony Jin <nijynot@gmail.com>",
-    "Alessandro Ricottone <ricott2@gmail.com>",
-    "Cayman <caymannava@gmail.com>",
-    "Chris Anderson <jchris@gmail.com>",
-    "Diogo Silva <fsdiogo@gmail.com>",
-    "Irakli Gozalishvili <contact@gozala.io>",
-    "KuhnChris <kuhnchris@kuhnchris.eu>",
-    "Lars Gierth <lgierth@users.noreply.github.com>",
-    "Linus Unnebäck <linus@folkdatorn.se>",
-    "Sid Harder <sideharder@gmail.com>",
-    "Stephen Whitmore <stephen.whitmore@gmail.com>",
-    "Trond Arne Bråthen <tabrath@gmail.com>",
-    "Yahya <ya7yaz@gmail.com>",
-    "Zane Starr <zcstarr@gmail.com>",
-    "Ze Bateira <jlageb@gmail.com>"
-  ]
+  }
 }
