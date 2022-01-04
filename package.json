@@ -22,7 +22,6 @@
     "test:browser": "aegir test -t browser -f ./dist/test/**/*.js",
     "test:node": "aegir test -t node -f ./dist/test/**/*.js",
     "test:electron-main": "aegir test -t electron-main -f ./dist/test/**/*.js",
-    "test:electron-renderer": "aegir test -t electron-renderer -f ./dist/test/**/*.js",
     "lint": "aegir ts -p check && aegir lint",
     "build": "tsc",
     "dep-check": "aegir dep-check dist/src/**/*.js dist/test/**/*.js",
