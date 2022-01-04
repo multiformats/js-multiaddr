@@ -1,5 +1,11 @@
-name: ci & maybe release
-on: [push, pull_request]
+name: test & maybe release
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
 
@@ -18,8 +24,7 @@ jobs:
         path: |
           ~/.npm
           ./node_modules
-          ./packages/*/node_modules
-          ./packages/*/dist
+          ./dist
         key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
     - name: Install Dependencies
       if: steps.cache.outputs.cache-hit != 'true'
@@ -50,8 +55,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
-            ./packages/*/node_modules
-            ./packages/*/dist
+            ./dist
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -77,8 +81,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
-            ./packages/*/node_modules
-            ./packages/*/dist
+            ./dist
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -103,8 +106,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
-            ./packages/*/node_modules
-            ./packages/*/dist
+            ./dist
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -129,8 +131,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
-            ./packages/*/node_modules
-            ./packages/*/dist
+            ./dist
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -184,8 +185,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
-            ./packages/*/node_modules
-            ./packages/*/dist
+            ./dist
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ github.event.pull_request.head.sha }}
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
