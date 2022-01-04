@@ -172,8 +172,8 @@ jobs:
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-            npm run --if-present build
             npm install
+            npm run --if-present build
       - run: npx xvfb-maybe npm run --if-present test:electron-renderer --bail
 
   release:
