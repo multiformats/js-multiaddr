@@ -34,7 +34,7 @@
     "./src/resolvers/dns.js": "./src/resolvers/dns.browser.js"
   },
   "dependencies": {
-    "dns-over-http-resolver": "^1.2.3",
+    "dns-over-http-resolver": "^2.0.1",
     "err-code": "^3.0.1",
     "is-ip": "^3.1.0",
     "multiformats": "^9.4.5",
