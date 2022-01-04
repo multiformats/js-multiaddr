@@ -1,42 +1,14 @@
-'use strict'
+import { convertToBytes, convertToString } from './convert.js'
+import { getProtocol } from './protocols-table.js'
+import varint from 'varint'
+import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
+import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
+import type { Protocol } from './protocols-table.js'
 
-const convert = require('./convert')
-const protocols = require('./protocols-table')
-const varint = require('varint')
-const { concat: uint8ArrayConcat } = require('uint8arrays/concat')
-const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
-
-// export codec
-module.exports = {
-  stringToStringTuples,
-  stringTuplesToString,
-
-  tuplesToStringTuples,
-  stringTuplesToTuples,
-
-  bytesToTuples,
-  tuplesToBytes,
-
-  bytesToString,
-  stringToBytes,
-
-  fromString,
-  fromBytes,
-  validateBytes,
-  isValidBytes,
-  cleanPath,
-
-  ParseError,
-  protoFromTuple,
-
-  sizeForAddr
-}
-
-// string -> [[str name, str addr]... ]
 /**
- * @param {string} str
+ * string -> [[str name, str addr]... ]
  */
-function stringToStringTuples (str) {
+export function stringToStringTuples (str: string) {
   const tuples = []
   const parts = str.split('/').slice(1) // skip first empty elem
   if (parts.length === 1 && parts[0] === '') {
@@ -45,7 +17,7 @@ function stringToStringTuples (str) {
 
   for (let p = 0; p < parts.length; p++) {
     const part = parts[p]
-    const proto = protocols(part)
+    const proto = getProtocol(part)
 
     if (proto.size === 0) {
       tuples.push([part])
@@ -58,7 +30,7 @@ function stringToStringTuples (str) {
     }
 
     // if it's a path proto, take the rest
-    if (proto.path) {
+    if (proto.path === true) {
       tuples.push([
         part,
         // TODO: should we need to check each path part to see if it's a proto?
@@ -75,17 +47,15 @@ function stringToStringTuples (str) {
   return tuples
 }
 
-// [[str name, str addr]... ] -> string
 /**
- * @param {[number, string?][]} tuples
+ * [[str name, str addr]... ] -> string
  */
-function stringTuplesToString (tuples) {
-  /** @type {Array<string | undefined>} */
-  const parts = []
+export function stringTuplesToString (tuples: Array<[number, string?]>) {
+  const parts: string[] = []
   tuples.map((tup) => {
     const proto = protoFromTuple(tup)
     parts.push(proto.name)
-    if (tup.length > 1) {
+    if (tup.length > 1 && tup[1] != null) {
       parts.push(tup[1])
     }
     return null
@@ -94,19 +64,17 @@ function stringTuplesToString (tuples) {
   return cleanPath(parts.join('/'))
 }
 
-// [[str name, str addr]... ] -> [[int code, Uint8Array]... ]
 /**
- * @param {Array<string[] | string >} tuples
- * @returns {[number , Uint8Array?][]}
+ * [[str name, str addr]... ] -> [[int code, Uint8Array]... ]
  */
-function stringTuplesToTuples (tuples) {
+export function stringTuplesToTuples (tuples: Array<string[] | string>): Array<[number, Uint8Array?]> {
   return tuples.map((tup) => {
     if (!Array.isArray(tup)) {
       tup = [tup]
     }
     const proto = protoFromTuple(tup)
     if (tup.length > 1) {
-      return [proto.code, convert.toBytes(proto.code, tup[1])]
+      return [proto.code, convertToBytes(proto.code, tup[1])]
     }
     return [proto.code]
   })
@@ -116,31 +84,26 @@ function stringTuplesToTuples (tuples) {
  * Convert tuples to string tuples
  *
  * [[int code, Uint8Array]... ] -> [[int code, str addr]... ]
- *
- * @param {Array<[number, Uint8Array?]>} tuples
- * @returns {Array<[number, string?]>}
  */
-
-function tuplesToStringTuples (tuples) {
+export function tuplesToStringTuples (tuples: Array<[number, Uint8Array?]>): Array<[number, string?]> {
   return tuples.map(tup => {
     const proto = protoFromTuple(tup)
-    if (tup[1]) {
-      return [proto.code, convert.toString(proto.code, tup[1])]
+    if (tup[1] != null) {
+      return [proto.code, convertToString(proto.code, tup[1])]
     }
     return [proto.code]
   })
 }
 
-// [[int code, Uint8Array ]... ] -> Uint8Array
 /**
- * @param {[number, Uint8Array?][]} tuples
+ * [[int code, Uint8Array ]... ] -> Uint8Array
  */
-function tuplesToBytes (tuples) {
-  return fromBytes(uint8ArrayConcat(tuples.map((/** @type {any[]} */ tup) => {
+export function tuplesToBytes (tuples: Array<[number, Uint8Array?]>) {
+  return fromBytes(uint8ArrayConcat(tuples.map((tup) => {
     const proto = protoFromTuple(tup)
     let buf = Uint8Array.from(varint.encode(proto.code))
 
-    if (tup.length > 1) {
+    if (tup.length > 1 && tup[1] != null) {
       buf = uint8ArrayConcat([buf, tup[1]]) // add address buffer
     }
 
@@ -148,11 +111,7 @@ function tuplesToBytes (tuples) {
   })))
 }
 
-/**
- * @param {import("./types").Protocol} p
- * @param {Uint8Array | number[]} addr
- */
-function sizeForAddr (p, addr) {
+export function sizeForAddr (p: Protocol, addr: Uint8Array | number[]) {
   if (p.size > 0) {
     return p.size / 8
   } else if (p.size === 0) {
@@ -163,20 +122,14 @@ function sizeForAddr (p, addr) {
   }
 }
 
-/**
- *
- * @param {Uint8Array} buf
- * @returns {Array<[number, Uint8Array?]>}
- */
-function bytesToTuples (buf) {
-  /** @type {Array<[number, Uint8Array?]>} */
-  const tuples = []
+export function bytesToTuples (buf: Uint8Array): Array<[number, Uint8Array?]> {
+  const tuples: Array<[number, Uint8Array?]> = []
   let i = 0
   while (i < buf.length) {
     const code = varint.decode(buf, i)
     const n = varint.decode.bytes
 
-    const p = protocols(code)
+    const p = getProtocol(code)
 
     const size = sizeForAddr(p, buf.slice(i + n))
 
@@ -201,21 +154,19 @@ function bytesToTuples (buf) {
   return tuples
 }
 
-// Uint8Array -> String
 /**
- * @param {Uint8Array} buf
+ * Uint8Array -> String
  */
-function bytesToString (buf) {
+export function bytesToString (buf: Uint8Array) {
   const a = bytesToTuples(buf)
   const b = tuplesToStringTuples(a)
   return stringTuplesToString(b)
 }
 
-// String -> Uint8Array
 /**
- * @param {string} str
+ * String -> Uint8Array
  */
-function stringToBytes (str) {
+export function stringToBytes (str: string) {
   str = cleanPath(str)
   const a = stringToStringTuples(str)
   const b = stringTuplesToTuples(a)
@@ -223,28 +174,25 @@ function stringToBytes (str) {
   return tuplesToBytes(b)
 }
 
-// String -> Uint8Array
 /**
- * @param {string} str
+ * String -> Uint8Array
  */
-function fromString (str) {
+export function fromString (str: string) {
   return stringToBytes(str)
 }
 
-// Uint8Array -> Uint8Array
 /**
- * @param {Uint8Array} buf
+ * Uint8Array -> Uint8Array
  */
-function fromBytes (buf) {
+export function fromBytes (buf: Uint8Array) {
   const err = validateBytes(buf)
-  if (err) throw err
+  if (err != null) {
+    throw err
+  }
   return Uint8Array.from(buf) // copy
 }
 
-/**
- * @param {Uint8Array} buf
- */
-function validateBytes (buf) {
+export function validateBytes (buf: Uint8Array) {
   try {
     bytesToTuples(buf) // try to parse. will throw if breaks
   } catch (err) {
@@ -252,31 +200,19 @@ function validateBytes (buf) {
   }
 }
 
-/**
- * @param {Uint8Array} buf
- */
-function isValidBytes (buf) {
+export function isValidBytes (buf: Uint8Array) {
   return validateBytes(buf) === undefined
 }
 
-/**
- * @param {string} str
- */
-function cleanPath (str) {
+export function cleanPath (str: string) {
   return '/' + str.trim().split('/').filter((/** @type {any} */ a) => a).join('/')
 }
 
-/**
- * @param {string} str
- */
-function ParseError (str) {
+export function ParseError (str: string) {
   return new Error('Error parsing address: ' + str)
 }
 
-/**
- * @param {any[]} tup
- */
-function protoFromTuple (tup) {
-  const proto = protocols(tup[0])
+export function protoFromTuple (tup: any[]) {
+  const proto = getProtocol(tup[0])
   return proto
 }

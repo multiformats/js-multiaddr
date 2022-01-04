@@ -1,10 +1,8 @@
 /* eslint-env mocha */
-'use strict'
-
-const codec = require('../src/codec')
-const varint = require('varint')
-const { expect } = require('aegir/utils/chai')
-const { fromString: uint8ArrayFromString } = require('uint8arrays/from-string')
+import * as codec from '../src/codec.js'
+import varint from 'varint'
+import { expect } from 'aegir/utils/chai.js'
+import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 
 describe('codec', () => {
   describe('.stringToStringTuples', () => {

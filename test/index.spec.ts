@@ -1,14 +1,12 @@
 /* eslint max-nested-callbacks: ["error", 8] */
 /* eslint-env mocha */
-'use strict'
-
-const { Multiaddr } = require('../src')
-const { expect } = require('aegir/utils/chai')
-const { fromString: uint8ArrayFromString } = require('uint8arrays/from-string')
+import { Multiaddr } from '../src/index.js'
+import { expect } from 'aegir/utils/chai.js'
+import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
+import { codes } from '../src/protocols-table.js'
 
 describe('construction', () => {
-  /** @type {Multiaddr} */
-  let udpAddr
+  let udpAddr: Multiaddr
 
   it('create multiaddr', () => {
     udpAddr = new Multiaddr('/ip4/127.0.0.1/udp/1234')
@@ -52,30 +50,29 @@ describe('construction', () => {
 
   it('throws on truthy non string or buffer', () => {
     const errRegex = /addr must be a string/
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new Multiaddr({})).to.throw(errRegex)
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new Multiaddr([])).to.throw(errRegex)
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new Multiaddr(138)).to.throw(errRegex)
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new Multiaddr(true)).to.throw(errRegex)
   })
 
   it('throws on falsy non string or buffer', () => {
     const errRegex = /addr must be a string/
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new Multiaddr(NaN)).to.throw(errRegex)
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new Multiaddr(false)).to.throw(errRegex)
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new Multiaddr(0)).to.throw(errRegex)
   })
 })
 
 describe('requiring varint', () => {
-  /** @type {Multiaddr} */
-  let uTPAddr
+  let uTPAddr: Multiaddr
 
   it('create multiaddr', () => {
     uTPAddr = new Multiaddr('/ip4/127.0.0.1/udp/1234/utp')
@@ -118,8 +115,8 @@ describe('manipulation', () => {
 
     expect(udpAddr.protoCodes()).to.deep.equal([4, 273])
     expect(udpAddr.protoNames()).to.deep.equal(['ip4', 'udp'])
-    expect(udpAddr.protos()).to.deep.equal([Multiaddr.protocols.codes[4], Multiaddr.protocols.codes[273]])
-    expect(udpAddr.protos()[0] === Multiaddr.protocols.codes[4]).to.equal(false)
+    expect(udpAddr.protos()).to.deep.equal([codes[4], codes[273]])
+    expect(udpAddr.protos()[0] === codes[4]).to.equal(false)
 
     const udpAddrbytes2 = udpAddr.encapsulate('/udp/5678')
     expect(udpAddrbytes2.toString()).to.equal('/ip4/127.0.0.1/udp/1234/udp/5678')
@@ -726,7 +723,7 @@ describe('helpers', () => {
   describe('.fromNodeAddress', () => {
     it('throws on missing address object', () => {
       expect(
-        // @ts-ignore
+        // @ts-expect-error
         () => Multiaddr.fromNodeAddress()
       ).to.throw(
         /requires node address/
@@ -735,7 +732,7 @@ describe('helpers', () => {
 
     it('throws on missing transport', () => {
       expect(
-        // @ts-ignore
+        // @ts-expect-error
         () => Multiaddr.fromNodeAddress({ address: '0.0.0.0' })
       ).to.throw(
         /requires transport protocol/
@@ -758,8 +755,7 @@ describe('helpers', () => {
   describe('.isThinWaistAddress', () => {
     const families = ['ip4', 'ip6']
     const transports = ['tcp', 'udp']
-    /** @type {Record<string, string>} */
-    const addresses = {
+    const addresses: Record<string, string> = {
       ip4: '192.168.0.1',
       ip6: '2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095'
     }
