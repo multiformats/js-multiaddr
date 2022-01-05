@@ -115,13 +115,11 @@ jobs:
         with:
           node-version: lts/*
       - uses: ipfs/aegir/actions/cache-node-modules@master
-      - run: |
-            if [[ -n "${DOCKER_TOKEN}" ]] && [[ -n "${DOCKER_USERNAME}" ]]; then
-              echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            fi
-            npm run --if-present release
+      - uses: ipfs/aegir/actions/docker-login@master
+        with:
+          docker-token: ${{ secrets.DOCKER_USERNAME }}
+          docker-username: ${{ secrets.DOCKER_USERNAME }}
+      - run: npm run --if-present release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
