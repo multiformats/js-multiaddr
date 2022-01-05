@@ -22,14 +22,17 @@
     }
   },
   "scripts": {
+    "lint": "aegir lint",
+    "dep-check": "aegir dep-check dist/src/**/*.js dist/test/**/*.js",
+    "build": "tsc",
     "pretest": "npm run build",
     "test": "aegir test -f ./dist/test/**/*.js",
-    "test:browser": "aegir test -t browser -f ./dist/test/**/*.js",
-    "test:node": "aegir test -t node -f ./dist/test/**/*.js",
-    "test:electron-main": "aegir test -t electron-main -f ./dist/test/**/*.js",
-    "lint": "aegir ts -p check && aegir lint",
-    "build": "tsc",
-    "dep-check": "aegir dep-check dist/src/**/*.js dist/test/**/*.js",
+    "test:chrome": "npm run test -- -t browser",
+    "test:chrome-webworker": "npm run test -- -t webworker",
+    "test:firefox": "npm run test -- -t browser -- --browser firefox",
+    "test:firefox-webworker": "npm run test -- -t webworker -- --browser firefox",
+    "test:node": "npm run test -- -t node --cov",
+    "test:electron-main": "npm run test -- -t electron-main",
     "release": "semantic-release"
   },
   "browser": {
@@ -41,7 +44,7 @@
     "binary",
     "string"
   ],
-  "license": "MIT",
+  "license": "(Apache-2.0 OR MIT)",
   "bugs": "https://github.com/multiformats/js-multiaddr/issues",
   "homepage": "https://github.com/multiformats/js-multiaddr",
   "dependencies": {
@@ -54,7 +57,7 @@
   },
   "devDependencies": {
     "@types/varint": "^6.0.0",
-    "aegir": "^36.1.2",
+    "aegir": "^36.1.3",
     "sinon": "^12.0.1",
     "util": "^0.12.3"
   }
