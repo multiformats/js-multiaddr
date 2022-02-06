@@ -116,10 +116,10 @@ export class Multiaddr {
    * // { family: 4, host: '127.0.0.1', transport: 'tcp', port: 4001 }
    * ```
    */
-  toOptions () {
+  toOptions (): MultiaddrObject {
     const parsed = this.toString().split('/')
 
-    const opts = {
+    const opts: MultiaddrObject = {
       family: parsed[1] === 'ip4' ? 4 : 6,
       host: parsed[2],
       transport: parsed[3],

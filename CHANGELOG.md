@@ -1,3 +1,18 @@
+### [10.1.3](https://github.com/multiformats/js-multiaddr/compare/v10.1.2...v10.1.3) (2022-02-06)
+
+
+### Bug Fixes
+
+* add return to toOptions ([#223](https://github.com/multiformats/js-multiaddr/issues/223)) ([e5e5f57](https://github.com/multiformats/js-multiaddr/commit/e5e5f5771267f594beb93bb12621fc44e8fca22b))
+
+### [10.1.2](https://github.com/multiformats/js-multiaddr/compare/v10.1.1...v10.1.2) (2022-01-08)
+
+
+### Trivial Changes
+
+* add semantic release config ([#220](https://github.com/multiformats/js-multiaddr/issues/220)) ([e8a691e](https://github.com/multiformats/js-multiaddr/commit/e8a691e29a572e0e74b9ef3fa11340cbee18cb3f))
+* update build ([#218](https://github.com/multiformats/js-multiaddr/issues/218)) ([c04f330](https://github.com/multiformats/js-multiaddr/commit/c04f3302c3d82c35e251302342996f2fb3648fa8))
+
 ## [10.0.1](https://github.com/multiformats/js-multiaddr/compare/v10.0.0...v10.0.1) (2021-08-19)
 
 
@@ -540,6 +555,3 @@ please see https://github.com/multiformats/multicodec/pull/16.
 
 <a name="1.1.0"></a>
 # 1.1.0 (2015-11-06)
-
-
-
