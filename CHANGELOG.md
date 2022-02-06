@@ -1,3 +1,10 @@
+### [10.1.3](https://github.com/multiformats/js-multiaddr/compare/v10.1.2...v10.1.3) (2022-02-06)
+
+
+### Bug Fixes
+
+* add return to toOptions ([#223](https://github.com/multiformats/js-multiaddr/issues/223)) ([e5e5f57](https://github.com/multiformats/js-multiaddr/commit/e5e5f5771267f594beb93bb12621fc44e8fca22b))
+
 ### [10.1.2](https://github.com/multiformats/js-multiaddr/compare/v10.1.1...v10.1.2) (2022-01-08)
 
 
