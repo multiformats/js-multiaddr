@@ -1,4 +1,4 @@
-import { isIPv4, isIPv6} from 'is-ip'
+import { isIPv4, isIPv6 } from 'is-ip'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 
 export { isIP as isIP } from 'is-ip'
