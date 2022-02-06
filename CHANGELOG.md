@@ -1,3 +1,10 @@
+### [10.1.4](https://github.com/multiformats/js-multiaddr/compare/v10.1.3...v10.1.4) (2022-02-06)
+
+
+### Trivial Changes
+
+* switch to unified ci ([#219](https://github.com/multiformats/js-multiaddr/issues/219)) ([b4150b9](https://github.com/multiformats/js-multiaddr/commit/b4150b9445b3d11425d8cea48d083ec857411193))
+
 ### [10.1.3](https://github.com/multiformats/js-multiaddr/compare/v10.1.2...v10.1.3) (2022-02-06)
 
 
