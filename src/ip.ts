@@ -1,9 +1,9 @@
-import isIp from 'is-ip'
+import { isIPv4, isIPv6} from 'is-ip'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 
-export const isIP = isIp
-export const isV4 = isIp.v4
-export const isV6 = isIp.v6
+export { isIP as isIP } from 'is-ip'
+export const isV4 = isIPv4
+export const isV6 = isIPv6
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L7
 // but with buf/offset args removed because we don't use them
