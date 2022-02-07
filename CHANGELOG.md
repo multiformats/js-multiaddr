@@ -1,3 +1,10 @@
+### [10.1.5](https://github.com/multiformats/js-multiaddr/compare/v10.1.4...v10.1.5) (2022-02-07)
+
+
+### Bug Fixes
+
+* update deps ([#224](https://github.com/multiformats/js-multiaddr/issues/224)) ([d9ace95](https://github.com/multiformats/js-multiaddr/commit/d9ace95b92eb9db51c4b5dd851a65db55d63ef9d))
+
 ### [10.1.4](https://github.com/multiformats/js-multiaddr/compare/v10.1.3...v10.1.4) (2022-02-06)
 
 
