@@ -241,6 +241,13 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('ip6 + ip6zone', () => {
+    const str = '/ip6zone/x/ip6/fe80::1'
+    const addr = new Multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it.skip('ip4 + dccp', () => {})
   it.skip('ip6 + dccp', () => {})
 
@@ -341,6 +348,13 @@ describe('variants', () => {
 
   it('ip6 + udp + quic + p2p', () => {
     const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const addr = new Multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('ip6 + ip6zone + udp + quic', () => {
+    const str = '/ip6zone/x/ip6/fe80::1/udp/1234/quic'
     const addr = new Multiaddr(str)
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
