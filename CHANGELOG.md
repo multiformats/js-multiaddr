@@ -1,3 +1,11 @@
+### [10.1.6](https://github.com/multiformats/js-multiaddr/compare/v10.1.5...v10.1.6) (2022-02-28)
+
+
+### Bug Fixes
+
+* export resolvers ([#229](https://github.com/multiformats/js-multiaddr/issues/229)) ([12e89a7](https://github.com/multiformats/js-multiaddr/commit/12e89a7e5775dfc837440eac9d0cb060555da364))
+* infer type after isMultiaddr call ([#227](https://github.com/multiformats/js-multiaddr/issues/227)) ([0720e3a](https://github.com/multiformats/js-multiaddr/commit/0720e3ab0b497112020c139cfed61104cabee0bc))
+
 ### [10.1.5](https://github.com/multiformats/js-multiaddr/compare/v10.1.4...v10.1.5) (2022-02-07)
 
 
