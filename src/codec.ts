@@ -205,7 +205,7 @@ export function isValidBytes (buf: Uint8Array) {
 }
 
 export function cleanPath (str: string) {
-  return '/' + str.trim().split('/').filter((/** @type {any} */ a) => a).join('/')
+  return '/' + str.trim().split('/').filter((a) => a).join('/')
 }
 
 export function ParseError (str: string) {
