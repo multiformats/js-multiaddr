@@ -91,7 +91,7 @@ describe('multiaddr resolve', () => {
 
       expect(resolvedMas).to.have.length(dnsaddrStub2.length)
 
-      resolvedMas.forEach((/** @type {Multiaddr} */ma, /** @type {number} */ index) => {
+      resolvedMas.forEach((ma, index) => {
         const stubAddr = dnsaddrStub2[index][0].split('=')[1]
 
         expect(ma.equals(new Multiaddr(stubAddr))).to.equal(true)

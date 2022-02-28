@@ -67,7 +67,6 @@ export class Multiaddr {
     Object.defineProperty(this, symbol, { value: true })
 
     if (addr instanceof Uint8Array) {
-      /** @type {Uint8Array} - The raw bytes representing this multiaddress */
       this.bytes = codec.fromBytes(addr)
     } else if (typeof addr === 'string') {
       if (addr.length > 0 && addr.charAt(0) !== '/') {
@@ -512,9 +511,6 @@ export class Multiaddr {
    * Multiaddr.fromNodeAddress({address: '127.0.0.1', port: '4001'}, 'tcp')
    * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
    * ```
-   *
-   * @param {{family: 4 | 6, address: string, port: number}} addr
-   * @param {string} transport
    */
   static fromNodeAddress (addr: NodeAddress, transport: string) {
     if (addr == null) {
