@@ -5,10 +5,6 @@ import type { Multiaddr } from '../index.js'
 const { code: dnsaddrCode } = getProtocol('dnsaddr')
 
 /**
- * @typedef {import('..').Multiaddr} Multiaddr
- */
-
-/**
  * Resolver for dnsaddr addresses.
  */
 export async function dnsaddrResolver (addr: Multiaddr) {
