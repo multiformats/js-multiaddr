@@ -1,3 +1,10 @@
+### [10.1.7](https://github.com/multiformats/js-multiaddr/compare/v10.1.6...v10.1.7) (2022-03-08)
+
+
+### Bug Fixes
+
+* fix table types ([#231](https://github.com/multiformats/js-multiaddr/issues/231)) ([4146dfa](https://github.com/multiformats/js-multiaddr/commit/4146dfa9e32d75dc4e6cb0ea1e0a9ebec038a060))
+
 ### [10.1.6](https://github.com/multiformats/js-multiaddr/compare/v10.1.5...v10.1.6) (2022-02-28)
 
 
