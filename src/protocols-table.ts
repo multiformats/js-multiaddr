@@ -10,7 +10,7 @@ const V = -1
 export const names: Record<string, Protocol> = {}
 export const codes: Record<number, Protocol> = {}
 
-export const table: Array<[code: number, size: number, name: string, resolvable?: boolean, path?: boolean]> = [
+export const table: Array<[number, number, string, boolean?, boolean?]> = [
   [4, 32, 'ip4'],
   [6, 16, 'tcp'],
   [33, 16, 'dccp'],
