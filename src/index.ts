@@ -549,7 +549,7 @@ export class Multiaddr {
    * Check if object is a CID instance
    */
   static isMultiaddr (value: any): value is Multiaddr {
-    return value instanceof Multiaddr ?? Boolean(value?.[symbol])
+    return Boolean(value?.[symbol])
   }
 
   /**
