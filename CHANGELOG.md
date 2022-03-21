@@ -1,3 +1,10 @@
+### [10.1.8](https://github.com/multiformats/js-multiaddr/compare/v10.1.7...v10.1.8) (2022-03-21)
+
+
+### Bug Fixes
+
+* remove instanceof from multiaddr check ([#232](https://github.com/multiformats/js-multiaddr/issues/232)) ([5680412](https://github.com/multiformats/js-multiaddr/commit/56804124e5d3944e882ad515f654b8d027d58e20))
+
 ### [10.1.7](https://github.com/multiformats/js-multiaddr/compare/v10.1.6...v10.1.7) (2022-03-08)
 
 
