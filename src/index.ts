@@ -119,7 +119,7 @@ export class Multiaddr {
     const parsed = this.toString().split('/')
 
     const opts: MultiaddrObject = {
-      family: parsed[1] === 'ip4' ? 4 : 6,
+      family: (parsed[1] === 'ip4' || parsed[1] === 'dns4') ? 4 : 6,
       host: parsed[2],
       transport: parsed[3],
       port: parseInt(parsed[4])
