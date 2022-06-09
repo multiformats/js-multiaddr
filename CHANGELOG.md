@@ -1,3 +1,10 @@
+## [10.2.0](https://github.com/multiformats/js-multiaddr/compare/v10.1.8...v10.2.0) (2022-06-09)
+
+
+### Features
+
+* add convert subpath export ([#246](https://github.com/multiformats/js-multiaddr/issues/246)) ([c69283b](https://github.com/multiformats/js-multiaddr/commit/c69283b9c4a82f08c151e246f6bcd7b6806a2989))
+
 ### [10.1.8](https://github.com/multiformats/js-multiaddr/compare/v10.1.7...v10.1.8) (2022-03-21)
 
 
