@@ -563,7 +563,7 @@ export class Multiaddr {
    * // '<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>'
    * ```
    */
-  [inspect] () {
+  private [inspect] () {
     return '<Multiaddr ' +
     uint8ArrayToString(this.bytes, 'base16') + ' - ' +
     codec.bytesToString(this.bytes) + '>'
