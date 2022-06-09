@@ -48,6 +48,9 @@
     ".": {
       "import": "./dist/src/index.js"
     },
+    "./convert": {
+      "import": "./dist/src/convert.js"
+    },
     "./resolvers": {
       "import": "./dist/src/resolvers/index.js"
     }
