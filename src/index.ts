@@ -581,9 +581,7 @@ export class Multiaddr {
    * ```
    */
   inspect () {
-    return '<Multiaddr ' +
-      uint8ArrayToString(this.bytes, 'base16') + ' - ' +
-      codec.bytesToString(this.bytes) + '>'
+    return this[inspect]()
   }
 }
 
