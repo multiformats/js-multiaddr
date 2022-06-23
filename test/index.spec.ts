@@ -687,7 +687,37 @@ describe('helpers', () => {
 
     it('returns a node friendly address with dns', () => {
       expect(
+        new Multiaddr('/dns/wss0.bootstrap.libp2p.io/tcp/443').nodeAddress()
+      ).to.be.eql({
+        address: 'wss0.bootstrap.libp2p.io',
+        family: 4,
+        port: 443
+      })
+    })
+
+    it('returns a node friendly address with dns4', () => {
+      expect(
         new Multiaddr('/dns4/wss0.bootstrap.libp2p.io/tcp/443').nodeAddress()
+      ).to.be.eql({
+        address: 'wss0.bootstrap.libp2p.io',
+        family: 4,
+        port: 443
+      })
+    })
+
+    it('returns a node friendly address with dns6', () => {
+      expect(
+        new Multiaddr('/dns6/wss0.bootstrap.libp2p.io/tcp/443').nodeAddress()
+      ).to.be.eql({
+        address: 'wss0.bootstrap.libp2p.io',
+        family: 6,
+        port: 443
+      })
+    })
+
+    it('returns a node friendly address with dnsaddr', () => {
+      expect(
+        new Multiaddr('/dnsaddr/wss0.bootstrap.libp2p.io/tcp/443').nodeAddress()
       ).to.be.eql({
         address: 'wss0.bootstrap.libp2p.io',
         family: 4,
