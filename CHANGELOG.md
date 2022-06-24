@@ -1,3 +1,10 @@
+### [10.2.1](https://github.com/multiformats/js-multiaddr/compare/v10.2.0...v10.2.1) (2022-06-24)
+
+
+### Bug Fixes
+
+* support dns and dnsaddr ([#253](https://github.com/multiformats/js-multiaddr/issues/253)) ([53fb15f](https://github.com/multiformats/js-multiaddr/commit/53fb15f2a29a488722dde11c6331c684db283c63))
+
 ## [10.2.0](https://github.com/multiformats/js-multiaddr/compare/v10.1.8...v10.2.0) (2022-06-09)
 
 
