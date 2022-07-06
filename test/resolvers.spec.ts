@@ -97,5 +97,19 @@ describe('multiaddr resolve', () => {
         expect(ma.equals(new Multiaddr(stubAddr))).to.equal(true)
       })
     })
+
+    it('can cancel resolving', async () => {
+      const ma = new Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nc')
+      const controller = new AbortController()
+
+      // Resolve
+      const resolvePromise = ma.resolve({
+        signal: controller.signal
+      })
+
+      controller.abort()
+
+      await expect(resolvePromise).to.eventually.be.rejected().with.property('code', 'ECANCELLED')
+    })
   })
 })
