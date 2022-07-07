@@ -725,6 +725,16 @@ describe('helpers', () => {
       })
     })
 
+    it('should transform a p2p dnsaddr without a tcp port into a node address', () => {
+      expect(
+        new Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN').nodeAddress()
+      ).to.be.eql({
+        address: 'bootstrap.libp2p.io',
+        family: 4,
+        port: 443
+      })
+    })
+
     it('throws on an invalid format address when the addr is not prefixed with a /', () => {
       expect(
         () => new Multiaddr('ip4/192.168.0.1/udp').nodeAddress()
