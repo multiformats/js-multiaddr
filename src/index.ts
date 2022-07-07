@@ -20,6 +20,16 @@ const DNS_CODES = [
   getProtocol('dnsaddr').code
 ]
 
+const P2P_CODES = [
+  getProtocol('p2p').code,
+  getProtocol('ipfs').code
+]
+
+const TCP_UDP_CODES = [
+  getProtocol('tcp').code,
+  getProtocol('udp').code
+]
+
 export interface Protocol {
   code: number
   size: number
@@ -459,12 +469,12 @@ export class Multiaddr {
     const codes = this.protoCodes()
     const names = this.protoNames()
     const parts = this.toString().split('/').slice(1)
-    let protocol = parts[2]
+    let protocol = getProtocol(parts[2]).code
     let port = parseInt(parts[3])
 
     // default to https when protocol & port are omitted from DNS addrs
-    if (DNS_CODES.includes(codes[0]) && protocol === 'p2p') {
-      protocol = 'tcp'
+    if (DNS_CODES.includes(codes[0]) && P2P_CODES.includes(codes[1])) {
+      protocol = getProtocol('tcp').code
       port = 443
     }
 
@@ -472,7 +482,7 @@ export class Multiaddr {
       throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6, dnsaddr}/{address}/{tcp, udp}/{port}".')
     } else if (!IP_CODES.includes(codes[0]) && !DNS_CODES.includes(codes[0])) {
       throw new Error(`no protocol with name: "'${names[0]}'". Must have a valid family name: "{ip4, ip6, dns, dns4, dns6, dnsaddr}".`)
-    } else if (protocol !== 'tcp' && protocol !== 'udp') {
+    } else if (!TCP_UDP_CODES.includes(protocol)) {
       throw new Error(`no protocol with name: "'${names[1]}'". Must have a valid transport protocol: "{tcp, udp}".`)
     }
 
