@@ -486,6 +486,46 @@ describe('helpers', () => {
           port: 1234
         })
     })
+
+    it('returns an options object from a DNS addr', () => {
+      expect(new Multiaddr('/dns4/google.net/tcp/8000').toOptions())
+        .to.eql({
+          family: 4,
+          host: 'google.net',
+          transport: 'tcp',
+          port: 8000
+        })
+    })
+
+    it('returns an options object from a DNS6 addr', () => {
+      expect(new Multiaddr('/dns6/google.net/tcp/8000').toOptions())
+        .to.eql({
+          family: 6,
+          host: 'google.net',
+          transport: 'tcp',
+          port: 8000
+        })
+    })
+
+    it('returns an options object from a DNS addr defaulting to https', () => {
+      expect(new Multiaddr('/dnsaddr/google.net').toOptions())
+        .to.eql({
+          family: 4,
+          host: 'google.net',
+          transport: 'tcp',
+          port: 443
+        })
+    })
+
+    it('returns an options object from a DNS addr with a PeerID defaulting to https', () => {
+      expect(new Multiaddr('/dnsaddr/google.net/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').toOptions())
+        .to.eql({
+          family: 4,
+          host: 'google.net',
+          transport: 'tcp',
+          port: 443
+        })
+    })
   })
 
   describe('.inspect', () => {
