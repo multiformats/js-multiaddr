@@ -99,7 +99,7 @@ describe('multiaddr resolve', () => {
     })
 
     it('can cancel resolving', async () => {
-      const ma = new Multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nc')
+      const ma = new Multiaddr('/dnsaddr/bootstrap.libp2p.ii/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nc')
       const controller = new AbortController()
 
       // Resolve
