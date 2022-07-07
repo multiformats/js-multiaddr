@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { getProtocol } from '../src/protocols-table.js'
-import { expect } from 'aegir/utils/chai.js'
+import { expect } from 'aegir/chai'
 
 describe('protocols', () => {
   describe('throws on non existent protocol', () => {
