@@ -1,3 +1,36 @@
+## [10.3.1](https://github.com/multiformats/js-multiaddr/compare/v10.3.0...v10.3.1) (2022-07-07)
+
+
+### Bug Fixes
+
+* default to https ports for dnsaddr addresses ([#258](https://github.com/multiformats/js-multiaddr/issues/258)) ([e8bcff7](https://github.com/multiformats/js-multiaddr/commit/e8bcff74866c5484953d2215995a58844646db28))
+
+
+### Dependencies
+
+* **dev:** bump sinon from 13.0.2 to 14.0.0 ([#240](https://github.com/multiformats/js-multiaddr/issues/240)) ([3c2eaba](https://github.com/multiformats/js-multiaddr/commit/3c2eabaf7a6287e194097d57669af92f4fd599ab))
+
+## [10.3.0](https://github.com/multiformats/js-multiaddr/compare/v10.2.1...v10.3.0) (2022-07-07)
+
+
+### Features
+
+* allow cancelling in-flight multiaddr resolve ([#257](https://github.com/multiformats/js-multiaddr/issues/257)) ([ddd751b](https://github.com/multiformats/js-multiaddr/commit/ddd751b51bf96b452b44943699dc9f316e32b8c4))
+
+### [10.2.1](https://github.com/multiformats/js-multiaddr/compare/v10.2.0...v10.2.1) (2022-06-24)
+
+
+### Bug Fixes
+
+* support dns and dnsaddr ([#253](https://github.com/multiformats/js-multiaddr/issues/253)) ([53fb15f](https://github.com/multiformats/js-multiaddr/commit/53fb15f2a29a488722dde11c6331c684db283c63))
+
+## [10.2.0](https://github.com/multiformats/js-multiaddr/compare/v10.1.8...v10.2.0) (2022-06-09)
+
+
+### Features
+
+* add convert subpath export ([#246](https://github.com/multiformats/js-multiaddr/issues/246)) ([c69283b](https://github.com/multiformats/js-multiaddr/commit/c69283b9c4a82f08c151e246f6bcd7b6806a2989))
+
 ### [10.1.8](https://github.com/multiformats/js-multiaddr/compare/v10.1.7...v10.1.8) (2022-03-21)
 
 

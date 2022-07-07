@@ -1,6 +1,6 @@
 {
   "name": "@multiformats/multiaddr",
-  "version": "10.1.8",
+  "version": "10.3.1",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "license": "Apache-2.0 OR MIT",
   "homepage": "https://github.com/multiformats/js-multiaddr#readme",
@@ -46,9 +46,15 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/src/index.d.ts",
       "import": "./dist/src/index.js"
     },
+    "./convert": {
+      "types": "./dist/src/convert.d.ts",
+      "import": "./dist/src/convert.js"
+    },
     "./resolvers": {
+      "types": "./dist/src/resolvers/index.d.ts",
       "import": "./dist/src/resolvers/index.js"
     }
   },
@@ -123,7 +129,11 @@
               },
               {
                 "type": "docs",
-                "section": "Trivial Changes"
+                "section": "Documentation"
+              },
+              {
+                "type": "deps",
+                "section": "Dependencies"
               },
               {
                 "type": "test",
@@ -140,21 +150,21 @@
     ]
   },
   "scripts": {
+    "clean": "aegir clean",
     "lint": "aegir lint",
-    "dep-check": "aegir dep-check dist/src/**/*.js dist/test/**/*.js",
-    "build": "tsc",
-    "pretest": "npm run build",
-    "test": "aegir test -f ./dist/test/**/*.js",
-    "test:chrome": "npm run test -- -t browser",
-    "test:chrome-webworker": "npm run test -- -t webworker",
-    "test:firefox": "npm run test -- -t browser -- --browser firefox",
-    "test:firefox-webworker": "npm run test -- -t webworker -- --browser firefox",
-    "test:node": "npm run test -- -t node --cov",
-    "test:electron-main": "npm run test -- -t electron-main",
-    "release": "semantic-release"
+    "dep-check": "aegir dep-check",
+    "build": "aegir build",
+    "test": "aegir test -f",
+    "test:chrome": "aegir test -t browser",
+    "test:chrome-webworker": "aegir test -t webworker",
+    "test:firefox": "aegir test -t browser -- --browser firefox",
+    "test:firefox-webworker": "aegir test -t webworker -- --browser firefox",
+    "test:node": "aegir test -t node --cov",
+    "test:electron-main": "aegir test -t electron-main",
+    "release": "aegir release"
   },
   "dependencies": {
-    "dns-over-http-resolver": "^2.0.1",
+    "dns-over-http-resolver": "^2.1.0",
     "err-code": "^3.0.1",
     "is-ip": "^4.0.0",
     "multiformats": "^9.4.5",
@@ -163,8 +173,8 @@
   },
   "devDependencies": {
     "@types/varint": "^6.0.0",
-    "aegir": "^36.1.3",
-    "sinon": "^13.0.1",
+    "aegir": "^37.4.5",
+    "sinon": "^14.0.0",
     "util": "^0.12.3"
   },
   "browser": {

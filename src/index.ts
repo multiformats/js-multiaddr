@@ -9,6 +9,27 @@ import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
 
 const inspect = Symbol.for('nodejs.util.inspect.custom')
 
+const IP_CODES = [
+  getProtocol('ip4').code,
+  getProtocol('ip6').code
+]
+const DNS_CODES = [
+  getProtocol('dns').code,
+  getProtocol('dns4').code,
+  getProtocol('dns6').code,
+  getProtocol('dnsaddr').code
+]
+
+const P2P_CODES = [
+  getProtocol('p2p').code,
+  getProtocol('ipfs').code
+]
+
+const TCP_UDP_CODES = [
+  getProtocol('tcp').code,
+  getProtocol('udp').code
+]
+
 export interface Protocol {
   code: number
   size: number
@@ -32,7 +53,11 @@ export interface NodeAddress {
 
 export type MultiaddrInput = string | Multiaddr | Uint8Array | null
 
-export interface Resolver { (addr: Multiaddr): Promise<string[]> }
+export interface Resolver { (addr: Multiaddr, options?: AbortOptions): Promise<string[]> }
+
+export interface AbortOptions {
+  signal?: AbortSignal
+}
 
 const resolvers = new Map<string, Resolver>()
 const symbol = Symbol.for('@multiformats/js-multiaddr/multiaddr')
@@ -410,7 +435,7 @@ export class Multiaddr {
    * // ]
    * ```
    */
-  async resolve () {
+  async resolve (options?: AbortOptions) {
     const resolvableProto = this.protos().find((p) => p.resolvable)
 
     // Multiaddr is not resolvable?
@@ -423,7 +448,7 @@ export class Multiaddr {
       throw errCode(new Error(`no available resolver for ${resolvableProto.name}`), 'ERR_NO_AVAILABLE_RESOLVER')
     }
 
-    const addresses = await resolver(this)
+    const addresses = await resolver(this, options)
     return addresses.map((a) => new Multiaddr(a))
   }
 
@@ -444,19 +469,27 @@ export class Multiaddr {
     const codes = this.protoCodes()
     const names = this.protoNames()
     const parts = this.toString().split('/').slice(1)
+    let protocol = getProtocol(parts[2]).code
+    let port = parseInt(parts[3])
+
+    // default to https when protocol & port are omitted from DNS addrs
+    if (DNS_CODES.includes(codes[0]) && P2P_CODES.includes(codes[1])) {
+      protocol = getProtocol('tcp').code
+      port = 443
+    }
 
     if (parts.length < 4) {
-      throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6}/{address}/{tcp, udp}/{port}".')
-    } else if (codes[0] !== 4 && codes[0] !== 41 && codes[0] !== 54 && codes[0] !== 55) {
-      throw new Error(`no protocol with name: "'${names[0]}'". Must have a valid family name: "{ip4, ip6, dns4, dns6}".`)
-    } else if (parts[2] !== 'tcp' && parts[2] !== 'udp') {
+      throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6, dnsaddr}/{address}/{tcp, udp}/{port}".')
+    } else if (!IP_CODES.includes(codes[0]) && !DNS_CODES.includes(codes[0])) {
+      throw new Error(`no protocol with name: "'${names[0]}'". Must have a valid family name: "{ip4, ip6, dns, dns4, dns6, dnsaddr}".`)
+    } else if (!TCP_UDP_CODES.includes(protocol)) {
       throw new Error(`no protocol with name: "'${names[1]}'". Must have a valid transport protocol: "{tcp, udp}".`)
     }
 
     return {
       family: (codes[0] === 41 || codes[0] === 55) ? 6 : 4,
       address: parts[1],
-      port: parseInt(parts[3]) // tcp or udp port
+      port // tcp or udp port
     }
   }
 

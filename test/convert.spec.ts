@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import * as convert from '../src/convert.js'
-import { expect } from 'aegir/utils/chai.js'
+import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 
 describe('convert', () => {
