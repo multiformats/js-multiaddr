@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { expect } from 'aegir/utils/chai.js'
+import { expect } from 'aegir/chai'
 import sinon from 'sinon'
 import { Multiaddr } from '../src/index.js'
 import * as resolvers from '../src/resolvers/index.js'
@@ -96,6 +96,20 @@ describe('multiaddr resolve', () => {
 
         expect(ma.equals(new Multiaddr(stubAddr))).to.equal(true)
       })
+    })
+
+    it('can cancel resolving', async () => {
+      const ma = new Multiaddr('/dnsaddr/bootstrap.libp2p.ii/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nc')
+      const controller = new AbortController()
+
+      // Resolve
+      const resolvePromise = ma.resolve({
+        signal: controller.signal
+      })
+
+      controller.abort()
+
+      await expect(resolvePromise).to.eventually.be.rejected().with.property('code', 'ECANCELLED')
     })
   })
 })

@@ -1,36 +1,34 @@
-js-multiaddr
-============
+# @multiformats/multiaddr <!-- omit in toc -->
 
-[![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)
-[![](https://img.shields.io/badge/project-multiformats-blue.svg?style=flat-square)](https://github.com/multiformats/multiformats)
-[![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](https://webchat.freenode.net/?channels=%23ipfs)
-[![Dependency Status](https://david-dm.org/multiformats/js-multiaddr.svg?style=flat-square)](https://david-dm.org/multiformats/js-multiaddr)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
-[![](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-[![](https://img.shields.io/travis/multiformats/js-multiaddr.svg?style=flat-square)](https://travis-ci.com/multiformats/js-multiaddr)
+[![multiformats.io](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](http://multiformats.io)
 [![codecov](https://img.shields.io/codecov/c/github/multiformats/js-multiaddr.svg?style=flat-square)](https://codecov.io/gh/multiformats/js-multiaddr)
+[![CI](https://img.shields.io/github/workflow/status/libp2p/js-libp2p-interfaces/test%20&%20maybe%20release/master?style=flat-square)](https://github.com/multiformats/js-multiaddr/actions/workflows/js-test-and-release.yml)
 
-> JavaScript implementation of [multiaddr](https://github.com/multiformats/multiaddr).
+> multiaddr implementation (binary + string representation of network addresses)
+
+## Table of contents <!-- omit in toc -->
+
+- [Install](#install)
+- [Lead Maintainer](#lead-maintainer)
+- [Background](#background)
+  - [What is multiaddr?](#what-is-multiaddr)
+  - [Browser: `<script>` Tag](#browser-script-tag)
+- [Usage](#usage)
+- [API](#api)
+- [Resolvers](#resolvers)
+- [Contribute](#contribute)
+- [License](#license)
+- [Contribution](#contribution)
+
+## Install
+
+```console
+$ npm i @multiformats/multiaddr
+```
 
 ## Lead Maintainer
 
 [Jacob Heun](https://github.com/jacobheun)
-
-## Table of Contents
-
-- [js-multiaddr](#js-multiaddr)
-  - [Lead Maintainer](#lead-maintainer)
-  - [Table of Contents](#table-of-contents)
-  - [Background](#background)
-    - [What is multiaddr?](#what-is-multiaddr)
-  - [Install](#install)
-    - [NPM](#npm)
-    - [Browser: `<script>` Tag](#browser-script-tag)
-  - [Usage](#usage)
-  - [API](#api)
-  - [Resolvers](#resolvers)
-  - [Contribute](#contribute)
-  - [License](#license)
 
 ## Background
 
@@ -44,9 +42,6 @@ A standard way to represent addresses that
 - have a nice string representation
 - encapsulate well
 
-## Install
-
-### NPM
 ```sh
 npm i multiaddr
 ```
@@ -64,12 +59,12 @@ the global namespace.
 
 ```js
 // if we are coming from <= 8.x you can use the factory function 
-const { multiaddr } = require('multiaddr')
-const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
+const { multiaddr } = require('multiaddr')
+const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
 
 // or just the class directly
-const { Multiaddr } = require('multiaddr')
+const { Multiaddr } = require('multiaddr')
 
 const addr = new Multiaddr("/ip4/127.0.0.1/udp/1234")
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
@@ -104,11 +99,11 @@ addr.encapsulate('/sctp/5678')
 
 ## API
 
-https://multiformats.github.io/js-multiaddr/
+<https://multiformats.github.io/js-multiaddr/>
 
 ## Resolvers
 
-`multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree. 
+`multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree.
 To provide multiaddr resolvers you can do:
 
 ```js
@@ -120,8 +115,8 @@ Multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 
 The available resolvers are:
 
-|     Name    | type | Description |
-|-------------|------|-------------|
+| Name              | type      | Description                         |
+| ----------------- | --------- | ----------------------------------- |
 | `dnsaddrResolver` | `dnsaddr` | dnsaddr resolution with TXT Records |
 
 A resolver receives a `Multiaddr` as a parameter and returns a `Promise<Array<string>>`.
@@ -136,4 +131,11 @@ Small note: If editing the README, please conform to the [standard-readme](https
 
 ## License
 
-[MIT](LICENSE) © 2016 Protocol Labs Inc.
+Licensed under either of
+
+- Apache 2.0, ([LICENSE-APACHE](LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT ([LICENSE-MIT](LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
+
+## Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.

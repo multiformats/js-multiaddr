@@ -43,7 +43,11 @@ export interface NodeAddress {
 
 export type MultiaddrInput = string | Multiaddr | Uint8Array | null
 
-export interface Resolver { (addr: Multiaddr): Promise<string[]> }
+export interface Resolver { (addr: Multiaddr, options?: AbortOptions): Promise<string[]> }
+
+export interface AbortOptions {
+  signal?: AbortSignal
+}
 
 const resolvers = new Map<string, Resolver>()
 const symbol = Symbol.for('@multiformats/js-multiaddr/multiaddr')
@@ -421,7 +425,7 @@ export class Multiaddr {
    * // ]
    * ```
    */
-  async resolve () {
+  async resolve (options?: AbortOptions) {
     const resolvableProto = this.protos().find((p) => p.resolvable)
 
     // Multiaddr is not resolvable?
@@ -434,7 +438,7 @@ export class Multiaddr {
       throw errCode(new Error(`no available resolver for ${resolvableProto.name}`), 'ERR_NO_AVAILABLE_RESOLVER')
     }
 
-    const addresses = await resolver(this)
+    const addresses = await resolver(this, options)
     return addresses.map((a) => new Multiaddr(a))
   }
 
