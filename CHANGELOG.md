@@ -1,3 +1,10 @@
+## [10.3.0](https://github.com/multiformats/js-multiaddr/compare/v10.2.1...v10.3.0) (2022-07-07)
+
+
+### Features
+
+* allow cancelling in-flight multiaddr resolve ([#257](https://github.com/multiformats/js-multiaddr/issues/257)) ([ddd751b](https://github.com/multiformats/js-multiaddr/commit/ddd751b51bf96b452b44943699dc9f316e32b8c4))
+
 ### [10.2.1](https://github.com/multiformats/js-multiaddr/compare/v10.2.0...v10.2.1) (2022-06-24)
 
 
