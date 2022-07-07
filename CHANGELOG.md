@@ -1,3 +1,10 @@
+## [10.3.3](https://github.com/multiformats/js-multiaddr/compare/v10.3.2...v10.3.3) (2022-07-07)
+
+
+### Bug Fixes
+
+* return correct family from toOptions with dns4 MultiAddr ([#233](https://github.com/multiformats/js-multiaddr/issues/233)) ([d3f8b05](https://github.com/multiformats/js-multiaddr/commit/d3f8b05436542560330140afa430dddc3a83f327))
+
 ## [10.3.2](https://github.com/multiformats/js-multiaddr/compare/v10.3.1...v10.3.2) (2022-07-07)
 
 
