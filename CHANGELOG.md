@@ -1,3 +1,10 @@
+## [10.3.2](https://github.com/multiformats/js-multiaddr/compare/v10.3.1...v10.3.2) (2022-07-07)
+
+
+### Bug Fixes
+
+* use codes instead of strings for dnsaddr detection ([#259](https://github.com/multiformats/js-multiaddr/issues/259)) ([d8431bf](https://github.com/multiformats/js-multiaddr/commit/d8431bf80e38ec3dfdc5fa9b2947326b9c3385b4)), closes [#258](https://github.com/multiformats/js-multiaddr/issues/258)
+
 ## [10.3.1](https://github.com/multiformats/js-multiaddr/compare/v10.3.0...v10.3.1) (2022-07-07)
 
 
