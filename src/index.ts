@@ -141,13 +141,32 @@ export class Multiaddr {
    * ```
    */
   toOptions (): MultiaddrObject {
-    const parsed = this.toString().split('/')
+    const codes = this.protoCodes()
+    const parts = this.toString().split('/').slice(1)
+    let transport: string
+    let port: number
+
+    if (parts.length > 2) {
+      // default to https when protocol & port are omitted from DNS addrs
+      if (DNS_CODES.includes(codes[0]) && P2P_CODES.includes(codes[1])) {
+        transport = getProtocol('tcp').name
+        port = 443
+      } else {
+        transport = getProtocol(parts[2]).name
+        port = parseInt(parts[3])
+      }
+    } else if (DNS_CODES.includes(codes[0])) {
+      transport = getProtocol('tcp').name
+      port = 443
+    } else {
+      throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6, dnsaddr}/{address}/{tcp, udp}/{port}".')
+    }
 
     const opts: MultiaddrObject = {
-      family: (parsed[1] === 'ip4' || parsed[1] === 'dns4') ? 4 : 6,
-      host: parsed[2],
-      transport: parsed[3],
-      port: parseInt(parsed[4])
+      family: (codes[0] === 41 || codes[0] === 55) ? 6 : 4,
+      host: parts[1],
+      transport,
+      port
     }
 
     return opts
