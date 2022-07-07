@@ -459,19 +459,27 @@ export class Multiaddr {
     const codes = this.protoCodes()
     const names = this.protoNames()
     const parts = this.toString().split('/').slice(1)
+    let protocol = parts[2]
+    let port = parseInt(parts[3])
+
+    // default to https when protocol & port are omitted from DNS addrs
+    if (DNS_CODES.includes(codes[0]) && protocol === 'p2p') {
+      protocol = 'tcp'
+      port = 443
+    }
 
     if (parts.length < 4) {
-      throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6}/{address}/{tcp, udp}/{port}".')
+      throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6, dnsaddr}/{address}/{tcp, udp}/{port}".')
     } else if (!IP_CODES.includes(codes[0]) && !DNS_CODES.includes(codes[0])) {
       throw new Error(`no protocol with name: "'${names[0]}'". Must have a valid family name: "{ip4, ip6, dns, dns4, dns6, dnsaddr}".`)
-    } else if (parts[2] !== 'tcp' && parts[2] !== 'udp') {
+    } else if (protocol !== 'tcp' && protocol !== 'udp') {
       throw new Error(`no protocol with name: "'${names[1]}'". Must have a valid transport protocol: "{tcp, udp}".`)
     }
 
     return {
       family: (codes[0] === 41 || codes[0] === 55) ? 6 : 4,
       address: parts[1],
-      port: parseInt(parts[3]) // tcp or udp port
+      port // tcp or udp port
     }
   }
 
