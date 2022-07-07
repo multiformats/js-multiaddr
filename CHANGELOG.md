@@ -1,3 +1,15 @@
+## [10.3.1](https://github.com/multiformats/js-multiaddr/compare/v10.3.0...v10.3.1) (2022-07-07)
+
+
+### Bug Fixes
+
+* default to https ports for dnsaddr addresses ([#258](https://github.com/multiformats/js-multiaddr/issues/258)) ([e8bcff7](https://github.com/multiformats/js-multiaddr/commit/e8bcff74866c5484953d2215995a58844646db28))
+
+
+### Dependencies
+
+* **dev:** bump sinon from 13.0.2 to 14.0.0 ([#240](https://github.com/multiformats/js-multiaddr/issues/240)) ([3c2eaba](https://github.com/multiformats/js-multiaddr/commit/3c2eabaf7a6287e194097d57669af92f4fd599ab))
+
 ## [10.3.0](https://github.com/multiformats/js-multiaddr/compare/v10.2.1...v10.3.0) (2022-07-07)
 
 
