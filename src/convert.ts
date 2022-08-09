@@ -4,6 +4,7 @@ import { getProtocol } from './protocols-table.js'
 import { CID } from 'multiformats/cid'
 import { base32 } from 'multiformats/bases/base32'
 import { base58btc } from 'multiformats/bases/base58'
+import * as MB from 'multibase'
 import * as Digest from 'multiformats/hashes/digest'
 import varint from 'varint'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
@@ -51,6 +52,8 @@ export function convertToString (proto: number | string, buf: Uint8Array) {
       return bytes2onion(buf)
     case 445: // onion3
       return bytes2onion(buf)
+    case 466: //certhash
+      return bytes2mh(buf)
     default:
       return uint8ArrayToString(buf, 'base16') // no clue. convert to hex
   }
@@ -84,6 +87,8 @@ export function convertToBytes (proto: string | number, str: string) {
       return onion2bytes(str)
     case 445: // onion3
       return onion32bytes(str)
+    case 466: //certhash
+      return mb2bytes(str)
     default:
       return uint8ArrayFromString(str, 'base16') // no clue. convert from hex
   }
@@ -146,6 +151,12 @@ function mh2bytes (hash: string) {
   // the address is a varint prefixed multihash string representation
   const size = Uint8Array.from(varint.encode(mh.length))
   return uint8ArrayConcat([size, mh], size.length + mh.length)
+}
+
+function mb2bytes(mbstr: string) {
+  let mb = MB.decode(mbstr)
+  const size = Uint8Array.from(varint.encode(mb.length))
+  return uint8ArrayConcat([size, mb], size.length + mb.length)
 }
 
 /**
