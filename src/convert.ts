@@ -53,7 +53,7 @@ export function convertToString (proto: number | string, buf: Uint8Array) {
     case 445: // onion3
       return bytes2onion(buf)
     case 466: //certhash
-      return bytes2mh(buf)
+      return bytes2mb(buf)
     default:
       return uint8ArrayToString(buf, 'base16') // no clue. convert to hex
   }
@@ -157,6 +157,16 @@ function mb2bytes(mbstr: string) {
   let mb = MB.decode(mbstr)
   const size = Uint8Array.from(varint.encode(mb.length))
   return uint8ArrayConcat([size, mb], size.length + mb.length)
+}
+function bytes2mb(buf: Uint8Array) {
+  const size = varint.decode(buf)
+  const hash = buf.slice(varint.decode.bytes)
+
+  if (hash.length !== size) {
+    throw new Error('inconsistent lengths')
+  }
+
+  return 'm' + uint8ArrayToString(hash, 'base64')
 }
 
 /**
