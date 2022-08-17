@@ -540,12 +540,14 @@ describe('helpers', () => {
       expect(new Multiaddr('/ip4/0.0.0.0/utp').protos())
         .to.eql([{
           code: 4,
+          convertor: undefined,
           name: 'ip4',
           path: false,
           size: 32,
-          resolvable: false
+          resolvable: false,
         }, {
           code: 302,
+          convertor: undefined,
           name: 'utp',
           path: false,
           size: 0,
@@ -558,18 +560,21 @@ describe('helpers', () => {
         new Multiaddr('/ip4/0.0.0.0/utp/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').protos()
       ).to.be.eql([{
         code: 4,
+        convertor: undefined,
         name: 'ip4',
         path: false,
         size: 32,
         resolvable: false
       }, {
         code: 302,
+        convertor: undefined,
         name: 'utp',
         path: false,
         size: 0,
         resolvable: false
       }, {
         code: 421,
+        convertor: undefined,
         name: 'p2p',
         path: false,
         size: -1,
@@ -582,18 +587,21 @@ describe('helpers', () => {
         new Multiaddr('/ip4/0.0.0.0/utp/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').protos()
       ).to.be.eql([{
         code: 4,
+        convertor: undefined,
         name: 'ip4',
         path: false,
         size: 32,
         resolvable: false
       }, {
         code: 302,
+        convertor: undefined,
         name: 'utp',
         path: false,
         size: 0,
         resolvable: false
       }, {
         code: 421,
+        convertor: undefined,
         name: 'p2p',
         path: false,
         size: -1,
@@ -606,18 +614,21 @@ describe('helpers', () => {
         new Multiaddr('/ip4/0.0.0.0/tcp/8000/unix/tmp/p2p.sock').protos()
       ).to.be.eql([{
         code: 4,
+        convertor: undefined,
         name: 'ip4',
         path: false,
         size: 32,
         resolvable: false
       }, {
         code: 6,
+        convertor: undefined,
         name: 'tcp',
         path: false,
         size: 16,
         resolvable: false
       }, {
         code: 400,
+        convertor: undefined,
         name: 'unix',
         path: true,
         size: -1,
@@ -630,12 +641,14 @@ describe('helpers', () => {
         new Multiaddr('/memory/test/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6').protos()
       ).to.be.eql([{
         code: 777,
+        convertor: undefined,
         name: 'memory',
         path: false,
         size: -1,
         resolvable: false
       }, {
         code: 421,
+        convertor: undefined,
         name: 'p2p',
         path: false,
         size: -1,
