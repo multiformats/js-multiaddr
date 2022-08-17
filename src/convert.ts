@@ -4,7 +4,7 @@ import { getProtocol } from './protocols-table.js'
 import { CID } from 'multiformats/cid'
 import { base32 } from 'multiformats/bases/base32'
 import { base58btc } from 'multiformats/bases/base58'
-import * as MB from 'multibase'
+import { bases } from 'multiformats/basics'
 import * as Digest from 'multiformats/hashes/digest'
 import varint from 'varint'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
@@ -94,6 +94,13 @@ export function convertToBytes (proto: string | number, str: string) {
   }
 }
 
+const decoders = Object.values(bases).map( (c) => c.decoder );
+const anybaseDecoder = (function () {
+  let acc = decoders[0].or(decoders[1]);
+  decoders.slice(2).forEach((d) => (acc = acc.or(d)));
+  return acc;
+})();
+
 function ip2bytes (ipString: string) {
   if (!ip.isIP(ipString)) {
     throw new Error('invalid ip address')
@@ -154,7 +161,7 @@ function mh2bytes (hash: string) {
 }
 
 function mb2bytes(mbstr: string) {
-  let mb = MB.decode(mbstr)
+  let mb = anybaseDecoder.decode(mbstr)
   const size = Uint8Array.from(varint.encode(mb.length))
   return uint8ArrayConcat([size, mb], size.length + mb.length)
 }
@@ -166,7 +173,7 @@ function bytes2mb(buf: Uint8Array) {
     throw new Error('inconsistent lengths')
   }
 
-  return 'm' + uint8ArrayToString(hash, 'base64')
+  return 'z' + uint8ArrayToString(hash, 'base58btc')
 }
 
 /**
