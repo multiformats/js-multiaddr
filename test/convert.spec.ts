@@ -97,7 +97,7 @@ describe('convert', () => {
     let bytes = convert.convertToBytes('certhash',mb);
     let outcome = convert.convertToString(466, bytes);
     //Although I sent hex encoding in, base64 always comes out
-    expect(outcome).to.equal('zHSFFdP8jLt9o6HXnz5bBYoE7JACNqVcFNnCnDyd5Ynyu');
+    expect(outcome).to.equal('m9DKgRTRiheDY13U2hHKOsqqecWTk6/4GUWRCZP4EqNA');
     let bytesOut = convert.convertToBytes(466,outcome);
     expect(bytesOut.toString()).to.equal(bytes.toString());
   })

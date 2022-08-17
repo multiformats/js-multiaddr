@@ -1,24 +1,16 @@
-import { DefaultCerthashCodec } from "./default-certhash-codec.js";
-
-export interface Codec {
-  stringToBytes(stringRepresentation: string): Uint8Array;
-  bytesToString(byteRepresentation: Uint8Array): string;
-}
-
 export interface Protocol {
   code: number
   size: number
   name: string
   resolvable?: boolean
   path?: boolean
-  convertor?: Codec
 }
 
 const V = -1
 export const names: Record<string, Protocol> = {}
 export const codes: Record<number, Protocol> = {}
 
-export const table: Array<[number, number, string, boolean?, boolean?, Codec?]> = [
+export const table: Array<[number, number, string, boolean?, boolean?]> = [
   [4, 32, 'ip4'],
   [6, 16, 'tcp'],
   [33, 16, 'dccp'],
@@ -49,7 +41,7 @@ export const table: Array<[number, number, string, boolean?, boolean?, Codec?]> 
   [445, 296, 'onion3'],
   [446, V, 'garlic64'],
   [460, 0, 'quic'],
-  [466, V, 'certhash', false, false, new DefaultCerthashCodec()],
+  [466, V, 'certhash'],
   [477, 0, 'ws'],
   [478, 0, 'wss'],
   [479, 0, 'p2p-websocket-star'],
@@ -64,14 +56,13 @@ table.forEach(row => {
   names[proto.name] = proto
 })
 
-export function createProtocol (code: number, size: number, name: string, resolvable?: any, path?: any, convertor?: Codec): Protocol {
+export function createProtocol (code: number, size: number, name: string, resolvable?: any, path?: any): Protocol {
   return {
     code,
     size,
     name,
     resolvable: Boolean(resolvable),
-    path: Boolean(path),
-    convertor: convertor
+    path: Boolean(path)
   }
 }
 
@@ -91,11 +82,4 @@ export function getProtocol (proto: number | string) {
   }
 
   throw new Error(`invalid protocol id type: ${typeof proto}`)
-}
-
-export function setProtocolCodec(proto: number | string, codec: Codec) {
-  let protocol = getProtocol(proto)
-  protocol.convertor = codec
-  codes[protocol.code] = protocol
-  names[protocol.name] = protocol
 }

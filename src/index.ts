@@ -1,5 +1,5 @@
 import * as codec from './codec.js'
-import { setProtocolCodec, getProtocol, names } from './protocols-table.js'
+import { getProtocol, names } from './protocols-table.js'
 import varint from 'varint'
 import { CID } from 'multiformats/cid'
 import { base58btc } from 'multiformats/bases/base58'
@@ -647,5 +647,4 @@ export function multiaddr (addr: MultiaddrInput) {
 }
 
 export { getProtocol as protocols }
-export { setProtocolCodec }
 export { resolvers }
