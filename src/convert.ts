@@ -173,7 +173,7 @@ function bytes2mb(buf: Uint8Array) {
     throw new Error('inconsistent lengths')
   }
 
-  return 'z' + uint8ArrayToString(hash, 'base58btc')
+  return 'u' + uint8ArrayToString(hash, 'base64url')
 }
 
 /**
