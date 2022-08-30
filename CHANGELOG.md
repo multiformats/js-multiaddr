@@ -1,3 +1,10 @@
+## [10.4.0](https://github.com/multiformats/js-multiaddr/compare/v10.3.5...v10.4.0) (2022-08-30)
+
+
+### Features
+
+* add support for webrtc and certhash ([#261](https://github.com/multiformats/js-multiaddr/issues/261)) ([#262](https://github.com/multiformats/js-multiaddr/issues/262)) ([e5a8e27](https://github.com/multiformats/js-multiaddr/commit/e5a8e27fb526e3a58af5ebe8873f6cc67b9d4483))
+
 ## [10.3.5](https://github.com/multiformats/js-multiaddr/compare/v10.3.4...v10.3.5) (2022-08-30)
 
 
