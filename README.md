@@ -16,9 +16,8 @@
 - [Usage](#usage)
 - [API](#api)
 - [Resolvers](#resolvers)
-- [Contribute](#contribute)
 - [License](#license)
-- [Contribute](#contribute-1)
+- [Contribute](#contribute)
 
 ## Install
 
@@ -58,7 +57,7 @@ the global namespace.
 ## Usage
 
 ```js
-// if we are coming from <= 8.x you can use the factory function 
+// if we are coming from <= 8.x you can use the factory function
 const { multiaddr } = require('multiaddr')
 const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
@@ -76,7 +75,7 @@ addr.toString()
 // '/ip4/127.0.0.1/udp/1234'
 
 addr.protos()
-/* 
+/*
 [
   {code: 4, name: 'ip4', size: 32},
   {code: 273, name: 'udp', size: 16}
@@ -120,14 +119,6 @@ The available resolvers are:
 | `dnsaddrResolver` | `dnsaddr` | dnsaddr resolution with TXT Records |
 
 A resolver receives a `Multiaddr` as a parameter and returns a `Promise<Array<string>>`.
-
-## Contribute
-
-Contributions welcome. Please check out [the issues](https://github.com/multiformats/js-multiaddr/issues).
-
-Check out our [contributing document](https://github.com/multiformats/multiformats/blob/master/contributing.md) for more information on how we work, and about contributing in general. Please be aware that all interactions related to multiformats are subject to the IPFS [Code of Conduct](https://github.com/ipfs/community/blob/master/code-of-conduct.md).
-
-Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 
