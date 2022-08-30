@@ -1,3 +1,15 @@
+## [10.3.5](https://github.com/multiformats/js-multiaddr/compare/v10.3.4...v10.3.5) (2022-08-30)
+
+
+### Trivial Changes
+
+* update project config ([#265](https://github.com/multiformats/js-multiaddr/issues/265)) ([4d3ba0c](https://github.com/multiformats/js-multiaddr/commit/4d3ba0cb0fad93189548e7e45d8322477eea1e5f))
+
+
+### Dependencies
+
+* bump is-ip from 4.0.0 to 5.0.0 ([#260](https://github.com/multiformats/js-multiaddr/issues/260)) ([3cd4699](https://github.com/multiformats/js-multiaddr/commit/3cd4699030a84767e3951646e1af253665a86890))
+
 ## [10.3.4](https://github.com/multiformats/js-multiaddr/compare/v10.3.3...v10.3.4) (2022-08-30)
 
 
