@@ -1,6 +1,6 @@
 {
   "name": "@multiformats/multiaddr",
-  "version": "10.3.3",
+  "version": "10.3.4",
   "description": "multiaddr implementation (binary + string representation of network addresses)",
   "license": "Apache-2.0 OR MIT",
   "homepage": "https://github.com/multiformats/js-multiaddr#readme",

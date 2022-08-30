@@ -1,3 +1,10 @@
+## [10.3.4](https://github.com/multiformats/js-multiaddr/compare/v10.3.3...v10.3.4) (2022-08-30)
+
+
+### Bug Fixes
+
+* specify return type of method to to fix linting ([#264](https://github.com/multiformats/js-multiaddr/issues/264)) ([e5f3bf6](https://github.com/multiformats/js-multiaddr/commit/e5f3bf6acb8fc537344b39dc392f15be9de309cd))
+
 ## [10.3.3](https://github.com/multiformats/js-multiaddr/compare/v10.3.2...v10.3.3) (2022-07-07)
 
 
