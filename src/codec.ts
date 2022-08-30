@@ -192,10 +192,10 @@ export function fromBytes (buf: Uint8Array) {
   return Uint8Array.from(buf) // copy
 }
 
-export function validateBytes (buf: Uint8Array) {
+export function validateBytes (buf: Uint8Array): Error | undefined {
   try {
     bytesToTuples(buf) // try to parse. will throw if breaks
-  } catch (err) {
+  } catch (err: any) {
     return err
   }
 }
