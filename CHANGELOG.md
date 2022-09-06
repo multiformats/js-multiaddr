@@ -1,3 +1,10 @@
+## [10.4.1](https://github.com/multiformats/js-multiaddr/compare/v10.4.0...v10.4.1) (2022-09-06)
+
+
+### Bug Fixes
+
+* dedupe toOptions/nodeAddress code ([#266](https://github.com/multiformats/js-multiaddr/issues/266)) ([de1d31c](https://github.com/multiformats/js-multiaddr/commit/de1d31cbff48d26d5f1bc3b78a093ba01af349a9))
+
 ## [10.4.0](https://github.com/multiformats/js-multiaddr/compare/v10.3.5...v10.4.0) (2022-08-30)
 
 
