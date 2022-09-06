@@ -9,10 +9,6 @@ import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
 
 const inspect = Symbol.for('nodejs.util.inspect.custom')
 
-const IP_CODES = [
-  getProtocol('ip4').code,
-  getProtocol('ip6').code
-]
 const DNS_CODES = [
   getProtocol('dns').code,
   getProtocol('dns4').code,
@@ -23,11 +19,6 @@ const DNS_CODES = [
 const P2P_CODES = [
   getProtocol('p2p').code,
   getProtocol('ipfs').code
-]
-
-const TCP_UDP_CODES = [
-  getProtocol('tcp').code,
-  getProtocol('udp').code
 ]
 
 export interface Protocol {
@@ -485,30 +476,16 @@ export class Multiaddr {
    * ```
    */
   nodeAddress (): NodeAddress {
-    const codes = this.protoCodes()
-    const names = this.protoNames()
-    const parts = this.toString().split('/').slice(1)
-    let protocol = getProtocol(parts[2]).code
-    let port = parseInt(parts[3])
+    const options = this.toOptions()
 
-    // default to https when protocol & port are omitted from DNS addrs
-    if (DNS_CODES.includes(codes[0]) && P2P_CODES.includes(codes[1])) {
-      protocol = getProtocol('tcp').code
-      port = 443
-    }
-
-    if (parts.length < 4) {
-      throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6, dnsaddr}/{address}/{tcp, udp}/{port}".')
-    } else if (!IP_CODES.includes(codes[0]) && !DNS_CODES.includes(codes[0])) {
-      throw new Error(`no protocol with name: "'${names[0]}'". Must have a valid family name: "{ip4, ip6, dns, dns4, dns6, dnsaddr}".`)
-    } else if (!TCP_UDP_CODES.includes(protocol)) {
-      throw new Error(`no protocol with name: "'${names[1]}'". Must have a valid transport protocol: "{tcp, udp}".`)
+    if (options.transport !== 'tcp' && options.transport !== 'udp') {
+      throw new Error(`multiaddr must have a valid format - no protocol with name: "${options.transport}". Must have a valid transport protocol: "{tcp, udp}"`)
     }
 
     return {
-      family: (codes[0] === 41 || codes[0] === 55) ? 6 : 4,
-      address: parts[1],
-      port // tcp or udp port
+      family: options.family,
+      address: options.host,
+      port: options.port
     }
   }
 
