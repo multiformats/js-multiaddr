@@ -57,7 +57,7 @@ export const toBytes = function (ip: string): Uint8Array {
   }
 
   if (result == null) {
-    throw Error('Invalid ip address: ' + ip)
+    throw new Error(`invalid ip address "${ip}"`)
   }
 
   return result
