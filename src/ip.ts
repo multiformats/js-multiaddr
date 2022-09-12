@@ -10,6 +10,7 @@ export const isV6 = isIPv6
 export const toBytes = function (ip: string): Uint8Array {
   let offset = 0
   let result
+  ip = ip.trim()
 
   if (isV4(ip)) {
     result = new Uint8Array(offset + 4)
@@ -56,14 +57,14 @@ export const toBytes = function (ip: string): Uint8Array {
   }
 
   if (result == null) {
-    throw Error('Invalid ip address: ' + ip)
+    throw new Error(`invalid ip address "${ip}"`)
   }
 
   return result
 }
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L63
-export const toString = function (buf: Uint8Array, offset: number, length: number) {
+export const toString = function (buf: Uint8Array, offset: number = 0, length?: number) {
   offset = ~~offset
   length = length ?? (buf.length - offset)
 
