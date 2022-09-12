@@ -1,3 +1,10 @@
+## [10.4.2](https://github.com/multiformats/js-multiaddr/compare/v10.4.1...v10.4.2) (2022-09-12)
+
+
+### Bug Fixes
+
+* more specific error messages ([#268](https://github.com/multiformats/js-multiaddr/issues/268)) ([db6bdfb](https://github.com/multiformats/js-multiaddr/commit/db6bdfbf9ffa8928fc041f9934c15a0da419b46a))
+
 ## [10.4.1](https://github.com/multiformats/js-multiaddr/compare/v10.4.0...v10.4.1) (2022-09-06)
 
 
