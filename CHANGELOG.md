@@ -1,3 +1,10 @@
+## [10.4.3](https://github.com/multiformats/js-multiaddr/compare/v10.4.2...v10.4.3) (2022-09-12)
+
+
+### Bug Fixes
+
+* trim string before parsing IP address ([#269](https://github.com/multiformats/js-multiaddr/issues/269)) ([9924afa](https://github.com/multiformats/js-multiaddr/commit/9924afab4469c8a2b126664a8157f8da5cb0188a))
+
 ## [10.4.2](https://github.com/multiformats/js-multiaddr/compare/v10.4.1...v10.4.2) (2022-09-12)
 
 
