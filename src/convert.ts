@@ -110,8 +110,11 @@ function ip2bytes (ipString: string) {
 
 function bytes2ip (ipBuff: Uint8Array) {
   const ipString = ip.toString(ipBuff, 0, ipBuff.length)
-  if (ipString == null || !ip.isIP(ipString)) {
-    throw new Error('invalid ip address')
+  if (ipString == null) {
+    throw new Error('ipBuff is required')
+  }
+  if (!ip.isIP(ipString)) {
+    throw new Error(`invalid ip address "${ipString}"`)
   }
   return ipString
 }
