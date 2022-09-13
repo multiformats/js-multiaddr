@@ -346,6 +346,13 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('webtransport', () => {
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic/webtransport'
+    const addr = new Multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it('unix', () => {
     const str = '/unix/a/b/c/d/e'
     const addr = new Multiaddr(str)
