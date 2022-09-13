@@ -103,7 +103,7 @@ const anybaseDecoder = (function () {
 
 function ip2bytes (ipString: string) {
   if (!ip.isIP(ipString)) {
-    throw new Error(`invalid ip address "${ipString}"`)
+    throw new Error('invalid ip address')
   }
   return ip.toBytes(ipString)
 }
@@ -114,7 +114,7 @@ function bytes2ip (ipBuff: Uint8Array) {
     throw new Error('ipBuff is required')
   }
   if (!ip.isIP(ipString)) {
-    throw new Error(`invalid ip address "${ipString}"`)
+    throw new Error('invalid ip address')
   }
   return ipString
 }

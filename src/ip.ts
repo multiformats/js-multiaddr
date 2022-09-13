@@ -9,15 +9,19 @@ export const isV6 = isIPv6
 // but with buf/offset args removed because we don't use them
 export const toBytes = function (ip: string): Uint8Array {
   let offset = 0
-  let result
-  ip = ip.trim()
+  ip = ip.toString().trim()
 
   if (isV4(ip)) {
-    result = new Uint8Array(offset + 4)
+    const bytes = new Uint8Array(offset + 4)
+
     ip.split(/\./g).forEach((byte) => {
-      result[offset++] = parseInt(byte, 10) & 0xff
+      bytes[offset++] = parseInt(byte, 10) & 0xff
     })
-  } else if (isV6(ip)) {
+
+    return bytes
+  }
+
+  if (isV6(ip)) {
     const sections = ip.split(':', 8)
 
     let i
@@ -48,19 +52,18 @@ export const toBytes = function (ip: string): Uint8Array {
       sections.splice.apply(sections, argv)
     }
 
-    result = new Uint8Array(offset + 16)
+    const bytes = new Uint8Array(offset + 16)
+
     for (i = 0; i < sections.length; i++) {
       const word = parseInt(sections[i], 16)
-      result[offset++] = (word >> 8) & 0xff
-      result[offset++] = word & 0xff
+      bytes[offset++] = (word >> 8) & 0xff
+      bytes[offset++] = word & 0xff
     }
+
+    return bytes
   }
 
-  if (result == null) {
-    throw new Error(`invalid ip address "${ip}"`)
-  }
-
-  return result
+  throw new Error('invalid ip address')
 }
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L63
@@ -68,24 +71,31 @@ export const toString = function (buf: Uint8Array, offset: number = 0, length?: 
   offset = ~~offset
   length = length ?? (buf.length - offset)
 
-  const result = []
-  let string = ''
   const view = new DataView(buf.buffer)
+
   if (length === 4) {
+    const result = []
+
     // IPv4
     for (let i = 0; i < length; i++) {
       result.push(buf[offset + i])
     }
-    string = result.join('.')
-  } else if (length === 16) {
+
+    return result.join('.')
+  }
+
+  if (length === 16) {
+    const result = []
+
     // IPv6
     for (let i = 0; i < length; i += 2) {
       result.push(view.getUint16(offset + i).toString(16))
     }
-    string = result.join(':')
-    string = string.replace(/(^|:)0(:0)*:0(:|$)/, '$1::$3')
-    string = string.replace(/:{3,4}/, '::')
+
+    return result.join(':')
+      .replace(/(^|:)0(:0)*:0(:|$)/, '$1::$3')
+      .replace(/:{3,4}/, '::')
   }
 
-  return string
+  return ''
 }
