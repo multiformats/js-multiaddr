@@ -1,3 +1,10 @@
+## [10.5.0](https://github.com/multiformats/js-multiaddr/compare/v10.4.3...v10.5.0) (2022-09-20)
+
+
+### Features
+
+* Add webtransport component ([#271](https://github.com/multiformats/js-multiaddr/issues/271)) ([210f156](https://github.com/multiformats/js-multiaddr/commit/210f156e53af8bb58944c7308fd7361c6ef35295))
+
 ## [10.4.3](https://github.com/multiformats/js-multiaddr/compare/v10.4.2...v10.4.3) (2022-09-12)
 
 
