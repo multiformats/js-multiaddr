@@ -1,3 +1,19 @@
+## [11.0.0](https://github.com/multiformats/js-multiaddr/compare/v10.5.0...v11.0.0) (2022-09-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* the `Multiaddr` class is now an interface
+
+### Features
+
+* convert to interface ([#274](https://github.com/multiformats/js-multiaddr/issues/274)) ([36de98f](https://github.com/multiformats/js-multiaddr/commit/36de98fd531e5ee4df0f7f7848337f3890748341)), closes [#202](https://github.com/multiformats/js-multiaddr/issues/202)
+
+
+### Bug Fixes
+
+* fix converting strings to IP addresses and back again ([#270](https://github.com/multiformats/js-multiaddr/issues/270)) ([77f063a](https://github.com/multiformats/js-multiaddr/commit/77f063a41834153a94e7291fa9de74538305c251))
+
 ## [10.5.0](https://github.com/multiformats/js-multiaddr/compare/v10.4.3...v10.5.0) (2022-09-20)
 
 
