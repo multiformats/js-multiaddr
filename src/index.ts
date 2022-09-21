@@ -46,6 +46,10 @@ export type MultiaddrInput = string | Multiaddr | Uint8Array | null
 
 export interface Resolver { (addr: Multiaddr, options?: AbortOptions): Promise<string[]> }
 
+export type Tuple = [number, Uint8Array?]
+
+export type StringTuple = [number, string?]
+
 export interface AbortOptions {
   signal?: AbortSignal
 }
@@ -137,7 +141,7 @@ export interface Multiaddr {
    * // [ [ 4, <Buffer 7f 00 00 01> ], [ 6, <Buffer 0f a1> ] ]
    * ```
    */
-  tuples: () => Array<[number, Uint8Array?]>
+  tuples: () => Tuple[]
 
   /**
    * Returns a tuple of string/number parts
@@ -150,7 +154,7 @@ export interface Multiaddr {
    * // [ [ 4, '127.0.0.1' ], [ 6, '4001' ] ]
    * ```
    */
-  stringTuples: () => Array<[number, string?]>
+  stringTuples: () => StringTuple[]
 
   /**
    * Encapsulates a Multiaddr in another Multiaddr
@@ -396,6 +400,8 @@ export function isMultiaddr (value: any): value is Multiaddr {
  */
 class DefaultMultiaddr implements Multiaddr {
   public bytes: Uint8Array
+  private _string?: string
+  private _tuples?: Tuple[]
 
   [symbol]: boolean = true
 
@@ -429,7 +435,11 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   toString () {
-    return codec.bytesToString(this.bytes)
+    if (this._string == null) {
+      this._string = codec.bytesToString(this.bytes)
+    }
+
+    return this._string
   }
 
   toJSON () {
@@ -495,11 +505,15 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   tuples (): Array<[number, Uint8Array?]> {
-    return codec.bytesToTuples(this.bytes)
+    if (this._tuples == null) {
+      this._tuples = codec.bytesToTuples(this.bytes)
+    }
+
+    return this._tuples
   }
 
   stringTuples (): Array<[number, string?]> {
-    const t = codec.bytesToTuples(this.bytes)
+    const t = this.tuples()
     return codec.tuplesToStringTuples(t)
   }
 
