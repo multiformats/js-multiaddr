@@ -9,7 +9,6 @@
 ## Table of contents <!-- omit in toc -->
 
 - [Install](#install)
-- [Lead Maintainer](#lead-maintainer)
 - [Background](#background)
   - [What is multiaddr?](#what-is-multiaddr)
   - [Browser: `<script>` Tag](#browser-script-tag)
@@ -24,10 +23,6 @@
 ```console
 $ npm i @multiformats/multiaddr
 ```
-
-## Lead Maintainer
-
-[Jacob Heun](https://github.com/jacobheun)
 
 ## Background
 
@@ -57,15 +52,11 @@ the global namespace.
 ## Usage
 
 ```js
-// if we are coming from <= 8.x you can use the factory function
-const { multiaddr } = require('multiaddr')
+import { multiaddr } from 'multiaddr'
 const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
 
-// or just the class directly
-const { Multiaddr } = require('multiaddr')
-
-const addr = new Multiaddr("/ip4/127.0.0.1/udp/1234")
+const addr = multiaddr("/ip4/127.0.0.1/udp/1234")
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
 
 addr.bytes
@@ -106,10 +97,9 @@ addr.encapsulate('/sctp/5678')
 To provide multiaddr resolvers you can do:
 
 ```js
-const { Multiaddr } = require('multiaddr')
-const resolvers = require('multiaddr/src/resolvers')
+import { resolvers  } from 'multiaddr'
 
-Multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 ```
 
 The available resolvers are:
