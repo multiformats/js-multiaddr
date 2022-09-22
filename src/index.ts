@@ -402,6 +402,7 @@ class DefaultMultiaddr implements Multiaddr {
   public bytes: Uint8Array
   private _string?: string
   private _tuples?: Tuple[]
+  private _stringTuples?: StringTuple[]
 
   [symbol]: boolean = true
 
@@ -513,8 +514,11 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   stringTuples (): Array<[number, string?]> {
-    const t = this.tuples()
-    return codec.tuplesToStringTuples(t)
+    if (this._stringTuples == null) {
+      this._stringTuples = codec.tuplesToStringTuples(this.tuples())
+    }
+
+    return this._stringTuples
   }
 
   encapsulate (addr: MultiaddrInput): Multiaddr {
