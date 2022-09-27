@@ -1,3 +1,10 @@
+## [11.0.1](https://github.com/multiformats/js-multiaddr/compare/v11.0.0...v11.0.1) (2022-09-27)
+
+
+### Tests
+
+* webtransport with certhash ([#276](https://github.com/multiformats/js-multiaddr/issues/276)) ([7b9950a](https://github.com/multiformats/js-multiaddr/commit/7b9950adbce39e0bc980e780a8e7595e66383407))
+
 ## [11.0.0](https://github.com/multiformats/js-multiaddr/compare/v10.5.0...v11.0.0) (2022-09-21)
 
 
