@@ -1,3 +1,10 @@
+## [11.0.2](https://github.com/multiformats/js-multiaddr/compare/v11.0.1...v11.0.2) (2022-09-29)
+
+
+### Bug Fixes
+
+* cache string and tuple representations ([#275](https://github.com/multiformats/js-multiaddr/issues/275)) ([9b18ff4](https://github.com/multiformats/js-multiaddr/commit/9b18ff4ce03d975ba87d878d963dddc5690f102a))
+
 ## [11.0.1](https://github.com/multiformats/js-multiaddr/compare/v11.0.0...v11.0.1) (2022-09-27)
 
 
