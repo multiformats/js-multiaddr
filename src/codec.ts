@@ -4,6 +4,7 @@ import varint from 'varint'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 import type { Protocol } from './protocols-table.js'
+import type { StringTuple, Tuple } from './index.js'
 
 /**
  * string -> [[str name, str addr]... ]
@@ -50,7 +51,7 @@ export function stringToStringTuples (str: string) {
 /**
  * [[str name, str addr]... ] -> string
  */
-export function stringTuplesToString (tuples: Array<[number, string?]>) {
+export function stringTuplesToString (tuples: StringTuple[]) {
   const parts: string[] = []
   tuples.map((tup) => {
     const proto = protoFromTuple(tup)
@@ -67,7 +68,7 @@ export function stringTuplesToString (tuples: Array<[number, string?]>) {
 /**
  * [[str name, str addr]... ] -> [[int code, Uint8Array]... ]
  */
-export function stringTuplesToTuples (tuples: Array<string[] | string>): Array<[number, Uint8Array?]> {
+export function stringTuplesToTuples (tuples: Array<string[] | string>): Tuple[] {
   return tuples.map((tup) => {
     if (!Array.isArray(tup)) {
       tup = [tup]
@@ -85,7 +86,7 @@ export function stringTuplesToTuples (tuples: Array<string[] | string>): Array<[
  *
  * [[int code, Uint8Array]... ] -> [[int code, str addr]... ]
  */
-export function tuplesToStringTuples (tuples: Array<[number, Uint8Array?]>): Array<[number, string?]> {
+export function tuplesToStringTuples (tuples: Tuple[]): StringTuple[] {
   return tuples.map(tup => {
     const proto = protoFromTuple(tup)
     if (tup[1] != null) {
@@ -98,7 +99,7 @@ export function tuplesToStringTuples (tuples: Array<[number, Uint8Array?]>): Arr
 /**
  * [[int code, Uint8Array ]... ] -> Uint8Array
  */
-export function tuplesToBytes (tuples: Array<[number, Uint8Array?]>) {
+export function tuplesToBytes (tuples: Tuple[]) {
   return fromBytes(uint8ArrayConcat(tuples.map((tup) => {
     const proto = protoFromTuple(tup)
     let buf = Uint8Array.from(varint.encode(proto.code))
@@ -122,7 +123,7 @@ export function sizeForAddr (p: Protocol, addr: Uint8Array | number[]) {
   }
 }
 
-export function bytesToTuples (buf: Uint8Array): Array<[number, Uint8Array?]> {
+export function bytesToTuples (buf: Uint8Array): Tuple[] {
   const tuples: Array<[number, Uint8Array?]> = []
   let i = 0
   while (i < buf.length) {

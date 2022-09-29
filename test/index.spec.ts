@@ -702,13 +702,13 @@ describe('helpers', () => {
       const relay = relayTCP.encapsulate('/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6/p2p-circuit')
       const target = multiaddr('/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
       const original = relay.encapsulate(target)
-      expect(original.decapsulateCode(421)).to.eql(relay)
-      expect(relay.decapsulateCode(421)).to.eql(relayTCP)
+      expect(original.decapsulateCode(421).toJSON()).to.eql(relay.toJSON())
+      expect(relay.decapsulateCode(421).toJSON()).to.eql(relayTCP.toJSON())
     })
 
     it('ignores missing codes', () => {
       const tcp = multiaddr('/ip4/0.0.0.0/tcp/8080')
-      expect(tcp.decapsulateCode(421)).to.eql(tcp)
+      expect(tcp.decapsulateCode(421).toJSON()).to.eql(tcp.toJSON())
     })
   })
 
