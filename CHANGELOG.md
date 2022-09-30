@@ -1,3 +1,10 @@
+## [11.0.3](https://github.com/multiformats/js-multiaddr/compare/v11.0.2...v11.0.3) (2022-09-30)
+
+
+### Bug Fixes
+
+* use private class field to store cached strings and tuples ([#277](https://github.com/multiformats/js-multiaddr/issues/277)) ([b0809bf](https://github.com/multiformats/js-multiaddr/commit/b0809bfd2a97c1fde7691dd092baaf00e0f3b886))
+
 ## [11.0.2](https://github.com/multiformats/js-multiaddr/compare/v11.0.1...v11.0.2) (2022-09-29)
 
 
