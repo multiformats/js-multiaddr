@@ -400,9 +400,9 @@ export function isMultiaddr (value: any): value is Multiaddr {
  */
 class DefaultMultiaddr implements Multiaddr {
   public bytes: Uint8Array
-  private _string?: string
-  private _tuples?: Tuple[]
-  private _stringTuples?: StringTuple[]
+  #string?: string
+  #tuples?: Tuple[]
+  #stringTuples?: StringTuple[]
 
   [symbol]: boolean = true
 
@@ -436,11 +436,11 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   toString () {
-    if (this._string == null) {
-      this._string = codec.bytesToString(this.bytes)
+    if (this.#string == null) {
+      this.#string = codec.bytesToString(this.bytes)
     }
 
-    return this._string
+    return this.#string
   }
 
   toJSON () {
@@ -506,19 +506,19 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   tuples (): Array<[number, Uint8Array?]> {
-    if (this._tuples == null) {
-      this._tuples = codec.bytesToTuples(this.bytes)
+    if (this.#tuples == null) {
+      this.#tuples = codec.bytesToTuples(this.bytes)
     }
 
-    return this._tuples
+    return this.#tuples
   }
 
   stringTuples (): Array<[number, string?]> {
-    if (this._stringTuples == null) {
-      this._stringTuples = codec.tuplesToStringTuples(this.tuples())
+    if (this.#stringTuples == null) {
+      this.#stringTuples = codec.tuplesToStringTuples(this.tuples())
     }
 
-    return this._stringTuples
+    return this.#stringTuples
   }
 
   encapsulate (addr: MultiaddrInput): Multiaddr {
