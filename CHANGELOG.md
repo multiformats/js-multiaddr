@@ -1,3 +1,10 @@
+## [11.0.4](https://github.com/multiformats/js-multiaddr/compare/v11.0.3...v11.0.4) (2022-10-12)
+
+
+### Dependencies
+
+* bump multiformats from 9.9.0 to 10.0.0 ([#278](https://github.com/multiformats/js-multiaddr/issues/278)) ([767bcbe](https://github.com/multiformats/js-multiaddr/commit/767bcbec03603cfc26ad6d80bcee80b9beeb52f6))
+
 ## [11.0.3](https://github.com/multiformats/js-multiaddr/compare/v11.0.2...v11.0.3) (2022-09-30)
 
 
