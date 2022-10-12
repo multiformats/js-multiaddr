@@ -1,3 +1,10 @@
+## [11.0.5](https://github.com/multiformats/js-multiaddr/compare/v11.0.4...v11.0.5) (2022-10-12)
+
+
+### Dependencies
+
+* bump uint8arrays from 3.x.x to 4.x.x ([#279](https://github.com/multiformats/js-multiaddr/issues/279)) ([4ef82ac](https://github.com/multiformats/js-multiaddr/commit/4ef82acb8a9c594c0c72d3ef46fbe7f281cc981e))
+
 ## [11.0.4](https://github.com/multiformats/js-multiaddr/compare/v11.0.3...v11.0.4) (2022-10-12)
 
 
