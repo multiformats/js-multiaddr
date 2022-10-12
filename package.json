@@ -167,7 +167,7 @@
     "dns-over-http-resolver": "^2.1.0",
     "err-code": "^3.0.1",
     "is-ip": "^5.0.0",
-    "multiformats": "^9.4.5",
+    "multiformats": "^10.0.0",
     "uint8arrays": "^3.0.0",
     "varint": "^6.0.0"
   },
