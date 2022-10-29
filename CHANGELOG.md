@@ -1,3 +1,10 @@
+## [11.0.6](https://github.com/multiformats/js-multiaddr/compare/v11.0.5...v11.0.6) (2022-10-29)
+
+
+### Bug Fixes
+
+* use @chainsafe/is-ip ([#280](https://github.com/multiformats/js-multiaddr/issues/280)) ([40124ff](https://github.com/multiformats/js-multiaddr/commit/40124ffcdd52a4c88c4c246584230ca2f10533e3))
+
 ## [11.0.5](https://github.com/multiformats/js-multiaddr/compare/v11.0.4...v11.0.5) (2022-10-12)
 
 
