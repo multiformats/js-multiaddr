@@ -164,9 +164,9 @@
     "release": "aegir release"
   },
   "dependencies": {
+    "@chainsafe/is-ip": "^1.0.0",
     "dns-over-http-resolver": "^2.1.0",
     "err-code": "^3.0.1",
-    "is-ip": "^5.0.0",
     "multiformats": "^10.0.0",
     "uint8arrays": "^4.0.2",
     "varint": "^6.0.0"

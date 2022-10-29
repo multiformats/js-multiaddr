@@ -1,7 +1,7 @@
-import { isIPv4, isIPv6 } from 'is-ip'
+import { isIPv4, isIPv6 } from '@chainsafe/is-ip'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 
-export { isIP } from 'is-ip'
+export { isIP } from '@chainsafe/is-ip'
 export const isV4 = isIPv4
 export const isV6 = isIPv6
 
