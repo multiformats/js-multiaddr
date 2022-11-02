@@ -52,6 +52,8 @@ Protocols.table = [
   [445, 296, 'onion3'],
   [446, V, 'garlic64'],
   [460, 0, 'quic'],
+  [465, 0, 'webtransport'],
+  [466, V, 'certhash'],
   [477, 0, 'ws'],
   [478, 0, 'wss'],
   [479, 0, 'p2p-websocket-star'],

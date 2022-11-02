@@ -39,6 +39,7 @@ Convert.toString = function convertToString (proto, buf) {
     case 56: // dnsaddr
     case 400: // unix
     case 777: // memory
+    case 466: // certhash
       return bytes2str(buf)
 
     case 421: // ipfs
@@ -72,6 +73,7 @@ Convert.toBytes = function convertToBytes (proto, str) {
     case 56: // dnsaddr
     case 400: // unix
     case 777: // memory
+    case 466: // certhash
       return str2bytes(str)
 
     case 421: // ipfs
