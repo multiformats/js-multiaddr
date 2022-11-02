@@ -1,3 +1,10 @@
+## [11.0.7](https://github.com/multiformats/js-multiaddr/compare/v11.0.6...v11.0.7) (2022-11-02)
+
+
+### Dependencies
+
+* update @chainsafe/is-ip ([#281](https://github.com/multiformats/js-multiaddr/issues/281)) ([fc6b600](https://github.com/multiformats/js-multiaddr/commit/fc6b600a474f43fb15cf1bae2fb8f28401581e88)), closes [/github.com/ChainSafe/is-ip/pull/1#issuecomment-1295761316](https://github.com/multiformats//github.com/ChainSafe/is-ip/pull/1/issues/issuecomment-1295761316)
+
 ## [11.0.6](https://github.com/multiformats/js-multiaddr/compare/v11.0.5...v11.0.6) (2022-10-29)
 
 
