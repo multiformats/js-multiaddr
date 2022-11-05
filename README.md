@@ -37,22 +37,13 @@ A standard way to represent addresses that
 - encapsulate well
 
 ```sh
-npm i multiaddr
-```
-
-### Browser: `<script>` Tag
-
-Loading this module through a script tag will make the `Multiaddr` obj available in
-the global namespace.
-
-```html
-<script src="https://unpkg.com/multiaddr/dist/index.min.js"></script>
+npm i @multiformats/multiaddr
 ```
 
 ## Usage
 
 ```js
-import { multiaddr } from 'multiaddr'
+import { multiaddr } from '@multiformats/multiaddr'
 const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
 // <Multiaddr /ip4/127.0.0.1/udp/1234>
 
@@ -97,7 +88,7 @@ addr.encapsulate('/sctp/5678')
 To provide multiaddr resolvers you can do:
 
 ```js
-import { resolvers  } from 'multiaddr'
+import { resolvers  } from '@multiformats/multiaddr'
 
 resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 ```
