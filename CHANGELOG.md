@@ -1,3 +1,10 @@
+## [11.0.9](https://github.com/multiformats/js-multiaddr/compare/v11.0.8...v11.0.9) (2022-12-07)
+
+
+### Documentation
+
+* publish API docs to github pages on release ([#289](https://github.com/multiformats/js-multiaddr/issues/289)) ([c22e55f](https://github.com/multiformats/js-multiaddr/commit/c22e55f320ad8f2478b9d083cb3cddc7d6985b13))
+
 ## [11.0.8](https://github.com/multiformats/js-multiaddr/compare/v11.0.7...v11.0.8) (2022-12-07)
 
 
