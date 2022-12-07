@@ -1,3 +1,10 @@
+## [11.0.10](https://github.com/multiformats/js-multiaddr/compare/v11.0.9...v11.0.10) (2022-12-07)
+
+
+### Bug Fixes
+
+* run docs after release otherwise version number is always wrong ([04e19e1](https://github.com/multiformats/js-multiaddr/commit/04e19e15b5bf24566fd077eb7bfb87a9274d25f6))
+
 ## [11.0.9](https://github.com/multiformats/js-multiaddr/compare/v11.0.8...v11.0.9) (2022-12-07)
 
 
