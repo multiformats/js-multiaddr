@@ -119,7 +119,7 @@ export function sizeForAddr (p: Protocol, addr: Uint8Array | number[]) {
     return 0
   } else {
     const size = varint.decode(addr)
-    return size + varint.decode.bytes
+    return size + (varint.decode.bytes ?? 0)
   }
 }
 
@@ -128,7 +128,7 @@ export function bytesToTuples (buf: Uint8Array): Tuple[] {
   let i = 0
   while (i < buf.length) {
     const code = varint.decode(buf, i)
-    const n = varint.decode.bytes
+    const n = varint.decode.bytes ?? 0
 
     const p = getProtocol(code)
 
