@@ -140,10 +140,10 @@ jobs:
         with:
           docker-token: ${{ secrets.DOCKER_TOKEN }}
           docker-username: ${{ secrets.DOCKER_USERNAME }}
-      - run: npm run --if-present docs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run --if-present release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm run --if-present docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
