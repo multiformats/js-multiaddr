@@ -54,10 +54,10 @@ the global namespace.
 ```js
 import { multiaddr } from 'multiaddr'
 const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
-// <Multiaddr /ip4/127.0.0.1/udp/1234>
+// Multiaddr(/ip4/127.0.0.1/udp/1234)
 
 const addr = multiaddr("/ip4/127.0.0.1/udp/1234")
-// <Multiaddr /ip4/127.0.0.1/udp/1234>
+// Multiaddr(/ip4/127.0.0.1/udp/1234)
 
 addr.bytes
 // <Uint8Array 04 7f 00 00 01 11 04 d2>
@@ -84,7 +84,7 @@ addr.nodeAddress()
 */
 
 addr.encapsulate('/sctp/5678')
-// <Multiaddr /ip4/127.0.0.1/udp/1234/sctp/5678>
+// Multiaddr(/ip4/127.0.0.1/udp/1234/sctp/5678)
 ```
 
 ## API
@@ -94,6 +94,7 @@ addr.encapsulate('/sctp/5678')
 ## Resolvers
 
 `multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree.
+
 To provide multiaddr resolvers you can do:
 
 ```js
