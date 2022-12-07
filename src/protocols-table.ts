@@ -61,7 +61,6 @@ export function createProtocol (code: number, size: number, name: string, resolv
   }
 }
 
-
 /**
  * For the passed proto string or number, return a {@link Protocol}
  *
