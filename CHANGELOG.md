@@ -1,3 +1,15 @@
+## [11.0.8](https://github.com/multiformats/js-multiaddr/compare/v11.0.7...v11.0.8) (2022-12-07)
+
+
+### Bug Fixes
+
+* varint.decode.bytes can now be undefined according to types ([#288](https://github.com/multiformats/js-multiaddr/issues/288)) ([e0a59e5](https://github.com/multiformats/js-multiaddr/commit/e0a59e584623b08026e9179c37bfb4966d8dbfe8))
+
+
+### Dependencies
+
+* **dev:** bump sinon from 14.0.2 to 15.0.0 ([#287](https://github.com/multiformats/js-multiaddr/issues/287)) ([41f67a7](https://github.com/multiformats/js-multiaddr/commit/41f67a7b70baf1bb16ef336b218607342bf9d338))
+
 ## [11.0.7](https://github.com/multiformats/js-multiaddr/compare/v11.0.6...v11.0.7) (2022-11-02)
 
 
