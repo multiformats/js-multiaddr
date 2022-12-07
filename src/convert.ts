@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ *
+ * Provides methods for converting
+ */
 
 import * as ip from './ip.js'
 import { getProtocol } from './protocols-table.js'
@@ -14,7 +19,9 @@ import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 /**
  * converts (serializes) addresses
  */
-export function convert (proto: string, a: string | Uint8Array) {
+export function convert (proto: string, a: string): Uint8Array
+export function convert (proto: string, a: Uint8Array): string
+export function convert (proto: string, a: string | Uint8Array): Uint8Array | string {
   if (a instanceof Uint8Array) {
     return convertToString(proto, a)
   } else {
@@ -25,7 +32,7 @@ export function convert (proto: string, a: string | Uint8Array) {
 /**
  * Convert [code,Uint8Array] to string
  */
-export function convertToString (proto: number | string, buf: Uint8Array) {
+export function convertToString (proto: number | string, buf: Uint8Array): string {
   const protocol = getProtocol(proto)
   switch (protocol.code) {
     case 4: // ipv4
@@ -59,7 +66,7 @@ export function convertToString (proto: number | string, buf: Uint8Array) {
   }
 }
 
-export function convertToBytes (proto: string | number, str: string) {
+export function convertToBytes (proto: string | number, str: string): Uint8Array {
   const protocol = getProtocol(proto)
   switch (protocol.code) {
     case 4: // ipv4
@@ -101,14 +108,14 @@ const anybaseDecoder = (function () {
   return acc
 })()
 
-function ip2bytes (ipString: string) {
+function ip2bytes (ipString: string): Uint8Array {
   if (!ip.isIP(ipString)) {
     throw new Error('invalid ip address')
   }
   return ip.toBytes(ipString)
 }
 
-function bytes2ip (ipBuff: Uint8Array) {
+function bytes2ip (ipBuff: Uint8Array): string {
   const ipString = ip.toString(ipBuff, 0, ipBuff.length)
   if (ipString == null) {
     throw new Error('ipBuff is required')
@@ -119,7 +126,7 @@ function bytes2ip (ipBuff: Uint8Array) {
   return ipString
 }
 
-function port2bytes (port: number) {
+function port2bytes (port: number): Uint8Array {
   const buf = new ArrayBuffer(2)
   const view = new DataView(buf)
   view.setUint16(0, port)
@@ -127,18 +134,18 @@ function port2bytes (port: number) {
   return new Uint8Array(buf)
 }
 
-function bytes2port (buf: Uint8Array) {
+function bytes2port (buf: Uint8Array): number {
   const view = new DataView(buf.buffer)
   return view.getUint16(buf.byteOffset)
 }
 
-function str2bytes (str: string) {
+function str2bytes (str: string): Uint8Array {
   const buf = uint8ArrayFromString(str)
   const size = Uint8Array.from(varint.encode(buf.length))
   return uint8ArrayConcat([size, buf], size.length + buf.length)
 }
 
-function bytes2str (buf: Uint8Array) {
+function bytes2str (buf: Uint8Array): string {
   const size = varint.decode(buf)
   buf = buf.slice(varint.decode.bytes)
 
@@ -149,7 +156,7 @@ function bytes2str (buf: Uint8Array) {
   return uint8ArrayToString(buf)
 }
 
-function mh2bytes (hash: string) {
+function mh2bytes (hash: string): Uint8Array {
   let mh
 
   if (hash[0] === 'Q' || hash[0] === '1') {
@@ -163,7 +170,7 @@ function mh2bytes (hash: string) {
   return uint8ArrayConcat([size, mh], size.length + mh.length)
 }
 
-function mb2bytes (mbstr: string) {
+function mb2bytes (mbstr: string): Uint8Array {
   const mb = anybaseDecoder.decode(mbstr)
   const size = Uint8Array.from(varint.encode(mb.length))
   return uint8ArrayConcat([size, mb], size.length + mb.length)
@@ -182,7 +189,7 @@ function bytes2mb (buf: Uint8Array) {
 /**
  * Converts bytes to bas58btc string
  */
-function bytes2mh (buf: Uint8Array) {
+function bytes2mh (buf: Uint8Array): string {
   const size = varint.decode(buf)
   const address = buf.slice(varint.decode.bytes)
 
@@ -193,7 +200,7 @@ function bytes2mh (buf: Uint8Array) {
   return uint8ArrayToString(address, 'base58btc')
 }
 
-function onion2bytes (str: string) {
+function onion2bytes (str: string): Uint8Array {
   const addr = str.split(':')
   if (addr.length !== 2) {
     throw new Error(`failed to parse onion addr: ["'${addr.join('", "')}'"]' does not contain a port number`)
@@ -214,7 +221,7 @@ function onion2bytes (str: string) {
   return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
 }
 
-function onion32bytes (str: string) {
+function onion32bytes (str: string): Uint8Array {
   const addr = str.split(':')
   if (addr.length !== 2) {
     throw new Error(`failed to parse onion addr: ["'${addr.join('", "')}'"]' does not contain a port number`)
@@ -234,7 +241,7 @@ function onion32bytes (str: string) {
   return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
 }
 
-function bytes2onion (buf: Uint8Array) {
+function bytes2onion (buf: Uint8Array): string {
   const addrBytes = buf.slice(0, buf.length - 2)
   const portBytes = buf.slice(buf.length - 2)
   const addr = uint8ArrayToString(addrBytes, 'base32')

@@ -161,7 +161,8 @@
     "test:firefox-webworker": "aegir test -t webworker -- --browser firefox",
     "test:node": "aegir test -t node --cov",
     "test:electron-main": "aegir test -t electron-main",
-    "release": "aegir release"
+    "release": "aegir release",
+    "docs": "aegir docs"
   },
   "dependencies": {
     "@chainsafe/is-ip": "^2.0.1",
@@ -173,7 +174,7 @@
   },
   "devDependencies": {
     "@types/varint": "^6.0.0",
-    "aegir": "^37.4.5",
+    "aegir": "^37.6.2",
     "sinon": "^15.0.0",
     "util": "^0.12.3"
   },
