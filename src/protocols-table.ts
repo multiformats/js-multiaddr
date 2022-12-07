@@ -1,10 +1,4 @@
-export interface Protocol {
-  code: number
-  size: number
-  name: string
-  resolvable?: boolean
-  path?: boolean
-}
+import type { Protocol } from './index.js'
 
 const V = -1
 export const names: Record<string, Protocol> = {}
@@ -67,7 +61,19 @@ export function createProtocol (code: number, size: number, name: string, resolv
   }
 }
 
-export function getProtocol (proto: number | string) {
+/**
+ * For the passed proto string or number, return a {@link Protocol}
+ *
+ * @example
+ *
+ * ```js
+ * import { protocol } from '@multiformats/multiaddr'
+ *
+ * console.info(protocol(4))
+ * // { code: 4, size: 32, name: 'ip4', resolvable: false, path: false }
+ * ```
+ */
+export function getProtocol (proto: number | string): Protocol {
   if (typeof proto === 'number') {
     if (codes[proto] != null) {
       return codes[proto]
