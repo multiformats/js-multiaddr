@@ -489,7 +489,7 @@ class DefaultMultiaddr implements Multiaddr {
     let i = 0
     while (i < buf.length) {
       const code = varint.decode(buf, i)
-      const n = varint.decode.bytes
+      const n = varint.decode.bytes ?? 0
 
       const p = getProtocol(code)
       const size = codec.sizeForAddr(p, buf.slice(i + n))
