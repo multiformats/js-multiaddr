@@ -42,11 +42,11 @@ npm i multiaddr
 
 ### Browser: `<script>` Tag
 
-Loading this module through a script tag will make the `Multiaddr` obj available in
+Loading this module through a script tag will make the `multiaddr` function available in
 the global namespace.
 
 ```html
-<script src="https://unpkg.com/multiaddr/dist/index.min.js"></script>
+<script src="https://unpkg.com/@multiformats/multiaddr/dist/index.min.js"></script>
 ```
 
 ## Usage
