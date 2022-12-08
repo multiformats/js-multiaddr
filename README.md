@@ -9,7 +9,7 @@
 ## Table of contents <!-- omit in toc -->
 
 - [Install](#install)
-  - [Browser: `<script>` Tag](#browser-script-tag)
+  - [Browser `<script>` tag](#browser-script-tag)
 - [Background](#background)
   - [What is multiaddr?](#what-is-multiaddr)
 - [Usage](#usage)
@@ -24,7 +24,7 @@
 $ npm i @multiformats/multiaddr
 ```
 
-### Browser: `<script>` Tag
+### Browser `<script>` tag
 
 Loading this module through a script tag will make the `multiaddr` function available in
 the global namespace.
