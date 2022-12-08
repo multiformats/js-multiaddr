@@ -1,3 +1,15 @@
+## [11.0.12](https://github.com/multiformats/js-multiaddr/compare/v11.0.11...v11.0.12) (2022-12-08)
+
+
+### Bug Fixes
+
+* update inspect format to be like CID class ([#290](https://github.com/multiformats/js-multiaddr/issues/290)) ([db032e9](https://github.com/multiformats/js-multiaddr/commit/db032e9c597cf91c44984fdc9293b883f4b9a628))
+
+
+### Documentation
+
+* update reamde with correct global namespace name ([#292](https://github.com/multiformats/js-multiaddr/issues/292)) ([fe36328](https://github.com/multiformats/js-multiaddr/commit/fe36328d300105ac5fb06bbc027bc3676ee73e1c))
+
 ## [11.0.11](https://github.com/multiformats/js-multiaddr/compare/v11.0.10...v11.0.11) (2022-12-08)
 
 
