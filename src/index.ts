@@ -222,13 +222,13 @@ export interface Multiaddr {
    * import { multiaddr } from '@multiformats/multiaddr'
    *
    * const mh1 = multiaddr('/ip4/8.8.8.8/tcp/1080')
-   * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
+   * // Multiaddr(/ip4/8.8.8.8/tcp/1080)
    *
    * const mh2 = multiaddr('/ip4/127.0.0.1/tcp/4001')
-   * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
+   * // Multiaddr(/ip4/127.0.0.1/tcp/4001)
    *
    * const mh3 = mh1.encapsulate(mh2)
-   * // <Multiaddr 0408080808060438047f000001060fa1 - /ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001>
+   * // Multiaddr(/ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001)
    *
    * mh3.toString()
    * // '/ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001'
@@ -246,13 +246,13 @@ export interface Multiaddr {
    * import { multiaddr } from '@multiformats/multiaddr'
    *
    * const mh1 = multiaddr('/ip4/8.8.8.8/tcp/1080')
-   * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
+   * // Multiaddr(/ip4/8.8.8.8/tcp/1080)
    *
    * const mh2 = multiaddr('/ip4/127.0.0.1/tcp/4001')
-   * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
+   * // Multiaddr(/ip4/127.0.0.1/tcp/4001)
    *
    * const mh3 = mh1.encapsulate(mh2)
-   * // <Multiaddr 0408080808060438047f000001060fa1 - /ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001>
+   * // Multiaddr(/ip4/8.8.8.8/tcp/1080/ip4/127.0.0.1/tcp/4001)
    *
    * mh3.decapsulate(mh2).toString()
    * // '/ip4/8.8.8.8/tcp/1080'
@@ -273,7 +273,7 @@ export interface Multiaddr {
    * import { multiaddr } from '@multiformats/multiaddr'
    *
    * const addr = multiaddr('/ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
-   * // <Multiaddr 0400... - /ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC>
+   * // Multiaddr(/ip4/0.0.0.0/tcp/8080/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC)
    *
    * addr.decapsulateCode(421).toString()
    * // '/ip4/0.0.0.0/tcp/8080'
@@ -292,7 +292,7 @@ export interface Multiaddr {
    * import { multiaddr } from '@multiformats/multiaddr'
    *
    * const mh1 = multiaddr('/ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string')
-   * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string>
+   * // Multiaddr(/ip4/8.8.8.8/tcp/1080/ipfs/QmValidBase58string)
    *
    * // should return QmValidBase58string or null if the id is missing or invalid
    * const peerId = mh1.getPeerId()
@@ -308,7 +308,7 @@ export interface Multiaddr {
    * import { multiaddr } from '@multiformats/multiaddr'
    *
    * const mh1 = multiaddr('/ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock')
-   * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock>
+   * // Multiaddr(/ip4/8.8.8.8/tcp/1080/unix/tmp/p2p.sock)
    *
    * // should return utf8 string or null if the id is missing or invalid
    * const path = mh1.getPath()
@@ -324,10 +324,10 @@ export interface Multiaddr {
    * import { multiaddr } from '@multiformats/multiaddr'
    *
    * const mh1 = multiaddr('/ip4/8.8.8.8/tcp/1080')
-   * // <Multiaddr 0408080808060438 - /ip4/8.8.8.8/tcp/1080>
+   * // Multiaddr(/ip4/8.8.8.8/tcp/1080)
    *
    * const mh2 = multiaddr('/ip4/127.0.0.1/tcp/4001')
-   * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
+   * // Multiaddr(/ip4/127.0.0.1/tcp/4001)
    *
    * mh1.equals(mh1)
    * // true
@@ -349,9 +349,9 @@ export interface Multiaddr {
    * const mh1 = multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
    * const resolvedMultiaddrs = await mh1.resolve()
    * // [
-   * //   <Multiaddr 04934b5353060fa1a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>,
-   * //   <Multiaddr 04934b53530601bbde03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/tcp/443/wss/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>,
-   * //   <Multiaddr 04934b535391020fa1cc03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /ip4/147.75.83.83/udp/4001/quic/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>
+   * //   Multiaddr(/ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb),
+   * //   Multiaddr(/ip4/147.75.83.83/tcp/443/wss/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb),
+   * //   Multiaddr(/ip4/147.75.83.83/udp/4001/quic/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb)
    * // ]
    * ```
    */
@@ -386,13 +386,13 @@ export interface Multiaddr {
    * import { multiaddr } from '@multiformats/multiaddr'
    *
    * const mh1 = multiaddr('/ip4/127.0.0.1/tcp/4001')
-   * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
+   * // Multiaddr(/ip4/127.0.0.1/tcp/4001)
    * const mh2 = multiaddr('/ip4/192.168.2.1/tcp/5001')
-   * // <Multiaddr 04c0a80201061389 - /ip4/192.168.2.1/tcp/5001>
+   * // Multiaddr(/ip4/192.168.2.1/tcp/5001)
    * const mh3 = mh1.encapsulate(mh2)
-   * // <Multiaddr 047f000001060fa104c0a80201061389 - /ip4/127.0.0.1/tcp/4001/ip4/192.168.2.1/tcp/5001>
+   * // Multiaddr(/ip4/127.0.0.1/tcp/4001/ip4/192.168.2.1/tcp/5001)
    * const mh4 = multiaddr('/ip4/127.0.0.1/tcp/2000/wss/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSooo2a')
-   * // <Multiaddr 047f0000010607d0de039302a503221220d52ebb89d85b02a284948203a62ff28389c57c9f42beec4ec20db76a64835843 - /ip4/127.0.0.1/tcp/2000/wss/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSooo2a>
+   * // Multiaddr(/ip4/127.0.0.1/tcp/2000/wss/p2p-webrtc-star/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSooo2a)
    * mh1.isThinWaistAddress()
    * // true
    * mh2.isThinWaistAddress()
@@ -404,21 +404,6 @@ export interface Multiaddr {
    * ```
    */
   isThinWaistAddress: (addr?: Multiaddr) => boolean
-
-  /**
-   * Returns Multiaddr as a human-readable string.
-   * Fallback for pre Node.js v10.0.0.
-   * https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect
-   *
-   * @example
-   * ```js
-   * import { multiaddr } from '@multiformats/multiaddr'
-   *
-   * multiaddr('/ip4/127.0.0.1/tcp/4001').inspect()
-   * // '<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>'
-   * ```
-   */
-  inspect: () => string
 }
 
 /**
@@ -429,7 +414,7 @@ export interface Multiaddr {
  * import { fromNodeAddress } from '@multiformats/multiaddr'
  *
  * fromNodeAddress({address: '127.0.0.1', port: '4001'}, 'tcp')
- * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
+ * // Multiaddr(/ip4/127.0.0.1/tcp/4001)
  * ```
  */
 export function fromNodeAddress (addr: NodeAddress, transport: string): Multiaddr {
@@ -738,24 +723,19 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   /**
-   * Returns Multiaddr as a human-readable string.
-   * For post Node.js v10.0.0.
-   * https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect
+   * Returns Multiaddr as a human-readable string
+   * https://nodejs.org/api/util.html#utilinspectcustom
    *
    * @example
    * ```js
    * import { multiaddr } from '@multiformats/multiaddr'
    *
-   * multiaddr('/ip4/127.0.0.1/tcp/4001')
-   * // '<Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>'
+   * console.info(multiaddr('/ip4/127.0.0.1/tcp/4001'))
+   * // 'Multiaddr(/ip4/127.0.0.1/tcp/4001)'
    * ```
    */
   [inspect] (): string {
-    return this.inspect()
-  }
-
-  inspect (): string {
-    return `<Multiaddr ${uint8ArrayToString(this.bytes, 'base16')} - ${codec.bytesToString(this.bytes)}>`
+    return `Multiaddr(${codec.bytesToString(this.bytes)})`
   }
 }
 
@@ -767,7 +747,7 @@ class DefaultMultiaddr implements Multiaddr {
  * import { multiaddr } from '@libp2p/multiaddr'
  *
  * multiaddr('/ip4/127.0.0.1/tcp/4001')
- * // <Multiaddr 047f000001060fa1 - /ip4/127.0.0.1/tcp/4001>
+ * // Multiaddr(/ip4/127.0.0.1/tcp/4001)
  * ```
  *
  * @param {MultiaddrInput} [addr] - If String or Uint8Array, needs to adhere to the address format of a [multiaddr](https://github.com/multiformats/multiaddr#string-format)

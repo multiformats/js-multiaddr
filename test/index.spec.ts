@@ -550,13 +550,6 @@ describe('helpers', () => {
     })
   })
 
-  describe('.inspect', () => {
-    it('renders the buffer as hex', () => {
-      expect(multiaddr('/ip4/0.0.0.0/tcp/1234').inspect())
-        .to.eql('<Multiaddr 04000000000604d2 - /ip4/0.0.0.0/tcp/1234>')
-    })
-  })
-
   describe('.protos', () => {
     it('returns a list of all protocols in the address', () => {
       expect(multiaddr('/ip4/0.0.0.0/utp').protos())
