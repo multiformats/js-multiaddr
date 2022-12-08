@@ -9,9 +9,9 @@
 ## Table of contents <!-- omit in toc -->
 
 - [Install](#install)
+  - [Browser `<script>` tag](#browser-script-tag)
 - [Background](#background)
   - [What is multiaddr?](#what-is-multiaddr)
-  - [Browser: `<script>` Tag](#browser-script-tag)
 - [Usage](#usage)
 - [API](#api)
 - [Resolvers](#resolvers)
@@ -22,6 +22,15 @@
 
 ```console
 $ npm i @multiformats/multiaddr
+```
+
+### Browser `<script>` tag
+
+Loading this module through a script tag will make the `multiaddr` function available in
+the global namespace.
+
+```html
+<script src="https://unpkg.com/@multiformats/multiaddr/dist/index.min.js"></script>
 ```
 
 ## Background
@@ -35,19 +44,6 @@ A standard way to represent addresses that
 - have a binary packed format
 - have a nice string representation
 - encapsulate well
-
-```sh
-npm i multiaddr
-```
-
-### Browser: `<script>` Tag
-
-Loading this module through a script tag will make the `Multiaddr` obj available in
-the global namespace.
-
-```html
-<script src="https://unpkg.com/multiaddr/dist/index.min.js"></script>
-```
 
 ## Usage
 
