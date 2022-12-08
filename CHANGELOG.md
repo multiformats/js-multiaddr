@@ -1,3 +1,10 @@
+## [11.0.11](https://github.com/multiformats/js-multiaddr/compare/v11.0.10...v11.0.11) (2022-12-08)
+
+
+### Bug Fixes
+
+* include minified bundle in npm tarball ([#291](https://github.com/multiformats/js-multiaddr/issues/291)) ([ac88cba](https://github.com/multiformats/js-multiaddr/commit/ac88cba167ba136d55d04f17ab0db01584d8ab3a))
+
 ## [11.0.10](https://github.com/multiformats/js-multiaddr/compare/v11.0.9...v11.0.10) (2022-12-07)
 
 
