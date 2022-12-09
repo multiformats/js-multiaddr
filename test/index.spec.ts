@@ -347,22 +347,36 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('ip6 + udp + quic-v1 + ipfs', () => {
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic-v1/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
+  })
+
+  it('ip6 + udp + quic-v1 + p2p', () => {
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic-v1/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it('ip6 webtransport', () => {
-    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic/webtransport'
+    const str = '/ip6/2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095/udp/4001/quic-v1/webtransport'
     const addr = multiaddr(str)
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('ip4 webtransport', () => {
-    const str = '/ip4/1.2.3.4/udp/4001/quic/webtransport'
+    const str = '/ip4/1.2.3.4/udp/4001/quic-v1/webtransport'
     const addr = multiaddr(str)
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
   it('webtransport with certhash', () => {
-    const str = '/ip4/1.2.3.4/udp/4001/quic/webtransport/certhash/uEiAkH5a4DPGKUuOBjYw0CgwjvcJCJMD2K_1aluKR_tpevQ/certhash/uEiAfbgiymPP2_nX7Dgir8B4QkksjHp2lVuJZz0F79Be9JA/p2p/12D3KooWBdmLJjhpgJ9KZgLM3f894ff9xyBfPvPjFNn7MKJpyrC2'
+    const str = '/ip4/1.2.3.4/udp/4001/quic-v1/webtransport/certhash/uEiAkH5a4DPGKUuOBjYw0CgwjvcJCJMD2K_1aluKR_tpevQ/certhash/uEiAfbgiymPP2_nX7Dgir8B4QkksjHp2lVuJZz0F79Be9JA/p2p/12D3KooWBdmLJjhpgJ9KZgLM3f894ff9xyBfPvPjFNn7MKJpyrC2'
     const addr = multiaddr(str)
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
