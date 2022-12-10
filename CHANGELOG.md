@@ -1,3 +1,10 @@
+## [11.1.0](https://github.com/multiformats/js-multiaddr/compare/v11.0.12...v11.1.0) (2022-12-10)
+
+
+### Features
+
+* support /quic-v1 ([#294](https://github.com/multiformats/js-multiaddr/issues/294)) ([7d95ef8](https://github.com/multiformats/js-multiaddr/commit/7d95ef885e3858d3627879ef8021b543e883458d))
+
 ## [11.0.12](https://github.com/multiformats/js-multiaddr/compare/v11.0.11...v11.0.12) (2022-12-08)
 
 
