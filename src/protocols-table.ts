@@ -35,6 +35,7 @@ export const table: Array<[number, number, string, boolean?, boolean?]> = [
   [445, 296, 'onion3'],
   [446, V, 'garlic64'],
   [460, 0, 'quic'],
+  [461, 0, 'quic-v1'],
   [465, 0, 'webtransport'],
   [466, V, 'certhash'],
   [477, 0, 'ws'],
