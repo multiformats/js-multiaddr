@@ -1,3 +1,10 @@
+## [11.1.1](https://github.com/multiformats/js-multiaddr/compare/v11.1.0...v11.1.1) (2022-12-13)
+
+
+### Bug Fixes
+
+* remove lockfile ([#296](https://github.com/multiformats/js-multiaddr/issues/296)) ([46452b3](https://github.com/multiformats/js-multiaddr/commit/46452b3f6e07515ab591b5eca03e79713d3552e2))
+
 ## [11.1.0](https://github.com/multiformats/js-multiaddr/compare/v11.0.12...v11.1.0) (2022-12-10)
 
 
