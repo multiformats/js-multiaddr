@@ -1,3 +1,10 @@
+## [11.1.3](https://github.com/multiformats/js-multiaddr/compare/v11.1.2...v11.1.3) (2022-12-14)
+
+
+### Documentation
+
+* remove redundant block ([#298](https://github.com/multiformats/js-multiaddr/issues/298)) ([864a30a](https://github.com/multiformats/js-multiaddr/commit/864a30ad18ed611597a065c29e762af781e33e4c))
+
 ## [11.1.2](https://github.com/multiformats/js-multiaddr/compare/v11.1.1...v11.1.2) (2022-12-14)
 
 
