@@ -155,7 +155,7 @@
     "dep-check": "aegir dep-check",
     "build": "aegir build",
     "test": "aegir test -f",
-    "test:chrome": "aegir test -t browser",
+    "test:chrome": "aegir test -t browser --cov",
     "test:chrome-webworker": "aegir test -t webworker",
     "test:firefox": "aegir test -t browser -- --browser firefox",
     "test:firefox-webworker": "aegir test -t webworker -- --browser firefox",
@@ -174,7 +174,7 @@
   },
   "devDependencies": {
     "@types/varint": "^6.0.0",
-    "aegir": "^37.6.2",
+    "aegir": "^37.7.2",
     "sinon": "^15.0.0",
     "util": "^0.12.3"
   },
