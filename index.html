@@ -36,7 +36,6 @@
 </ul>
 </li>
 <li><a href="#usage">Usage</a></li>
-<li><a href="#api">API</a></li>
 <li><a href="#resolvers">Resolvers</a></li>
 <li><a href="#api-docs">API Docs</a></li>
 <li><a href="#license">License</a></li>
@@ -77,11 +76,6 @@
 </a>
 <pre><code class="language-js"><span class="hl-5">import</span><span class="hl-6"> { </span><span class="hl-7">multiaddr</span><span class="hl-6"> } </span><span class="hl-5">from</span><span class="hl-6"> </span><span class="hl-8">&#39;multiaddr&#39;</span><br/><span class="hl-9">const</span><span class="hl-6"> </span><span class="hl-10">addr</span><span class="hl-6"> =  </span><span class="hl-11">multiaddr</span><span class="hl-6">(</span><span class="hl-8">&quot;/ip4/127.0.0.1/udp/1234&quot;</span><span class="hl-6">)</span><br/><span class="hl-12">// Multiaddr(/ip4/127.0.0.1/udp/1234)</span><br/><br/><span class="hl-9">const</span><span class="hl-6"> </span><span class="hl-10">addr</span><span class="hl-6"> = </span><span class="hl-11">multiaddr</span><span class="hl-6">(</span><span class="hl-8">&quot;/ip4/127.0.0.1/udp/1234&quot;</span><span class="hl-6">)</span><br/><span class="hl-12">// Multiaddr(/ip4/127.0.0.1/udp/1234)</span><br/><br/><span class="hl-7">addr</span><span class="hl-6">.</span><span class="hl-7">bytes</span><br/><span class="hl-12">// &lt;Uint8Array 04 7f 00 00 01 11 04 d2&gt;</span><br/><br/><span class="hl-7">addr</span><span class="hl-6">.</span><span class="hl-11">toString</span><span class="hl-6">()</span><br/><span class="hl-12">// &#39;/ip4/127.0.0.1/udp/1234&#39;</span><br/><br/><span class="hl-7">addr</span><span class="hl-6">.</span><span class="hl-11">protos</span><span class="hl-6">()</span><br/><span class="hl-12">/*</span><br/><span class="hl-12">[</span><br/><span class="hl-12">  {code: 4, name: &#39;ip4&#39;, size: 32},</span><br/><span class="hl-12">  {code: 273, name: &#39;udp&#39;, size: 16}</span><br/><span class="hl-12">]</span><br/><span class="hl-12">*/</span><br/><br/><span class="hl-12">// gives you an object that is friendly with what Node.js core modules expect for addresses</span><br/><span class="hl-7">addr</span><span class="hl-6">.</span><span class="hl-11">nodeAddress</span><span class="hl-6">()</span><br/><span class="hl-12">/*</span><br/><span class="hl-12">{</span><br/><span class="hl-12">  family: 4,</span><br/><span class="hl-12">  port: 1234,</span><br/><span class="hl-12">  address: &quot;127.0.0.1&quot;</span><br/><span class="hl-12">}</span><br/><span class="hl-12">*/</span><br/><br/><span class="hl-7">addr</span><span class="hl-6">.</span><span class="hl-11">encapsulate</span><span class="hl-6">(</span><span class="hl-8">&#39;/sctp/5678&#39;</span><span class="hl-6">)</span><br/><span class="hl-12">// Multiaddr(/ip4/127.0.0.1/udp/1234/sctp/5678)</span>
 </code></pre>
-
-<a href="#api" id="api" style="color: inherit; text-decoration: none;">
-  <h2>API</h2>
-</a>
-<p><a href="https://multiformats.github.io/js-multiaddr/">https://multiformats.github.io/js-multiaddr/</a></p>
 
 <a href="#resolvers" id="resolvers" style="color: inherit; text-decoration: none;">
   <h2>Resolvers</h2>
