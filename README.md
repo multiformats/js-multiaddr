@@ -13,7 +13,6 @@
 - [Background](#background)
   - [What is multiaddr?](#what-is-multiaddr)
 - [Usage](#usage)
-- [API](#api)
 - [Resolvers](#resolvers)
 - [API Docs](#api-docs)
 - [License](#license)
@@ -82,10 +81,6 @@ addr.nodeAddress()
 addr.encapsulate('/sctp/5678')
 // Multiaddr(/ip4/127.0.0.1/udp/1234/sctp/5678)
 ```
-
-## API
-
-<https://multiformats.github.io/js-multiaddr/>
 
 ## Resolvers
 
