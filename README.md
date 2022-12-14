@@ -15,6 +15,7 @@
 - [Usage](#usage)
 - [API](#api)
 - [Resolvers](#resolvers)
+- [API Docs](#api-docs)
 - [License](#license)
 - [Contribute](#contribute)
 
@@ -105,6 +106,10 @@ The available resolvers are:
 | `dnsaddrResolver` | `dnsaddr` | dnsaddr resolution with TXT Records |
 
 A resolver receives a `Multiaddr` as a parameter and returns a `Promise<Array<string>>`.
+
+## API Docs
+
+- <https://multiformats.github.io/js-multiaddr>
 
 ## License
 

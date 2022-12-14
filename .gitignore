@@ -1,13 +1,9 @@
 **/node_modules/
 **/*.log
-test/repo-tests*
-**/bundle.js
 
 # Logs
 logs
 *.log
-
-coverage
 
 # Runtime data
 pids
@@ -19,6 +15,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+.coverage
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
@@ -28,16 +25,13 @@ coverage
 
 build
 docs
+.docs
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 
-lib
 dist
-test/test-data/go-ipfs-repo/LOCK
-test/test-data/go-ipfs-repo/LOG
-test/test-data/go-ipfs-repo/LOG.old
 
 # while testing npm5
 package-lock.json
