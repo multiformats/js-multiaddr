@@ -1,3 +1,10 @@
+## [11.1.2](https://github.com/multiformats/js-multiaddr/compare/v11.1.1...v11.1.2) (2022-12-14)
+
+
+### Bug Fixes
+
+* update project to build docs ([#297](https://github.com/multiformats/js-multiaddr/issues/297)) ([5bc66d4](https://github.com/multiformats/js-multiaddr/commit/5bc66d41f69ed45a3efe92a3388fb6d74b30d803))
+
 ## [11.1.1](https://github.com/multiformats/js-multiaddr/compare/v11.1.0...v11.1.1) (2022-12-13)
 
 
