@@ -1,3 +1,10 @@
+## [11.1.4](https://github.com/multiformats/js-multiaddr/compare/v11.1.3...v11.1.4) (2022-12-16)
+
+
+### Bug Fixes
+
+* update CI badge link ([#300](https://github.com/multiformats/js-multiaddr/issues/300)) ([111c28d](https://github.com/multiformats/js-multiaddr/commit/111c28d169029e806bc0c4d03d3dbf28911baa9c))
+
 ## [11.1.3](https://github.com/multiformats/js-multiaddr/compare/v11.1.2...v11.1.3) (2022-12-14)
 
 
