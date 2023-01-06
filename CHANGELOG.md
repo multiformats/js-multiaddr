@@ -1,3 +1,15 @@
+## [11.1.5](https://github.com/multiformats/js-multiaddr/compare/v11.1.4...v11.1.5) (2023-01-06)
+
+
+### Dependencies
+
+* bump multiformats from 10.0.3 to 11.0.0 ([#301](https://github.com/multiformats/js-multiaddr/issues/301)) ([f52b85a](https://github.com/multiformats/js-multiaddr/commit/f52b85a1a3497bf4ece049959babd1045917d052)), closes [#234](https://github.com/multiformats/js-multiaddr/issues/234) [#226](https://github.com/multiformats/js-multiaddr/issues/226) [#234](https://github.com/multiformats/js-multiaddr/issues/234) [#226](https://github.com/multiformats/js-multiaddr/issues/226) [#226](https://github.com/multiformats/js-multiaddr/issues/226)
+
+
+### Documentation
+
+* update readme ([6f1df24](https://github.com/multiformats/js-multiaddr/commit/6f1df24476af0aad2e2419a2a6cf31227d506daf))
+
 ## [11.1.4](https://github.com/multiformats/js-multiaddr/compare/v11.1.3...v11.1.4) (2022-12-16)
 
 
