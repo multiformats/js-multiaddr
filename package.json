@@ -174,7 +174,7 @@
   },
   "devDependencies": {
     "@types/varint": "^6.0.0",
-    "aegir": "^37.7.2",
+    "aegir": "^37.9.1",
     "sinon": "^15.0.0",
     "util": "^0.12.3"
   },
