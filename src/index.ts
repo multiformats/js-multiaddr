@@ -510,7 +510,7 @@ class DefaultMultiaddr implements Multiaddr {
     }
   }
 
-  toString () {
+  toString (): string {
     if (this.#string == null) {
       this.#string = codec.bytesToString(this.bytes)
     }
@@ -518,7 +518,7 @@ class DefaultMultiaddr implements Multiaddr {
     return this.#string
   }
 
-  toJSON () {
+  toJSON (): string {
     return this.toString()
   }
 

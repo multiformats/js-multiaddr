@@ -67,7 +67,7 @@ export const toBytes = function (ip: string): Uint8Array {
 }
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L63
-export const toString = function (buf: Uint8Array, offset: number = 0, length?: number) {
+export const toString = function (buf: Uint8Array, offset: number = 0, length?: number): string {
   offset = ~~offset
   length = length ?? (buf.length - offset)
 
