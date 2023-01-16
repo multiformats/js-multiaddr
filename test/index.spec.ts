@@ -969,6 +969,7 @@ describe('helpers', () => {
   describe('multiaddr.isMultiaddr', () => {
     it('handles different inputs', () => {
       expect(isMultiaddr(multiaddr('/'))).to.be.eql(true)
+      expect(isMultiaddr(multiaddr('/ip4/192.0.2.0/ipcidr/24'))).to.be.eql(true)
       expect(isMultiaddr('/')).to.be.eql(false)
       expect(isMultiaddr(123)).to.be.eql(false)
 
