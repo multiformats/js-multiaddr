@@ -10,6 +10,7 @@ export const table: Array<[number, number, string, boolean?, boolean?]> = [
   [33, 16, 'dccp'],
   [41, 128, 'ip6'],
   [42, V, 'ip6zone'],
+  [43, 8, 'ipcidr'],
   [53, V, 'dns', true],
   [54, V, 'dns4', true],
   [55, V, 'dns6', true],
