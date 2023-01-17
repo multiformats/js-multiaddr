@@ -175,7 +175,7 @@ function mb2bytes (mbstr: string): Uint8Array {
   const size = Uint8Array.from(varint.encode(mb.length))
   return uint8ArrayConcat([size, mb], size.length + mb.length)
 }
-function bytes2mb (buf: Uint8Array) {
+function bytes2mb (buf: Uint8Array): string {
   const size = varint.decode(buf)
   const hash = buf.slice(varint.decode.bytes)
 

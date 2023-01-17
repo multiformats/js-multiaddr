@@ -21,6 +21,7 @@ export function stringToStringTuples (str: string): string[][] {
 
     if (proto.size === 0) {
       tuples.push([part])
+      // eslint-disable-next-line no-continue
       continue
     }
 
@@ -33,7 +34,7 @@ export function stringToStringTuples (str: string): string[][] {
     if (proto.path === true) {
       tuples.push([
         part,
-        // TODO: should we need to check each path part to see if it's a proto?
+        // should we need to check each path part to see if it's a proto?
         // This would allow for other protocols to be added after a unix path,
         // however it would have issues if the path had a protocol name in the path
         cleanPath(parts.slice(p).join('/'))
@@ -139,6 +140,7 @@ export function bytesToTuples (buf: Uint8Array): Tuple[] {
     if (size === 0) {
       tuples.push([code])
       i += n
+      // eslint-disable-next-line no-continue
       continue
     }
 
