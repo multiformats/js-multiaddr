@@ -3,12 +3,12 @@ import { getProtocol } from './protocols-table.js'
 import varint from 'varint'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import type { Protocol } from './protocols-table.js'
+import type { StringTuple, Tuple, Protocol } from './index.js'
 
 /**
  * string -> [[str name, str addr]... ]
  */
-export function stringToStringTuples (str: string) {
+export function stringToStringTuples (str: string): string[][] {
   const tuples = []
   const parts = str.split('/').slice(1) // skip first empty elem
   if (parts.length === 1 && parts[0] === '') {
@@ -21,6 +21,7 @@ export function stringToStringTuples (str: string) {
 
     if (proto.size === 0) {
       tuples.push([part])
+      // eslint-disable-next-line no-continue
       continue
     }
 
@@ -33,7 +34,7 @@ export function stringToStringTuples (str: string) {
     if (proto.path === true) {
       tuples.push([
         part,
-        // TODO: should we need to check each path part to see if it's a proto?
+        // should we need to check each path part to see if it's a proto?
         // This would allow for other protocols to be added after a unix path,
         // however it would have issues if the path had a protocol name in the path
         cleanPath(parts.slice(p).join('/'))
@@ -50,7 +51,7 @@ export function stringToStringTuples (str: string) {
 /**
  * [[str name, str addr]... ] -> string
  */
-export function stringTuplesToString (tuples: Array<[number, string?]>) {
+export function stringTuplesToString (tuples: StringTuple[]): string {
   const parts: string[] = []
   tuples.map((tup) => {
     const proto = protoFromTuple(tup)
@@ -67,7 +68,7 @@ export function stringTuplesToString (tuples: Array<[number, string?]>) {
 /**
  * [[str name, str addr]... ] -> [[int code, Uint8Array]... ]
  */
-export function stringTuplesToTuples (tuples: Array<string[] | string>): Array<[number, Uint8Array?]> {
+export function stringTuplesToTuples (tuples: Array<string[] | string>): Tuple[] {
   return tuples.map((tup) => {
     if (!Array.isArray(tup)) {
       tup = [tup]
@@ -85,7 +86,7 @@ export function stringTuplesToTuples (tuples: Array<string[] | string>): Array<[
  *
  * [[int code, Uint8Array]... ] -> [[int code, str addr]... ]
  */
-export function tuplesToStringTuples (tuples: Array<[number, Uint8Array?]>): Array<[number, string?]> {
+export function tuplesToStringTuples (tuples: Tuple[]): StringTuple[] {
   return tuples.map(tup => {
     const proto = protoFromTuple(tup)
     if (tup[1] != null) {
@@ -98,7 +99,7 @@ export function tuplesToStringTuples (tuples: Array<[number, Uint8Array?]>): Arr
 /**
  * [[int code, Uint8Array ]... ] -> Uint8Array
  */
-export function tuplesToBytes (tuples: Array<[number, Uint8Array?]>) {
+export function tuplesToBytes (tuples: Tuple[]): Uint8Array {
   return fromBytes(uint8ArrayConcat(tuples.map((tup) => {
     const proto = protoFromTuple(tup)
     let buf = Uint8Array.from(varint.encode(proto.code))
@@ -111,23 +112,26 @@ export function tuplesToBytes (tuples: Array<[number, Uint8Array?]>) {
   })))
 }
 
-export function sizeForAddr (p: Protocol, addr: Uint8Array | number[]) {
+/**
+ * For the passed address, return the serialized size
+ */
+export function sizeForAddr (p: Protocol, addr: Uint8Array | number[]): number {
   if (p.size > 0) {
     return p.size / 8
   } else if (p.size === 0) {
     return 0
   } else {
     const size = varint.decode(addr)
-    return size + varint.decode.bytes
+    return size + (varint.decode.bytes ?? 0)
   }
 }
 
-export function bytesToTuples (buf: Uint8Array): Array<[number, Uint8Array?]> {
+export function bytesToTuples (buf: Uint8Array): Tuple[] {
   const tuples: Array<[number, Uint8Array?]> = []
   let i = 0
   while (i < buf.length) {
     const code = varint.decode(buf, i)
-    const n = varint.decode.bytes
+    const n = varint.decode.bytes ?? 0
 
     const p = getProtocol(code)
 
@@ -136,6 +140,7 @@ export function bytesToTuples (buf: Uint8Array): Array<[number, Uint8Array?]> {
     if (size === 0) {
       tuples.push([code])
       i += n
+      // eslint-disable-next-line no-continue
       continue
     }
 
@@ -157,7 +162,7 @@ export function bytesToTuples (buf: Uint8Array): Array<[number, Uint8Array?]> {
 /**
  * Uint8Array -> String
  */
-export function bytesToString (buf: Uint8Array) {
+export function bytesToString (buf: Uint8Array): string {
   const a = bytesToTuples(buf)
   const b = tuplesToStringTuples(a)
   return stringTuplesToString(b)
@@ -166,7 +171,7 @@ export function bytesToString (buf: Uint8Array) {
 /**
  * String -> Uint8Array
  */
-export function stringToBytes (str: string) {
+export function stringToBytes (str: string): Uint8Array {
   str = cleanPath(str)
   const a = stringToStringTuples(str)
   const b = stringTuplesToTuples(a)
@@ -177,14 +182,14 @@ export function stringToBytes (str: string) {
 /**
  * String -> Uint8Array
  */
-export function fromString (str: string) {
+export function fromString (str: string): Uint8Array {
   return stringToBytes(str)
 }
 
 /**
  * Uint8Array -> Uint8Array
  */
-export function fromBytes (buf: Uint8Array) {
+export function fromBytes (buf: Uint8Array): Uint8Array {
   const err = validateBytes(buf)
   if (err != null) {
     throw err
@@ -192,27 +197,27 @@ export function fromBytes (buf: Uint8Array) {
   return Uint8Array.from(buf) // copy
 }
 
-export function validateBytes (buf: Uint8Array) {
+export function validateBytes (buf: Uint8Array): Error | undefined {
   try {
     bytesToTuples(buf) // try to parse. will throw if breaks
-  } catch (err) {
+  } catch (err: any) {
     return err
   }
 }
 
-export function isValidBytes (buf: Uint8Array) {
+export function isValidBytes (buf: Uint8Array): boolean {
   return validateBytes(buf) === undefined
 }
 
-export function cleanPath (str: string) {
-  return '/' + str.trim().split('/').filter((/** @type {any} */ a) => a).join('/')
+export function cleanPath (str: string): string {
+  return '/' + str.trim().split('/').filter((a) => a).join('/')
 }
 
-export function ParseError (str: string) {
+export function ParseError (str: string): Error {
   return new Error('Error parsing address: ' + str)
 }
 
-export function protoFromTuple (tup: any[]) {
+export function protoFromTuple (tup: any[]): Protocol {
   const proto = getProtocol(tup[0])
   return proto
 }

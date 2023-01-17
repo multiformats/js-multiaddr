@@ -1,21 +1,16 @@
-export interface Protocol {
-  code: number
-  size: number
-  name: string
-  resolvable?: boolean
-  path?: boolean
-}
+import type { Protocol } from './index.js'
 
 const V = -1
 export const names: Record<string, Protocol> = {}
 export const codes: Record<number, Protocol> = {}
 
-export const table: Array<[code: number, size: number, name: string, resolvable?: boolean, path?: boolean]> = [
+export const table: Array<[number, number, string, boolean?, boolean?]> = [
   [4, 32, 'ip4'],
   [6, 16, 'tcp'],
   [33, 16, 'dccp'],
   [41, 128, 'ip6'],
   [42, V, 'ip6zone'],
+  [43, 8, 'ipcidr'],
   [53, V, 'dns', true],
   [54, V, 'dns4', true],
   [55, V, 'dns6', true],
@@ -25,6 +20,7 @@ export const table: Array<[code: number, size: number, name: string, resolvable?
   [275, 0, 'p2p-webrtc-star'],
   [276, 0, 'p2p-webrtc-direct'],
   [277, 0, 'p2p-stardust'],
+  [280, 0, 'webrtc'],
   [290, 0, 'p2p-circuit'],
   [301, 0, 'udt'],
   [302, 0, 'utp'],
@@ -40,6 +36,9 @@ export const table: Array<[code: number, size: number, name: string, resolvable?
   [445, 296, 'onion3'],
   [446, V, 'garlic64'],
   [460, 0, 'quic'],
+  [461, 0, 'quic-v1'],
+  [465, 0, 'webtransport'],
+  [466, V, 'certhash'],
   [477, 0, 'ws'],
   [478, 0, 'wss'],
   [479, 0, 'p2p-websocket-star'],
@@ -64,7 +63,19 @@ export function createProtocol (code: number, size: number, name: string, resolv
   }
 }
 
-export function getProtocol (proto: number | string) {
+/**
+ * For the passed proto string or number, return a {@link Protocol}
+ *
+ * @example
+ *
+ * ```js
+ * import { protocol } from '@multiformats/multiaddr'
+ *
+ * console.info(protocol(4))
+ * // { code: 4, size: 32, name: 'ip4', resolvable: false, path: false }
+ * ```
+ */
+export function getProtocol (proto: number | string): Protocol {
   if (typeof proto === 'number') {
     if (codes[proto] != null) {
       return codes[proto]

@@ -1,3 +1,295 @@
+## [11.2.0](https://github.com/multiformats/js-multiaddr/compare/v11.1.5...v11.2.0) (2023-01-17)
+
+
+### Features
+
+* add ipcidr protocol ([#303](https://github.com/multiformats/js-multiaddr/issues/303)) ([fe760d3](https://github.com/multiformats/js-multiaddr/commit/fe760d31f45e547963b33185aa48d29cca8475af))
+
+
+### Dependencies
+
+* **dev:** bump aegir from 37.12.1 to 38.1.0 ([#302](https://github.com/multiformats/js-multiaddr/issues/302)) ([534d8fa](https://github.com/multiformats/js-multiaddr/commit/534d8fa0da2c1c1d1c61b92aa8deb75edc07619e))
+
+## [11.1.5](https://github.com/multiformats/js-multiaddr/compare/v11.1.4...v11.1.5) (2023-01-06)
+
+
+### Dependencies
+
+* bump multiformats from 10.0.3 to 11.0.0 ([#301](https://github.com/multiformats/js-multiaddr/issues/301)) ([f52b85a](https://github.com/multiformats/js-multiaddr/commit/f52b85a1a3497bf4ece049959babd1045917d052)), closes [#234](https://github.com/multiformats/js-multiaddr/issues/234) [#226](https://github.com/multiformats/js-multiaddr/issues/226) [#234](https://github.com/multiformats/js-multiaddr/issues/234) [#226](https://github.com/multiformats/js-multiaddr/issues/226) [#226](https://github.com/multiformats/js-multiaddr/issues/226)
+
+
+### Documentation
+
+* update readme ([6f1df24](https://github.com/multiformats/js-multiaddr/commit/6f1df24476af0aad2e2419a2a6cf31227d506daf))
+
+## [11.1.4](https://github.com/multiformats/js-multiaddr/compare/v11.1.3...v11.1.4) (2022-12-16)
+
+
+### Bug Fixes
+
+* update CI badge link ([#300](https://github.com/multiformats/js-multiaddr/issues/300)) ([111c28d](https://github.com/multiformats/js-multiaddr/commit/111c28d169029e806bc0c4d03d3dbf28911baa9c))
+
+## [11.1.3](https://github.com/multiformats/js-multiaddr/compare/v11.1.2...v11.1.3) (2022-12-14)
+
+
+### Documentation
+
+* remove redundant block ([#298](https://github.com/multiformats/js-multiaddr/issues/298)) ([864a30a](https://github.com/multiformats/js-multiaddr/commit/864a30ad18ed611597a065c29e762af781e33e4c))
+
+## [11.1.2](https://github.com/multiformats/js-multiaddr/compare/v11.1.1...v11.1.2) (2022-12-14)
+
+
+### Bug Fixes
+
+* update project to build docs ([#297](https://github.com/multiformats/js-multiaddr/issues/297)) ([5bc66d4](https://github.com/multiformats/js-multiaddr/commit/5bc66d41f69ed45a3efe92a3388fb6d74b30d803))
+
+## [11.1.1](https://github.com/multiformats/js-multiaddr/compare/v11.1.0...v11.1.1) (2022-12-13)
+
+
+### Bug Fixes
+
+* remove lockfile ([#296](https://github.com/multiformats/js-multiaddr/issues/296)) ([46452b3](https://github.com/multiformats/js-multiaddr/commit/46452b3f6e07515ab591b5eca03e79713d3552e2))
+
+## [11.1.0](https://github.com/multiformats/js-multiaddr/compare/v11.0.12...v11.1.0) (2022-12-10)
+
+
+### Features
+
+* support /quic-v1 ([#294](https://github.com/multiformats/js-multiaddr/issues/294)) ([7d95ef8](https://github.com/multiformats/js-multiaddr/commit/7d95ef885e3858d3627879ef8021b543e883458d))
+
+## [11.0.12](https://github.com/multiformats/js-multiaddr/compare/v11.0.11...v11.0.12) (2022-12-08)
+
+
+### Bug Fixes
+
+* update inspect format to be like CID class ([#290](https://github.com/multiformats/js-multiaddr/issues/290)) ([db032e9](https://github.com/multiformats/js-multiaddr/commit/db032e9c597cf91c44984fdc9293b883f4b9a628))
+
+
+### Documentation
+
+* update reamde with correct global namespace name ([#292](https://github.com/multiformats/js-multiaddr/issues/292)) ([fe36328](https://github.com/multiformats/js-multiaddr/commit/fe36328d300105ac5fb06bbc027bc3676ee73e1c))
+
+## [11.0.11](https://github.com/multiformats/js-multiaddr/compare/v11.0.10...v11.0.11) (2022-12-08)
+
+
+### Bug Fixes
+
+* include minified bundle in npm tarball ([#291](https://github.com/multiformats/js-multiaddr/issues/291)) ([ac88cba](https://github.com/multiformats/js-multiaddr/commit/ac88cba167ba136d55d04f17ab0db01584d8ab3a))
+
+## [11.0.10](https://github.com/multiformats/js-multiaddr/compare/v11.0.9...v11.0.10) (2022-12-07)
+
+
+### Bug Fixes
+
+* run docs after release otherwise version number is always wrong ([04e19e1](https://github.com/multiformats/js-multiaddr/commit/04e19e15b5bf24566fd077eb7bfb87a9274d25f6))
+
+## [11.0.9](https://github.com/multiformats/js-multiaddr/compare/v11.0.8...v11.0.9) (2022-12-07)
+
+
+### Documentation
+
+* publish API docs to github pages on release ([#289](https://github.com/multiformats/js-multiaddr/issues/289)) ([c22e55f](https://github.com/multiformats/js-multiaddr/commit/c22e55f320ad8f2478b9d083cb3cddc7d6985b13))
+
+## [11.0.8](https://github.com/multiformats/js-multiaddr/compare/v11.0.7...v11.0.8) (2022-12-07)
+
+
+### Bug Fixes
+
+* varint.decode.bytes can now be undefined according to types ([#288](https://github.com/multiformats/js-multiaddr/issues/288)) ([e0a59e5](https://github.com/multiformats/js-multiaddr/commit/e0a59e584623b08026e9179c37bfb4966d8dbfe8))
+
+
+### Dependencies
+
+* **dev:** bump sinon from 14.0.2 to 15.0.0 ([#287](https://github.com/multiformats/js-multiaddr/issues/287)) ([41f67a7](https://github.com/multiformats/js-multiaddr/commit/41f67a7b70baf1bb16ef336b218607342bf9d338))
+
+## [11.0.7](https://github.com/multiformats/js-multiaddr/compare/v11.0.6...v11.0.7) (2022-11-02)
+
+
+### Dependencies
+
+* update @chainsafe/is-ip ([#281](https://github.com/multiformats/js-multiaddr/issues/281)) ([fc6b600](https://github.com/multiformats/js-multiaddr/commit/fc6b600a474f43fb15cf1bae2fb8f28401581e88)), closes [/github.com/ChainSafe/is-ip/pull/1#issuecomment-1295761316](https://github.com/multiformats//github.com/ChainSafe/is-ip/pull/1/issues/issuecomment-1295761316)
+
+## [11.0.6](https://github.com/multiformats/js-multiaddr/compare/v11.0.5...v11.0.6) (2022-10-29)
+
+
+### Bug Fixes
+
+* use @chainsafe/is-ip ([#280](https://github.com/multiformats/js-multiaddr/issues/280)) ([40124ff](https://github.com/multiformats/js-multiaddr/commit/40124ffcdd52a4c88c4c246584230ca2f10533e3))
+
+## [11.0.5](https://github.com/multiformats/js-multiaddr/compare/v11.0.4...v11.0.5) (2022-10-12)
+
+
+### Dependencies
+
+* bump uint8arrays from 3.x.x to 4.x.x ([#279](https://github.com/multiformats/js-multiaddr/issues/279)) ([4ef82ac](https://github.com/multiformats/js-multiaddr/commit/4ef82acb8a9c594c0c72d3ef46fbe7f281cc981e))
+
+## [11.0.4](https://github.com/multiformats/js-multiaddr/compare/v11.0.3...v11.0.4) (2022-10-12)
+
+
+### Dependencies
+
+* bump multiformats from 9.9.0 to 10.0.0 ([#278](https://github.com/multiformats/js-multiaddr/issues/278)) ([767bcbe](https://github.com/multiformats/js-multiaddr/commit/767bcbec03603cfc26ad6d80bcee80b9beeb52f6))
+
+## [11.0.3](https://github.com/multiformats/js-multiaddr/compare/v11.0.2...v11.0.3) (2022-09-30)
+
+
+### Bug Fixes
+
+* use private class field to store cached strings and tuples ([#277](https://github.com/multiformats/js-multiaddr/issues/277)) ([b0809bf](https://github.com/multiformats/js-multiaddr/commit/b0809bfd2a97c1fde7691dd092baaf00e0f3b886))
+
+## [11.0.2](https://github.com/multiformats/js-multiaddr/compare/v11.0.1...v11.0.2) (2022-09-29)
+
+
+### Bug Fixes
+
+* cache string and tuple representations ([#275](https://github.com/multiformats/js-multiaddr/issues/275)) ([9b18ff4](https://github.com/multiformats/js-multiaddr/commit/9b18ff4ce03d975ba87d878d963dddc5690f102a))
+
+## [11.0.1](https://github.com/multiformats/js-multiaddr/compare/v11.0.0...v11.0.1) (2022-09-27)
+
+
+### Tests
+
+* webtransport with certhash ([#276](https://github.com/multiformats/js-multiaddr/issues/276)) ([7b9950a](https://github.com/multiformats/js-multiaddr/commit/7b9950adbce39e0bc980e780a8e7595e66383407))
+
+## [11.0.0](https://github.com/multiformats/js-multiaddr/compare/v10.5.0...v11.0.0) (2022-09-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* the `Multiaddr` class is now an interface
+
+### Features
+
+* convert to interface ([#274](https://github.com/multiformats/js-multiaddr/issues/274)) ([36de98f](https://github.com/multiformats/js-multiaddr/commit/36de98fd531e5ee4df0f7f7848337f3890748341)), closes [#202](https://github.com/multiformats/js-multiaddr/issues/202)
+
+
+### Bug Fixes
+
+* fix converting strings to IP addresses and back again ([#270](https://github.com/multiformats/js-multiaddr/issues/270)) ([77f063a](https://github.com/multiformats/js-multiaddr/commit/77f063a41834153a94e7291fa9de74538305c251))
+
+## [10.5.0](https://github.com/multiformats/js-multiaddr/compare/v10.4.3...v10.5.0) (2022-09-20)
+
+
+### Features
+
+* Add webtransport component ([#271](https://github.com/multiformats/js-multiaddr/issues/271)) ([210f156](https://github.com/multiformats/js-multiaddr/commit/210f156e53af8bb58944c7308fd7361c6ef35295))
+
+## [10.4.3](https://github.com/multiformats/js-multiaddr/compare/v10.4.2...v10.4.3) (2022-09-12)
+
+
+### Bug Fixes
+
+* trim string before parsing IP address ([#269](https://github.com/multiformats/js-multiaddr/issues/269)) ([9924afa](https://github.com/multiformats/js-multiaddr/commit/9924afab4469c8a2b126664a8157f8da5cb0188a))
+
+## [10.4.2](https://github.com/multiformats/js-multiaddr/compare/v10.4.1...v10.4.2) (2022-09-12)
+
+
+### Bug Fixes
+
+* more specific error messages ([#268](https://github.com/multiformats/js-multiaddr/issues/268)) ([db6bdfb](https://github.com/multiformats/js-multiaddr/commit/db6bdfbf9ffa8928fc041f9934c15a0da419b46a))
+
+## [10.4.1](https://github.com/multiformats/js-multiaddr/compare/v10.4.0...v10.4.1) (2022-09-06)
+
+
+### Bug Fixes
+
+* dedupe toOptions/nodeAddress code ([#266](https://github.com/multiformats/js-multiaddr/issues/266)) ([de1d31c](https://github.com/multiformats/js-multiaddr/commit/de1d31cbff48d26d5f1bc3b78a093ba01af349a9))
+
+## [10.4.0](https://github.com/multiformats/js-multiaddr/compare/v10.3.5...v10.4.0) (2022-08-30)
+
+
+### Features
+
+* add support for webrtc and certhash ([#261](https://github.com/multiformats/js-multiaddr/issues/261)) ([#262](https://github.com/multiformats/js-multiaddr/issues/262)) ([e5a8e27](https://github.com/multiformats/js-multiaddr/commit/e5a8e27fb526e3a58af5ebe8873f6cc67b9d4483))
+
+## [10.3.5](https://github.com/multiformats/js-multiaddr/compare/v10.3.4...v10.3.5) (2022-08-30)
+
+
+### Trivial Changes
+
+* update project config ([#265](https://github.com/multiformats/js-multiaddr/issues/265)) ([4d3ba0c](https://github.com/multiformats/js-multiaddr/commit/4d3ba0cb0fad93189548e7e45d8322477eea1e5f))
+
+
+### Dependencies
+
+* bump is-ip from 4.0.0 to 5.0.0 ([#260](https://github.com/multiformats/js-multiaddr/issues/260)) ([3cd4699](https://github.com/multiformats/js-multiaddr/commit/3cd4699030a84767e3951646e1af253665a86890))
+
+## [10.3.4](https://github.com/multiformats/js-multiaddr/compare/v10.3.3...v10.3.4) (2022-08-30)
+
+
+### Bug Fixes
+
+* specify return type of method to to fix linting ([#264](https://github.com/multiformats/js-multiaddr/issues/264)) ([e5f3bf6](https://github.com/multiformats/js-multiaddr/commit/e5f3bf6acb8fc537344b39dc392f15be9de309cd))
+
+## [10.3.3](https://github.com/multiformats/js-multiaddr/compare/v10.3.2...v10.3.3) (2022-07-07)
+
+
+### Bug Fixes
+
+* return correct family from toOptions with dns4 MultiAddr ([#233](https://github.com/multiformats/js-multiaddr/issues/233)) ([d3f8b05](https://github.com/multiformats/js-multiaddr/commit/d3f8b05436542560330140afa430dddc3a83f327))
+
+## [10.3.2](https://github.com/multiformats/js-multiaddr/compare/v10.3.1...v10.3.2) (2022-07-07)
+
+
+### Bug Fixes
+
+* use codes instead of strings for dnsaddr detection ([#259](https://github.com/multiformats/js-multiaddr/issues/259)) ([d8431bf](https://github.com/multiformats/js-multiaddr/commit/d8431bf80e38ec3dfdc5fa9b2947326b9c3385b4)), closes [#258](https://github.com/multiformats/js-multiaddr/issues/258)
+
+## [10.3.1](https://github.com/multiformats/js-multiaddr/compare/v10.3.0...v10.3.1) (2022-07-07)
+
+
+### Bug Fixes
+
+* default to https ports for dnsaddr addresses ([#258](https://github.com/multiformats/js-multiaddr/issues/258)) ([e8bcff7](https://github.com/multiformats/js-multiaddr/commit/e8bcff74866c5484953d2215995a58844646db28))
+
+
+### Dependencies
+
+* **dev:** bump sinon from 13.0.2 to 14.0.0 ([#240](https://github.com/multiformats/js-multiaddr/issues/240)) ([3c2eaba](https://github.com/multiformats/js-multiaddr/commit/3c2eabaf7a6287e194097d57669af92f4fd599ab))
+
+## [10.3.0](https://github.com/multiformats/js-multiaddr/compare/v10.2.1...v10.3.0) (2022-07-07)
+
+
+### Features
+
+* allow cancelling in-flight multiaddr resolve ([#257](https://github.com/multiformats/js-multiaddr/issues/257)) ([ddd751b](https://github.com/multiformats/js-multiaddr/commit/ddd751b51bf96b452b44943699dc9f316e32b8c4))
+
+### [10.2.1](https://github.com/multiformats/js-multiaddr/compare/v10.2.0...v10.2.1) (2022-06-24)
+
+
+### Bug Fixes
+
+* support dns and dnsaddr ([#253](https://github.com/multiformats/js-multiaddr/issues/253)) ([53fb15f](https://github.com/multiformats/js-multiaddr/commit/53fb15f2a29a488722dde11c6331c684db283c63))
+
+## [10.2.0](https://github.com/multiformats/js-multiaddr/compare/v10.1.8...v10.2.0) (2022-06-09)
+
+
+### Features
+
+* add convert subpath export ([#246](https://github.com/multiformats/js-multiaddr/issues/246)) ([c69283b](https://github.com/multiformats/js-multiaddr/commit/c69283b9c4a82f08c151e246f6bcd7b6806a2989))
+
+### [10.1.8](https://github.com/multiformats/js-multiaddr/compare/v10.1.7...v10.1.8) (2022-03-21)
+
+
+### Bug Fixes
+
+* remove instanceof from multiaddr check ([#232](https://github.com/multiformats/js-multiaddr/issues/232)) ([5680412](https://github.com/multiformats/js-multiaddr/commit/56804124e5d3944e882ad515f654b8d027d58e20))
+
+### [10.1.7](https://github.com/multiformats/js-multiaddr/compare/v10.1.6...v10.1.7) (2022-03-08)
+
+
+### Bug Fixes
+
+* fix table types ([#231](https://github.com/multiformats/js-multiaddr/issues/231)) ([4146dfa](https://github.com/multiformats/js-multiaddr/commit/4146dfa9e32d75dc4e6cb0ea1e0a9ebec038a060))
+
+### [10.1.6](https://github.com/multiformats/js-multiaddr/compare/v10.1.5...v10.1.6) (2022-02-28)
+
+
+### Bug Fixes
+
+* export resolvers ([#229](https://github.com/multiformats/js-multiaddr/issues/229)) ([12e89a7](https://github.com/multiformats/js-multiaddr/commit/12e89a7e5775dfc837440eac9d0cb060555da364))
+* infer type after isMultiaddr call ([#227](https://github.com/multiformats/js-multiaddr/issues/227)) ([0720e3a](https://github.com/multiformats/js-multiaddr/commit/0720e3ab0b497112020c139cfed61104cabee0bc))
+
 ### [10.1.5](https://github.com/multiformats/js-multiaddr/compare/v10.1.4...v10.1.5) (2022-02-07)
 
 

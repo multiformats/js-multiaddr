@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import * as convert from '../src/convert.js'
-import { expect } from 'aegir/utils/chai.js'
+import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 
 describe('convert', () => {
@@ -86,5 +86,18 @@ describe('convert', () => {
       buffer.set(bytes, 5)
       expect(convert.convertToString('sctp', buffer.subarray(5))).to.equal('1234')
     })
+  })
+
+  it('can round-trip certhash, though encoding base may change', () => {
+    const myCertFingerprint = {
+      algorithm: 'sha-256',
+      value: 'f4:32:a0:45:34:62:85:e0:d8:d7:75:36:84:72:8e:b2:aa:9e:71:64:e4:eb:fe:06:51:64:42:64:fe:04:a8:d0'
+    }
+    const mb = 'f' + myCertFingerprint.value.replaceAll(':', '')
+    const bytes = convert.convertToBytes('certhash', mb)
+    const outcome = convert.convertToString(466, bytes)
+    expect(outcome).to.equal('u9DKgRTRiheDY13U2hHKOsqqecWTk6_4GUWRCZP4EqNA')
+    const bytesOut = convert.convertToBytes(466, outcome)
+    expect(bytesOut.toString()).to.equal(bytes.toString())
   })
 })

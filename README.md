@@ -1,36 +1,36 @@
-js-multiaddr
-============
+# @multiformats/multiaddr <!-- omit in toc -->
 
-[![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)
-[![](https://img.shields.io/badge/project-multiformats-blue.svg?style=flat-square)](https://github.com/multiformats/multiformats)
-[![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](https://webchat.freenode.net/?channels=%23ipfs)
-[![Dependency Status](https://david-dm.org/multiformats/js-multiaddr.svg?style=flat-square)](https://david-dm.org/multiformats/js-multiaddr)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
-[![](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-[![](https://img.shields.io/travis/multiformats/js-multiaddr.svg?style=flat-square)](https://travis-ci.com/multiformats/js-multiaddr)
+[![multiformats.io](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](http://multiformats.io)
 [![codecov](https://img.shields.io/codecov/c/github/multiformats/js-multiaddr.svg?style=flat-square)](https://codecov.io/gh/multiformats/js-multiaddr)
+[![CI](https://img.shields.io/github/actions/workflow/status/multiformats/js-multiaddr/js-test-and-release.yml?branch=master\&style=flat-square)](https://github.com/multiformats/js-multiaddr/actions/workflows/js-test-and-release.yml?query=branch%3Amaster)
 
-> JavaScript implementation of [multiaddr](https://github.com/multiformats/multiaddr).
+> multiaddr implementation (binary + string representation of network addresses)
 
-## Lead Maintainer
+## Table of contents <!-- omit in toc -->
 
-[Jacob Heun](https://github.com/jacobheun)
+- [Install](#install)
+  - [Browser `<script>` tag](#browser-script-tag)
+- [Background](#background)
+  - [What is multiaddr?](#what-is-multiaddr)
+- [Usage](#usage)
+- [Resolvers](#resolvers)
+- [API Docs](#api-docs)
+- [License](#license)
+- [Contribution](#contribution)
 
-## Table of Contents
+## Install
 
-- [js-multiaddr](#js-multiaddr)
-  - [Lead Maintainer](#lead-maintainer)
-  - [Table of Contents](#table-of-contents)
-  - [Background](#background)
-    - [What is multiaddr?](#what-is-multiaddr)
-  - [Install](#install)
-    - [NPM](#npm)
-    - [Browser: `<script>` Tag](#browser-script-tag)
-  - [Usage](#usage)
-  - [API](#api)
-  - [Resolvers](#resolvers)
-  - [Contribute](#contribute)
-  - [License](#license)
+```console
+$ npm i @multiformats/multiaddr
+```
+
+### Browser `<script>` tag
+
+Loading this module through a script tag will make it's exports available as `MultiformatsMultiaddr` in the global namespace.
+
+```html
+<script src="https://unpkg.com/@multiformats/multiaddr/dist/index.min.js"></script>
+```
 
 ## Background
 
@@ -44,35 +44,15 @@ A standard way to represent addresses that
 - have a nice string representation
 - encapsulate well
 
-## Install
-
-### NPM
-```sh
-npm i multiaddr
-```
-
-### Browser: `<script>` Tag
-
-Loading this module through a script tag will make the `Multiaddr` obj available in
-the global namespace.
-
-```html
-<script src="https://unpkg.com/multiaddr/dist/index.min.js"></script>
-```
-
 ## Usage
 
 ```js
-// if we are coming from <= 8.x you can use the factory function 
-const { multiaddr } = require('multiaddr')
-const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
-// <Multiaddr /ip4/127.0.0.1/udp/1234>
+import { multiaddr } from 'multiaddr'
+const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
+// Multiaddr(/ip4/127.0.0.1/udp/1234)
 
-// or just the class directly
-const { Multiaddr } = require('multiaddr')
-
-const addr = new Multiaddr("/ip4/127.0.0.1/udp/1234")
-// <Multiaddr /ip4/127.0.0.1/udp/1234>
+const addr = multiaddr("/ip4/127.0.0.1/udp/1234")
+// Multiaddr(/ip4/127.0.0.1/udp/1234)
 
 addr.bytes
 // <Uint8Array 04 7f 00 00 01 11 04 d2>
@@ -81,7 +61,7 @@ addr.toString()
 // '/ip4/127.0.0.1/udp/1234'
 
 addr.protos()
-/* 
+/*
 [
   {code: 4, name: 'ip4', size: 32},
   {code: 273, name: 'udp', size: 16}
@@ -99,41 +79,40 @@ addr.nodeAddress()
 */
 
 addr.encapsulate('/sctp/5678')
-// <Multiaddr /ip4/127.0.0.1/udp/1234/sctp/5678>
+// Multiaddr(/ip4/127.0.0.1/udp/1234/sctp/5678)
 ```
-
-## API
-
-https://multiformats.github.io/js-multiaddr/
 
 ## Resolvers
 
-`multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree. 
+`multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree.
+
 To provide multiaddr resolvers you can do:
 
 ```js
-const { Multiaddr } = require('multiaddr')
-const resolvers = require('multiaddr/src/resolvers')
+import { resolvers  } from 'multiaddr'
 
-Multiaddr.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 ```
 
 The available resolvers are:
 
-|     Name    | type | Description |
-|-------------|------|-------------|
+| Name              | type      | Description                         |
+| ----------------- | --------- | ----------------------------------- |
 | `dnsaddrResolver` | `dnsaddr` | dnsaddr resolution with TXT Records |
 
 A resolver receives a `Multiaddr` as a parameter and returns a `Promise<Array<string>>`.
 
-## Contribute
+## API Docs
 
-Contributions welcome. Please check out [the issues](https://github.com/multiformats/js-multiaddr/issues).
-
-Check out our [contributing document](https://github.com/multiformats/multiformats/blob/master/contributing.md) for more information on how we work, and about contributing in general. Please be aware that all interactions related to multiformats are subject to the IPFS [Code of Conduct](https://github.com/ipfs/community/blob/master/code-of-conduct.md).
-
-Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+- <https://multiformats.github.io/js-multiaddr>
 
 ## License
 
-[MIT](LICENSE) © 2016 Protocol Labs Inc.
+Licensed under either of
+
+- Apache 2.0, ([LICENSE-APACHE](LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT ([LICENSE-MIT](LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
+
+## Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
