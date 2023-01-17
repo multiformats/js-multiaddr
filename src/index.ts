@@ -30,11 +30,6 @@ const DNS_CODES = [
   getProtocol('dnsaddr').code
 ]
 
-const P2P_CODES = [
-  getProtocol('p2p').code,
-  getProtocol('ipfs').code
-]
-
 /**
  * Protocols are present in the protocol table
  */
@@ -523,30 +518,45 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   toOptions (): MultiaddrObject {
-    const codes = this.protoCodes()
-    const parts = this.toString().split('/').slice(1)
-    let transport: string
-    let port: number
+    let family: 4 | 6 | undefined
+    let transport: string | undefined
+    let host: string | undefined
+    let port: number | undefined
 
-    if (parts.length > 2) {
+    const tcp = getProtocol('tcp')
+    const udp = getProtocol('udp')
+    const ip4 = getProtocol('ip4')
+    const ip6 = getProtocol('ip6')
+    const dns6 = getProtocol('dns6')
+
+    for (const [code, value] of this.stringTuples()) {
       // default to https when protocol & port are omitted from DNS addrs
-      if (DNS_CODES.includes(codes[0]) && P2P_CODES.includes(codes[1])) {
-        transport = getProtocol('tcp').name
+      if (DNS_CODES.includes(code)) {
+        transport = tcp.name
         port = 443
-      } else {
-        transport = getProtocol(parts[2]).name
-        port = parseInt(parts[3])
+        host = value ?? ''
+        family = code === dns6.code ? 6 : 4
       }
-    } else if (DNS_CODES.includes(codes[0])) {
-      transport = getProtocol('tcp').name
-      port = 443
-    } else {
+
+      if (code === tcp.code || code === udp.code) {
+        transport = getProtocol(code).name
+        port = parseInt(value ?? '')
+      }
+
+      if (code === ip4.code || code === ip6.code) {
+        transport = getProtocol(code).name
+        host = value ?? ''
+        family = code === ip6.code ? 6 : 4
+      }
+    }
+
+    if (family == null || transport == null || host == null || port == null) {
       throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6, dnsaddr}/{address}/{tcp, udp}/{port}".')
     }
 
     const opts: MultiaddrObject = {
-      family: (codes[0] === 41 || codes[0] === 55) ? 6 : 4,
-      host: parts[1],
+      family,
+      host,
       transport,
       port
     }

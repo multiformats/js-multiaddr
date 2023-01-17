@@ -576,6 +576,17 @@ describe('helpers', () => {
           port: 443
         })
     })
+
+    it('returns an options object from an address with an ip6 zone', () => {
+      expect(
+        multiaddr('/ip6zone/x/ip6/fe80::1/tcp/1234').toOptions()
+      ).to.be.eql({
+        family: 6,
+        host: 'fe80::1',
+        transport: 'tcp',
+        port: 1234
+      })
+    })
   })
 
   describe('.protos', () => {
@@ -815,6 +826,16 @@ describe('helpers', () => {
         address: 'bootstrap.libp2p.io',
         family: 4,
         port: 443
+      })
+    })
+
+    it('transforms an address with an ip6 zone', () => {
+      expect(
+        multiaddr('/ip6zone/x/ip6/fe80::1/tcp/1234').nodeAddress()
+      ).to.be.eql({
+        address: 'fe80::1',
+        family: 6,
+        port: 1234
       })
     })
 
