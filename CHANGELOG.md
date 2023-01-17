@@ -1,3 +1,15 @@
+## [11.2.0](https://github.com/multiformats/js-multiaddr/compare/v11.1.5...v11.2.0) (2023-01-17)
+
+
+### Features
+
+* add ipcidr protocol ([#303](https://github.com/multiformats/js-multiaddr/issues/303)) ([fe760d3](https://github.com/multiformats/js-multiaddr/commit/fe760d31f45e547963b33185aa48d29cca8475af))
+
+
+### Dependencies
+
+* **dev:** bump aegir from 37.12.1 to 38.1.0 ([#302](https://github.com/multiformats/js-multiaddr/issues/302)) ([534d8fa](https://github.com/multiformats/js-multiaddr/commit/534d8fa0da2c1c1d1c61b92aa8deb75edc07619e))
+
 ## [11.1.5](https://github.com/multiformats/js-multiaddr/compare/v11.1.4...v11.1.5) (2023-01-06)
 
 
