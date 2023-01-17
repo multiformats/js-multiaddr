@@ -1,3 +1,10 @@
+## [11.3.0](https://github.com/multiformats/js-multiaddr/compare/v11.2.0...v11.3.0) (2023-01-17)
+
+
+### Features
+
+* support ip6zone ([#226](https://github.com/multiformats/js-multiaddr/issues/226)) ([cfacedb](https://github.com/multiformats/js-multiaddr/commit/cfacedb1fbee772eab2fdb443a25b4d90c5ffc1f)), closes [#134](https://github.com/multiformats/js-multiaddr/issues/134)
+
 ## [11.2.0](https://github.com/multiformats/js-multiaddr/compare/v11.1.5...v11.2.0) (2023-01-17)
 
 
