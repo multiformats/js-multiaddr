@@ -62,8 +62,8 @@
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type.__type-1"><span class="tsd-signature-symbol">(</span>addr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="decapsulate.__type.__type-1"><span class="tsd-signature-symbol">(</span>addr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Decapsulates a Multiaddr from another Multiaddr</p>
 
@@ -87,8 +87,8 @@
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-2.__type-3"><span class="tsd-signature-symbol">(</span>code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="decapsulateCode.__type-2.__type-3"><span class="tsd-signature-symbol">(</span>code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>A more reliable version of <code>decapsulate</code> if you are targeting a
 specific code, such as 421 (the <code>p2p</code> protocol code). The last index of the code
@@ -113,8 +113,8 @@ If the code is not present, the original <code>Multiaddr</code> is returned.</p>
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-4.__type-5"><span class="tsd-signature-symbol">(</span>addr<span class="tsd-signature-symbol">: </span><a href="../types/index.MultiaddrInput.html" class="tsd-signature-type" data-tsd-kind="Type alias">MultiaddrInput</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="encapsulate.__type-4.__type-5"><span class="tsd-signature-symbol">(</span>addr<span class="tsd-signature-symbol">: </span><a href="../types/index.MultiaddrInput.html" class="tsd-signature-type" data-tsd-kind="Type alias">MultiaddrInput</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Encapsulates a Multiaddr in another Multiaddr</p>
 
@@ -138,8 +138,8 @@ If the code is not present, the original <code>Multiaddr</code> is returned.</p>
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-6.__type-7"><span class="tsd-signature-symbol">(</span>addr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>bytes<span class="tsd-signature-symbol">: </span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" class="tsd-signature-type external" target="_blank">Uint8Array</a><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="equals.__type-6.__type-7"><span class="tsd-signature-symbol">(</span>addr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>bytes<span class="tsd-signature-symbol">: </span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" class="tsd-signature-type external" target="_blank">Uint8Array</a><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if two Multiaddrs are the same</p>
 
@@ -164,8 +164,8 @@ If the code is not present, the original <code>Multiaddr</code> is returned.</p>
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-8.__type-9"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="getPath.__type-8.__type-9"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Extract the path if the multiaddr contains one</p>
 
@@ -182,8 +182,8 @@ If the code is not present, the original <code>Multiaddr</code> is returned.</p>
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-10.__type-11"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="getPeerId.__type-10.__type-11"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Extract the peerId if the multiaddr contains one</p>
 
@@ -200,8 +200,8 @@ If the code is not present, the original <code>Multiaddr</code> is returned.</p>
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-12.__type-13"><span class="tsd-signature-symbol">(</span>addr<span class="tsd-signature-symbol">?: </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="isThinWaistAddress.__type-12.__type-13"><span class="tsd-signature-symbol">(</span>addr<span class="tsd-signature-symbol">?: </span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns if a Multiaddr is a Thin Waist address or not.</p>
 <p>Thin Waist is if a Multiaddr adheres to the standard combination of:</p>
@@ -225,8 +225,8 @@ If the code is not present, the original <code>Multiaddr</code> is returned.</p>
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-14.__type-15"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.NodeAddress.html" class="tsd-signature-type" data-tsd-kind="Interface">NodeAddress</a></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="nodeAddress.__type-14.__type-15"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.NodeAddress.html" class="tsd-signature-type" data-tsd-kind="Interface">NodeAddress</a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Gets a Multiaddrs node-friendly address object. Note that protocol information
 is left out: in Node (and most network systems) the protocol is unknowable
@@ -246,8 +246,8 @@ given only the address.</p>
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-16.__type-17"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="protoCodes.__type-16.__type-17"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns the codes of the protocols in left-to-right order.
 <a href="https://github.com/multiformats/multiaddr/blob/master/protocols.csv">See list of protocols</a></p>
@@ -265,8 +265,8 @@ given only the address.</p>
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-18.__type-19"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="protoNames.__type-18.__type-19"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns the names of the protocols in left-to-right order.
 <a href="https://github.com/multiformats/multiaddr/blob/master/protocols.csv">See list of protocols</a></p>
@@ -284,8 +284,8 @@ given only the address.</p>
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-20.__type-21"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Protocol.html" class="tsd-signature-type" data-tsd-kind="Interface">Protocol</a><span class="tsd-signature-symbol">[]</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="protos.__type-20.__type-21"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Protocol.html" class="tsd-signature-type" data-tsd-kind="Interface">Protocol</a><span class="tsd-signature-symbol">[]</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns the protocols the Multiaddr is defined with, as an array of objects, in
 left-to-right order. Each object contains the protocol code, protocol name,
@@ -305,8 +305,8 @@ and the size of its address space in bits.
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-22.__type-23"><span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="index.AbortOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AbortOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="tsd-signature-type external" target="_blank">Promise</a><span class="tsd-signature-symbol">&lt;</span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="resolve.__type-22.__type-23"><span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="index.AbortOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AbortOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="tsd-signature-type external" target="_blank">Promise</a><span class="tsd-signature-symbol">&lt;</span><a href="index.Multiaddr.html" class="tsd-signature-type" data-tsd-kind="Interface">Multiaddr</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Resolve multiaddr if containing resolvable hostname.</p>
 
@@ -328,8 +328,8 @@ and the size of its address space in bits.
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-24.__type-25"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../types/index.StringTuple.html" class="tsd-signature-type" data-tsd-kind="Type alias">StringTuple</a><span class="tsd-signature-symbol">[]</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="stringTuples.__type-24.__type-25"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../types/index.StringTuple.html" class="tsd-signature-type" data-tsd-kind="Type alias">StringTuple</a><span class="tsd-signature-symbol">[]</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns a tuple of string/number parts</p>
 <ul>
@@ -350,8 +350,8 @@ and the size of its address space in bits.
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-26.__type-27"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="toJSON.__type-26.__type-27"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns Multiaddr as a JSON encoded object</p>
 
@@ -368,8 +368,8 @@ and the size of its address space in bits.
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-28.__type-29"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.MultiaddrObject.html" class="tsd-signature-type" data-tsd-kind="Interface">MultiaddrObject</a></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="toOptions.__type-28.__type-29"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.MultiaddrObject.html" class="tsd-signature-type" data-tsd-kind="Interface">MultiaddrObject</a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns Multiaddr as a convinient options object to be used with net.createConnection</p>
 
@@ -386,8 +386,8 @@ and the size of its address space in bits.
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-30.__type-31"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="toString.__type-30.__type-31"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns Multiaddr as a String</p>
 
@@ -404,8 +404,8 @@ and the size of its address space in bits.
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-<li class="tsd-signature" id="__type-32.__type-33"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../types/index.Tuple.html" class="tsd-signature-type" data-tsd-kind="Type alias">Tuple</a><span class="tsd-signature-symbol">[]</span></li>
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="tuples.__type-32.__type-33"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../types/index.Tuple.html" class="tsd-signature-type" data-tsd-kind="Type alias">Tuple</a><span class="tsd-signature-symbol">[]</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns a tuple of parts</p>
 
