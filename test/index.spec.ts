@@ -244,7 +244,7 @@ describe('variants', () => {
 
   it('ip6 + ip6zone', () => {
     const str = '/ip6zone/x/ip6/fe80::1'
-    const addr = new Multiaddr(str)
+    const addr = multiaddr(str)
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
@@ -391,7 +391,7 @@ describe('variants', () => {
 
   it('ip6 + ip6zone + udp + quic', () => {
     const str = '/ip6zone/x/ip6/fe80::1/udp/1234/quic'
-    const addr = new Multiaddr(str)
+    const addr = multiaddr(str)
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
