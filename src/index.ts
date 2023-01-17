@@ -419,18 +419,31 @@ export function fromNodeAddress (addr: NodeAddress, transport: string): Multiadd
   if (transport == null) {
     throw new Error('requires transport protocol')
   }
-  let ip
+  let ip: string | undefined
+  let host = addr.address
   switch (addr.family) {
     case 4:
       ip = 'ip4'
       break
     case 6:
       ip = 'ip6'
+
+      if (host.includes('%')) {
+        const parts = host.split('%')
+
+        if (parts.length !== 2) {
+          throw Error('Multiple ip6 zones in multiaddr')
+        }
+
+        host = parts[0]
+        const zone = parts[1]
+        ip = `/ip6zone/${zone}/ip6`
+      }
       break
     default:
       throw Error('Invalid addr family, should be 4 or 6.')
   }
-  return new DefaultMultiaddr('/' + [ip, addr.address, transport, addr.port].join('/'))
+  return new DefaultMultiaddr('/' + [ip, host, transport, addr.port].join('/'))
 }
 
 /**
@@ -522,19 +535,25 @@ class DefaultMultiaddr implements Multiaddr {
     let transport: string | undefined
     let host: string | undefined
     let port: number | undefined
+    let zone = ''
 
     const tcp = getProtocol('tcp')
     const udp = getProtocol('udp')
     const ip4 = getProtocol('ip4')
     const ip6 = getProtocol('ip6')
     const dns6 = getProtocol('dns6')
+    const ip6zone = getProtocol('ip6zone')
 
     for (const [code, value] of this.stringTuples()) {
+      if (code === ip6zone.code) {
+        zone = `%${value ?? ''}`
+      }
+
       // default to https when protocol & port are omitted from DNS addrs
       if (DNS_CODES.includes(code)) {
         transport = tcp.name
         port = 443
-        host = value ?? ''
+        host = `${value ?? ''}${zone}`
         family = code === dns6.code ? 6 : 4
       }
 
@@ -545,7 +564,7 @@ class DefaultMultiaddr implements Multiaddr {
 
       if (code === ip4.code || code === ip6.code) {
         transport = getProtocol(code).name
-        host = value ?? ''
+        host = `${value ?? ''}${zone}`
         family = code === ip6.code ? 6 : 4
       }
     }

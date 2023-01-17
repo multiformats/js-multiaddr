@@ -582,7 +582,7 @@ describe('helpers', () => {
         multiaddr('/ip6zone/x/ip6/fe80::1/tcp/1234').toOptions()
       ).to.be.eql({
         family: 6,
-        host: 'fe80::1',
+        host: 'fe80::1%x',
         transport: 'tcp',
         port: 1234
       })
@@ -833,7 +833,7 @@ describe('helpers', () => {
       expect(
         multiaddr('/ip6zone/x/ip6/fe80::1/tcp/1234').nodeAddress()
       ).to.be.eql({
-        address: 'fe80::1',
+        address: 'fe80::1%x',
         family: 6,
         port: 1234
       })
@@ -892,6 +892,18 @@ describe('helpers', () => {
         }, 'tcp').toString()
       ).to.be.eql(
         '/ip4/192.168.0.1/tcp/1234'
+      )
+    })
+
+    it('parses a node address with an ip6zone', () => {
+      expect(
+        fromNodeAddress({
+          address: 'fe80::1%x',
+          family: 6,
+          port: 1234
+        }, 'tcp').toString()
+      ).to.be.eql(
+        '/ip6zone/x/ip6/fe80::1/tcp/1234'
       )
     })
   })
