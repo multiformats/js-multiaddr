@@ -38,6 +38,8 @@ export function convertToString (proto: number | string, buf: Uint8Array): strin
     case 4: // ipv4
     case 41: // ipv6
       return bytes2ip(buf)
+    case 42: // ipv6zone
+      return bytes2str(buf)
 
     case 6: // tcp
     case 273: // udp
@@ -73,6 +75,8 @@ export function convertToBytes (proto: string | number, str: string): Uint8Array
       return ip2bytes(str)
     case 41: // ipv6
       return ip2bytes(str)
+    case 42: // ipv6zone
+      return str2bytes(str)
 
     case 6: // tcp
     case 273: // udp

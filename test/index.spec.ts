@@ -242,6 +242,13 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('ip6 + ip6zone', () => {
+    const str = '/ip6zone/x/ip6/fe80::1'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it.skip('ip4 + dccp', () => {})
   it.skip('ip6 + dccp', () => {})
 
@@ -377,6 +384,13 @@ describe('variants', () => {
 
   it('webtransport with certhash', () => {
     const str = '/ip4/1.2.3.4/udp/4001/quic-v1/webtransport/certhash/uEiAkH5a4DPGKUuOBjYw0CgwjvcJCJMD2K_1aluKR_tpevQ/certhash/uEiAfbgiymPP2_nX7Dgir8B4QkksjHp2lVuJZz0F79Be9JA/p2p/12D3KooWBdmLJjhpgJ9KZgLM3f894ff9xyBfPvPjFNn7MKJpyrC2'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('ip6 + ip6zone + udp + quic', () => {
+    const str = '/ip6zone/x/ip6/fe80::1/udp/1234/quic'
     const addr = multiaddr(str)
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
@@ -561,6 +575,17 @@ describe('helpers', () => {
           transport: 'tcp',
           port: 443
         })
+    })
+
+    it('returns an options object from an address with an ip6 zone', () => {
+      expect(
+        multiaddr('/ip6zone/x/ip6/fe80::1/tcp/1234').toOptions()
+      ).to.be.eql({
+        family: 6,
+        host: 'fe80::1%x',
+        transport: 'tcp',
+        port: 1234
+      })
     })
   })
 
@@ -804,6 +829,16 @@ describe('helpers', () => {
       })
     })
 
+    it('transforms an address with an ip6 zone', () => {
+      expect(
+        multiaddr('/ip6zone/x/ip6/fe80::1/tcp/1234').nodeAddress()
+      ).to.be.eql({
+        address: 'fe80::1%x',
+        family: 6,
+        port: 1234
+      })
+    })
+
     it('throws on an invalid format address when the addr is not prefixed with a /', () => {
       expect(
         () => multiaddr('ip4/192.168.0.1/udp').nodeAddress()
@@ -857,6 +892,18 @@ describe('helpers', () => {
         }, 'tcp').toString()
       ).to.be.eql(
         '/ip4/192.168.0.1/tcp/1234'
+      )
+    })
+
+    it('parses a node address with an ip6zone', () => {
+      expect(
+        fromNodeAddress({
+          address: 'fe80::1%x',
+          family: 6,
+          port: 1234
+        }, 'tcp').toString()
+      ).to.be.eql(
+        '/ip6zone/x/ip6/fe80::1/tcp/1234'
       )
     })
   })

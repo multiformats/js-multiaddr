@@ -30,11 +30,6 @@ const DNS_CODES = [
   getProtocol('dnsaddr').code
 ]
 
-const P2P_CODES = [
-  getProtocol('p2p').code,
-  getProtocol('ipfs').code
-]
-
 /**
  * Protocols are present in the protocol table
  */
@@ -424,18 +419,31 @@ export function fromNodeAddress (addr: NodeAddress, transport: string): Multiadd
   if (transport == null) {
     throw new Error('requires transport protocol')
   }
-  let ip
+  let ip: string | undefined
+  let host = addr.address
   switch (addr.family) {
     case 4:
       ip = 'ip4'
       break
     case 6:
       ip = 'ip6'
+
+      if (host.includes('%')) {
+        const parts = host.split('%')
+
+        if (parts.length !== 2) {
+          throw Error('Multiple ip6 zones in multiaddr')
+        }
+
+        host = parts[0]
+        const zone = parts[1]
+        ip = `/ip6zone/${zone}/ip6`
+      }
       break
     default:
       throw Error('Invalid addr family, should be 4 or 6.')
   }
-  return new DefaultMultiaddr('/' + [ip, addr.address, transport, addr.port].join('/'))
+  return new DefaultMultiaddr('/' + [ip, host, transport, addr.port].join('/'))
 }
 
 /**
@@ -523,30 +531,51 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   toOptions (): MultiaddrObject {
-    const codes = this.protoCodes()
-    const parts = this.toString().split('/').slice(1)
-    let transport: string
-    let port: number
+    let family: 4 | 6 | undefined
+    let transport: string | undefined
+    let host: string | undefined
+    let port: number | undefined
+    let zone = ''
 
-    if (parts.length > 2) {
-      // default to https when protocol & port are omitted from DNS addrs
-      if (DNS_CODES.includes(codes[0]) && P2P_CODES.includes(codes[1])) {
-        transport = getProtocol('tcp').name
-        port = 443
-      } else {
-        transport = getProtocol(parts[2]).name
-        port = parseInt(parts[3])
+    const tcp = getProtocol('tcp')
+    const udp = getProtocol('udp')
+    const ip4 = getProtocol('ip4')
+    const ip6 = getProtocol('ip6')
+    const dns6 = getProtocol('dns6')
+    const ip6zone = getProtocol('ip6zone')
+
+    for (const [code, value] of this.stringTuples()) {
+      if (code === ip6zone.code) {
+        zone = `%${value ?? ''}`
       }
-    } else if (DNS_CODES.includes(codes[0])) {
-      transport = getProtocol('tcp').name
-      port = 443
-    } else {
+
+      // default to https when protocol & port are omitted from DNS addrs
+      if (DNS_CODES.includes(code)) {
+        transport = tcp.name
+        port = 443
+        host = `${value ?? ''}${zone}`
+        family = code === dns6.code ? 6 : 4
+      }
+
+      if (code === tcp.code || code === udp.code) {
+        transport = getProtocol(code).name
+        port = parseInt(value ?? '')
+      }
+
+      if (code === ip4.code || code === ip6.code) {
+        transport = getProtocol(code).name
+        host = `${value ?? ''}${zone}`
+        family = code === ip6.code ? 6 : 4
+      }
+    }
+
+    if (family == null || transport == null || host == null || port == null) {
       throw new Error('multiaddr must have a valid format: "/{ip4, ip6, dns4, dns6, dnsaddr}/{address}/{tcp, udp}/{port}".')
     }
 
     const opts: MultiaddrObject = {
-      family: (codes[0] === 41 || codes[0] === 55) ? 6 : 4,
-      host: parts[1],
+      family,
+      host,
       transport,
       port
     }
