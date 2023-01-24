@@ -15,6 +15,12 @@ import varint from 'varint'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
+import type { Multiaddr } from './index.js'
+import { IpNet } from '@chainsafe/netmask'
+
+const ip4Protocol = getProtocol('ip4')
+const ip6Protocol = getProtocol('ip6')
+const ipcidrProtocol = getProtocol('ipcidr')
 
 /**
  * converts (serializes) addresses
@@ -103,6 +109,23 @@ export function convertToBytes (proto: string | number, str: string): Uint8Array
     default:
       return uint8ArrayFromString(str, 'base16') // no clue. convert from hex
   }
+}
+
+export function convertToIpNet (multiaddr: Multiaddr): IpNet {
+  let mask: string | undefined
+  let addr: string | undefined
+  multiaddr.stringTuples().forEach(([code, value]) => {
+    if (code === ip4Protocol.code || code === ip6Protocol.code) {
+      addr = value
+    }
+    if (code === ipcidrProtocol.code) {
+      mask = value
+    }
+  })
+  if (mask == null || addr == null) {
+    throw new Error('Invalid multiaddr')
+  }
+  return new IpNet(addr, mask)
 }
 
 const decoders = Object.values(bases).map((c) => c.decoder)

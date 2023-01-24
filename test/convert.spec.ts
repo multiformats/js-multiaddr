@@ -2,6 +2,7 @@
 import * as convert from '../src/convert.js'
 import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
+import { multiaddr } from '../src/index.js'
 
 describe('convert', () => {
   it('handles ip4 buffers', () => {
@@ -99,5 +100,23 @@ describe('convert', () => {
     expect(outcome).to.equal('u9DKgRTRiheDY13U2hHKOsqqecWTk6_4GUWRCZP4EqNA')
     const bytesOut = convert.convertToBytes(466, outcome)
     expect(bytesOut.toString()).to.equal(bytes.toString())
+  })
+
+  it('convertToIpNet ip4', function () {
+    const ipnet = convert.convertToIpNet(multiaddr('/ip4/192.0.2.0/ipcidr/24'))
+    expect(ipnet.toString()).equal('192.0.2.0/24')
+  })
+
+  it('convertToIpNet ip6', function () {
+    const ipnet = convert.convertToIpNet(multiaddr('/ip6/2001:0db8:85a3:0000:0000:8a2e:0370:7334/ipcidr/64'))
+    expect(ipnet.toString()).equal('2001:0db8:85a3:0000:0000:0000:0000:0000/64')
+  })
+
+  it('convertToIpNet not ipcidr', function () {
+    expect(() => convert.convertToIpNet(multiaddr('/ip6/2001:0db8:85a3:0000:0000:8a2e:0370:7334/tcp/64'))).to.throw()
+  })
+
+  it('convertToIpNet not ipv6', function () {
+    expect(() => convert.convertToIpNet(multiaddr('/dns6/foo.com/ipcidr/64'))).to.throw()
   })
 })
