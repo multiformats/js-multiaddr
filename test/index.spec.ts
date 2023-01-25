@@ -424,6 +424,13 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str.replace('/ipfs/', '/p2p/'))
   })
 
+  it('tls', () => {
+    const str = '/ip4/127.0.0.1/tcp/9090/tls/ws'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it('onion', () => {
     const str = '/onion/timaq4ygg2iegci7:1234'
     const addr = multiaddr(str)
@@ -1056,5 +1063,12 @@ describe('helpers', () => {
         expect(isName(addr)).to.equal(false)
       })
     })
+  })
+})
+
+describe("unknown protocols", () => {
+  it("throws an error", () => {
+    const str = '/ip4/127.0.0.1/unknown'
+    expect(() => multiaddr(str)).to.throw()
   })
 })
