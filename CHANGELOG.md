@@ -1,3 +1,10 @@
+## [11.4.0](https://github.com/multiformats/js-multiaddr/compare/v11.3.0...v11.4.0) (2023-01-30)
+
+
+### Features
+
+* add TLS to protocols-table ([#306](https://github.com/multiformats/js-multiaddr/issues/306)) ([50bb433](https://github.com/multiformats/js-multiaddr/commit/50bb4332cafb1fbfd4e7e21be6fcaf42252deb73))
+
 ## [11.3.0](https://github.com/multiformats/js-multiaddr/compare/v11.2.0...v11.3.0) (2023-01-17)
 
 
