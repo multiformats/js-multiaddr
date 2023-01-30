@@ -1069,6 +1069,6 @@ describe('helpers', () => {
 describe('unknown protocols', () => {
   it('throws an error', () => {
     const str = '/ip4/127.0.0.1/unknown'
-    expect(() => multiaddr(str)).to.throw()
+    expect(() => multiaddr(str)).to.throw('no protocol with name: unknown')
   })
 })
