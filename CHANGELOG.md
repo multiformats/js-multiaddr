@@ -1,3 +1,10 @@
+## [11.5.0](https://github.com/multiformats/js-multiaddr/compare/v11.4.0...v11.5.0) (2023-03-03)
+
+
+### Features
+
+* Add webrtc-w3c protocol for browser to browser ([#309](https://github.com/multiformats/js-multiaddr/issues/309)) ([16232d5](https://github.com/multiformats/js-multiaddr/commit/16232d521e13bd2e36d96932316aa86385bdebff))
+
 ## [11.4.0](https://github.com/multiformats/js-multiaddr/compare/v11.3.0...v11.4.0) (2023-01-30)
 
 
