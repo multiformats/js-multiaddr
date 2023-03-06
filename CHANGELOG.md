@@ -1,3 +1,10 @@
+## [11.6.0](https://github.com/multiformats/js-multiaddr/compare/v11.5.0...v11.6.0) (2023-03-06)
+
+
+### Features
+
+* Add SNI support ([#312](https://github.com/multiformats/js-multiaddr/issues/312)) ([b44f608](https://github.com/multiformats/js-multiaddr/commit/b44f6086f0eccb8480c7360cf86f047882c0f56a))
+
 ## [11.5.0](https://github.com/multiformats/js-multiaddr/compare/v11.4.0...v11.5.0) (2023-03-03)
 
 
