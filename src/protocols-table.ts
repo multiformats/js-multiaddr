@@ -21,7 +21,7 @@ export const table: Array<[number, number, string, boolean?, boolean?]> = [
   [276, 0, 'p2p-webrtc-direct'],
   [277, 0, 'p2p-stardust'],
   [280, 0, 'webrtc'],
-  [281, 0, 'webrtc-w3c'],
+  [281, 0, 'webrtc-private-to-private'],
   [290, 0, 'p2p-circuit'],
   [301, 0, 'udt'],
   [302, 0, 'utp'],
