@@ -23,6 +23,14 @@ const dnsaddrStub2 = [
   ['dnsaddr=/ip6/2604:1380:2000:7a00::1/udp/4001/quic/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb']
 ]
 
+const dnsaddrStub3 = [
+  ['dnsaddr=/dnsaddr/sv15.bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN'],
+  ['dnsaddr=/dnsaddr/ny5.bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa'],
+  ['dnsaddr_record_value'],
+  ['dnsaddr=/dnsaddr/am6.bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb'],
+  ['dnsaddr=/dnsaddr/sg1.bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt']
+]
+
 describe('multiaddr resolve', () => {
   it('should throw if no resolver is available', async () => {
     const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
@@ -96,6 +104,20 @@ describe('multiaddr resolve', () => {
 
         expect(ma.equals(multiaddr(stubAddr))).to.equal(true)
       })
+    })
+
+    it('can resolve dnsaddr with bad record', async () => {
+      const ma = multiaddr('/dnsaddr/am6.bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
+
+      const stub = sinon.stub(Resolver.prototype, 'resolveTxt')
+      stub.onCall(0).returns(Promise.resolve(dnsaddrStub3))
+
+      // Resolve
+      const resolvedMas = await ma.resolve()
+
+      // Should only have one address with the same peer id and should ignore the bad record
+      expect(resolvedMas).to.have.lengthOf(1)
+      expect(resolvedMas[0].toString()).to.equal(ma.toString())
     })
 
     it('can cancel resolving', async () => {
