@@ -49,7 +49,7 @@ export async function dnsaddrResolver (addr: Multiaddr, options: AbortOptions = 
 
   const records = await resolver.resolveTxt(`_dnsaddr.${hostname}`)
 
-  let addresses = records.flat().map((a) => a.split('=')[1])
+  let addresses = records.flat().map((a) => a.split('=')[1]).filter(Boolean)
 
   if (peerId != null) {
     addresses = addresses.filter((entry) => entry.includes(peerId))
