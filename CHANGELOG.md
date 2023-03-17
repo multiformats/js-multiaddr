@@ -1,3 +1,14 @@
+## [12.0.0](https://github.com/multiformats/js-multiaddr/compare/v11.6.1...v12.0.0) (2023-03-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* webrtc has been renamed webrtc-direct and webrtc-w3c has been renamed webrtc
+
+### Bug Fixes
+
+* Rename webrtc to webrtc-direct and webrtc-w3c to webrtc ([#314](https://github.com/multiformats/js-multiaddr/issues/314)) ([fc33ac8](https://github.com/multiformats/js-multiaddr/commit/fc33ac8bb483d29b51cf3e7da1f4a5f134cc45cb))
+
 ## [11.6.1](https://github.com/multiformats/js-multiaddr/compare/v11.6.0...v11.6.1) (2023-03-09)
 
 
