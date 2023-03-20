@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 import { expect } from 'aegir/chai'
-import { MultiaddrFilter } from '../../src/index.js'
-import { multiaddr, MultiaddrInput } from '../../src/index.js'
+import { MultiaddrFilter, multiaddr, MultiaddrInput } from '../../src/index.js'
 
 describe('MultiaddrFilter', () => {
   const cases: Array<[MultiaddrInput, MultiaddrInput, boolean]> = [
