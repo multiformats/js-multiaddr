@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from 'aegir/chai'
-import { MultiaddrFilter } from '../../src/filter/multiaddr-filter.js'
+import { MultiaddrFilter } from '../../src/index.js'
 import { multiaddr, MultiaddrInput } from '../../src/index.js'
 
 describe('MultiaddrFilter', () => {
