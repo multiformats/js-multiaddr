@@ -14,10 +14,11 @@ import { multiaddr, Multiaddr, MultiaddrInput } from '../index.js'
  * ```js
  * import { multiaddr, MultiaddrFilter } from '@multiformats/multiaddr'
  *
- * const range = '/ip4/192.168.10.10/ipcidr/24'
+ * const range = multiaddr('/ip4/192.168.10.10/ipcidr/24')
  * const filter = new MultiaddrFilter(range)
  *
- * console.info(filter.contains('/ip4/192.168.10.2/udp/60')) // true
+ * const input = multiaddr('/ip4/192.168.10.2/udp/60')
+ * console.info(filter.contains(input)) // true
  * ```
  */
 export class MultiaddrFilter {
