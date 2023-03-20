@@ -58,6 +58,7 @@ export function convertToString (proto: number | string, buf: Uint8Array): strin
     case 55: // dns6
     case 56: // dnsaddr
     case 400: // unix
+    case 449: // sni
     case 777: // memory
       return bytes2str(buf)
 
@@ -95,6 +96,7 @@ export function convertToBytes (proto: string | number, str: string): Uint8Array
     case 55: // dns6
     case 56: // dnsaddr
     case 400: // unix
+    case 449: // sni
     case 777: // memory
       return str2bytes(str)
 

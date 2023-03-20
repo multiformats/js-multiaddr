@@ -1,3 +1,42 @@
+## [12.0.0](https://github.com/multiformats/js-multiaddr/compare/v11.6.1...v12.0.0) (2023-03-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* webrtc has been renamed webrtc-direct and webrtc-w3c has been renamed webrtc
+
+### Bug Fixes
+
+* Rename webrtc to webrtc-direct and webrtc-w3c to webrtc ([#314](https://github.com/multiformats/js-multiaddr/issues/314)) ([fc33ac8](https://github.com/multiformats/js-multiaddr/commit/fc33ac8bb483d29b51cf3e7da1f4a5f134cc45cb))
+
+## [11.6.1](https://github.com/multiformats/js-multiaddr/compare/v11.6.0...v11.6.1) (2023-03-09)
+
+
+### Bug Fixes
+
+* survive bad dns record ([#313](https://github.com/multiformats/js-multiaddr/issues/313)) ([1f7f2a0](https://github.com/multiformats/js-multiaddr/commit/1f7f2a0a79671486c893bc023737010d68c9b271))
+
+## [11.6.0](https://github.com/multiformats/js-multiaddr/compare/v11.5.0...v11.6.0) (2023-03-06)
+
+
+### Features
+
+* Add SNI support ([#312](https://github.com/multiformats/js-multiaddr/issues/312)) ([b44f608](https://github.com/multiformats/js-multiaddr/commit/b44f6086f0eccb8480c7360cf86f047882c0f56a))
+
+## [11.5.0](https://github.com/multiformats/js-multiaddr/compare/v11.4.0...v11.5.0) (2023-03-03)
+
+
+### Features
+
+* Add webrtc-w3c protocol for browser to browser ([#309](https://github.com/multiformats/js-multiaddr/issues/309)) ([16232d5](https://github.com/multiformats/js-multiaddr/commit/16232d521e13bd2e36d96932316aa86385bdebff))
+
+## [11.4.0](https://github.com/multiformats/js-multiaddr/compare/v11.3.0...v11.4.0) (2023-01-30)
+
+
+### Features
+
+* add TLS to protocols-table ([#306](https://github.com/multiformats/js-multiaddr/issues/306)) ([50bb433](https://github.com/multiformats/js-multiaddr/commit/50bb4332cafb1fbfd4e7e21be6fcaf42252deb73))
+
 ## [11.3.0](https://github.com/multiformats/js-multiaddr/compare/v11.2.0...v11.3.0) (2023-01-17)
 
 
