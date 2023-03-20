@@ -2,6 +2,24 @@ import type { IpNet } from '@chainsafe/netmask'
 import { convertToIpNet } from '../convert.js'
 import { multiaddr, Multiaddr, MultiaddrInput } from '../index.js'
 
+/**
+ * A utility class to determine if a Multiaddr contains another
+ * multiaddr.
+ *
+ * This can be used with ipcidr ranges to determine if a given
+ * multiaddr is in a ipcidr range.
+ *
+ * @example
+ *
+ * ```js
+ * import { multiaddr, MultiaddrFilter } from '@multiformats/multiaddr'
+ *
+ * const range = '/ip4/192.168.10.10/ipcidr/24'
+ * const filter = new MultiaddrFilter(range)
+ *
+ * console.info(filter.contains('/ip4/192.168.10.2/udp/60')) // true
+ * ```
+ */
 export class MultiaddrFilter {
   private readonly multiaddr: Multiaddr
   private readonly netmask: IpNet
