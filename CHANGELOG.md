@@ -1,3 +1,10 @@
+## [12.1.0](https://github.com/multiformats/js-multiaddr/compare/v12.0.0...v12.1.0) (2023-03-21)
+
+
+### Features
+
+* add multiaddr filter function ([#305](https://github.com/multiformats/js-multiaddr/issues/305)) ([bcd3cb5](https://github.com/multiformats/js-multiaddr/commit/bcd3cb5c30b7b93db707d9ac7d697b455f0a8a90))
+
 ## [12.0.0](https://github.com/multiformats/js-multiaddr/compare/v11.6.1...v12.0.0) (2023-03-17)
 
 
