@@ -94,6 +94,8 @@ export interface AbortOptions {
 export const resolvers = new Map<string, Resolver>()
 const symbol = Symbol.for('@multiformats/js-multiaddr/multiaddr')
 
+export { MultiaddrFilter } from './filter/multiaddr-filter.js'
+
 export interface Multiaddr {
   bytes: Uint8Array
 
