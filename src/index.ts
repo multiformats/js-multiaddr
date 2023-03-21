@@ -17,7 +17,7 @@ import { getProtocol, names } from './protocols-table.js'
 import varint from 'varint'
 import { CID } from 'multiformats/cid'
 import { base58btc } from 'multiformats/bases/base58'
-import errCode from 'err-code'
+import { CodeError } from '@libp2p/interfaces/errors'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
 
@@ -716,7 +716,7 @@ class DefaultMultiaddr implements Multiaddr {
 
     const resolver = resolvers.get(resolvableProto.name)
     if (resolver == null) {
-      throw errCode(new Error(`no available resolver for ${resolvableProto.name}`), 'ERR_NO_AVAILABLE_RESOLVER')
+      throw new CodeError(`no available resolver for ${resolvableProto.name}`, 'ERR_NO_AVAILABLE_RESOLVER')
     }
 
     const addresses = await resolver(this, options)
