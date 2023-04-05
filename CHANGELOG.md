@@ -1,3 +1,10 @@
+## [12.1.1](https://github.com/multiformats/js-multiaddr/compare/v12.1.0...v12.1.1) (2023-04-05)
+
+
+### Bug Fixes
+
+* replace err-code with CodeError ([#317](https://github.com/multiformats/js-multiaddr/issues/317)) ([cb5ff5f](https://github.com/multiformats/js-multiaddr/commit/cb5ff5f8c972f591f4fec36e1489f8e1b0c4c39a))
+
 ## [12.1.0](https://github.com/multiformats/js-multiaddr/compare/v12.0.0...v12.1.0) (2023-03-21)
 
 
