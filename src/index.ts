@@ -497,6 +497,7 @@ class DefaultMultiaddr implements Multiaddr {
   #string?: string
   #tuples?: Tuple[]
   #stringTuples?: StringTuple[]
+  #path?: string | null
 
   [symbol]: boolean = true
 
@@ -683,23 +684,27 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   getPath (): string | null {
-    let path = null
-    try {
-      path = this.stringTuples().filter((tuple) => {
-        const proto = getProtocol(tuple[0])
-        if (proto.path === true) {
-          return true
-        }
-        return false
-      })[0][1]
+    // on initialization, this.#path is undefined
+    // after the first call, it is either a string or null
+    if (this.#path === undefined) {
+      try {
+        this.#path = this.stringTuples().filter((tuple) => {
+          const proto = getProtocol(tuple[0])
+          if (proto.path === true) {
+            return true
+          }
+          return false
+        })[0][1]
 
-      if (path == null) {
-        path = null
+        if (this.#path == null) {
+          this.#path = null
+        }
+      } catch {
+        this.#path = null
       }
-    } catch {
-      path = null
     }
-    return path
+
+    return this.#path
   }
 
   equals (addr: { bytes: Uint8Array }): boolean {
