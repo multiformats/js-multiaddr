@@ -1,3 +1,10 @@
+## [12.1.2](https://github.com/multiformats/js-multiaddr/compare/v12.1.1...v12.1.2) (2023-04-14)
+
+
+### Bug Fixes
+
+* only compute path on first getPath() call ([#318](https://github.com/multiformats/js-multiaddr/issues/318)) ([9fd631f](https://github.com/multiformats/js-multiaddr/commit/9fd631f5b521b61f04a642f6b2a710a02ff20e94)), closes [/github.com/libp2p/js-libp2p-tcp/pull/264#issuecomment-1503473722](https://github.com/multiformats//github.com/libp2p/js-libp2p-tcp/pull/264/issues/issuecomment-1503473722)
+
 ## [12.1.1](https://github.com/multiformats/js-multiaddr/compare/v12.1.0...v12.1.1) (2023-04-05)
 
 
