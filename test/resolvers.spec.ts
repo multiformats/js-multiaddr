@@ -2,8 +2,8 @@
 import { expect } from 'aegir/chai'
 import sinon from 'sinon'
 import { multiaddr, resolvers } from '../src/index.js'
-import * as resolversInternal from '../src/resolvers/index.js'
 import Resolver from '../src/resolvers/dns.js'
+import * as resolversInternal from '../src/resolvers/index.js'
 
 const dnsaddrStub1 = [
   ['dnsaddr=/dnsaddr/ams-1.bootstrap.libp2p.io/p2p/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd'],
@@ -92,7 +92,7 @@ describe('multiaddr resolve', () => {
       const resolvedInitialMas = await ma.resolve()
       const resolvedSecondMas = await Promise.all(resolvedInitialMas.map(async nm => {
         //  nm.resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
-        return await nm.resolve()
+        return nm.resolve()
       }))
 
       const resolvedMas = resolvedSecondMas.flat()

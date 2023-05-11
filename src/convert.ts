@@ -4,19 +4,19 @@
  * Provides methods for converting
  */
 
-import * as ip from './ip.js'
-import { getProtocol } from './protocols-table.js'
-import { CID } from 'multiformats/cid'
+import { IpNet } from '@chainsafe/netmask'
 import { base32 } from 'multiformats/bases/base32'
 import { base58btc } from 'multiformats/bases/base58'
 import { bases } from 'multiformats/basics'
+import { CID } from 'multiformats/cid'
 import * as Digest from 'multiformats/hashes/digest'
-import varint from 'varint'
-import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
+import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
+import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
+import varint from 'varint'
+import * as ip from './ip.js'
+import { getProtocol } from './protocols-table.js'
 import type { Multiaddr } from './index.js'
-import { IpNet } from '@chainsafe/netmask'
 
 const ip4Protocol = getProtocol('ip4')
 const ip6Protocol = getProtocol('ip6')

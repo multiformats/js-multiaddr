@@ -1,8 +1,8 @@
-import { convertToBytes, convertToString } from './convert.js'
-import { getProtocol } from './protocols-table.js'
-import varint from 'varint'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
+import varint from 'varint'
+import { convertToBytes, convertToString } from './convert.js'
+import { getProtocol } from './protocols-table.js'
 import type { StringTuple, Tuple, Protocol } from './index.js'
 
 /**

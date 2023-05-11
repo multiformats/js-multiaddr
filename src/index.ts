@@ -12,14 +12,14 @@
  * ```
  */
 
+import { CodeError } from '@libp2p/interfaces/errors'
+import { base58btc } from 'multiformats/bases/base58'
+import { CID } from 'multiformats/cid'
+import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
+import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
+import varint from 'varint'
 import * as codec from './codec.js'
 import { getProtocol, names } from './protocols-table.js'
-import varint from 'varint'
-import { CID } from 'multiformats/cid'
-import { base58btc } from 'multiformats/bases/base58'
-import { CodeError } from '@libp2p/interfaces/errors'
-import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
 
 const inspect = Symbol.for('nodejs.util.inspect.custom')
 
