@@ -1,7 +1,7 @@
 /* eslint-env mocha */
-import * as convert from '../src/convert.js'
 import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
+import * as convert from '../src/convert.js'
 import { multiaddr } from '../src/index.js'
 
 describe('convert', () => {

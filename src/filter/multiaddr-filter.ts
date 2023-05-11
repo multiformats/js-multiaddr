@@ -1,6 +1,6 @@
-import type { IpNet } from '@chainsafe/netmask'
 import { convertToIpNet } from '../convert.js'
-import { multiaddr, Multiaddr, MultiaddrInput } from '../index.js'
+import { multiaddr, type Multiaddr, type MultiaddrInput } from '../index.js'
+import type { IpNet } from '@chainsafe/netmask'
 
 /**
  * A utility class to determine if a Multiaddr contains another

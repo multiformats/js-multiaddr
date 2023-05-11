@@ -1,10 +1,10 @@
 /* eslint max-nested-callbacks: ["error", 8] */
 /* eslint-env mocha */
-import { multiaddr, isMultiaddr, fromNodeAddress, isName } from '../src/index.js'
-import type { Multiaddr } from '../src/index.js'
 import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
+import { multiaddr, isMultiaddr, fromNodeAddress, isName } from '../src/index.js'
 import { codes } from '../src/protocols-table.js'
+import type { Multiaddr } from '../src/index.js'
 
 describe('construction', () => {
   let udpAddr: Multiaddr
@@ -51,23 +51,23 @@ describe('construction', () => {
 
   it('throws on truthy non string or buffer', () => {
     const errRegex = /addr must be a string/
-    // @ts-expect-error
+    // @ts-expect-error incorrect parameters
     expect(() => multiaddr({})).to.throw(errRegex)
-    // @ts-expect-error
+    // @ts-expect-error incorrect parameters
     expect(() => multiaddr([])).to.throw(errRegex)
-    // @ts-expect-error
+    // @ts-expect-error incorrect parameters
     expect(() => multiaddr(138)).to.throw(errRegex)
-    // @ts-expect-error
+    // @ts-expect-error incorrect parameters
     expect(() => multiaddr(true)).to.throw(errRegex)
   })
 
   it('throws on falsy non string or buffer', () => {
     const errRegex = /addr must be a string/
-    // @ts-expect-error
+    // @ts-expect-error incorrect parameters
     expect(() => multiaddr(NaN)).to.throw(errRegex)
-    // @ts-expect-error
+    // @ts-expect-error incorrect parameters
     expect(() => multiaddr(false)).to.throw(errRegex)
-    // @ts-expect-error
+    // @ts-expect-error incorrect parameters
     expect(() => multiaddr(0)).to.throw(errRegex)
   })
 })
@@ -881,7 +881,7 @@ describe('helpers', () => {
   describe('.fromNodeAddress', () => {
     it('throws on missing address object', () => {
       expect(
-        // @ts-expect-error
+        // @ts-expect-error incorrect parameters
         () => fromNodeAddress()
       ).to.throw(
         /requires node address/
@@ -890,7 +890,7 @@ describe('helpers', () => {
 
     it('throws on missing transport', () => {
       expect(
-        // @ts-expect-error
+        // @ts-expect-error incorrect parameters
         () => fromNodeAddress({ address: '0.0.0.0' })
       ).to.throw(
         /requires transport protocol/

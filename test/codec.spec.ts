@@ -1,8 +1,8 @@
 /* eslint-env mocha */
-import * as codec from '../src/codec.js'
-import varint from 'varint'
 import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
+import varint from 'varint'
+import * as codec from '../src/codec.js'
 
 describe('codec', () => {
   describe('.stringToStringTuples', () => {

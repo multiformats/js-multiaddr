@@ -1,6 +1,6 @@
 /* eslint-env mocha */
-import { getProtocol } from '../src/protocols-table.js'
 import { expect } from 'aegir/chai'
+import { getProtocol } from '../src/protocols-table.js'
 
 describe('protocols', () => {
   describe('throws on non existent protocol', () => {
@@ -22,7 +22,7 @@ describe('protocols', () => {
 
     it('else', () => {
       expect(
-        // @ts-expect-error
+        // @ts-expect-error incorrect parameters
         () => getProtocol({ hi: 34 })
       ).to.throw(
         /invalid protocol id type/
