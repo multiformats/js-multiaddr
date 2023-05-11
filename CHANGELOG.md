@@ -1,3 +1,10 @@
+## [12.1.3](https://github.com/multiformats/js-multiaddr/compare/v12.1.2...v12.1.3) (2023-05-11)
+
+
+### Dependencies
+
+* **dev:** bump aegir from 38.1.8 to 39.0.6 ([#324](https://github.com/multiformats/js-multiaddr/issues/324)) ([8a84847](https://github.com/multiformats/js-multiaddr/commit/8a84847ee0272b9a324e96467a38570c858e25eb))
+
 ## [12.1.2](https://github.com/multiformats/js-multiaddr/compare/v12.1.1...v12.1.2) (2023-04-14)
 
 
