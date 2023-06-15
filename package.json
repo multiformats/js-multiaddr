@@ -169,7 +169,7 @@
     "@chainsafe/netmask": "^2.0.0",
     "@libp2p/interfaces": "^3.3.1",
     "dns-over-http-resolver": "^2.1.0",
-    "multiformats": "^11.0.0",
+    "multiformats": "^12.0.1",
     "uint8arrays": "^4.0.2",
     "varint": "^6.0.0"
   },
