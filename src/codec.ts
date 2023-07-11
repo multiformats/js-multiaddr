@@ -68,17 +68,25 @@ export function stringTuplesToString (tuples: StringTuple[]): string {
 /**
  * [[str name, str addr]... ] -> [[int code, Uint8Array]... ]
  */
-export function stringTuplesToTuples (tuples: Array<string[] | string>): Tuple[] {
-  return tuples.map((tup) => {
+export function stringTuplesToTuples (stringTuples: Array<string[] | string>): { tuples: Tuple[], path: string | null } {
+  let path: string | null | undefined
+  const tuples = stringTuples.map((tup) => {
     if (!Array.isArray(tup)) {
       tup = [tup]
     }
     const proto = protoFromTuple(tup)
-    if (tup.length > 1) {
-      return [proto.code, convertToBytes(proto.code, tup[1])]
+    const tuple: Tuple = (tup.length > 1) ? [proto.code, convertToBytes(proto.code, tup[1])] : [proto.code]
+    if (path === undefined && proto.path === true) {
+      path = tuple[1] != null ? convertToString(proto.code, tuple[1]) : null
     }
-    return [proto.code]
+    return tuple
   })
+
+  if (path == null) {
+    path = null
+  }
+
+  return { tuples, path }
 }
 
 /**
@@ -171,18 +179,18 @@ export function bytesToString (buf: Uint8Array): string {
 /**
  * String -> Uint8Array
  */
-export function stringToBytes (str: string): Uint8Array {
+export function stringToBytes (str: string): { bytes: Uint8Array, tuples: Tuple[], path: string | null } {
   str = cleanPath(str)
-  const a = stringToStringTuples(str)
-  const b = stringTuplesToTuples(a)
+  const stringTuples = stringToStringTuples(str)
+  const { tuples, path } = stringTuplesToTuples(stringTuples)
 
-  return tuplesToBytes(b)
+  return { bytes: tuplesToBytes(tuples), tuples, path }
 }
 
 /**
  * String -> Uint8Array
  */
-export function fromString (str: string): Uint8Array {
+export function fromString (str: string): { bytes: Uint8Array, tuples: Tuple[], path: string | null } {
   return stringToBytes(str)
 }
 

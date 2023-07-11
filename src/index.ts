@@ -513,7 +513,10 @@ class DefaultMultiaddr implements Multiaddr {
       if (addr.length > 0 && addr.charAt(0) !== '/') {
         throw new Error(`multiaddr "${addr}" must start with a "/"`)
       }
-      this.bytes = codec.fromString(addr)
+      const { bytes, tuples, path } = codec.fromString(addr)
+      this.bytes = bytes
+      this.#tuples = tuples
+      this.#path = path
     } else if (isMultiaddr(addr)) { // Multiaddr
       this.bytes = codec.fromBytes(addr.bytes) // validate + copy buffer
     } else {

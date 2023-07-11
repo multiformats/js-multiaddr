@@ -3,6 +3,7 @@ import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import varint from 'varint'
 import * as codec from '../src/codec.js'
+import { convertToBytes } from '../src/convert.js'
 
 describe('codec', () => {
   describe('.stringToStringTuples', () => {
@@ -16,13 +17,20 @@ describe('codec', () => {
   })
 
   describe('.stringTuplesToTuples', () => {
-    it('handles non array tuples', () => {
-      expect(
-        codec.stringTuplesToTuples([['ip4', '0.0.0.0'], 'utp'])
-      ).to.eql(
-        [[4, Uint8Array.from([0, 0, 0, 0])], [302]]
-      )
-    })
+    const testCases: Array<{ name: string, stringTuples: Array<string[] | string>, tuples: Array<[number, Uint8Array?]>, path: string | null }> = [
+      { name: 'handles non array tuples', stringTuples: [['ip4', '0.0.0.0'], 'utp'], tuples: [[4, Uint8Array.from([0, 0, 0, 0])], [302]], path: null },
+      { name: 'handle not null path', stringTuples: [['unix', '/tmp/p2p.sock']], tuples: [[400, convertToBytes(400, '/tmp/p2p.sock')]], path: '/tmp/p2p.sock' }
+    ]
+
+    for (const { name, stringTuples, tuples, path } of testCases) {
+      it(name, () => {
+        expect(
+          codec.stringTuplesToTuples(stringTuples)
+        ).to.eql(
+          { tuples, path }
+        )
+      })
+    }
   })
 
   describe('.tuplesToStringTuples', () => {
