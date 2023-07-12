@@ -61,9 +61,14 @@ export interface NodeAddress {
 }
 
 /**
+ * Represent a multiaaddr input string
+ */
+export type MultiaddrInputString = string
+
+/**
  * These types can be parsed into a {@link Multiaddr} object
  */
-export type MultiaddrInput = string | Multiaddr | Uint8Array | null
+export type MultiaddrInput = MultiaddrInputString | Multiaddr | Uint8Array | null
 
 /**
  * A Resolver is a function that takes a {@link Multiaddr} and resolves it into one
@@ -80,6 +85,13 @@ export type Tuple = [number, Uint8Array?]
  * A code/value pair with the value as a string
  */
 export type StringTuple = [number, string?]
+
+/** The result of parsing a MultiaddrInput string */
+export interface MultiaddrInputStringResult {
+  bytes: Uint8Array
+  tuples: Tuple[]
+  path: string | null
+}
 
 /**
  * Allows aborting long-lived operations
@@ -513,7 +525,7 @@ class DefaultMultiaddr implements Multiaddr {
       if (addr.length > 0 && addr.charAt(0) !== '/') {
         throw new Error(`multiaddr "${addr}" must start with a "/"`)
       }
-      const { bytes, tuples, path } = codec.fromString(addr)
+      const { bytes, tuples, path } = codec.fromMultiaddrInputString(addr)
       this.bytes = bytes
       this.#tuples = tuples
       this.#path = path

@@ -3,7 +3,7 @@ import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 import varint from 'varint'
 import { convertToBytes, convertToString } from './convert.js'
 import { getProtocol } from './protocols-table.js'
-import type { StringTuple, Tuple, Protocol } from './index.js'
+import type { StringTuple, Tuple, Protocol, MultiaddrInputString, MultiaddrInputStringResult } from './index.js'
 
 /**
  * string -> [[str name, str addr]... ]
@@ -66,9 +66,10 @@ export function stringTuplesToString (tuples: StringTuple[]): string {
 }
 
 /**
- * [[str name, str addr]... ] -> [[int code, Uint8Array]... ]
+ * [[str name, str addr]... ] -> {tuples: [[int code, Uint8Array]... ], path: str}
+ * The logic to get path is the same to DefaultMultiaddr.getPath()
  */
-export function stringTuplesToTuples (stringTuples: Array<string[] | string>): { tuples: Tuple[], path: string | null } {
+export function stringTuplesToTuples (stringTuples: Array<string[] | string>): Omit<MultiaddrInputStringResult, 'bytes'> {
   let path: string | null | undefined
   const tuples = stringTuples.map((tup) => {
     if (!Array.isArray(tup)) {
@@ -177,9 +178,9 @@ export function bytesToString (buf: Uint8Array): string {
 }
 
 /**
- * String -> Uint8Array
+ * MultiaddrInputString -> MultiaddrInputStringResult
  */
-export function stringToBytes (str: string): { bytes: Uint8Array, tuples: Tuple[], path: string | null } {
+export function parseMultiaddrInputString (str: MultiaddrInputString): MultiaddrInputStringResult {
   str = cleanPath(str)
   const stringTuples = stringToStringTuples(str)
   const { tuples, path } = stringTuplesToTuples(stringTuples)
@@ -188,10 +189,10 @@ export function stringToBytes (str: string): { bytes: Uint8Array, tuples: Tuple[
 }
 
 /**
- * String -> Uint8Array
+ * MultiaddrInputString -> MultiaddrInputStringResult
  */
-export function fromString (str: string): { bytes: Uint8Array, tuples: Tuple[], path: string | null } {
-  return stringToBytes(str)
+export function fromMultiaddrInputString (str: MultiaddrInputString): MultiaddrInputStringResult {
+  return parseMultiaddrInputString(str)
 }
 
 /**

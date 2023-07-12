@@ -19,7 +19,8 @@ describe('codec', () => {
   describe('.stringTuplesToTuples', () => {
     const testCases: Array<{ name: string, stringTuples: Array<string[] | string>, tuples: Array<[number, Uint8Array?]>, path: string | null }> = [
       { name: 'handles non array tuples', stringTuples: [['ip4', '0.0.0.0'], 'utp'], tuples: [[4, Uint8Array.from([0, 0, 0, 0])], [302]], path: null },
-      { name: 'handle not null path', stringTuples: [['unix', '/tmp/p2p.sock']], tuples: [[400, convertToBytes(400, '/tmp/p2p.sock')]], path: '/tmp/p2p.sock' }
+      { name: 'handle not null path', stringTuples: [['unix', '/tmp/p2p.sock']], tuples: [[400, convertToBytes(400, '/tmp/p2p.sock')]], path: '/tmp/p2p.sock' },
+      { name: 'should return the 1st path', stringTuples: [['unix', '/tmp/p2p.sock'], ['unix', '/tmp2/p2p.sock']], tuples: [[400, convertToBytes(400, '/tmp/p2p.sock')], [400, convertToBytes(400, '/tmp2/p2p.sock')]], path: '/tmp/p2p.sock' }
     ]
 
     for (const { name, stringTuples, tuples, path } of testCases) {
