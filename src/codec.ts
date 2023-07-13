@@ -83,7 +83,7 @@ export function stringTuplesToTuples (stringTuples: Array<string[] | string>): O
     return tuple
   })
 
-  if (path == null) {
+  if (path === undefined) {
     path = null
   }
 
