@@ -17,8 +17,7 @@ import { base58btc } from 'multiformats/bases/base58'
 import { CID } from 'multiformats/cid'
 import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import varint from 'varint'
-import * as codec from './codec.js'
+import { bytesToMultiaddrParts, stringToMultiaddrParts, type MultiaddrParts, tuplesToBytes } from './codec.js'
 import { getProtocol, names } from './protocols-table.js'
 
 const inspect = Symbol.for('nodejs.util.inspect.custom')
@@ -61,14 +60,9 @@ export interface NodeAddress {
 }
 
 /**
- * Represent a multiaaddr input string
- */
-export type MultiaddrInputString = string
-
-/**
  * These types can be parsed into a {@link Multiaddr} object
  */
-export type MultiaddrInput = MultiaddrInputString | Multiaddr | Uint8Array | null
+export type MultiaddrInput = string | Multiaddr | Uint8Array | null
 
 /**
  * A Resolver is a function that takes a {@link Multiaddr} and resolves it into one
@@ -85,13 +79,6 @@ export type Tuple = [number, Uint8Array?]
  * A code/value pair with the value as a string
  */
 export type StringTuple = [number, string?]
-
-/** The result of parsing a MultiaddrInput string */
-export interface MultiaddrInputStringResult {
-  bytes: Uint8Array
-  tuples: Tuple[]
-  path: string | null
-}
 
 /**
  * Allows aborting long-lived operations
@@ -506,10 +493,10 @@ export function isMultiaddr (value: any): value is Multiaddr {
  */
 class DefaultMultiaddr implements Multiaddr {
   public bytes: Uint8Array
-  #string?: string
-  #tuples?: Tuple[]
-  #stringTuples?: StringTuple[]
-  #path?: string | null
+  #string: string
+  #tuples: Tuple[]
+  #stringTuples: StringTuple[]
+  #path: string | null
 
   [symbol]: boolean = true
 
@@ -519,28 +506,28 @@ class DefaultMultiaddr implements Multiaddr {
       addr = ''
     }
 
+    let parts: MultiaddrParts
     if (addr instanceof Uint8Array) {
-      this.bytes = codec.fromBytes(addr)
+      parts = bytesToMultiaddrParts(addr)
     } else if (typeof addr === 'string') {
       if (addr.length > 0 && addr.charAt(0) !== '/') {
         throw new Error(`multiaddr "${addr}" must start with a "/"`)
       }
-      const { bytes, tuples, path } = codec.fromMultiaddrInputString(addr)
-      this.bytes = bytes
-      this.#tuples = tuples
-      this.#path = path
+      parts = stringToMultiaddrParts(addr)
     } else if (isMultiaddr(addr)) { // Multiaddr
-      this.bytes = codec.fromBytes(addr.bytes) // validate + copy buffer
+      parts = bytesToMultiaddrParts(addr.bytes)
     } else {
       throw new Error('addr must be a string, Buffer, or another Multiaddr')
     }
+
+    this.bytes = parts.bytes
+    this.#string = parts.string
+    this.#tuples = parts.tuples
+    this.#stringTuples = parts.stringTuples
+    this.#path = parts.path
   }
 
   toString (): string {
-    if (this.#string == null) {
-      this.#string = codec.bytesToString(this.bytes)
-    }
-
     return this.#string
   }
 
@@ -602,44 +589,22 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   protos (): Protocol[] {
-    return this.protoCodes().map(code => Object.assign({}, getProtocol(code)))
+    return this.#tuples.map(([code]) => Object.assign({}, getProtocol(code)))
   }
 
   protoCodes (): number[] {
-    const codes: number[] = []
-    const buf = this.bytes
-    let i = 0
-    while (i < buf.length) {
-      const code = varint.decode(buf, i)
-      const n = varint.decode.bytes ?? 0
-
-      const p = getProtocol(code)
-      const size = codec.sizeForAddr(p, buf.slice(i + n))
-
-      i += (size + n)
-      codes.push(code)
-    }
-
-    return codes
+    return this.#tuples.map(([code]) => code)
   }
 
   protoNames (): string[] {
-    return this.protos().map(proto => proto.name)
+    return this.#tuples.map(([code]) => getProtocol(code).name)
   }
 
   tuples (): Array<[number, Uint8Array?]> {
-    if (this.#tuples == null) {
-      this.#tuples = codec.bytesToTuples(this.bytes)
-    }
-
     return this.#tuples
   }
 
   stringTuples (): Array<[number, string?]> {
-    if (this.#stringTuples == null) {
-      this.#stringTuples = codec.tuplesToStringTuples(this.tuples())
-    }
-
     return this.#stringTuples
   }
 
@@ -662,7 +627,7 @@ class DefaultMultiaddr implements Multiaddr {
     const tuples = this.tuples()
     for (let i = tuples.length - 1; i >= 0; i--) {
       if (tuples[i][0] === code) {
-        return new DefaultMultiaddr(codec.tuplesToBytes(tuples.slice(0, i)))
+        return new DefaultMultiaddr(tuplesToBytes(tuples.slice(0, i)))
       }
     }
     return this
@@ -699,26 +664,6 @@ class DefaultMultiaddr implements Multiaddr {
   }
 
   getPath (): string | null {
-    // on initialization, this.#path is undefined
-    // after the first call, it is either a string or null
-    if (this.#path === undefined) {
-      try {
-        this.#path = this.stringTuples().filter((tuple) => {
-          const proto = getProtocol(tuple[0])
-          if (proto.path === true) {
-            return true
-          }
-          return false
-        })[0][1]
-
-        if (this.#path == null) {
-          this.#path = null
-        }
-      } catch {
-        this.#path = null
-      }
-    }
-
     return this.#path
   }
 
@@ -786,7 +731,7 @@ class DefaultMultiaddr implements Multiaddr {
    * ```
    */
   [inspect] (): string {
-    return `Multiaddr(${codec.bytesToString(this.bytes)})`
+    return `Multiaddr(${this.#string})`
   }
 }
 
