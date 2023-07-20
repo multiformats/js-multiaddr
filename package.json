@@ -176,7 +176,7 @@
   "devDependencies": {
     "@types/sinon": "^10.0.14",
     "@types/varint": "^6.0.0",
-    "aegir": "^39.0.6",
+    "aegir": "^40.0.0",
     "sinon": "^15.0.0"
   },
   "browser": {
