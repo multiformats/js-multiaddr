@@ -1,3 +1,10 @@
+## [12.1.5](https://github.com/multiformats/js-multiaddr/compare/v12.1.4...v12.1.5) (2023-07-28)
+
+
+### Bug Fixes
+
+* make getPeerId return the target peer id from relay addrs ([#325](https://github.com/multiformats/js-multiaddr/issues/325)) ([2b0e353](https://github.com/multiformats/js-multiaddr/commit/2b0e35325c9014db9c3c8aec915ff185dea2f786)), closes [#319](https://github.com/multiformats/js-multiaddr/issues/319)
+
 ## [12.1.4](https://github.com/multiformats/js-multiaddr/compare/v12.1.3...v12.1.4) (2023-07-28)
 
 
