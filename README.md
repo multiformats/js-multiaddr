@@ -47,7 +47,7 @@ A standard way to represent addresses that
 ## Usage
 
 ```js
-import { multiaddr } from 'multiaddr'
+import { multiaddr } from '@multiformats/multiaddr'
 const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
 // Multiaddr(/ip4/127.0.0.1/udp/1234)
 
@@ -89,7 +89,7 @@ addr.encapsulate('/sctp/5678')
 To provide multiaddr resolvers you can do:
 
 ```js
-import { resolvers  } from 'multiaddr'
+import { resolvers  } from '@multiformats/multiaddr'
 
 resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
 ```
