@@ -997,6 +997,11 @@ describe('helpers', () => {
         multiaddr('/p2p-circuit/p2p/12D3KooWNvSZnPi3RrhrTwEY4LuuBeB6K6facKUCJcyWG1aoDd2p').getPeerId()
       ).to.equal('12D3KooWNvSZnPi3RrhrTwEY4LuuBeB6K6facKUCJcyWG1aoDd2p')
     })
+    it('does not extract a peer Id from a circuit relay multiaddr where only the relay peer id is present', () => {
+      expect(
+        multiaddr('/ip4/127.0.0.1/tcp/123/p2p/bafzbeigweq4zr4x4ky2dvv7nanbkw6egutvrrvzw6g3h2rftp7gidyhtt4/p2p-circuit').getPeerId()
+      ).to.be.null()
+    })
   })
 
   describe('.getPeerId should return null on missing peer id in multiaddr', () => {

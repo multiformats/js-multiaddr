@@ -635,14 +635,21 @@ class DefaultMultiaddr implements Multiaddr {
 
   getPeerId (): string | null {
     try {
-      const tuples = this.stringTuples().filter((tuple) => {
-        if (tuple[0] === names.ipfs.code) {
-          return true
+      let tuples: Array<[number, string | undefined]> = []
+
+      this.stringTuples().forEach(([code, name]) => {
+        if (code === names.p2p.code) {
+          tuples.push([code, name])
         }
-        return false
+
+        // if this is a p2p-circuit address, return the target peer id if present
+        // not the peer id of the relay
+        if (code === names['p2p-circuit'].code) {
+          tuples = []
+        }
       })
 
-      // Get the last ipfs tuple ['ipfs', 'peerid string']
+      // Get the last ipfs tuple ['p2p', 'peerid string']
       const tuple = tuples.pop()
       if (tuple?.[1] != null) {
         const peerIdStr = tuple[1]
