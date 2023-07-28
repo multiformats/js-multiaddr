@@ -1,3 +1,26 @@
+## [12.1.4](https://github.com/multiformats/js-multiaddr/compare/v12.1.3...v12.1.4) (2023-07-28)
+
+
+### Bug Fixes
+
+* precalculate multiaddr parts ([#330](https://github.com/multiformats/js-multiaddr/issues/330)) ([cf7e9c6](https://github.com/multiformats/js-multiaddr/commit/cf7e9c6dfffe8c5c2a9120d85a56465e3c856314)), closes [#329](https://github.com/multiformats/js-multiaddr/issues/329)
+
+
+### Trivial Changes
+
+* update project config ([#326](https://github.com/multiformats/js-multiaddr/issues/326)) ([76fa6f5](https://github.com/multiformats/js-multiaddr/commit/76fa6f57b842010c2f74fffdca35b9a1435dbab9))
+
+
+### Documentation
+
+* import from @multiformats/multiaddr ([#327](https://github.com/multiformats/js-multiaddr/issues/327)) ([4dedd4b](https://github.com/multiformats/js-multiaddr/commit/4dedd4bf6eeea9aa9847db6affe43b2b003fbee7))
+
+
+### Dependencies
+
+* bump multiformats from 11.0.2 to 12.0.1 ([#328](https://github.com/multiformats/js-multiaddr/issues/328)) ([07d4f8a](https://github.com/multiformats/js-multiaddr/commit/07d4f8ad77f381e0ec7633bdfc9f6de34b818279))
+* **dev:** bump aegir from 39.0.13 to 40.0.2 ([#333](https://github.com/multiformats/js-multiaddr/issues/333)) ([3480741](https://github.com/multiformats/js-multiaddr/commit/34807412911acbb4532620260f4144c179642aad))
+
 ## [12.1.3](https://github.com/multiformats/js-multiaddr/compare/v12.1.2...v12.1.3) (2023-05-11)
 
 
