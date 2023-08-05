@@ -1,3 +1,10 @@
+## [12.1.6](https://github.com/multiformats/js-multiaddr/compare/v12.1.5...v12.1.6) (2023-08-05)
+
+
+### Dependencies
+
+* switch to @libp2p/interface ([#334](https://github.com/multiformats/js-multiaddr/issues/334)) ([bb14cb2](https://github.com/multiformats/js-multiaddr/commit/bb14cb22df933727599948a8817d44992929ac6e))
+
 ## [12.1.5](https://github.com/multiformats/js-multiaddr/compare/v12.1.4...v12.1.5) (2023-07-28)
 
 
