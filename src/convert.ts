@@ -10,10 +10,10 @@ import { base58btc } from 'multiformats/bases/base58'
 import { bases } from 'multiformats/basics'
 import { CID } from 'multiformats/cid'
 import * as Digest from 'multiformats/hashes/digest'
+import * as varint from 'uint8-varint'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import varint from 'varint'
 import * as ip from './ip.js'
 import { getProtocol } from './protocols-table.js'
 import type { Multiaddr } from './index.js'
@@ -176,7 +176,7 @@ function str2bytes (str: string): Uint8Array {
 
 function bytes2str (buf: Uint8Array): string {
   const size = varint.decode(buf)
-  buf = buf.slice(varint.decode.bytes)
+  buf = buf.slice(varint.encodingLength(size))
 
   if (buf.length !== size) {
     throw new Error('inconsistent lengths')
@@ -206,7 +206,7 @@ function mb2bytes (mbstr: string): Uint8Array {
 }
 function bytes2mb (buf: Uint8Array): string {
   const size = varint.decode(buf)
-  const hash = buf.slice(varint.decode.bytes)
+  const hash = buf.slice(varint.encodingLength(size))
 
   if (hash.length !== size) {
     throw new Error('inconsistent lengths')
@@ -220,7 +220,7 @@ function bytes2mb (buf: Uint8Array): string {
  */
 function bytes2mh (buf: Uint8Array): string {
   const size = varint.decode(buf)
-  const address = buf.slice(varint.decode.bytes)
+  const address = buf.slice(varint.encodingLength(size))
 
   if (address.length !== size) {
     throw new Error('inconsistent lengths')
