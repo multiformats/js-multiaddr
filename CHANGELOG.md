@@ -1,3 +1,16 @@
+## [12.1.7](https://github.com/multiformats/js-multiaddr/compare/v12.1.6...v12.1.7) (2023-08-16)
+
+
+### Trivial Changes
+
+* add or force update .github/workflows/js-test-and-release.yml ([#336](https://github.com/multiformats/js-multiaddr/issues/336)) ([9e786a0](https://github.com/multiformats/js-multiaddr/commit/9e786a0beaeac2044b5b80139b6090ddd7d1763d))
+* delete templates [skip ci] ([#335](https://github.com/multiformats/js-multiaddr/issues/335)) ([853d432](https://github.com/multiformats/js-multiaddr/commit/853d4328e31f2c1d7c5858203bc752c8d7bbfa9d))
+
+
+### Dependencies
+
+* switch varint for uint8-varint ([#337](https://github.com/multiformats/js-multiaddr/issues/337)) ([166fd43](https://github.com/multiformats/js-multiaddr/commit/166fd43d80c2f7f5061a36d0381582d5ffd5b158))
+
 ## [12.1.6](https://github.com/multiformats/js-multiaddr/compare/v12.1.5...v12.1.6) (2023-08-05)
 
 
