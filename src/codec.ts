@@ -1,6 +1,6 @@
+import * as varint from 'uint8-varint'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import varint from 'varint'
 import { convertToBytes, convertToString } from './convert.js'
 import { getProtocol } from './protocols-table.js'
 import type { StringTuple, Tuple, Protocol } from './index.js'
@@ -79,7 +79,7 @@ export function bytesToMultiaddrParts (bytes: Uint8Array): MultiaddrParts {
   let i = 0
   while (i < bytes.length) {
     const code = varint.decode(bytes, i)
-    const n = varint.decode.bytes ?? 0
+    const n = varint.encodingLength(code)
 
     const p = getProtocol(code)
 
@@ -165,8 +165,8 @@ function sizeForAddr (p: Protocol, addr: Uint8Array | number[]): number {
   } else if (p.size === 0) {
     return 0
   } else {
-    const size = varint.decode(addr)
-    return size + (varint.decode.bytes ?? 0)
+    const size = varint.decode(addr instanceof Uint8Array ? addr : Uint8Array.from(addr))
+    return size + varint.encodingLength(size)
   }
 }
 
@@ -175,7 +175,7 @@ export function bytesToTuples (buf: Uint8Array): Tuple[] {
   let i = 0
   while (i < buf.length) {
     const code = varint.decode(buf, i)
-    const n = varint.decode.bytes ?? 0
+    const n = varint.encodingLength(code)
 
     const p = getProtocol(code)
 
