@@ -46,7 +46,7 @@ export const table: Array<[number, number, string, boolean?, boolean?]> = [
   [478, 0, 'wss'],
   [479, 0, 'p2p-websocket-star'],
   [480, 0, 'http'],
-  [777, V, 'memory']
+  [1883, 0, 'mqtt']
 ]
 
 // populate tables
