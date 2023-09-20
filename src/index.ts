@@ -692,7 +692,7 @@ class DefaultMultiaddr implements Multiaddr {
     return uint8ArrayEquals(this.bytes, addr.bytes)
   }
 
-  async resolve (options?: AbortOptions & ResolverOptions ): Promise<Multiaddr[]> {
+  async resolve (options?: AbortOptions & ResolverOptions): Promise<Multiaddr[]> {
     const resolvableProto = this.protos().find((p) => p.resolvable)
 
     // Multiaddr is not resolvable?
