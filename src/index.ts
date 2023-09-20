@@ -68,7 +68,7 @@ export type MultiaddrInput = string | Multiaddr | Uint8Array | null
  * A Resolver is a function that takes a {@link Multiaddr} and resolves it into one
  * or more string representations of that {@link Multiaddr}.
  */
-export interface Resolver { (addr: Multiaddr, options?: AbortOptions): Promise<string[]> }
+export interface Resolver { (addr: Multiaddr, options?: AbortOptions & ResolverOptions): Promise<string[]> }
 
 /**
  * A code/value pair
@@ -85,6 +85,20 @@ export type StringTuple = [number, string?]
  */
 export interface AbortOptions {
   signal?: AbortSignal
+}
+
+/**
+ * Options for DNS resolvers.
+ * dns-over-http-resolver in the browser and 'node:dns' in Node.js
+ */
+export interface ResolverOptions {
+  /**
+   * DNS servers to use for resolution.
+   *
+   * In the browser, this is passed to dns-over-http-resolver, so the servers should be a DoH compatible url such as https://cloudflare-dns.com/dns-query
+   * In Node.js, this is passed to dns.resolve, so the servers should be an IP address or hostname (with optional port) such as '9.9.9.9'
+   */
+  dnsServers?: string[]
 }
 
 /**
@@ -351,7 +365,7 @@ export interface Multiaddr {
    * // ]
    * ```
    */
-  resolve: (options?: AbortOptions) => Promise<Multiaddr[]>
+  resolve: (options?: AbortOptions & ResolverOptions) => Promise<Multiaddr[]>
 
   /**
    * Gets a Multiaddrs node-friendly address object. Note that protocol information
@@ -678,7 +692,7 @@ class DefaultMultiaddr implements Multiaddr {
     return uint8ArrayEquals(this.bytes, addr.bytes)
   }
 
-  async resolve (options?: AbortOptions): Promise<Multiaddr[]> {
+  async resolve (options?: AbortOptions & ResolverOptions ): Promise<Multiaddr[]> {
     const resolvableProto = this.protos().find((p) => p.resolvable)
 
     // Multiaddr is not resolvable?

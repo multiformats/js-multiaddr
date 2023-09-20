@@ -6,7 +6,7 @@
 
 import { getProtocol } from '../protocols-table.js'
 import Resolver from './dns.js'
-import type { AbortOptions, Multiaddr } from '../index.js'
+import type { AbortOptions, Multiaddr, ResolverOptions } from '../index.js'
 
 const { code: dnsaddrCode } = getProtocol('dnsaddr')
 
@@ -31,8 +31,11 @@ const { code: dnsaddrCode } = getProtocol('dnsaddr')
  * //]
  * ```
  */
-export async function dnsaddrResolver (addr: Multiaddr, options: AbortOptions = {}): Promise<string[]> {
+export async function dnsaddrResolver (addr: Multiaddr, options: AbortOptions & ResolverOptions = {}): Promise<string[]> {
   const resolver = new Resolver()
+  if (options.dnsServers != null) {
+    resolver.setServers(options.dnsServers)
+  }
 
   if (options.signal != null) {
     options.signal.addEventListener('abort', () => {

@@ -1,3 +1,3 @@
-import { Resolver } from 'dns/promises'
+import { Resolver } from 'node:dns/promises'
 
 export default Resolver
