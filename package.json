@@ -175,7 +175,7 @@
   },
   "devDependencies": {
     "@types/sinon": "^10.0.14",
-    "aegir": "^40.0.2",
+    "aegir": "^41.0.0",
     "sinon": "^15.0.0"
   },
   "browser": {
