@@ -176,7 +176,7 @@
   "devDependencies": {
     "@types/sinon": "^10.0.14",
     "aegir": "^40.0.2",
-    "sinon": "^15.0.0"
+    "sinon": "^16.1.3"
   },
   "browser": {
     "./dist/src/resolvers/dns.js": "./dist/src/resolvers/dns.browser.js"
