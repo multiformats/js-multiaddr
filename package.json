@@ -16,10 +16,6 @@
     "multiaddr",
     "string"
   ],
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.6.0"
-  },
   "type": "module",
   "types": "./dist/src/index.d.ts",
   "typesVersions": {
@@ -61,6 +57,7 @@
   "eslintConfig": {
     "extends": "ipfs",
     "parserOptions": {
+      "project": true,
       "sourceType": "module"
     }
   },

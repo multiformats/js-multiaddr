@@ -1,0 +1,7 @@
+{
+  "entryPoints": [
+    "./src/index.ts",
+    "./src/convert.ts",
+    "./src/resolvers/index.ts"
+  ]
+}
