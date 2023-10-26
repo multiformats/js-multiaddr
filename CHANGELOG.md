@@ -1,3 +1,11 @@
+## [12.1.8](https://github.com/multiformats/js-multiaddr/compare/v12.1.7...v12.1.8) (2023-10-26)
+
+
+### Dependencies
+
+* **dev:** bump aegir from 40.0.13 to 41.0.11 ([#351](https://github.com/multiformats/js-multiaddr/issues/351)) ([7de4e23](https://github.com/multiformats/js-multiaddr/commit/7de4e231c6e02bb5ff41c760833001d072e4bfd0))
+* **dev:** bump sinon from 15.2.0 to 17.0.0 ([#348](https://github.com/multiformats/js-multiaddr/issues/348)) ([b229e64](https://github.com/multiformats/js-multiaddr/commit/b229e64bdec7897e5840c329b02faa407148e0bb))
+
 ## [12.1.7](https://github.com/multiformats/js-multiaddr/compare/v12.1.6...v12.1.7) (2023-08-16)
 
 
