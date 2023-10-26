@@ -16,10 +16,6 @@
     "multiaddr",
     "string"
   ],
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.6.0"
-  },
   "type": "module",
   "types": "./dist/src/index.d.ts",
   "typesVersions": {
@@ -61,6 +57,7 @@
   "eslintConfig": {
     "extends": "ipfs",
     "parserOptions": {
+      "project": true,
       "sourceType": "module"
     }
   },
@@ -175,7 +172,7 @@
   },
   "devDependencies": {
     "@types/sinon": "^10.0.14",
-    "aegir": "^40.0.2",
+    "aegir": "^41.0.11",
     "sinon": "^17.0.0"
   },
   "browser": {

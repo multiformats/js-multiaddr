@@ -109,7 +109,7 @@ export interface Multiaddr {
    * // '/ip4/127.0.0.1/tcp/4001'
    * ```
    */
-  toString: () => string
+  toString(): string
 
   /**
    * Returns Multiaddr as a JSON encoded object
@@ -122,7 +122,7 @@ export interface Multiaddr {
    * // '/ip4/127.0.0.1/tcp/4001'
    * ```
    */
-  toJSON: () => string
+  toJSON(): string
 
   /**
    * Returns Multiaddr as a convinient options object to be used with net.createConnection
@@ -135,7 +135,7 @@ export interface Multiaddr {
    * // { family: 4, host: '127.0.0.1', transport: 'tcp', port: 4001 }
    * ```
    */
-  toOptions: () => MultiaddrObject
+  toOptions(): MultiaddrObject
 
   /**
    * Returns the protocols the Multiaddr is defined with, as an array of objects, in
@@ -152,7 +152,7 @@ export interface Multiaddr {
    * //   { code: 6, size: 16, name: 'tcp' } ]
    * ```
    */
-  protos: () => Protocol[]
+  protos(): Protocol[]
 
   /**
    * Returns the codes of the protocols in left-to-right order.
@@ -166,7 +166,7 @@ export interface Multiaddr {
    * // [ 4, 6 ]
    * ```
    */
-  protoCodes: () => number[]
+  protoCodes(): number[]
 
   /**
    * Returns the names of the protocols in left-to-right order.
@@ -180,7 +180,7 @@ export interface Multiaddr {
    * // [ 'ip4', 'tcp' ]
    * ```
    */
-  protoNames: () => string[]
+  protoNames(): string[]
 
   /**
    * Returns a tuple of parts
@@ -193,7 +193,7 @@ export interface Multiaddr {
    * // [ [ 4, <Buffer 7f 00 00 01> ], [ 6, <Buffer 0f a1> ] ]
    * ```
    */
-  tuples: () => Tuple[]
+  tuples(): Tuple[]
 
   /**
    * Returns a tuple of string/number parts
@@ -208,7 +208,7 @@ export interface Multiaddr {
    * // [ [ 4, '127.0.0.1' ], [ 6, '4001' ] ]
    * ```
    */
-  stringTuples: () => StringTuple[]
+  stringTuples(): StringTuple[]
 
   /**
    * Encapsulates a Multiaddr in another Multiaddr
@@ -232,7 +232,7 @@ export interface Multiaddr {
    *
    * @param {MultiaddrInput} addr - Multiaddr to add into this Multiaddr
    */
-  encapsulate: (addr: MultiaddrInput) => Multiaddr
+  encapsulate(addr: MultiaddrInput): Multiaddr
 
   /**
    * Decapsulates a Multiaddr from another Multiaddr
@@ -256,7 +256,7 @@ export interface Multiaddr {
    *
    * @param {Multiaddr | string} addr - Multiaddr to remove from this Multiaddr
    */
-  decapsulate: (addr: Multiaddr | string) => Multiaddr
+  decapsulate(addr: Multiaddr | string): Multiaddr
 
   /**
    * A more reliable version of `decapsulate` if you are targeting a
@@ -278,7 +278,7 @@ export interface Multiaddr {
    * // '/ip4/127.0.0.1/tcp/8080'
    * ```
    */
-  decapsulateCode: (code: number) => Multiaddr
+  decapsulateCode(code: number): Multiaddr
 
   /**
    * Extract the peerId if the multiaddr contains one
@@ -294,7 +294,7 @@ export interface Multiaddr {
    * const peerId = mh1.getPeerId()
    * ```
    */
-  getPeerId: () => string | null
+  getPeerId(): string | null
 
   /**
    * Extract the path if the multiaddr contains one
@@ -310,7 +310,7 @@ export interface Multiaddr {
    * const path = mh1.getPath()
    * ```
    */
-  getPath: () => string | null
+  getPath(): string | null
 
   /**
    * Checks if two Multiaddrs are the same
@@ -332,7 +332,7 @@ export interface Multiaddr {
    * // false
    * ```
    */
-  equals: (addr: { bytes: Uint8Array }) => boolean
+  equals(addr: { bytes: Uint8Array }): boolean
 
   /**
    * Resolve multiaddr if containing resolvable hostname.
@@ -351,7 +351,7 @@ export interface Multiaddr {
    * // ]
    * ```
    */
-  resolve: (options?: AbortOptions) => Promise<Multiaddr[]>
+  resolve(options?: AbortOptions): Promise<Multiaddr[]>
 
   /**
    * Gets a Multiaddrs node-friendly address object. Note that protocol information
@@ -368,7 +368,7 @@ export interface Multiaddr {
    * // {family: 4, address: '127.0.0.1', port: 4001}
    * ```
    */
-  nodeAddress: () => NodeAddress
+  nodeAddress(): NodeAddress
 
   /**
    * Returns if a Multiaddr is a Thin Waist address or not.
@@ -399,7 +399,7 @@ export interface Multiaddr {
    * // false
    * ```
    */
-  isThinWaistAddress: (addr?: Multiaddr) => boolean
+  isThinWaistAddress(addr?: Multiaddr): boolean
 }
 
 /**
