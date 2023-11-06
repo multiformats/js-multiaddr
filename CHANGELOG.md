@@ -1,3 +1,10 @@
+## [12.1.9](https://github.com/multiformats/js-multiaddr/compare/v12.1.8...v12.1.9) (2023-11-06)
+
+
+### Bug Fixes
+
+* use Multiaddr as class name ([#352](https://github.com/multiformats/js-multiaddr/issues/352)) ([35348cd](https://github.com/multiformats/js-multiaddr/commit/35348cd0a91f3c8fe1d88fadc57d7db1201b83c4))
+
 ## [12.1.8](https://github.com/multiformats/js-multiaddr/compare/v12.1.7...v12.1.8) (2023-10-26)
 
 
