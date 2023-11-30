@@ -1,3 +1,15 @@
+## [12.1.11](https://github.com/multiformats/js-multiaddr/compare/v12.1.10...v12.1.11) (2023-11-30)
+
+
+### Trivial Changes
+
+* update branch name ([7d0cfd7](https://github.com/multiformats/js-multiaddr/commit/7d0cfd7e0add12ca28d6fc8c139f9573afc4c3c1))
+
+
+### Dependencies
+
+* bump @libp2p/interface from 0.1.6 to 1.0.0 ([#357](https://github.com/multiformats/js-multiaddr/issues/357)) ([bb58351](https://github.com/multiformats/js-multiaddr/commit/bb58351496a892e1fbd4acacef39d03058abfdc1))
+
 ## [12.1.10](https://github.com/multiformats/js-multiaddr/compare/v12.1.9...v12.1.10) (2023-11-06)
 
 
