@@ -1,15 +1,67 @@
 /**
  * @packageDocumentation
  *
- * An implementation of a Multiaddr in JavaScript
+ * A standard way to represent addresses that
+ *
+ * - support any standard network protocol
+ * - are self-describing
+ * - have a binary packed format
+ * - have a nice string representation
+ * - encapsulate well
  *
  * @example
  *
  * ```js
  * import { multiaddr } from '@multiformats/multiaddr'
+ * const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
+ * // Multiaddr(/ip4/127.0.0.1/udp/1234)
  *
- * const ma = multiaddr('/ip4/127.0.0.1/tcp/1234')
+ * const addr = multiaddr("/ip4/127.0.0.1/udp/1234")
+ * // Multiaddr(/ip4/127.0.0.1/udp/1234)
+ *
+ * addr.bytes
+ * // <Uint8Array 04 7f 00 00 01 11 04 d2>
+ *
+ * addr.toString()
+ * // '/ip4/127.0.0.1/udp/1234'
+ *
+ * addr.protos()
+ * // [
+ * //   {code: 4, name: 'ip4', size: 32},
+ * //   {code: 273, name: 'udp', size: 16}
+ * // ]
+ *
+ * // gives you an object that is friendly with what Node.js core modules expect for addresses
+ * addr.nodeAddress()
+ * // {
+ * //   family: 4,
+ * //   port: 1234,
+ * //   address: "127.0.0.1"
+ * // }
+ *
+ * addr.encapsulate('/sctp/5678')
+ * // Multiaddr(/ip4/127.0.0.1/udp/1234/sctp/5678)
  * ```
+ *
+ * ## Resolvers
+ *
+ * `multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree.
+ *
+ * To provide multiaddr resolvers you can do:
+ *
+ * ```js
+ * import { resolvers  } from '@multiformats/multiaddr'
+ *
+ * resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+ * ```
+ *
+ * The available resolvers are:
+ *
+ * | Name              | type      | Description                         |
+ * | ----------------- | --------- | ----------------------------------- |
+ * | `dnsaddrResolver` | `dnsaddr` | dnsaddr resolution with TXT Records |
+ *
+ * A resolver receives a `Multiaddr` as a parameter and returns a `Promise<Array<string>>`.
  */
 
 import { Multiaddr as MultiaddrClass, symbol } from './multiaddr.js'
