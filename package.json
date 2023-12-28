@@ -172,7 +172,7 @@
     "dns-over-http-resolver": "3.0.0",
     "multiformats": "^13.0.0",
     "uint8-varint": "^2.0.1",
-    "uint8arrays": "^4.0.2"
+    "uint8arrays": "^5.0.0"
   },
   "devDependencies": {
     "@types/sinon": "^17.0.2",
