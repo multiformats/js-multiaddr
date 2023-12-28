@@ -1,3 +1,16 @@
+## [12.1.12](https://github.com/multiformats/js-multiaddr/compare/v12.1.11...v12.1.12) (2023-12-28)
+
+
+### Trivial Changes
+
+* update .github/workflows/js-test-and-release.yml ([#358](https://github.com/multiformats/js-multiaddr/issues/358)) ([ca07127](https://github.com/multiformats/js-multiaddr/commit/ca071273566b25b8e0afba0cba0ea3e7f0343f10))
+
+
+### Dependencies
+
+* bump multiformats from 12.1.3 to 13.0.0 ([#360](https://github.com/multiformats/js-multiaddr/issues/360)) ([d807310](https://github.com/multiformats/js-multiaddr/commit/d80731039a00c740a11da8db9f9f172c6ee28b01))
+* bump uint8arrays from 4.0.10 to 5.0.0 ([#359](https://github.com/multiformats/js-multiaddr/issues/359)) ([53c0c1c](https://github.com/multiformats/js-multiaddr/commit/53c0c1c79ab62be09f4f1f4c1f4024203e033d62))
+
 ## [12.1.11](https://github.com/multiformats/js-multiaddr/compare/v12.1.10...v12.1.11) (2023-11-30)
 
 
