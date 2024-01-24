@@ -1,3 +1,10 @@
+## [12.1.14](https://github.com/multiformats/js-multiaddr/compare/v12.1.13...v12.1.14) (2024-01-24)
+
+
+### Dependencies
+
+* bump dns-over-http-resolver from 3.0.0 to 3.0.2 ([#366](https://github.com/multiformats/js-multiaddr/issues/366)) ([ffb674c](https://github.com/multiformats/js-multiaddr/commit/ffb674ce7065aebd0a71caba60356177b0cf51a1))
+
 ## [12.1.13](https://github.com/multiformats/js-multiaddr/compare/v12.1.12...v12.1.13) (2024-01-24)
 
 
