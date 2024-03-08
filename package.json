@@ -169,15 +169,17 @@
     "@chainsafe/is-ip": "^2.0.1",
     "@chainsafe/netmask": "^2.0.0",
     "@libp2p/interface": "^1.0.0",
-    "dns-over-http-resolver": "^3.0.2",
+    "@multiformats/dns": "^1.0.1",
     "multiformats": "^13.0.0",
+    "race-signal": "^1.0.2",
     "uint8-varint": "^2.0.1",
     "uint8arrays": "^5.0.0"
   },
   "devDependencies": {
     "@types/sinon": "^17.0.2",
     "aegir": "^42.2.2",
-    "sinon": "^17.0.0"
+    "sinon": "^17.0.0",
+    "sinon-ts": "^2.0.0"
   },
   "browser": {
     "./dist/src/resolvers/dns.js": "./dist/src/resolvers/dns.browser.js"

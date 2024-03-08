@@ -11,7 +11,7 @@
  *
  * @example
  *
- * ```js
+ * ```TypeScript
  * import { multiaddr } from '@multiformats/multiaddr'
  * const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
  * // Multiaddr(/ip4/127.0.0.1/udp/1234)
@@ -43,29 +43,58 @@
  * // Multiaddr(/ip4/127.0.0.1/udp/1234/sctp/5678)
  * ```
  *
- * ## Resolvers
+ * ## Resolving DNSADDR addresses
  *
- * `multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree.
+ * [DNSADDR](https://github.com/multiformats/multiaddr/blob/master/protocols/DNSADDR.md) is a spec that allows storing a TXT DNS record that contains a Multiaddr.
  *
- * To provide multiaddr resolvers you can do:
+ * To resolve DNSADDR addresses, call the `.resolve()` function the multiaddr, optionally passing a `DNS` resolver.
  *
- * ```js
- * import { resolvers  } from '@multiformats/multiaddr'
+ * DNSADDR addresses can resolve to multiple multiaddrs, since there is no limit to the number of TXT records that can be stored.
  *
- * resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+ * @example Resolving DNSADDR Multiaddrs
+ *
+ * ```TypeScript
+ * import { multiaddr, resolvers } from '@multiformats/multiaddr'
+ * import { dnsaddr } from '@multiformats/multiaddr/resolvers'
+ *
+ * resolvers.set('dnsaddr', dnsaddr)
+ *
+ * const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
+ *
+ * // resolve with a 5s timeout
+ * const resolved = await ma.resolve({
+ *   signal: AbortSignal.timeout(5000)
+ * })
+ *
+ * console.info(await ma.resolve(resolved)
+ * // [Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...')...]
  * ```
  *
- * The available resolvers are:
+ * @example Using a custom DNS resolver to resolve DNSADDR Multiaddrs
  *
- * | Name              | type      | Description                         |
- * | ----------------- | --------- | ----------------------------------- |
- * | `dnsaddrResolver` | `dnsaddr` | dnsaddr resolution with TXT Records |
+ * ```TypeScript
+ * import { multiaddr } from '@multiformats/multiaddr'
+ * import { dns } from '@multiformats/dns'
+ * import { dnsJsonOverHttps } from '@multiformats/dns/resolvers'
  *
- * A resolver receives a `Multiaddr` as a parameter and returns a `Promise<Array<string>>`.
+ * const resolver = dns({
+ *   '.': dnsJsonOverHttps('https://cloudflare-dns.com/dns-query')
+ * })
+ *
+ * const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
+ * const resolved = await ma.resolve({
+ *  dns: resolver
+ * })
+ *
+ * console.info(resolved)
+ * // [Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...')...]
+ * ```
  */
 
 import { Multiaddr as MultiaddrClass, symbol } from './multiaddr.js'
 import { getProtocol } from './protocols-table.js'
+import type { Resolver } from './resolvers/index.js'
+import type { DNS } from '@multiformats/dns'
 
 /**
  * Protocols are present in the protocol table
@@ -103,12 +132,6 @@ export interface NodeAddress {
 export type MultiaddrInput = string | Multiaddr | Uint8Array | null
 
 /**
- * A Resolver is a function that takes a {@link Multiaddr} and resolves it into one
- * or more string representations of that {@link Multiaddr}.
- */
-export interface Resolver { (addr: Multiaddr, options?: AbortOptions): Promise<string[]> }
-
-/**
  * A code/value pair
  */
 export type Tuple = [number, Uint8Array?]
@@ -131,6 +154,21 @@ export interface AbortOptions {
 export const resolvers = new Map<string, Resolver>()
 
 export { MultiaddrFilter } from './filter/multiaddr-filter.js'
+
+export interface ResolveOptions extends AbortOptions {
+  /**
+   * An optional DNS resolver
+   */
+  dns?: DNS
+
+  /**
+   * When resolving DNSADDR Multiaddrs that resolve to other DNSADDR Multiaddrs,
+   * limit how many times we will recursively resolve them.
+   *
+   * @default 32
+   */
+  maxRecursiveDepth?: number
+}
 
 export interface Multiaddr {
   bytes: Uint8Array
@@ -388,7 +426,7 @@ export interface Multiaddr {
    * // ]
    * ```
    */
-  resolve(options?: AbortOptions): Promise<Multiaddr[]>
+  resolve(options?: ResolveOptions): Promise<Multiaddr[]>
 
   /**
    * Gets a Multiaddrs node-friendly address object. Note that protocol information
