@@ -1,3 +1,16 @@
+## [12.2.0](https://github.com/multiformats/js-multiaddr/compare/v12.1.14...v12.2.0) (2024-03-11)
+
+
+### Features
+
+* accept DNS resolver when resolving DNSADDR addresses ([#373](https://github.com/multiformats/js-multiaddr/issues/373)) ([9b2df99](https://github.com/multiformats/js-multiaddr/commit/9b2df992c067cecc80e6290ccba34e30291b9617))
+
+
+### Trivial Changes
+
+* add or force update .github/workflows/js-test-and-release.yml ([#371](https://github.com/multiformats/js-multiaddr/issues/371)) ([f61dec7](https://github.com/multiformats/js-multiaddr/commit/f61dec7a498f63de9c0943ce54d6694e578ca16a))
+* update project ([#372](https://github.com/multiformats/js-multiaddr/issues/372)) ([9ce73b2](https://github.com/multiformats/js-multiaddr/commit/9ce73b2a950c904095f367f059ea087574302d77))
+
 ## [12.1.14](https://github.com/multiformats/js-multiaddr/compare/v12.1.13...v12.1.14) (2024-01-24)
 
 
