@@ -25,7 +25,7 @@ export interface DNSADDROptions extends AbortOptions {
   maxRecursiveDepth?: number
 }
 
-export const dnsaddr: Resolver<DNSADDROptions> = async function dnsaddr (ma: Multiaddr, options: DNSADDROptions = {}): Promise<Multiaddr[]> {
+export const dnsaddrResolver: Resolver<DNSADDROptions> = async function dnsaddr (ma: Multiaddr, options: DNSADDROptions = {}): Promise<string[]> {
   const recursionLimit = options.maxRecursiveDepth ?? MAX_RECURSIVE_DEPTH
 
   if (recursionLimit === 0) {
@@ -43,7 +43,7 @@ export const dnsaddr: Resolver<DNSADDROptions> = async function dnsaddr (ma: Mul
   }), options.signal)
 
   const peerId = ma.getPeerId()
-  const output: Multiaddr[] = []
+  const output: string[] = []
 
   for (const answer of result.Answer) {
     const addr = answer.data.split('=')[1]
@@ -64,9 +64,9 @@ export const dnsaddr: Resolver<DNSADDROptions> = async function dnsaddr (ma: Mul
         maxRecursiveDepth: recursionLimit - 1
       })
 
-      output.push(...resolved)
+      output.push(...resolved.map(ma => ma.toString()))
     } else {
-      output.push(ma)
+      output.push(ma.toString())
     }
   }
 

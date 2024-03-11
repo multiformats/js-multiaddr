@@ -3,7 +3,7 @@ import { expect } from 'aegir/chai'
 import sinon from 'sinon'
 import { stubInterface, type StubbedInstance } from 'sinon-ts'
 import { multiaddr, resolvers } from '../src/index.js'
-import { dnsaddr } from '../src/resolvers/index.js'
+import { dnsaddrResolver } from '../src/resolvers/index.js'
 import type { DNS } from '@multiformats/dns'
 
 const stubs: Record<string, string[]> = {
@@ -60,7 +60,7 @@ describe('multiaddr resolve', () => {
       })
     })
 
-    resolvers.set('dnsaddr', dnsaddr)
+    resolvers.set('dnsaddr', dnsaddrResolver)
   })
 
   it('should throw if no resolver is available', async () => {

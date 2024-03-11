@@ -19,7 +19,7 @@ import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 import { bytesToMultiaddrParts, stringToMultiaddrParts, type MultiaddrParts, tuplesToBytes } from './codec.js'
 import { getProtocol, names } from './protocols-table.js'
-import { isMultiaddr, resolvers } from './index.js'
+import { isMultiaddr, multiaddr, resolvers } from './index.js'
 import type { MultiaddrInput, Multiaddr as MultiaddrInterface, MultiaddrObject, Protocol, StringTuple, Tuple, NodeAddress, ResolveOptions } from './index.js'
 
 const inspect = Symbol.for('nodejs.util.inspect.custom')
@@ -235,7 +235,9 @@ export class Multiaddr implements MultiaddrInterface {
       throw new CodeError(`no available resolver for ${resolvableProto.name}`, 'ERR_NO_AVAILABLE_RESOLVER')
     }
 
-    return resolver(this, options)
+    const result = await resolver(this, options)
+
+    return result.map(str => multiaddr(str))
   }
 
   nodeAddress (): NodeAddress {

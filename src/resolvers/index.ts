@@ -1,7 +1,7 @@
 import type { AbortOptions, Multiaddr } from '../index.js'
 
 export interface Resolver<ResolveOptions extends AbortOptions = AbortOptions> {
-  (ma: Multiaddr, options?: ResolveOptions): Promise<Multiaddr[]>
+  (ma: Multiaddr, options?: ResolveOptions): Promise<string[]>
 }
 
-export { dnsaddr } from './dnsaddr.js'
+export { dnsaddrResolver } from './dnsaddr.js'

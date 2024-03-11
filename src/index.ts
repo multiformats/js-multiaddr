@@ -155,6 +155,8 @@ export interface AbortOptions {
  */
 export const resolvers = new Map<string, Resolver>()
 
+export type { Resolver }
+
 export { MultiaddrFilter } from './filter/multiaddr-filter.js'
 
 export interface ResolveOptions extends AbortOptions {
