@@ -33,7 +33,7 @@ A standard way to represent addresses that
 
 ## Example
 
-```js
+```TypeScript
 import { multiaddr } from '@multiformats/multiaddr'
 const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
 // Multiaddr(/ip4/127.0.0.1/udp/1234)
@@ -65,25 +65,54 @@ addr.encapsulate('/sctp/5678')
 // Multiaddr(/ip4/127.0.0.1/udp/1234/sctp/5678)
 ```
 
-## Resolvers
+## Resolving DNSADDR addresses
 
-`multiaddr` allows multiaddrs to be resolved when appropriate resolvers are provided. This module already has resolvers available, but you can also create your own.  Resolvers should always be set in the same module that is calling `multiaddr.resolve()` to avoid conflicts if multiple versions of `multiaddr` are in your dependency tree.
+[DNSADDR](https://github.com/multiformats/multiaddr/blob/master/protocols/DNSADDR.md) is a spec that allows storing a TXT DNS record that contains a Multiaddr.
 
-To provide multiaddr resolvers you can do:
+To resolve DNSADDR addresses, call the `.resolve()` function the multiaddr, optionally passing a `DNS` resolver.
 
-```js
-import { resolvers  } from '@multiformats/multiaddr'
+DNSADDR addresses can resolve to multiple multiaddrs, since there is no limit to the number of TXT records that can be stored.
 
-resolvers.set('dnsaddr', resolvers.dnsaddrResolver)
+## Example - Resolving DNSADDR Multiaddrs
+
+```TypeScript
+import { multiaddr, resolvers } from '@multiformats/multiaddr'
+import { dnsaddr } from '@multiformats/multiaddr/resolvers'
+
+resolvers.set('dnsaddr', dnsaddr)
+
+const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
+
+// resolve with a 5s timeout
+const resolved = await ma.resolve({
+  signal: AbortSignal.timeout(5000)
+})
+
+console.info(await ma.resolve(resolved)
+// [Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...')...]
 ```
 
-The available resolvers are:
+## Example - Using a custom DNS resolver to resolve DNSADDR Multiaddrs
 
-| Name              | type      | Description                         |
-| ----------------- | --------- | ----------------------------------- |
-| `dnsaddrResolver` | `dnsaddr` | dnsaddr resolution with TXT Records |
+See the docs for [@multiformats/dns](https://www.npmjs.com/package/@multiformats/dns) for a full breakdown of how to specify multiple resolvers or resolvers that can be used for specific TLDs.
 
-A resolver receives a `Multiaddr` as a parameter and returns a `Promise<Array<string>>`.
+```TypeScript
+import { multiaddr } from '@multiformats/multiaddr'
+import { dns } from '@multiformats/dns'
+import { dnsJsonOverHttps } from '@multiformats/dns/resolvers'
+
+const resolver = dns({
+  '.': dnsJsonOverHttps('https://cloudflare-dns.com/dns-query')
+})
+
+const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
+const resolved = await ma.resolve({
+ dns: resolver
+})
+
+console.info(resolved)
+// [Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...')...]
+```
 
 # Install
 
