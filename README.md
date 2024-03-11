@@ -94,6 +94,8 @@ console.info(await ma.resolve(resolved)
 
 ## Example - Using a custom DNS resolver to resolve DNSADDR Multiaddrs
 
+See the docs for [@multiformats/dns](https://www.npmjs.com/package/@multiformats/dns) for a full breakdown of how to specify multiple resolvers or resolvers that can be used for specific TLDs.
+
 ```TypeScript
 import { multiaddr } from '@multiformats/multiaddr'
 import { dns } from '@multiformats/dns'
