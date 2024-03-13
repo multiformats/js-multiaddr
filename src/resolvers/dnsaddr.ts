@@ -1,6 +1,5 @@
 import { CodeError } from '@libp2p/interface'
 import { dns, RecordType } from '@multiformats/dns'
-import { raceSignal } from 'race-signal'
 import { multiaddr } from '../index.js'
 import { getProtocol } from '../protocols-table.js'
 import type { Resolver } from './index.js'
@@ -25,7 +24,7 @@ export interface DNSADDROptions extends AbortOptions {
   maxRecursiveDepth?: number
 }
 
-export const dnsaddrResolver: Resolver<DNSADDROptions> = async function dnsaddr (ma: Multiaddr, options: DNSADDROptions = {}): Promise<string[]> {
+export const dnsaddrResolver: Resolver<DNSADDROptions> = async function dnsaddrResolver (ma: Multiaddr, options: DNSADDROptions = {}): Promise<string[]> {
   const recursionLimit = options.maxRecursiveDepth ?? MAX_RECURSIVE_DEPTH
 
   if (recursionLimit === 0) {
@@ -35,12 +34,12 @@ export const dnsaddrResolver: Resolver<DNSADDROptions> = async function dnsaddr 
   const [, hostname] = ma.stringTuples().find(([proto]) => proto === dnsaddrCode) ?? []
 
   const resolver = options?.dns ?? dns()
-  const result = await raceSignal(resolver.query(`_dnsaddr.${hostname}`, {
+  const result = await resolver.query(`_dnsaddr.${hostname}`, {
     signal: options?.signal,
     types: [
       RecordType.TXT
     ]
-  }), options.signal)
+  })
 
   const peerId = ma.getPeerId()
   const output: string[] = []

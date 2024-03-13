@@ -129,7 +129,7 @@ describe('multiaddr resolve', () => {
 
       controller.abort()
 
-      await expect(resolvePromise).to.eventually.be.rejected().with.property('code', 'ABORT_ERR')
+      await expect(resolvePromise).to.eventually.be.rejected()
     })
 
     it('should abort resolving deeply nested records', async () => {
