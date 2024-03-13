@@ -1,3 +1,10 @@
+## [12.2.1](https://github.com/multiformats/js-multiaddr/compare/v12.2.0...v12.2.1) (2024-03-13)
+
+
+### Bug Fixes
+
+* remove unused dep ([#374](https://github.com/multiformats/js-multiaddr/issues/374)) ([16e8a75](https://github.com/multiformats/js-multiaddr/commit/16e8a75e074fc9462b81fe58f062dec7175f5fc9))
+
 ## [12.2.0](https://github.com/multiformats/js-multiaddr/compare/v12.1.14...v12.2.0) (2024-03-11)
 
 
