@@ -36,6 +36,9 @@ const stubs: Record<string, string[]> = {
   ],
   '_dnsaddr.am6.bootstrap.libp2p.io': [
     'dnsaddr=/ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb'
+  ],
+  '_dnsaddr.self-referential.io': [
+    'dnsaddr=/dnsaddr/self-referential.io'
   ]
 }
 
@@ -134,6 +137,18 @@ describe('multiaddr resolve', () => {
 
     it('should abort resolving deeply nested records', async () => {
       const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
+
+      // Resolve
+      const resolvePromise = ma.resolve({
+        dns,
+        maxRecursiveDepth: 1
+      })
+
+      await expect(resolvePromise).to.eventually.be.rejected().with.property('code', 'ERR_MAX_RECURSIVE_DEPTH_REACHED')
+    })
+
+    it('should handle recursive loops', async () => {
+      const ma = multiaddr('/dnsaddr/self-referential.io')
 
       // Resolve
       const resolvePromise = ma.resolve({
