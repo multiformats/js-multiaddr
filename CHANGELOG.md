@@ -1,3 +1,15 @@
+## [12.2.2](https://github.com/multiformats/js-multiaddr/compare/v12.2.1...v12.2.2) (2024-05-17)
+
+
+### Trivial Changes
+
+* add test for never-ending recursion ([#375](https://github.com/multiformats/js-multiaddr/issues/375)) ([59309b0](https://github.com/multiformats/js-multiaddr/commit/59309b0c4dd0d96ab2d7e3f241db0ffaf3c1d220))
+
+
+### Dependencies
+
+* **dev:** bump sinon from 17.0.2 to 18.0.0 ([#377](https://github.com/multiformats/js-multiaddr/issues/377)) ([f1adf0f](https://github.com/multiformats/js-multiaddr/commit/f1adf0fb1da88449ccd5710f126e994c6e00ce3d))
+
 ## [12.2.1](https://github.com/multiformats/js-multiaddr/compare/v12.2.0...v12.2.1) (2024-03-13)
 
 
