@@ -39,6 +39,15 @@ const stubs: Record<string, string[]> = {
   ],
   '_dnsaddr.self-referential.io': [
     'dnsaddr=/dnsaddr/self-referential.io'
+  ],
+  '_dnsaddr.double-quoted-answer.io': [
+    '"dnsaddr=/ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb"'
+  ],
+  '_dnsaddr.single-quoted-answer.io': [
+    "'dnsaddr=/ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb'"
+  ],
+  '_dnsaddr.mixed-quoted-answer.io': [
+    '"\'""" dnsaddr=/ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb"  "'
   ]
 }
 
@@ -157,6 +166,45 @@ describe('multiaddr resolve', () => {
       })
 
       await expect(resolvePromise).to.eventually.be.rejected().with.property('code', 'ERR_MAX_RECURSIVE_DEPTH_REACHED')
+    })
+
+    it('should handle double quotes', async () => {
+      const ma = multiaddr('/dnsaddr/double-quoted-answer.io')
+
+      // Resolve
+      const resolvedMas = await ma.resolve({
+        dns
+      })
+
+      // Should ignore double quotes
+      expect(resolvedMas).to.have.lengthOf(1)
+      expect(resolvedMas[0].toString()).to.equal('/ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
+    })
+
+    it('should handle single quotes', async () => {
+      const ma = multiaddr('/dnsaddr/single-quoted-answer.io')
+
+      // Resolve
+      const resolvedMas = await ma.resolve({
+        dns
+      })
+
+      // Should ignore double quotes
+      expect(resolvedMas).to.have.lengthOf(1)
+      expect(resolvedMas[0].toString()).to.equal('/ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
+    })
+
+    it('should handle mixed quotes', async () => {
+      const ma = multiaddr('/dnsaddr/mixed-quoted-answer.io')
+
+      // Resolve
+      const resolvedMas = await ma.resolve({
+        dns
+      })
+
+      // Should ignore double quotes
+      expect(resolvedMas).to.have.lengthOf(1)
+      expect(resolvedMas[0].toString()).to.equal('/ip4/147.75.83.83/tcp/4001/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb')
     })
   })
 })
