@@ -45,7 +45,10 @@ export const dnsaddrResolver: Resolver<DNSADDROptions> = async function dnsaddrR
   const output: string[] = []
 
   for (const answer of result.Answer) {
-    const addr = answer.data.split('=')[1]
+    const addr = answer.data
+      .replace(/["']/g, '')
+      .trim()
+      .split('=')[1]
 
     if (addr == null) {
       continue
