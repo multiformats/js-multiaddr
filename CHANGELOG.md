@@ -1,3 +1,10 @@
+## [12.2.3](https://github.com/multiformats/js-multiaddr/compare/v12.2.2...v12.2.3) (2024-05-17)
+
+
+### Bug Fixes
+
+* handle quotes in dnsaddr results ([#378](https://github.com/multiformats/js-multiaddr/issues/378)) ([b438d3d](https://github.com/multiformats/js-multiaddr/commit/b438d3dfc6f9fa09b19252f9029fbe5dac41dbb3))
+
 ## [12.2.2](https://github.com/multiformats/js-multiaddr/compare/v12.2.1...v12.2.2) (2024-05-17)
 
 
