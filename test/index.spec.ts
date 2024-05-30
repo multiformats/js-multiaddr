@@ -438,6 +438,13 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('http-path', () => {
+    const str = '/ip4/127.0.0.1/tcp/9090/tls/http-path/tmp%2Ffoo%2F..%2Fbar'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it('onion', () => {
     const str = '/onion/timaq4ygg2iegci7:1234'
     const addr = multiaddr(str)
