@@ -1,3 +1,15 @@
+## [12.3.0](https://github.com/multiformats/js-multiaddr/compare/v12.2.3...v12.3.0) (2024-06-05)
+
+
+### Features
+
+* add support for http-path ([#380](https://github.com/multiformats/js-multiaddr/issues/380)) ([0524f79](https://github.com/multiformats/js-multiaddr/commit/0524f7901f7dc813463cf19e45bbd62bf581fb38))
+
+
+### Dependencies
+
+* **dev:** bump aegir from 42.2.11 to 43.0.1 ([#379](https://github.com/multiformats/js-multiaddr/issues/379)) ([371f58d](https://github.com/multiformats/js-multiaddr/commit/371f58dc7a7b9b10e6017dbac160975a11cc28a3))
+
 ## [12.2.3](https://github.com/multiformats/js-multiaddr/compare/v12.2.2...v12.2.3) (2024-05-17)
 
 
