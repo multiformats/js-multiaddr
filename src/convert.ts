@@ -70,6 +70,8 @@ export function convertToString (proto: number | string, buf: Uint8Array): strin
       return bytes2onion(buf)
     case 466: // certhash
       return bytes2mb(buf)
+    case 481: // http-path
+      return globalThis.encodeURIComponent(bytes2str(buf))
     default:
       return uint8ArrayToString(buf, 'base16') // no clue. convert to hex
   }
@@ -108,6 +110,8 @@ export function convertToBytes (proto: string | number, str: string): Uint8Array
       return onion32bytes(str)
     case 466: // certhash
       return mb2bytes(str)
+    case 481: // http-path
+      return str2bytes(globalThis.decodeURIComponent(str))
     default:
       return uint8ArrayFromString(str, 'base16') // no clue. convert from hex
   }

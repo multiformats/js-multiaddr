@@ -46,6 +46,7 @@ export const table: Array<[number, number, string, boolean?, boolean?]> = [
   [478, 0, 'wss'],
   [479, 0, 'p2p-websocket-star'],
   [480, 0, 'http'],
+  [481, V, 'http-path'],
   [777, V, 'memory']
 ]
 

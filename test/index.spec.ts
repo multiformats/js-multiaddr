@@ -438,6 +438,17 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
+  it('http-path', () => {
+    const str = '/ip4/127.0.0.1/tcp/9090/tls/http-path/tmp%2Ffoo%2F..%2Fbar'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    const parts = addr.tuples()
+    const lastPart = parts[parts.length - 1]
+    const httpPath = new TextDecoder().decode(lastPart[1]?.subarray(1)) // skip the first byte since it's the length prefix
+    expect(httpPath).to.equal('tmp/foo/../bar')
+    expect(addr.toString()).to.equal(str)
+  })
+
   it('onion', () => {
     const str = '/onion/timaq4ygg2iegci7:1234'
     const addr = multiaddr(str)
