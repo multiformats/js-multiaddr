@@ -37,10 +37,10 @@ const DNS_CODES = [
  */
 export class Multiaddr implements MultiaddrInterface {
   public bytes: Uint8Array
-  #string: string
-  #tuples: Tuple[]
-  #stringTuples: StringTuple[]
-  #path: string | null
+  readonly #string: string
+  readonly #tuples: Tuple[]
+  readonly #stringTuples: StringTuple[]
+  readonly #path: string | null
 
   [symbol]: boolean = true
 
