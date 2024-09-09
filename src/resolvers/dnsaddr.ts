@@ -1,4 +1,3 @@
-import { CodeError } from '@libp2p/interface'
 import { dns, RecordType } from '@multiformats/dns'
 import { multiaddr } from '../index.js'
 import { getProtocol } from '../protocols-table.js'
@@ -8,6 +7,13 @@ import type { DNS } from '@multiformats/dns'
 
 const MAX_RECURSIVE_DEPTH = 32
 const { code: dnsaddrCode } = getProtocol('dnsaddr')
+
+class RecursionLimitError extends Error {
+  constructor (message = 'Max recursive depth reached') {
+    super(message)
+    this.name = 'RecursionLimitError'
+  }
+}
 
 export interface DNSADDROptions extends AbortOptions {
   /**
@@ -28,7 +34,7 @@ export const dnsaddrResolver: Resolver<DNSADDROptions> = async function dnsaddrR
   const recursionLimit = options.maxRecursiveDepth ?? MAX_RECURSIVE_DEPTH
 
   if (recursionLimit === 0) {
-    throw new CodeError('Max recursive depth reached', 'ERR_MAX_RECURSIVE_DEPTH_REACHED')
+    throw new RecursionLimitError('Max recursive depth reached')
   }
 
   const [, hostname] = ma.stringTuples().find(([proto]) => proto === dnsaddrCode) ?? []

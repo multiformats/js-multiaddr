@@ -82,7 +82,7 @@ describe('multiaddr resolve', () => {
 
     // Resolve
     await expect(ma.resolve()).to.eventually.be.rejected()
-      .and.to.have.property('code', 'ERR_NO_AVAILABLE_RESOLVER')
+      .and.to.have.property('name', 'NoAvailableResolverError')
   })
 
   describe('dnsaddr', () => {
@@ -153,7 +153,7 @@ describe('multiaddr resolve', () => {
         maxRecursiveDepth: 1
       })
 
-      await expect(resolvePromise).to.eventually.be.rejected().with.property('code', 'ERR_MAX_RECURSIVE_DEPTH_REACHED')
+      await expect(resolvePromise).to.eventually.be.rejected().with.property('name', 'RecursionLimitError')
     })
 
     it('should handle recursive loops', async () => {
@@ -165,7 +165,7 @@ describe('multiaddr resolve', () => {
         maxRecursiveDepth: 1
       })
 
-      await expect(resolvePromise).to.eventually.be.rejected().with.property('code', 'ERR_MAX_RECURSIVE_DEPTH_REACHED')
+      await expect(resolvePromise).to.eventually.be.rejected().with.property('name', 'RecursionLimitError')
     })
 
     it('should handle double quotes', async () => {

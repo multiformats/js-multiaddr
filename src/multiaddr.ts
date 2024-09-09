@@ -12,7 +12,6 @@
  * ```
  */
 
-import { CodeError } from '@libp2p/interface'
 import { base58btc } from 'multiformats/bases/base58'
 import { CID } from 'multiformats/cid'
 import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
@@ -31,6 +30,13 @@ const DNS_CODES = [
   getProtocol('dns6').code,
   getProtocol('dnsaddr').code
 ]
+
+class NoAvailableResolverError extends Error {
+  constructor (message = 'No available resolver') {
+    super(message)
+    this.name = 'NoAvailableResolverError'
+  }
+}
 
 /**
  * Creates a {@link Multiaddr} from a {@link MultiaddrInput}
@@ -232,7 +238,7 @@ export class Multiaddr implements MultiaddrInterface {
 
     const resolver = resolvers.get(resolvableProto.name)
     if (resolver == null) {
-      throw new CodeError(`no available resolver for ${resolvableProto.name}`, 'ERR_NO_AVAILABLE_RESOLVER')
+      throw new NoAvailableResolverError(`no available resolver for ${resolvableProto.name}`)
     }
 
     const result = await resolver(this, options)
