@@ -1,3 +1,13 @@
+## [12.3.1](https://github.com/multiformats/js-multiaddr/compare/v12.3.0...v12.3.1) (2024-09-09)
+
+### Bug Fixes
+
+* use named error instead of CodeError ([#385](https://github.com/multiformats/js-multiaddr/issues/385)) ([a0bc8f9](https://github.com/multiformats/js-multiaddr/commit/a0bc8f90384e3f2a8c6199da2a740cf6971db14b))
+
+### Dependencies
+
+* **dev:** bump aegir from 43.0.3 to 44.1.1 ([#384](https://github.com/multiformats/js-multiaddr/issues/384)) ([408ba5a](https://github.com/multiformats/js-multiaddr/commit/408ba5ab2a8191da74509415f89dacc024135fc9))
+
 ## [12.3.0](https://github.com/multiformats/js-multiaddr/compare/v12.2.3...v12.3.0) (2024-06-05)
 
 
