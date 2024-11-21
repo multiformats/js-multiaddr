@@ -731,6 +731,14 @@ describe('helpers', () => {
           [302]
         ])
     })
+
+    it('does not allow modifying parts', () => {
+      const ma = multiaddr('/ip4/0.0.0.0/tcp/1234')
+      const tuples = ma.tuples()
+      tuples[0][0] = 41
+
+      expect(ma.toOptions()).to.have.property('family', 4)
+    })
   })
 
   describe('.stringTuples', () => {
@@ -740,6 +748,14 @@ describe('helpers', () => {
           [4, '0.0.0.0'],
           [302]
         ])
+    })
+
+    it('does not allow modifying string parts', () => {
+      const ma = multiaddr('/ip4/0.0.0.0/tcp/1234')
+      const tuples = ma.stringTuples()
+      tuples[0][0] = 41
+
+      expect(ma.toOptions()).to.have.property('family', 4)
     })
   })
 

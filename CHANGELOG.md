@@ -1,3 +1,13 @@
+## [12.3.2](https://github.com/multiformats/js-multiaddr/compare/v12.3.1...v12.3.2) (2024-11-21)
+
+### Bug Fixes
+
+* do not allow modifying tuples ([#391](https://github.com/multiformats/js-multiaddr/issues/391)) ([77f15d2](https://github.com/multiformats/js-multiaddr/commit/77f15d29b07e7b7e2fb9e3ef39cd0e1da0982388))
+
+### Documentation
+
+* fix dnsaddrResolver name ([#392](https://github.com/multiformats/js-multiaddr/issues/392)) ([823b45f](https://github.com/multiformats/js-multiaddr/commit/823b45fc786d0603f3260b9de4c7694dbe91533a)), closes [#388](https://github.com/multiformats/js-multiaddr/issues/388)
+
 ## [12.3.1](https://github.com/multiformats/js-multiaddr/compare/v12.3.0...v12.3.1) (2024-09-09)
 
 ### Bug Fixes
