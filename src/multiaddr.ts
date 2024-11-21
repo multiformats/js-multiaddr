@@ -1,17 +1,3 @@
-/**
- * @packageDocumentation
- *
- * An implementation of a Multiaddr in JavaScript
- *
- * @example
- *
- * ```js
- * import { multiaddr } from '@multiformats/multiaddr'
- *
- * const ma = multiaddr('/ip4/127.0.0.1/tcp/1234')
- * ```
- */
-
 import { base58btc } from 'multiformats/bases/base58'
 import { CID } from 'multiformats/cid'
 import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
