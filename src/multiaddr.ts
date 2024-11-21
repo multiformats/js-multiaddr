@@ -137,11 +137,23 @@ export class Multiaddr implements MultiaddrInterface {
   }
 
   tuples (): Array<[number, Uint8Array?]> {
-    return this.#tuples
+    return this.#tuples.map(([code, value]) => {
+      if (value == null) {
+        return [code]
+      }
+
+      return [code, value]
+    })
   }
 
   stringTuples (): Array<[number, string?]> {
-    return this.#stringTuples
+    return this.#stringTuples.map(([code, value]) => {
+      if (value == null) {
+        return [code]
+      }
+
+      return [code, value]
+    })
   }
 
   encapsulate (addr: MultiaddrInput): Multiaddr {
