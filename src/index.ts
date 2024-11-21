@@ -13,10 +13,8 @@
  *
  * ```TypeScript
  * import { multiaddr } from '@multiformats/multiaddr'
- * const addr =  multiaddr("/ip4/127.0.0.1/udp/1234")
- * // Multiaddr(/ip4/127.0.0.1/udp/1234)
  *
- * const addr = multiaddr("/ip4/127.0.0.1/udp/1234")
+ * const addr = multiaddr('/ip4/127.0.0.1/udp/1234')
  * // Multiaddr(/ip4/127.0.0.1/udp/1234)
  *
  * addr.bytes
@@ -55,9 +53,9 @@
  *
  * ```TypeScript
  * import { multiaddr, resolvers } from '@multiformats/multiaddr'
- * import { dnsaddr } from '@multiformats/multiaddr/resolvers'
+ * import { dnsaddrResolver } from '@multiformats/multiaddr/resolvers'
  *
- * resolvers.set('dnsaddr', dnsaddr)
+ * resolvers.set('dnsaddr', dnsaddrResolver)
  *
  * const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')
  *
@@ -66,7 +64,7 @@
  *   signal: AbortSignal.timeout(5000)
  * })
  *
- * console.info(await ma.resolve(resolved)
+ * console.info(resolved)
  * // [Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...')...]
  * ```
  *
@@ -80,7 +78,9 @@
  * import { dnsJsonOverHttps } from '@multiformats/dns/resolvers'
  *
  * const resolver = dns({
- *   '.': dnsJsonOverHttps('https://cloudflare-dns.com/dns-query')
+ *   resolvers: {
+ *     '.': dnsJsonOverHttps('https://cloudflare-dns.com/dns-query')
+ *   }
  * })
  *
  * const ma = multiaddr('/dnsaddr/bootstrap.libp2p.io')

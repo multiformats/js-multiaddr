@@ -5,3 +5,4 @@ export interface Resolver<ResolveOptions extends AbortOptions = AbortOptions> {
 }
 
 export { dnsaddrResolver } from './dnsaddr.js'
+export type { DNSADDROptions } from './dnsaddr.js'

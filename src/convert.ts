@@ -1,9 +1,3 @@
-/**
- * @packageDocumentation
- *
- * Provides methods for converting
- */
-
 import { IpNet } from '@chainsafe/netmask'
 import { base32 } from 'multiformats/bases/base32'
 import { base58btc } from 'multiformats/bases/base58'
