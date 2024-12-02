@@ -85,7 +85,7 @@ export function convertToBytes (proto: string | number, str: string): Uint8Array
     case 42: // ipv6zone
       return str2bytes(str)
     case 43: // ipcidr
-      return new Uint8Array([parseInt(str, 10)])
+      return uint8ArrayFromString(str, 'base10')
 
     case 6: // tcp
     case 273: // udp
