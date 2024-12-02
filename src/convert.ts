@@ -42,7 +42,7 @@ export function convertToString (proto: number | string, buf: Uint8Array): strin
     case 42: // ipv6zone
       return bytes2str(buf)
     case 43: // ipcidr
-      return buf[0].toString()
+      return uint8ArrayToString(buf, 'base10')
 
     case 6: // tcp
     case 273: // udp
