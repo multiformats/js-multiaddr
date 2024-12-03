@@ -1,3 +1,9 @@
+## [12.3.4](https://github.com/multiformats/js-multiaddr/compare/v12.3.3...v12.3.4) (2024-12-03)
+
+### Bug Fixes
+
+* handle valid CIDR ranges for IPv4 and IPv6 ([#394](https://github.com/multiformats/js-multiaddr/issues/394)) ([1513768](https://github.com/multiformats/js-multiaddr/commit/1513768012ea30f31e86c0b65e4f2c04c91d2736))
+
 ## [12.3.3](https://github.com/multiformats/js-multiaddr/compare/v12.3.2...v12.3.3) (2024-11-21)
 
 ### Dependencies
