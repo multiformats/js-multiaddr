@@ -32,6 +32,7 @@ export function convert (proto: string, a: string | Uint8Array): Uint8Array | st
 /**
  * Convert [code,Uint8Array] to string
  */
+// eslint-disable-next-line complexity
 export function convertToString (proto: number | string, buf: Uint8Array): string {
   const protocol = getProtocol(proto)
   switch (protocol.code) {
@@ -40,6 +41,8 @@ export function convertToString (proto: number | string, buf: Uint8Array): strin
       return bytes2ip(buf)
     case 42: // ipv6zone
       return bytes2str(buf)
+    case 43: // ipcidr
+      return uint8ArrayToString(buf, 'base10')
 
     case 6: // tcp
     case 273: // udp
@@ -71,6 +74,7 @@ export function convertToString (proto: number | string, buf: Uint8Array): strin
   }
 }
 
+// eslint-disable-next-line complexity
 export function convertToBytes (proto: string | number, str: string): Uint8Array {
   const protocol = getProtocol(proto)
   switch (protocol.code) {
@@ -80,6 +84,8 @@ export function convertToBytes (proto: string | number, str: string): Uint8Array
       return ip2bytes(str)
     case 42: // ipv6zone
       return str2bytes(str)
+    case 43: // ipcidr
+      return uint8ArrayFromString(str, 'base10')
 
     case 6: // tcp
     case 273: // udp
