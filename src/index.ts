@@ -115,7 +115,7 @@ export interface Protocol {
 export interface MultiaddrObject {
   family: 4 | 6
   host: string
-  transport: string
+  transport: 'tcp' | 'udp'
   port: number
 }
 
