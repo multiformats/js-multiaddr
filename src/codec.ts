@@ -43,7 +43,7 @@ export function stringToMultiaddrParts (str: string): MultiaddrParts {
 
     p++ // advance addr part
     if (p >= parts.length) {
-      throw ParseError('invalid address: ' + str)
+      throw new ParseError('invalid address: ' + str)
     }
 
     // if it's a path proto, take the rest
@@ -98,7 +98,7 @@ export function bytesToMultiaddrParts (bytes: Uint8Array): MultiaddrParts {
     i += (size + n)
 
     if (i > bytes.length) { // did not end _exactly_ at buffer.length
-      throw ParseError('Invalid address Uint8Array: ' + uint8ArrayToString(bytes, 'base16'))
+      throw new ParseError('Invalid address Uint8Array: ' + uint8ArrayToString(bytes, 'base16'))
     }
 
     // ok, tuple seems good.
@@ -193,7 +193,7 @@ export function bytesToTuples (buf: Uint8Array): Tuple[] {
     i += (size + n)
 
     if (i > buf.length) { // did not end _exactly_ at buffer.length
-      throw ParseError('Invalid address Uint8Array: ' + uint8ArrayToString(buf, 'base16'))
+      throw new ParseError('Invalid address Uint8Array: ' + uint8ArrayToString(buf, 'base16'))
     }
 
     // ok, tuple seems good.
@@ -207,6 +207,11 @@ export function cleanPath (str: string): string {
   return '/' + str.trim().split('/').filter((a) => a).join('/')
 }
 
-export function ParseError (str: string): Error {
-  return new Error('Error parsing address: ' + str)
+export class ParseError extends Error {
+  static name = 'ParseError'
+  name = 'ParseError'
+
+  constructor (str: string) {
+    super(`Error parsing address: ${str}`)
+  }
 }
