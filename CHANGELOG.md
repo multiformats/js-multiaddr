@@ -1,3 +1,14 @@
+## [12.3.5](https://github.com/multiformats/js-multiaddr/compare/v12.3.4...v12.3.5) (2025-02-05)
+
+### Bug Fixes
+
+* constrain options transport to tcp or udp ([#396](https://github.com/multiformats/js-multiaddr/issues/396)) ([8d5b325](https://github.com/multiformats/js-multiaddr/commit/8d5b32526f24e07ab167c33804be5608a51c8a99))
+* use named error when parsing multiaddrs ([#395](https://github.com/multiformats/js-multiaddr/issues/395)) ([5a9d33c](https://github.com/multiformats/js-multiaddr/commit/5a9d33c5e29d11a17729200c0e5722f0a2030340))
+
+### Dependencies
+
+* **dev:** bump sinon from 18.0.1 to 19.0.2 ([#387](https://github.com/multiformats/js-multiaddr/issues/387)) ([e1747b7](https://github.com/multiformats/js-multiaddr/commit/e1747b792c87a9801e8f3532d15e492ae4d9c72e))
+
 ## [12.3.4](https://github.com/multiformats/js-multiaddr/compare/v12.3.3...v12.3.4) (2024-12-03)
 
 ### Bug Fixes
