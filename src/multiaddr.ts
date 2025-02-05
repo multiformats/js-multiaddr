@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { base58btc } from 'multiformats/bases/base58'
 import { CID } from 'multiformats/cid'
 import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
@@ -73,7 +74,7 @@ export class Multiaddr implements MultiaddrInterface {
 
   toOptions (): MultiaddrObject {
     let family: 4 | 6 | undefined
-    let transport: string | undefined
+    let transport: 'tcp' | 'udp' | undefined
     let host: string | undefined
     let port: number | undefined
     let zone = ''
@@ -92,19 +93,19 @@ export class Multiaddr implements MultiaddrInterface {
 
       // default to https when protocol & port are omitted from DNS addrs
       if (DNS_CODES.includes(code)) {
-        transport = tcp.name
+        transport = tcp.name === 'tcp' ? 'tcp' : 'udp'
         port = 443
         host = `${value ?? ''}${zone}`
         family = code === dns6.code ? 6 : 4
       }
 
       if (code === tcp.code || code === udp.code) {
-        transport = getProtocol(code).name
+        transport = getProtocol(code).name === 'tcp' ? 'tcp' : 'udp'
         port = parseInt(value ?? '')
       }
 
       if (code === ip4.code || code === ip6.code) {
-        transport = getProtocol(code).name
+        transport = getProtocol(code).name === 'tcp' ? 'tcp' : 'udp'
         host = `${value ?? ''}${zone}`
         family = code === ip6.code ? 6 : 4
       }
