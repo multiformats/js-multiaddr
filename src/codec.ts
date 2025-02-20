@@ -1,5 +1,6 @@
 import * as varint from 'uint8-varint'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
+import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 import { convertToBytes, convertToString } from './convert.js'
 import { getProtocol } from './protocols-table.js'
@@ -124,7 +125,26 @@ export function bytesToMultiaddrParts (bytes: Uint8Array): MultiaddrParts {
 }
 
 /**
- * [[str name, str addr]... ] -> string
+ * [[num code, str value?]... ] -> Tuple[]
+ */
+export function stringTuplesToTuples (stringTuples: StringTuple[]): Tuple[] {
+  const tuples: Tuple[] = []
+
+  stringTuples.forEach(([code, value]) => {
+    const tuple: Tuple = [code]
+
+    if (value != null) {
+      tuple[1] = convertToBytes(code, value)
+    }
+
+    tuples.push(tuple)
+  })
+
+  return tuples
+}
+
+/**
+ * [[num code, str value?]... ] -> string
  */
 function stringTuplesToString (tuples: StringTuple[]): string {
   const parts: string[] = []

@@ -93,6 +93,7 @@
  * ```
  */
 
+import { stringTuplesToTuples, tuplesToBytes } from './codec.js'
 import { Multiaddr as MultiaddrClass, symbol } from './multiaddr.js'
 import { getProtocol } from './protocols-table.js'
 import type { Resolver } from './resolvers/index.js'
@@ -524,6 +525,48 @@ export function fromNodeAddress (addr: NodeAddress, transport: string): Multiadd
       throw Error('Invalid addr family, should be 4 or 6.')
   }
   return new MultiaddrClass('/' + [ip, host, transport, addr.port].join('/'))
+}
+
+/**
+ * Create a {@link Multiaddr} from an array of {@link Tuple}s
+ *
+ * @example
+ *
+ * ```ts
+ * import { fromTuples, multiaddr } from '@multiformats/multiaddr'
+ *
+ * const ma = multiaddr('/ip4/127.0.0.1')
+ * const tuples = ma.tuples()
+ *
+ * const ma2 = fromTuples(tuples)
+ *
+ * console.info(ma2)
+ * // '/ip4/127.0.0.1'
+ * ```
+ */
+export function fromTuples (tuples: Tuple[]): Multiaddr {
+  return multiaddr(tuplesToBytes(tuples))
+}
+
+/**
+ * Create a {@link Multiaddr} from an array of {@link StringTuple}s
+ *
+ * @example
+ *
+ * ```ts
+ * import { fromStringTuples, multiaddr } from '@multiformats/multiaddr'
+ *
+ * const ma = multiaddr('/ip4/127.0.0.1')
+ * const tuples = ma.stringTuples()
+ *
+ * const ma2 = fromStringTuples(tuples)
+ *
+ * console.info(ma2)
+ * // '/ip4/127.0.0.1'
+ * ```
+ */
+export function fromStringTuples (tuples: StringTuple[]): Multiaddr {
+  return fromTuples(stringTuplesToTuples(tuples))
 }
 
 /**
