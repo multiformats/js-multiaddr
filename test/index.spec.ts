@@ -2,7 +2,7 @@
 /* eslint-env mocha */
 import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
-import { multiaddr, isMultiaddr, fromNodeAddress, isName } from '../src/index.js'
+import { multiaddr, isMultiaddr, fromNodeAddress, isName, fromTuples, fromStringTuples } from '../src/index.js'
 import { codes } from '../src/protocols-table.js'
 import type { Multiaddr } from '../src/index.js'
 
@@ -946,6 +946,28 @@ describe('helpers', () => {
       ).to.be.eql(
         '/ip6zone/x/ip6/fe80::1/tcp/1234'
       )
+    })
+  })
+
+  describe('.fromTuples', () => {
+    it('should create a multiaddr from a list of tuples', () => {
+      const ma = multiaddr('/ip4/0.0.0.0')
+      const tuples = ma.tuples()
+      tuples.push([0x06, Uint8Array.from([0, 100])])
+
+      const ma2 = fromTuples(tuples)
+      expect(ma2.toString()).to.equal('/ip4/0.0.0.0/tcp/100')
+    })
+  })
+
+  describe('.fromStringTuples', () => {
+    it('should create a multiaddr from a list of string tuples', () => {
+      const ma = multiaddr('/ip4/0.0.0.0')
+      const tuples = ma.stringTuples()
+      tuples.push([0x06, '100'])
+
+      const ma2 = fromStringTuples(tuples)
+      expect(ma2.toString()).to.equal('/ip4/0.0.0.0/tcp/100')
     })
   })
 

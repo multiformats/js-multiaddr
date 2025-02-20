@@ -124,7 +124,26 @@ export function bytesToMultiaddrParts (bytes: Uint8Array): MultiaddrParts {
 }
 
 /**
- * [[str name, str addr]... ] -> string
+ * [[num code, str value?]... ] -> Tuple[]
+ */
+export function stringTuplesToTuples (stringTuples: StringTuple[]): Tuple[] {
+  const tuples: Tuple[] = []
+
+  stringTuples.forEach(([code, value]) => {
+    const tuple: Tuple = [code]
+
+    if (value != null) {
+      tuple[1] = convertToBytes(code, value)
+    }
+
+    tuples.push(tuple)
+  })
+
+  return tuples
+}
+
+/**
+ * [[num code, str value?]... ] -> string
  */
 function stringTuplesToString (tuples: StringTuple[]): string {
   const parts: string[] = []
