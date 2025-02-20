@@ -1,3 +1,9 @@
+## [12.4.0](https://github.com/multiformats/js-multiaddr/compare/v12.3.5...v12.4.0) (2025-02-20)
+
+### Features
+
+* add fromTuples and fromStringTuples methods ([#397](https://github.com/multiformats/js-multiaddr/issues/397)) ([c9058ab](https://github.com/multiformats/js-multiaddr/commit/c9058abebaef5db5450cf8b27e17168d4b85f658))
+
 ## [12.3.5](https://github.com/multiformats/js-multiaddr/compare/v12.3.4...v12.3.5) (2025-02-05)
 
 ### Bug Fixes
