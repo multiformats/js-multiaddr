@@ -96,3 +96,8 @@ export function getProtocol (proto: number | string): Protocol {
 
   throw new Error(`invalid protocol id type: ${typeof proto}`)
 }
+
+export function registerProtocol (protocol: Protocol): void {
+  codes[protocol.code] = protocol
+  names[protocol.name] = protocol
+}
