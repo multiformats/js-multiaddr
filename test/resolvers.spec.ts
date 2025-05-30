@@ -1,10 +1,11 @@
 import { RecordType } from '@multiformats/dns'
 import { expect } from 'aegir/chai'
 import sinon from 'sinon'
-import { stubInterface, type StubbedInstance } from 'sinon-ts'
+import { stubInterface } from 'sinon-ts'
 import { multiaddr, resolvers } from '../src/index.js'
 import { dnsaddrResolver } from '../src/resolvers/index.js'
 import type { DNS } from '@multiformats/dns'
+import type { StubbedInstance } from 'sinon-ts'
 
 const stubs: Record<string, string[]> = {
   '_dnsaddr.bootstrap.libp2p.io': [

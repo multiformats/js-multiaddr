@@ -40,11 +40,11 @@ export const toBytes = function (ip: string): Uint8Array {
     }
 
     if (sections[0] === '') {
-      while (sections.length < 8) sections.unshift('0')
+      while (sections.length < 8) { sections.unshift('0') }
     } else if (sections[sections.length - 1] === '') {
-      while (sections.length < 8) sections.push('0')
+      while (sections.length < 8) { sections.push('0') }
     } else if (sections.length < 8) {
-      for (i = 0; i < sections.length && sections[i] !== ''; i++);
+      for (i = 0; i < sections.length && sections[i] !== ''; i++) { }
       const argv: [number, number, ...string[]] = [i, 1]
       for (i = 9 - sections.length; i > 0; i--) {
         argv.push('0')

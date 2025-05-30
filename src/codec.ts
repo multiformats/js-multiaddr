@@ -37,7 +37,7 @@ export function stringToMultiaddrParts (str: string): MultiaddrParts {
     if (proto.size === 0) {
       tuples.push([proto.code])
       stringTuples.push([proto.code])
-      // eslint-disable-next-line no-continue
+
       continue
     }
 
@@ -89,7 +89,7 @@ export function bytesToMultiaddrParts (bytes: Uint8Array): MultiaddrParts {
       tuples.push([code])
       stringTuples.push([code])
       i += n
-      // eslint-disable-next-line no-continue
+
       continue
     }
 
@@ -165,7 +165,7 @@ function stringTuplesToString (tuples: StringTuple[]): string {
 export function tuplesToBytes (tuples: Tuple[]): Uint8Array {
   return uint8ArrayConcat(tuples.map((tup) => {
     const proto = getProtocol(tup[0])
-    let buf = Uint8Array.from(varint.encode(proto.code))
+    let buf: Uint8Array = Uint8Array.from(varint.encode(proto.code))
 
     if (tup.length > 1 && tup[1] != null) {
       buf = uint8ArrayConcat([buf, tup[1]]) // add address buffer
@@ -203,7 +203,7 @@ export function bytesToTuples (buf: Uint8Array): Tuple[] {
     if (size === 0) {
       tuples.push([code])
       i += n
-      // eslint-disable-next-line no-continue
+
       continue
     }
 

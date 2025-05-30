@@ -1,5 +1,6 @@
 import { convertToIpNet } from '../convert.js'
-import { multiaddr, type Multiaddr, type MultiaddrInput } from '../index.js'
+import { multiaddr } from '../index.js'
+import type { Multiaddr, MultiaddrInput } from '../index.js'
 import type { IpNet } from '@chainsafe/netmask'
 
 /**
@@ -31,7 +32,7 @@ export class MultiaddrFilter {
   }
 
   public contains (input: MultiaddrInput): boolean {
-    if (input == null) return false
+    if (input == null) { return false }
     const m = multiaddr(input)
     let ip
     for (const [code, value] of m.stringTuples()) {
@@ -40,7 +41,7 @@ export class MultiaddrFilter {
         break
       }
     }
-    if (ip === undefined) return false
+    if (ip === undefined) { return false }
     return this.netmask.contains(ip)
   }
 }
