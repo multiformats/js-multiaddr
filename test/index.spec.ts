@@ -548,6 +548,21 @@ describe('variants', () => {
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
+
+  it('ip4 + tcp + http  + retrieval', () => {
+    const str = '/ip4/127.0.0.1/tcp/8000/http/retrieval/http'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
+
+  it('ws + p2p + retrieval tuple', () => {
+    const str =
+      '/ip4/127.0.0.1/tcp/9090/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/retrieval/bitswap/retrieval/graphsync'
+    const addr = multiaddr(str)
+    expect(addr).to.have.property('bytes')
+    expect(addr.toString()).to.equal(str)
+  })
 })
 
 describe('helpers', () => {
@@ -732,6 +747,26 @@ describe('helpers', () => {
         ])
     })
 
+    it('returns the tuples for retrieval', () => {
+      expect(multiaddr('/ip4/127.0.0.1/tcp/8000/http/retrieval/http').tuples())
+        .to.eql([
+          [4, Uint8Array.from([127, 0, 0, 1])],
+          [6, Uint8Array.from([31, 64])],
+          [480],
+          [384, Uint8Array.from([4, 104, 116, 116, 112])]
+        ])
+
+      expect(multiaddr('/ip4/127.0.0.1/tcp/9090/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/retrieval/bitswap/retrieval/graphsync').tuples())
+        .to.eql([
+          [4, Uint8Array.from([127, 0, 0, 1])],
+          [6, Uint8Array.from([35, 130])],
+          [477],
+          [421, Uint8Array.from([34, 18, 32, 213, 46, 187, 137, 216, 91, 2, 162, 132, 148, 130, 3, 166, 47, 242, 131, 137, 197, 124, 159, 66, 190, 236, 78, 194, 13, 183, 106, 104, 145, 28, 11])],
+          [384, Uint8Array.from([7, 98, 105, 116, 115, 119, 97, 112])],
+          [384, Uint8Array.from([9, 103, 114, 97, 112, 104, 115, 121, 110, 99])]
+        ])
+    })
+
     it('does not allow modifying parts', () => {
       const ma = multiaddr('/ip4/0.0.0.0/tcp/1234')
       const tuples = ma.tuples()
@@ -742,11 +777,31 @@ describe('helpers', () => {
   })
 
   describe('.stringTuples', () => {
-    it('returns the string partss', () => {
+    it('returns the string parts', () => {
       expect(multiaddr('/ip4/0.0.0.0/utp').stringTuples())
         .to.eql([
           [4, '0.0.0.0'],
           [302]
+        ])
+    })
+
+    it('returns the string parts for retrieval', () => {
+      expect(multiaddr('/ip4/127.0.0.1/tcp/8000/http/retrieval/http').stringTuples())
+        .to.eql([
+          [4, '127.0.0.1'],
+          [6, '8000'],
+          [480],
+          [384, 'http']
+        ])
+
+      expect(multiaddr('/ip4/127.0.0.1/tcp/9090/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/retrieval/bitswap/retrieval/graphsync').stringTuples())
+        .to.eql([
+          [4, '127.0.0.1'],
+          [6, '9090'],
+          [477],
+          [421, 'QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'],
+          [384, 'bitswap'],
+          [384, 'graphsync']
         ])
     })
 
