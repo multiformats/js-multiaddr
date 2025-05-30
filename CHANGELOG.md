@@ -1,3 +1,9 @@
+## [12.4.1](https://github.com/multiformats/js-multiaddr/compare/v12.4.0...v12.4.1) (2025-05-30)
+
+### Dependencies
+
+* **dev:** bump aegir from 45.0.9 to 47.0.12 ([#419](https://github.com/multiformats/js-multiaddr/issues/419)) ([c784a8c](https://github.com/multiformats/js-multiaddr/commit/c784a8c53dd3aaa770a79a3d03a34c7ccaf1905e))
+
 ## [12.4.0](https://github.com/multiformats/js-multiaddr/compare/v12.3.5...v12.4.0) (2025-02-20)
 
 ### Features
