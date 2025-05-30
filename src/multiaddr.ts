@@ -3,9 +3,10 @@ import { base58btc } from 'multiformats/bases/base58'
 import { CID } from 'multiformats/cid'
 import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import { bytesToMultiaddrParts, stringToMultiaddrParts, type MultiaddrParts, tuplesToBytes } from './codec.js'
+import { bytesToMultiaddrParts, stringToMultiaddrParts, tuplesToBytes } from './codec.js'
 import { getProtocol, names } from './protocols-table.js'
 import { isMultiaddr, multiaddr, resolvers } from './index.js'
+import type { MultiaddrParts } from './codec.js'
 import type { MultiaddrInput, Multiaddr as MultiaddrInterface, MultiaddrObject, Protocol, StringTuple, Tuple, NodeAddress, ResolveOptions } from './index.js'
 
 const inspect = Symbol.for('nodejs.util.inspect.custom')
