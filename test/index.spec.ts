@@ -56,6 +56,10 @@ describe('construction', () => {
     expect(multiaddr('').toString()).to.equal('/')
   })
 
+  it('should handle repeated /', () => {
+    expect(multiaddr('////////').toString()).to.equal('/')
+  })
+
   it('null/undefined construct still works', () => {
     expect(multiaddr().toString()).to.equal('/')
     expect(multiaddr(null).toString()).to.equal('/')

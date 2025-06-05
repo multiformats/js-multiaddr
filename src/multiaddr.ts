@@ -28,7 +28,7 @@ class NoAvailableResolverError extends Error {
 }
 
 function toComponents (addr: MultiaddrInput): Component[] {
-  if (addr === '' || addr == null) {
+  if (addr == null) {
     addr = '/'
   }
 
@@ -41,6 +41,14 @@ function toComponents (addr: MultiaddrInput): Component[] {
   }
 
   if (typeof addr === 'string') {
+    addr = addr
+      .replace(/\/(\/)+/, '/')
+      .replace(/(\/)+$/, '')
+
+    if (addr === '') {
+      addr = '/'
+    }
+
     return stringToComponents(addr)
   }
 
