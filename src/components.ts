@@ -201,6 +201,5 @@ function sizeForAddr (codec: ProtocolCodec, bytes: Uint8Array, offset: number): 
     return codec.size / 8
   }
 
-  const size = varint.decode(bytes, offset)
-  return size + varint.encodingLength(size)
+  return varint.decode(bytes, offset)
 }

@@ -98,19 +98,18 @@ export function bytes2onion (buf: Uint8Array): string {
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L7
 // but with buf/offset args removed because we don't use them
 export const ip4ToBytes = function (ip: string): Uint8Array {
-  let offset = 0
   ip = ip.toString().trim()
 
-  const bytes = new Uint8Array(offset + 4)
+  const bytes = new Uint8Array(4)
 
-  ip.split(/\./g).forEach((byte) => {
+  ip.split(/\./g).forEach((byte, index) => {
     const value = parseInt(byte, 10)
 
     if (isNaN(value) || value < 0 || value > 0xff) {
       throw new InvalidMultiaddrError('Invalid byte value in IP address')
     }
 
-    bytes[offset++] = value
+    bytes[index] = value
   })
 
   return bytes
@@ -173,37 +172,63 @@ export const ip6ToBytes = function (ip: string): Uint8Array {
 }
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L63
-export const ipToString = function (buf: Uint8Array): string {
-  const offset = 0
-  const length = buf.byteLength
-
-  const view = new DataView(buf.buffer)
-
-  if (length === 4) {
-    const result = []
-
-    // IPv4
-    for (let i = 0; i < length; i++) {
-      result.push(buf[offset + i])
-    }
-
-    return result.join('.')
+export const ip4ToString = function (buf: Uint8Array): string {
+  if (buf.byteLength !== 4) {
+    throw new InvalidMultiaddrError('IPv4 address was incorrect length')
   }
 
-  if (length === 16) {
-    const result = []
+  const result = []
 
-    // IPv6
-    for (let i = 0; i < length; i += 2) {
-      result.push(view.getUint16(offset + i).toString(16))
-    }
-
-    return result.join(':')
-      .replace(/(^|:)0(:0)*:0(:|$)/, '$1::$3')
-      .replace(/:{3,4}/, '::')
+  for (let i = 0; i < buf.byteLength; i++) {
+    result.push(buf[i])
   }
 
-  return ''
+  return result.join('.')
+}
+
+export const ip6ToString = function (buf: Uint8Array): string {
+  if (buf.byteLength !== 16) {
+    throw new InvalidMultiaddrError('IPv6 address was incorrect length')
+  }
+
+  const result: string[] = []
+
+  for (let i = 0; i < buf.byteLength; i += 2) {
+    result.push(`${
+      buf[i].toString(16)
+    }${
+      buf[i + 1].toString(16).padStart(2, '0')
+    }`
+      .replace(/^(0+)/, '')
+    )
+  }
+
+  return result.join(':')
+    .replace(/:(:)+/, '::')
+}
+
+export function ip6StringToValue (str: string): string {
+  let parts = str.split(':')
+
+  parts = parts.map((str, index) => {
+    if (index === parts.length - 1 && isIPv4(str)) {
+      const bytes = str.split('.')
+      return `${
+        parseInt(bytes[0], 10).toString(16)
+      }${
+        parseInt(bytes[1], 10).toString(16).padStart(2, '0')
+      }:${
+        parseInt(bytes[2], 10).toString(16)
+      }${
+        parseInt(bytes[3], 10).toString(16).padStart(2, '0')
+      }`
+    }
+
+    return str.replace(/^(0+)/, '')
+  })
+
+  return `${parts.join(':')}`
+    .replace(/:(:)+/, '::')
 }
 
 const decoders = Object.values(bases).map((c) => c.decoder)

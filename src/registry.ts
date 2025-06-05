@@ -2,7 +2,7 @@ import { isIPv4, isIPv6 } from '@chainsafe/is-ip'
 import { CID } from 'multiformats'
 import { base64url } from 'multiformats/bases/base64'
 import { CODE_CERTHASH, CODE_DCCP, CODE_DNS, CODE_DNS4, CODE_DNS6, CODE_DNSADDR, CODE_GARLIC32, CODE_GARLIC64, CODE_HTTP, CODE_HTTP_PATH, CODE_HTTPS, CODE_IP4, CODE_IP6, CODE_IP6ZONE, CODE_IPCIDR, CODE_MEMORY, CODE_NOISE, CODE_ONION, CODE_ONION3, CODE_P2P, CODE_P2P_CIRCUIT, CODE_P2P_STARDUST, CODE_P2P_WEBRTC_DIRECT, CODE_P2P_WEBRTC_STAR, CODE_P2P_WEBSOCKET_STAR, CODE_QUIC, CODE_QUIC_V1, CODE_SCTP, CODE_SNI, CODE_TCP, CODE_TLS, CODE_UDP, CODE_UDT, CODE_UNIX, CODE_UTP, CODE_WEBRTC, CODE_WEBRTC_DIRECT, CODE_WEBTRANSPORT, CODE_WS, CODE_WSS } from './constants.ts'
-import { bytes2mb, bytes2onion, bytes2port, bytesToString, ip4ToBytes, ip6ToBytes, ipToString, onion2bytes, onion32bytes, port2bytes, stringToBytes } from './convert.ts'
+import { bytes2mb, bytes2onion, bytes2port, bytesToString, ip4ToBytes, ip4ToString, ip6StringToValue, ip6ToBytes, ip6ToString, mb2bytes, onion2bytes, onion32bytes, port2bytes, stringToBytes } from './convert.ts'
 import { InvalidProtocolError, ValidationError } from './errors.ts'
 import { validatePort } from './validation.ts'
 
@@ -95,7 +95,7 @@ const codecs: ProtocolCodec[] = [{
   name: 'ip4',
   size: 32,
   valueToBytes: ip4ToBytes,
-  bytesToValue: ipToString,
+  bytesToValue: ip4ToString,
   validate: (value) => {
     if (!isIPv4(value)) {
       throw new ValidationError('Invalid ip address')
@@ -127,7 +127,8 @@ const codecs: ProtocolCodec[] = [{
   name: 'ip6',
   size: 128,
   valueToBytes: ip6ToBytes,
-  bytesToValue: ipToString,
+  bytesToValue: ip6ToString,
+  stringToValue: ip6StringToValue,
   validate: (value) => {
     if (!isIPv6(value)) {
       throw new ValidationError('Invalid ip address')
@@ -239,7 +240,8 @@ const codecs: ProtocolCodec[] = [{
   code: CODE_CERTHASH,
   name: 'certhash',
   size: V,
-  bytesToValue: bytes2mb(base64url)
+  bytesToValue: bytes2mb(base64url),
+  valueToBytes: mb2bytes
 }, {
   code: CODE_HTTP,
   name: 'http'

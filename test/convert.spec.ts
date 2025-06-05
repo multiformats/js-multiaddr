@@ -2,16 +2,16 @@
 import { expect } from 'aegir/chai'
 import { base64url } from 'multiformats/bases/base64'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
-import { bytes2mb, bytes2port, convertToIpNet, ip4ToBytes, ip6ToBytes, mb2bytes, port2bytes, ipToString } from '../src/convert.ts'
+import { bytes2mb, bytes2port, convertToIpNet, ip4ToBytes, ip4ToString, ip6ToBytes, ip6ToString, mb2bytes, port2bytes } from '../src/convert.ts'
 import { multiaddr } from '../src/index.js'
 
 describe('convert', () => {
   it('handles ip4 buffers', () => {
-    expect(ipToString(uint8ArrayFromString('c0a80001', 'base16'))).to.equal('192.168.0.1')
+    expect(ip4ToString(uint8ArrayFromString('c0a80001', 'base16'))).to.equal('192.168.0.1')
   })
 
   it('handles ip6 buffers', () => {
-    expect(ipToString(uint8ArrayFromString('abcd0000000100020003000400050006', 'base16'))).to.equal('abcd:0:1:2:3:4:5:6')
+    expect(ip6ToString(uint8ArrayFromString('abcd0000000100020003000400050006', 'base16'))).to.equal('abcd::1:2:3:4:5:6')
   })
 
   it('handles ipv6 strings', () => {
@@ -36,14 +36,14 @@ describe('convert', () => {
     const address = '127.0.0.1'
     const bytes = ip4ToBytes(address)
 
-    expect(ipToString(bytes)).to.equal(address)
+    expect(ip4ToString(bytes)).to.equal(address)
   })
 
   it('round trips class C addresses', () => {
     const address = '192.168.1.1'
     const bytes = ip4ToBytes(address)
 
-    expect(ipToString(bytes)).to.equal(address)
+    expect(ip4ToString(bytes)).to.equal(address)
   })
 
   /*
