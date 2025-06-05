@@ -549,16 +549,16 @@ describe('variants', () => {
     expect(addr.toString()).to.equal(str)
   })
 
-  it('ip4 + tcp + http  + retrieval', () => {
-    const str = '/ip4/127.0.0.1/tcp/8000/http/retrieval/http'
+  it('ip4 + tcp + http  + tag', () => {
+    const str = '/ip4/127.0.0.1/tcp/8000/http/tag/http'
     const addr = multiaddr(str)
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
   })
 
-  it('ws + p2p + retrieval tuple', () => {
+  it('ws + p2p + tag tuple', () => {
     const str =
-      '/ip4/127.0.0.1/tcp/9090/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/retrieval/bitswap/retrieval/graphsync'
+      '/ip4/127.0.0.1/tcp/9090/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tag/bitswap/tag/graphsync'
     const addr = multiaddr(str)
     expect(addr).to.have.property('bytes')
     expect(addr.toString()).to.equal(str)
@@ -747,8 +747,8 @@ describe('helpers', () => {
         ])
     })
 
-    it('returns the tuples for retrieval', () => {
-      expect(multiaddr('/ip4/127.0.0.1/tcp/8000/http/retrieval/http').tuples())
+    it('returns the tuples for tag', () => {
+      expect(multiaddr('/ip4/127.0.0.1/tcp/8000/http/tag/http').tuples())
         .to.eql([
           [4, Uint8Array.from([127, 0, 0, 1])],
           [6, Uint8Array.from([31, 64])],
@@ -756,7 +756,7 @@ describe('helpers', () => {
           [384, Uint8Array.from([4, 104, 116, 116, 112])]
         ])
 
-      expect(multiaddr('/ip4/127.0.0.1/tcp/9090/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/retrieval/bitswap/retrieval/graphsync').tuples())
+      expect(multiaddr('/ip4/127.0.0.1/tcp/9090/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tag/bitswap/tag/graphsync').tuples())
         .to.eql([
           [4, Uint8Array.from([127, 0, 0, 1])],
           [6, Uint8Array.from([35, 130])],
@@ -785,8 +785,8 @@ describe('helpers', () => {
         ])
     })
 
-    it('returns the string parts for retrieval', () => {
-      expect(multiaddr('/ip4/127.0.0.1/tcp/8000/http/retrieval/http').stringTuples())
+    it('returns the string parts for tag', () => {
+      expect(multiaddr('/ip4/127.0.0.1/tcp/8000/http/tag/http').stringTuples())
         .to.eql([
           [4, '127.0.0.1'],
           [6, '8000'],
@@ -794,7 +794,7 @@ describe('helpers', () => {
           [384, 'http']
         ])
 
-      expect(multiaddr('/ip4/127.0.0.1/tcp/9090/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/retrieval/bitswap/retrieval/graphsync').stringTuples())
+      expect(multiaddr('/ip4/127.0.0.1/tcp/9090/ws/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC/tag/bitswap/tag/graphsync').stringTuples())
         .to.eql([
           [4, '127.0.0.1'],
           [6, '9090'],
