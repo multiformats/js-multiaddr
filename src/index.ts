@@ -95,7 +95,7 @@
 
 import { stringTuplesToTuples, tuplesToBytes } from './codec.js'
 import { Multiaddr as MultiaddrClass, symbol } from './multiaddr.js'
-import { getProtocol } from './protocols-table.js'
+import { getProtocol, registerProtocol } from './protocols-table.js'
 import type { Resolver } from './resolvers/index.js'
 import type { DNS } from '@multiformats/dns'
 
@@ -627,4 +627,4 @@ export function multiaddr (addr?: MultiaddrInput): Multiaddr {
   return new MultiaddrClass(addr)
 }
 
-export { getProtocol as protocols }
+export { getProtocol as protocols, registerProtocol }
