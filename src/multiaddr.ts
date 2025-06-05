@@ -1,22 +1,23 @@
-/* eslint-disable complexity */
 import { base58btc } from 'multiformats/bases/base58'
 import { CID } from 'multiformats/cid'
 import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
+import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import { bytesToMultiaddrParts, stringToMultiaddrParts, tuplesToBytes } from './codec.js'
-import { getProtocol, names } from './protocols-table.js'
+import { bytesToComponents, componentsToBytes, componentsToString, stringToComponents } from './components.js'
+import { CODE_DNS, CODE_DNS4, CODE_DNS6, CODE_DNSADDR, CODE_IP4, CODE_IP6, CODE_IP6ZONE, CODE_P2P, CODE_P2P_CIRCUIT, CODE_TCP, CODE_UDP } from './constants.ts'
+import { InvalidMultiaddrError, InvalidParametersError } from './errors.ts'
+import { registry } from './registry.ts'
 import { isMultiaddr, multiaddr, resolvers } from './index.js'
-import type { MultiaddrParts } from './codec.js'
-import type { MultiaddrInput, Multiaddr as MultiaddrInterface, MultiaddrObject, Protocol, StringTuple, Tuple, NodeAddress, ResolveOptions } from './index.js'
+import type { MultiaddrInput, Multiaddr as MultiaddrInterface, MultiaddrObject, Protocol, Tuple, NodeAddress, ResolveOptions, Component } from './index.js'
 
 const inspect = Symbol.for('nodejs.util.inspect.custom')
-export const symbol = Symbol.for('@multiformats/js-multiaddr/multiaddr')
+export const symbol = Symbol.for('@multiformats/multiaddr')
 
 const DNS_CODES = [
-  getProtocol('dns').code,
-  getProtocol('dns4').code,
-  getProtocol('dns6').code,
-  getProtocol('dnsaddr').code
+  CODE_DNS,
+  CODE_DNS4,
+  CODE_DNS6,
+  CODE_DNSADDR
 ]
 
 class NoAvailableResolverError extends Error {
@@ -26,46 +27,57 @@ class NoAvailableResolverError extends Error {
   }
 }
 
+function toComponents (addr: MultiaddrInput): Component[] {
+  if (addr === '' || addr == null) {
+    addr = '/'
+  }
+
+  if (isMultiaddr(addr)) {
+    return addr.getComponents()
+  }
+
+  if (addr instanceof Uint8Array) {
+    return bytesToComponents(addr)
+  }
+
+  if (typeof addr === 'string') {
+    return stringToComponents(addr)
+  }
+
+  if (Array.isArray(addr)) {
+    return addr
+  }
+
+  throw new InvalidMultiaddrError('Must be a string, Uint8Array, Component[], or another Multiaddr')
+}
+
 /**
  * Creates a {@link Multiaddr} from a {@link MultiaddrInput}
  */
 export class Multiaddr implements MultiaddrInterface {
-  public bytes: Uint8Array
-  readonly #string: string
-  readonly #tuples: Tuple[]
-  readonly #stringTuples: StringTuple[]
-  readonly #path: string | null
-
   [symbol]: boolean = true
+  readonly #components: Component[]
 
-  constructor (addr?: MultiaddrInput) {
-    // default
-    if (addr == null) {
-      addr = ''
+  #string: string | undefined
+  #bytes: Uint8Array | undefined
+
+  constructor (addr: MultiaddrInput | Component[] = '/') {
+    this.#components = toComponents(addr)
+  }
+
+  get bytes (): Uint8Array {
+    if (this.#bytes == null) {
+      this.#bytes = componentsToBytes(this.#components)
     }
 
-    let parts: MultiaddrParts
-    if (addr instanceof Uint8Array) {
-      parts = bytesToMultiaddrParts(addr)
-    } else if (typeof addr === 'string') {
-      if (addr.length > 0 && addr.charAt(0) !== '/') {
-        throw new Error(`multiaddr "${addr}" must start with a "/"`)
-      }
-      parts = stringToMultiaddrParts(addr)
-    } else if (isMultiaddr(addr)) { // Multiaddr
-      parts = bytesToMultiaddrParts(addr.bytes)
-    } else {
-      throw new Error('addr must be a string, Buffer, or another Multiaddr')
-    }
-
-    this.bytes = parts.bytes
-    this.#string = parts.string
-    this.#tuples = parts.tuples
-    this.#stringTuples = parts.stringTuples
-    this.#path = parts.path
+    return this.#bytes
   }
 
   toString (): string {
+    if (this.#string == null) {
+      this.#string = componentsToString(this.#components)
+    }
+
     return this.#string
   }
 
@@ -80,35 +92,28 @@ export class Multiaddr implements MultiaddrInterface {
     let port: number | undefined
     let zone = ''
 
-    const tcp = getProtocol('tcp')
-    const udp = getProtocol('udp')
-    const ip4 = getProtocol('ip4')
-    const ip6 = getProtocol('ip6')
-    const dns6 = getProtocol('dns6')
-    const ip6zone = getProtocol('ip6zone')
-
-    for (const [code, value] of this.stringTuples()) {
-      if (code === ip6zone.code) {
+    for (const { code, name, value } of this.#components) {
+      if (code === CODE_IP6ZONE) {
         zone = `%${value ?? ''}`
       }
 
       // default to https when protocol & port are omitted from DNS addrs
       if (DNS_CODES.includes(code)) {
-        transport = tcp.name === 'tcp' ? 'tcp' : 'udp'
+        transport = 'tcp'
         port = 443
         host = `${value ?? ''}${zone}`
-        family = code === dns6.code ? 6 : 4
+        family = code === CODE_DNS6 ? 6 : 4
       }
 
-      if (code === tcp.code || code === udp.code) {
-        transport = getProtocol(code).name === 'tcp' ? 'tcp' : 'udp'
+      if (code === CODE_TCP || code === CODE_UDP) {
+        transport = name === 'tcp' ? 'tcp' : 'udp'
         port = parseInt(value ?? '')
       }
 
-      if (code === ip4.code || code === ip6.code) {
-        transport = getProtocol(code).name === 'tcp' ? 'tcp' : 'udp'
+      if (code === CODE_IP4 || code === CODE_IP6) {
+        transport = 'tcp'
         host = `${value ?? ''}${zone}`
-        family = code === ip6.code ? 6 : 4
+        family = code === CODE_IP6 ? 6 : 4
       }
     }
 
@@ -126,30 +131,51 @@ export class Multiaddr implements MultiaddrInterface {
     return opts
   }
 
+  getComponents (): Component[] {
+    return this.#components
+  }
+
   protos (): Protocol[] {
-    return this.#tuples.map(([code]) => Object.assign({}, getProtocol(code)))
+    return this.#components.map(({ code, value }) => {
+      const codec = registry.getCodec(code)
+
+      return {
+        code,
+        size: codec.size ?? 0,
+        name: codec.name,
+        resolvable: Boolean(codec.resolvable),
+        path: Boolean(codec.path)
+      }
+    })
   }
 
   protoCodes (): number[] {
-    return this.#tuples.map(([code]) => code)
+    return this.#components.map(({ code }) => code)
   }
 
   protoNames (): string[] {
-    return this.#tuples.map(([code]) => getProtocol(code).name)
+    return this.#components.map(({ name }) => name)
   }
 
-  tuples (): Array<[number, Uint8Array?]> {
-    return this.#tuples.map(([code, value]) => {
+  tuples (): Tuple[] {
+    return this.#components.map(({ code, value }) => {
       if (value == null) {
         return [code]
       }
 
-      return [code, value]
+      const codec = registry.getCodec(code)
+      const output: Tuple = [code]
+
+      if (value != null) {
+        output.push(codec.valueToBytes?.(value) ?? uint8ArrayFromString(value))
+      }
+
+      return output
     })
   }
 
   stringTuples (): Array<[number, string?]> {
-    return this.#stringTuples.map(([code, value]) => {
+    return this.#components.map(({ code, value }) => {
       if (value == null) {
         return [code]
       }
@@ -158,43 +184,52 @@ export class Multiaddr implements MultiaddrInterface {
     })
   }
 
-  encapsulate (addr: MultiaddrInput): Multiaddr {
-    addr = new Multiaddr(addr)
-    return new Multiaddr(this.toString() + addr.toString())
+  encapsulate (addr: MultiaddrInput): MultiaddrInterface {
+    const ma = new Multiaddr(addr)
+
+    return new Multiaddr([
+      ...this.getComponents(),
+      ...ma.getComponents()
+    ])
   }
 
-  decapsulate (addr: Multiaddr | string): Multiaddr {
+  decapsulate (addr: Multiaddr | string): MultiaddrInterface {
     const addrString = addr.toString()
     const s = this.toString()
     const i = s.lastIndexOf(addrString)
+
     if (i < 0) {
-      throw new Error(`Address ${this.toString()} does not contain subaddress: ${addr.toString()}`)
+      throw new InvalidParametersError(`Address ${this.toString()} does not contain subaddress: ${addr.toString()}`)
     }
+
     return new Multiaddr(s.slice(0, i))
   }
 
   decapsulateCode (code: number): Multiaddr {
-    const tuples = this.tuples()
-    for (let i = tuples.length - 1; i >= 0; i--) {
-      if (tuples[i][0] === code) {
-        return new Multiaddr(tuplesToBytes(tuples.slice(0, i)))
+    let index
+
+    for (let i = this.#components.length - 1; i > -1; i--) {
+      if (this.#components[i].code === code) {
+        index = i
+        break
       }
     }
-    return this
+
+    return new Multiaddr(this.#components.slice(0, index))
   }
 
   getPeerId (): string | null {
     try {
       let tuples: Array<[number, string | undefined]> = []
 
-      this.stringTuples().forEach(([code, name]) => {
-        if (code === names.p2p.code) {
-          tuples.push([code, name])
+      this.#components.forEach(({ code, value }) => {
+        if (code === CODE_P2P) {
+          tuples.push([code, value])
         }
 
         // if this is a p2p-circuit address, return the target peer id if present
         // not the peer id of the relay
-        if (code === names['p2p-circuit'].code) {
+        if (code === CODE_P2P_CIRCUIT) {
           tuples = []
         }
       })
@@ -221,7 +256,17 @@ export class Multiaddr implements MultiaddrInterface {
   }
 
   getPath (): string | null {
-    return this.#path
+    for (const component of this.#components) {
+      const codec = registry.getCodec(component.code)
+
+      if (!codec.path) {
+        continue
+      }
+
+      return component.value ?? null
+    }
+
+    return null
   }
 
   equals (addr: { bytes: Uint8Array }): boolean {
@@ -260,19 +305,21 @@ export class Multiaddr implements MultiaddrInterface {
     }
   }
 
-  isThinWaistAddress (addr?: Multiaddr): boolean {
-    const protos = (addr ?? this).protos()
+  isThinWaistAddress (): boolean {
+    const components = this.getComponents()
 
-    if (protos.length !== 2) {
+    if (components.length !== 2) {
       return false
     }
 
-    if (protos[0].code !== 4 && protos[0].code !== 41) {
+    if (components[0].code !== CODE_IP4 && components[0].code !== CODE_IP6) {
       return false
     }
-    if (protos[1].code !== 6 && protos[1].code !== 273) {
+
+    if (components[1].code !== CODE_TCP && components[1].code !== CODE_UDP) {
       return false
     }
+
     return true
   }
 
@@ -289,6 +336,23 @@ export class Multiaddr implements MultiaddrInterface {
    * ```
    */
   [inspect] (): string {
-    return `Multiaddr(${this.#string})`
+    return `Multiaddr(${this.toString()})`
   }
+}
+
+/**
+ * Ensures all multiaddr tuples are correct. Throws if any invalid protocols or
+ * values are encountered.
+ */
+export function validate (addr: Multiaddr): void {
+  addr.getComponents()
+    .forEach(component => {
+      const codec = registry.getCodec(component.code)
+
+      if (component.value == null) {
+        return
+      }
+
+      codec.validate?.(component.value)
+    })
 }

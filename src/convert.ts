@@ -1,137 +1,209 @@
+import { isIPv4 } from '@chainsafe/is-ip'
 import { IpNet } from '@chainsafe/netmask'
 import { base32 } from 'multiformats/bases/base32'
-import { base58btc } from 'multiformats/bases/base58'
 import { bases } from 'multiformats/basics'
-import { CID } from 'multiformats/cid'
-import * as Digest from 'multiformats/hashes/digest'
-import * as varint from 'uint8-varint'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import * as ip from './ip.js'
-import { getProtocol } from './protocols-table.js'
-import type { Multiaddr } from './index.js'
+import { InvalidMultiaddrError } from './errors.ts'
+import type { Multiaddr } from './index.ts'
+import type { MultibaseCodec } from 'multiformats'
+import type { SupportedEncodings } from 'uint8arrays/to-string'
 
-const ip4Protocol = getProtocol('ip4')
-const ip6Protocol = getProtocol('ip6')
-const ipcidrProtocol = getProtocol('ipcidr')
-
-/**
- * converts (serializes) addresses
- */
-export function convert (proto: string, a: string): Uint8Array
-export function convert (proto: string, a: Uint8Array): string
-export function convert (proto: string, a: string | Uint8Array): Uint8Array | string {
-  if (a instanceof Uint8Array) {
-    return convertToString(proto, a)
-  } else {
-    return convertToBytes(proto, a)
+export function bytesToString (base: SupportedEncodings): (buf: Uint8Array) => string {
+  return (buf) => {
+    return uint8ArrayToString(buf, base)
   }
 }
 
-/**
- * Convert [code,Uint8Array] to string
- */
-// eslint-disable-next-line complexity
-export function convertToString (proto: number | string, buf: Uint8Array): string {
-  const protocol = getProtocol(proto)
-  switch (protocol.code) {
-    case 4: // ipv4
-    case 41: // ipv6
-      return bytes2ip(buf)
-    case 42: // ipv6zone
-      return bytes2str(buf)
-    case 43: // ipcidr
-      return uint8ArrayToString(buf, 'base10')
-
-    case 6: // tcp
-    case 273: // udp
-    case 33: // dccp
-    case 132: // sctp
-      return bytes2port(buf).toString()
-
-    case 53: // dns
-    case 54: // dns4
-    case 55: // dns6
-    case 56: // dnsaddr
-    case 400: // unix
-    case 449: // sni
-    case 777: // memory
-      return bytes2str(buf)
-
-    case 421: // ipfs
-      return bytes2mh(buf)
-    case 444: // onion
-      return bytes2onion(buf)
-    case 445: // onion3
-      return bytes2onion(buf)
-    case 466: // certhash
-      return bytes2mb(buf)
-    case 481: // http-path
-      return globalThis.encodeURIComponent(bytes2str(buf))
-    default:
-      return uint8ArrayToString(buf, 'base16') // no clue. convert to hex
+export function stringToBytes (base: SupportedEncodings): (value: string) => Uint8Array {
+  return (buf) => {
+    return uint8ArrayFromString(buf, base)
   }
 }
 
-// eslint-disable-next-line complexity
-export function convertToBytes (proto: string | number, str: string): Uint8Array {
-  const protocol = getProtocol(proto)
-  switch (protocol.code) {
-    case 4: // ipv4
-      return ip2bytes(str)
-    case 41: // ipv6
-      return ip2bytes(str)
-    case 42: // ipv6zone
-      return str2bytes(str)
-    case 43: // ipcidr
-      return uint8ArrayFromString(str, 'base10')
-
-    case 6: // tcp
-    case 273: // udp
-    case 33: // dccp
-    case 132: // sctp
-      return port2bytes(parseInt(str, 10))
-
-    case 53: // dns
-    case 54: // dns4
-    case 55: // dns6
-    case 56: // dnsaddr
-    case 400: // unix
-    case 449: // sni
-    case 777: // memory
-      return str2bytes(str)
-
-    case 421: // ipfs
-      return mh2bytes(str)
-    case 444: // onion
-      return onion2bytes(str)
-    case 445: // onion3
-      return onion32bytes(str)
-    case 466: // certhash
-      return mb2bytes(str)
-    case 481: // http-path
-      return str2bytes(globalThis.decodeURIComponent(str))
-    default:
-      return uint8ArrayFromString(str, 'base16') // no clue. convert from hex
-  }
+export function bytes2port (buf: Uint8Array): string {
+  const view = new DataView(buf.buffer)
+  return view.getUint16(buf.byteOffset).toString()
 }
 
-export function convertToIpNet (multiaddr: Multiaddr): IpNet {
-  let mask: string | undefined
-  let addr: string | undefined
-  multiaddr.stringTuples().forEach(([code, value]) => {
-    if (code === ip4Protocol.code || code === ip6Protocol.code) {
-      addr = value
+export function port2bytes (port: string | number): Uint8Array {
+  const buf = new ArrayBuffer(2)
+  const view = new DataView(buf)
+  view.setUint16(0, typeof port === 'string' ? parseInt(port) : port)
+
+  return new Uint8Array(buf)
+}
+
+export function onion2bytes (str: string): Uint8Array {
+  const addr = str.split(':')
+
+  if (addr.length !== 2) {
+    throw new Error(`failed to parse onion addr: ["'${addr.join('", "')}'"]' does not contain a port number`)
+  }
+
+  if (addr[0].length !== 16) {
+    throw new Error(`failed to parse onion addr: ${addr[0]} not a Tor onion address.`)
+  }
+
+  // onion addresses do not include the multibase prefix, add it before decoding
+  const buf = uint8ArrayFromString(addr[0], 'base32')
+
+  // onion port number
+  const port = parseInt(addr[1], 10)
+
+  if (port < 1 || port > 65536) {
+    throw new Error('Port number is not in range(1, 65536)')
+  }
+
+  const portBuf = port2bytes(port)
+
+  return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
+}
+
+export function onion32bytes (str: string): Uint8Array {
+  const addr = str.split(':')
+
+  if (addr.length !== 2) {
+    throw new Error(`failed to parse onion addr: ["'${addr.join('", "')}'"]' does not contain a port number`)
+  }
+
+  if (addr[0].length !== 56) {
+    throw new Error(`failed to parse onion addr: ${addr[0]} not a Tor onion3 address.`)
+  }
+
+  // onion addresses do not include the multibase prefix, add it before decoding
+  const buf = base32.decode(`b${addr[0]}`)
+
+  // onion port number
+  const port = parseInt(addr[1], 10)
+
+  if (port < 1 || port > 65536) {
+    throw new Error('Port number is not in range(1, 65536)')
+  }
+
+  const portBuf = port2bytes(port)
+
+  return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
+}
+
+export function bytes2onion (buf: Uint8Array): string {
+  const addrBytes = buf.subarray(0, buf.length - 2)
+  const portBytes = buf.subarray(buf.length - 2)
+  const addr = uint8ArrayToString(addrBytes, 'base32')
+  const port = bytes2port(portBytes)
+  return `${addr}:${port}`
+}
+
+// Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L7
+// but with buf/offset args removed because we don't use them
+export const ip4ToBytes = function (ip: string): Uint8Array {
+  let offset = 0
+  ip = ip.toString().trim()
+
+  const bytes = new Uint8Array(offset + 4)
+
+  ip.split(/\./g).forEach((byte) => {
+    const value = parseInt(byte, 10)
+
+    if (isNaN(value) || value < 0 || value > 0xff) {
+      throw new InvalidMultiaddrError('Invalid byte value in IP address')
     }
-    if (code === ipcidrProtocol.code) {
-      mask = value
-    }
+
+    bytes[offset++] = value
   })
-  if (mask == null || addr == null) {
-    throw new Error('Invalid multiaddr')
+
+  return bytes
+}
+
+// Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L7
+// but with buf/offset args removed because we don't use them
+export const ip6ToBytes = function (ip: string): Uint8Array {
+  let offset = 0
+  ip = ip.toString().trim()
+
+  const sections = ip.split(':', 8)
+
+  let i
+  for (i = 0; i < sections.length; i++) {
+    const isv4 = isIPv4(sections[i])
+    let v4Buffer: Uint8Array | undefined
+
+    if (isv4) {
+      v4Buffer = ip4ToBytes(sections[i])
+      sections[i] = uint8ArrayToString(v4Buffer.subarray(0, 2), 'base16')
+    }
+
+    if (v4Buffer != null && ++i < 8) {
+      sections.splice(i, 0, uint8ArrayToString(v4Buffer.subarray(2, 4), 'base16'))
+    }
   }
-  return new IpNet(addr, mask)
+
+  if (sections[0] === '') {
+    while (sections.length < 8) { sections.unshift('0') }
+  } else if (sections[sections.length - 1] === '') {
+    while (sections.length < 8) { sections.push('0') }
+  } else if (sections.length < 8) {
+    for (i = 0; i < sections.length && sections[i] !== ''; i++) { }
+    const argv: [number, number, ...string[]] = [i, 1]
+    for (i = 9 - sections.length; i > 0; i--) {
+      argv.push('0')
+    }
+    sections.splice.apply(sections, argv)
+  }
+
+  const bytes = new Uint8Array(offset + 16)
+
+  for (i = 0; i < sections.length; i++) {
+    if (sections[i] === '') {
+      sections[i] = '0'
+    }
+
+    const word = parseInt(sections[i], 16)
+
+    if (isNaN(word) || word < 0 || word > 0xffff) {
+      throw new InvalidMultiaddrError('Invalid byte value in IP address')
+    }
+
+    bytes[offset++] = (word >> 8) & 0xff
+    bytes[offset++] = word & 0xff
+  }
+
+  return bytes
+}
+
+// Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L63
+export const ipToString = function (buf: Uint8Array): string {
+  const offset = 0
+  const length = buf.byteLength
+
+  const view = new DataView(buf.buffer)
+
+  if (length === 4) {
+    const result = []
+
+    // IPv4
+    for (let i = 0; i < length; i++) {
+      result.push(buf[offset + i])
+    }
+
+    return result.join('.')
+  }
+
+  if (length === 16) {
+    const result = []
+
+    // IPv6
+    for (let i = 0; i < length; i += 2) {
+      result.push(view.getUint16(offset + i).toString(16))
+    }
+
+    return result.join(':')
+      .replace(/(^|:)0(:0)*:0(:|$)/, '$1::$3')
+      .replace(/:{3,4}/, '::')
+  }
+
+  return ''
 }
 
 const decoders = Object.values(bases).map((c) => c.decoder)
@@ -141,143 +213,32 @@ const anybaseDecoder = (function () {
   return acc
 })()
 
-function ip2bytes (ipString: string): Uint8Array {
-  if (!ip.isIP(ipString)) {
-    throw new Error('invalid ip address')
-  }
-  return ip.toBytes(ipString)
+export function mb2bytes (mbstr: string): Uint8Array {
+  return anybaseDecoder.decode(mbstr)
 }
 
-function bytes2ip (ipBuff: Uint8Array): string {
-  const ipString = ip.toString(ipBuff, 0, ipBuff.length)
-  if (ipString == null) {
-    throw new Error('ipBuff is required')
+export function bytes2mb (base: MultibaseCodec<any>): (buf: Uint8Array) => string {
+  return (buf) => {
+    return base.encoder.encode(buf)
   }
-  if (!ip.isIP(ipString)) {
-    throw new Error('invalid ip address')
-  }
-  return ipString
 }
 
-function port2bytes (port: number): Uint8Array {
-  const buf = new ArrayBuffer(2)
-  const view = new DataView(buf)
-  view.setUint16(0, port)
+export function convertToIpNet (multiaddr: Multiaddr): IpNet {
+  let mask: string | undefined
+  let addr: string | undefined
 
-  return new Uint8Array(buf)
-}
+  multiaddr.getComponents().forEach(component => {
+    if (component.name === 'ip4' || component.name === 'ip6') {
+      addr = component.value
+    }
+    if (component.name === 'ipcidr') {
+      mask = component.value
+    }
+  })
 
-function bytes2port (buf: Uint8Array): number {
-  const view = new DataView(buf.buffer)
-  return view.getUint16(buf.byteOffset)
-}
-
-function str2bytes (str: string): Uint8Array {
-  const buf = uint8ArrayFromString(str)
-  const size = Uint8Array.from(varint.encode(buf.length))
-  return uint8ArrayConcat([size, buf], size.length + buf.length)
-}
-
-function bytes2str (buf: Uint8Array): string {
-  const size = varint.decode(buf)
-  buf = buf.slice(varint.encodingLength(size))
-
-  if (buf.length !== size) {
-    throw new Error('inconsistent lengths')
+  if (mask == null || addr == null) {
+    throw new Error('Invalid multiaddr')
   }
 
-  return uint8ArrayToString(buf)
-}
-
-function mh2bytes (hash: string): Uint8Array {
-  let mh
-
-  if (hash[0] === 'Q' || hash[0] === '1') {
-    mh = Digest.decode(base58btc.decode(`z${hash}`)).bytes
-  } else {
-    mh = CID.parse(hash).multihash.bytes
-  }
-
-  // the address is a varint prefixed multihash string representation
-  const size = Uint8Array.from(varint.encode(mh.length))
-  return uint8ArrayConcat([size, mh], size.length + mh.length)
-}
-
-function mb2bytes (mbstr: string): Uint8Array {
-  const mb = anybaseDecoder.decode(mbstr)
-  const size = Uint8Array.from(varint.encode(mb.length))
-  return uint8ArrayConcat([size, mb], size.length + mb.length)
-}
-function bytes2mb (buf: Uint8Array): string {
-  const size = varint.decode(buf)
-  const hash = buf.slice(varint.encodingLength(size))
-
-  if (hash.length !== size) {
-    throw new Error('inconsistent lengths')
-  }
-
-  return 'u' + uint8ArrayToString(hash, 'base64url')
-}
-
-/**
- * Converts bytes to bas58btc string
- */
-function bytes2mh (buf: Uint8Array): string {
-  const size = varint.decode(buf)
-  const address = buf.slice(varint.encodingLength(size))
-
-  if (address.length !== size) {
-    throw new Error('inconsistent lengths')
-  }
-
-  return uint8ArrayToString(address, 'base58btc')
-}
-
-function onion2bytes (str: string): Uint8Array {
-  const addr = str.split(':')
-  if (addr.length !== 2) {
-    throw new Error(`failed to parse onion addr: ["'${addr.join('", "')}'"]' does not contain a port number`)
-  }
-  if (addr[0].length !== 16) {
-    throw new Error(`failed to parse onion addr: ${addr[0]} not a Tor onion address.`)
-  }
-
-  // onion addresses do not include the multibase prefix, add it before decoding
-  const buf = base32.decode('b' + addr[0])
-
-  // onion port number
-  const port = parseInt(addr[1], 10)
-  if (port < 1 || port > 65536) {
-    throw new Error('Port number is not in range(1, 65536)')
-  }
-  const portBuf = port2bytes(port)
-  return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
-}
-
-function onion32bytes (str: string): Uint8Array {
-  const addr = str.split(':')
-  if (addr.length !== 2) {
-    throw new Error(`failed to parse onion addr: ["'${addr.join('", "')}'"]' does not contain a port number`)
-  }
-  if (addr[0].length !== 56) {
-    throw new Error(`failed to parse onion addr: ${addr[0]} not a Tor onion3 address.`)
-  }
-  // onion addresses do not include the multibase prefix, add it before decoding
-  const buf = base32.decode(`b${addr[0]}`)
-
-  // onion port number
-  const port = parseInt(addr[1], 10)
-  if (port < 1 || port > 65536) {
-    throw new Error('Port number is not in range(1, 65536)')
-  }
-  const portBuf = port2bytes(port)
-  return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
-}
-
-function bytes2onion (buf: Uint8Array): string {
-  const addrBytes = buf.slice(0, buf.length - 2)
-  const portBytes = buf.slice(buf.length - 2)
-  const addr = uint8ArrayToString(addrBytes, 'base32')
-  const port = bytes2port(portBytes)
-  return `${addr}:${port}`
+  return new IpNet(addr, mask)
 }
