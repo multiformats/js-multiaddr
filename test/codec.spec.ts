@@ -1,44 +1,84 @@
 /* eslint-env mocha */
 import { expect } from 'aegir/chai'
-import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
-import * as codec from '../src/codec.js'
-import { convertToBytes } from '../src/convert.js'
-import type { StringTuple, Tuple } from '../src/index.js'
+import { componentsToString, stringToComponents } from '../src/components.ts'
+import { CODE_HTTP, CODE_HTTP_PATH, CODE_IP4, CODE_UNIX, CODE_UTP } from '../src/constants.ts'
+import type { Component } from '../src/index.js'
+
+interface TestCase {
+  name: string
+  input: string
+  components: Component[]
+}
 
 describe('codec', () => {
-  describe('.stringToMultiaddrParts', () => {
+  describe('.stringToComponents', () => {
     it('throws on invalid addresses', () => {
       expect(
-        () => codec.stringToMultiaddrParts('/ip4/0.0.0.0/ip4')
-      ).to.throw(
-        /invalid address/
-      )
+        () => stringToComponents('/ip4/0.0.0.0/ip4')
+      ).to.throw()
+        .with.property('name', 'InvalidMultiaddrError')
+    })
+
+    const testCases: TestCase[] = [{
+      name: 'handles non array tuples',
+      input: '/ip4/0.0.0.0/utp',
+      components: [{
+        code: CODE_IP4,
+        name: 'ip4',
+        value: '0.0.0.0'
+      }, {
+        code: CODE_UTP,
+        name: 'utp'
+      }]
+    }, {
+      name: 'handle not null path',
+      input: '/unix/tmp%2Fp2p.sock',
+      components: [{
+        code: CODE_UNIX,
+        name: 'unix',
+        value: '/tmp/p2p.sock'
+      }]
+    }, {
+      name: 'handle http path',
+      input: '/ip4/123.123.123.123/http/http-path/foo%2Findex.html',
+      components: [{
+        code: CODE_IP4,
+        name: 'ip4',
+        value: '123.123.123.123'
+      }, {
+        code: CODE_HTTP,
+        name: 'http'
+      }, {
+        code: CODE_HTTP_PATH,
+        name: 'http-path',
+        value: '/foo/index.html'
+      }]
+    }]
+
+    for (const { name, input, components } of testCases) {
+      it(name, () => {
+        expect(stringToComponents(input)).to.deep.equal(components)
+      })
+    }
+
+    it('throws on invalid addresses', () => {
+      expect(
+        () => stringToComponents('/ip4/0.0.0.0/ip4')
+      ).to.throw()
+        .with.property('name', 'InvalidMultiaddrError')
     })
   })
 
-  describe('.stringToMultiaddrParts', () => {
-    const testCases: Array<{ name: string, string: string, stringTuples: StringTuple[], tuples: Tuple[], path: string | null }> = [
-      { name: 'handles non array tuples', string: '/ip4/0.0.0.0/utp', stringTuples: [[4, '0.0.0.0'], [302]], tuples: [[4, Uint8Array.from([0, 0, 0, 0])], [302]], path: null },
-      { name: 'handle not null path', string: '/unix/tmp/p2p.sock', stringTuples: [[400, '/tmp/p2p.sock']], tuples: [[400, convertToBytes(400, '/tmp/p2p.sock')]], path: '/tmp/p2p.sock' }
-    ]
-
-    for (const { name, string, stringTuples, tuples, path } of testCases) {
-      it(name, () => {
-        const parts = codec.stringToMultiaddrParts(string)
-        expect(parts.stringTuples).to.eql(stringTuples)
-        expect(parts.tuples).to.eql(tuples)
-        expect(parts.path).to.eql(path)
-      })
-    }
-  })
-
-  describe('.bytesToTuples', () => {
+  describe('.componentsToString', () => {
     it('throws on invalid address', () => {
       expect(
-        () => codec.bytesToTuples(codec.tuplesToBytes([[4, uint8ArrayFromString('192')]]))
-      ).to.throw(
-        /Invalid address/
-      )
+        () => componentsToString([{
+          code: 123,
+          name: 'non-existant',
+          value: 'non-existant'
+        }])
+      ).to.throw()
+        .with.property('name', 'InvalidProtocolError')
     })
   })
 })

@@ -171,6 +171,7 @@
     "@chainsafe/is-ip": "^2.0.1",
     "@chainsafe/netmask": "^2.0.0",
     "@multiformats/dns": "^1.0.3",
+    "abort-error": "^1.0.1",
     "multiformats": "^13.0.0",
     "uint8-varint": "^2.0.1",
     "uint8arrays": "^5.0.0"
