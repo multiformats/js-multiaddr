@@ -194,13 +194,18 @@ export const ip6ToString = function (buf: Uint8Array): string {
   const result: string[] = []
 
   for (let i = 0; i < buf.byteLength; i += 2) {
-    result.push(`${
-      buf[i].toString(16)
-    }${
-      buf[i + 1].toString(16).padStart(2, '0')
-    }`
-      .replace(/^(0+)/, '')
-    )
+    const byte1 = buf[i]
+    const byte2 = buf[i + 1]
+
+    let tuple = ''
+
+    if (byte1 > 0) {
+      tuple = `${byte1.toString(16)}${byte2.toString(16).padStart(2, '0')}`
+    } else if (byte2 > 0) {
+      tuple = byte2.toString(16)
+    }
+
+    result.push(tuple)
   }
 
   return result.join(':')
