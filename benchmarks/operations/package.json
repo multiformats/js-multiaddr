@@ -1,0 +1,21 @@
+{
+  "name": "benchmarks-operations",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "aegir clean",
+    "build": "aegir build --bundle false",
+    "lint": "aegir lint",
+    "dep-check": "aegir dep-check",
+    "doc-check": "aegir doc-check",
+    "start": "npm run build && node dist/test/index.js"
+  },
+  "devDependencies": {
+    "@multiformats/multiaddr-12.4.0": "npm:@multiformats/multiaddr@12.4.0",
+    "@multiformats/multiaddr": "../../",
+    "aegir": "^47.0.7",
+    "tinybench": "^4.0.1"
+  }
+}
