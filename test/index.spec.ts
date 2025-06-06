@@ -301,6 +301,10 @@ describe('normalize', () => {
       input: '/ip6/0000:0000:0000:0000:0000:0000:0000:0001',
       output: '/ip6/::1'
     },
+    'ip6 empty': {
+      input: '/ip6/:0::00::000::001',
+      output: '/ip6/::1'
+    },
     'ip6 with ip4': {
       input: '/ip6/::101.45.75.219/tcp/9090',
       output: '/ip6/::652d:4bdb/tcp/9090'

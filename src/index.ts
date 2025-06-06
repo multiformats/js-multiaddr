@@ -769,3 +769,9 @@ export function protocols (proto: number | string): Protocol {
  * ```
  */
 export { validate } from './multiaddr.ts'
+
+/**
+ * Export all table.csv codes. These are all named exports so can be tree-shaken
+ * out by bundlers.
+ */
+export * from './constants.ts'
