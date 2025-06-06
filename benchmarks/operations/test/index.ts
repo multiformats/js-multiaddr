@@ -41,7 +41,8 @@ async function main (): Promise<void> {
 
   console.table(suite.tasks.map(({ name, result }) => {
     if (result?.error != null) {
-      console.info(result.error)
+      console.error(result.error)
+
       return {
         Implementation: name,
         'ops/s': 'error',
@@ -50,6 +51,7 @@ async function main (): Promise<void> {
         p99: 'error'
       }
     }
+
     return {
       Implementation: name,
       'ops/s': result?.hz.toFixed(RESULT_PRECISION),

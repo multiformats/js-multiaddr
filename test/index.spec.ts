@@ -66,6 +66,13 @@ describe('construction', () => {
     expect(multiaddr(undefined).toString()).to.equal('/')
   })
 
+  it('should not mutate multiaddr', () => {
+    const str = '/ip4/127.0.0.1/udp/1234'
+    udpAddr = multiaddr(str)
+    udpAddr.getComponents().pop()
+    expect(udpAddr.toString()).to.equal(str)
+  })
+
   it('throws on truthy non string or buffer', () => {
     // @ts-expect-error incorrect parameters
     expect(() => multiaddr({})).to.throw()

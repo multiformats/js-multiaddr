@@ -140,7 +140,9 @@ export class Multiaddr implements MultiaddrInterface {
   }
 
   getComponents (): Component[] {
-    return this.#components
+    return [
+      ...this.#components
+    ]
   }
 
   protos (): Protocol[] {
