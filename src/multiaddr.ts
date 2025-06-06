@@ -198,7 +198,7 @@ export class Multiaddr implements MultiaddrInterface {
     const ma = new Multiaddr(addr)
 
     return new Multiaddr([
-      ...this.getComponents(),
+      ...this.#components,
       ...ma.getComponents()
     ])
   }
@@ -316,17 +316,15 @@ export class Multiaddr implements MultiaddrInterface {
   }
 
   isThinWaistAddress (): boolean {
-    const components = this.getComponents()
-
-    if (components.length !== 2) {
+    if (this.#components.length !== 2) {
       return false
     }
 
-    if (components[0].code !== CODE_IP4 && components[0].code !== CODE_IP6) {
+    if (this.#components[0].code !== CODE_IP4 && this.#components[0].code !== CODE_IP6) {
       return false
     }
 
-    if (components[1].code !== CODE_TCP && components[1].code !== CODE_UDP) {
+    if (this.#components[1].code !== CODE_TCP && this.#components[1].code !== CODE_UDP) {
       return false
     }
 
