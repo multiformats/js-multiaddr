@@ -59,6 +59,10 @@ function toComponents (addr: MultiaddrInput): Component[] {
   throw new InvalidMultiaddrError('Must be a string, Uint8Array, Component[], or another Multiaddr')
 }
 
+interface MultiaddrOptions {
+  validate?: boolean
+}
+
 /**
  * Creates a {@link Multiaddr} from a {@link MultiaddrInput}
  */
@@ -66,11 +70,17 @@ export class Multiaddr implements MultiaddrInterface {
   [symbol]: boolean = true
   readonly #components: Component[]
 
+  // cache string representation
   #string: string | undefined
+  // cache byte representation
   #bytes: Uint8Array | undefined
 
-  constructor (addr: MultiaddrInput | Component[] = '/') {
+  constructor (addr: MultiaddrInput | Component[] = '/', options: MultiaddrOptions = {}) {
     this.#components = toComponents(addr)
+
+    if (options.validate !== false) {
+      validate(this)
+    }
   }
 
   get bytes (): Uint8Array {
@@ -200,7 +210,9 @@ export class Multiaddr implements MultiaddrInterface {
     return new Multiaddr([
       ...this.#components,
       ...ma.getComponents()
-    ])
+    ], {
+      validate: false
+    })
   }
 
   decapsulate (addr: Multiaddr | string): MultiaddrInterface {
@@ -212,7 +224,9 @@ export class Multiaddr implements MultiaddrInterface {
       throw new InvalidParametersError(`Address ${this.toString()} does not contain subaddress: ${addr.toString()}`)
     }
 
-    return new Multiaddr(s.slice(0, i))
+    return new Multiaddr(s.slice(0, i), {
+      validate: false
+    })
   }
 
   decapsulateCode (code: number): Multiaddr {
@@ -225,7 +239,9 @@ export class Multiaddr implements MultiaddrInterface {
       }
     }
 
-    return new Multiaddr(this.#components.slice(0, index))
+    return new Multiaddr(this.#components.slice(0, index), {
+      validate: false
+    })
   }
 
   getPeerId (): string | null {
