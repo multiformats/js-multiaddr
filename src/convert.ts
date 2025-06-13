@@ -197,7 +197,7 @@ export const ip6ToString = function (buf: Uint8Array): string {
     const byte1 = buf[i]
     const byte2 = buf[i + 1]
 
-    let tuple = `${byte1.toString(16).padStart(2, '0')}${byte2.toString(16).padStart(2, '0')}`
+    const tuple = `${byte1.toString(16).padStart(2, '0')}${byte2.toString(16).padStart(2, '0')}`
 
     result.push(tuple)
   }
