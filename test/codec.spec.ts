@@ -32,7 +32,7 @@ describe('codec', () => {
       }]
     }, {
       name: 'handle not null path',
-      input: '/unix/tmp%2Fp2p.sock',
+      input: '/unix/%2Ftmp%2Fp2p.sock',
       components: [{
         code: CODE_UNIX,
         name: 'unix',

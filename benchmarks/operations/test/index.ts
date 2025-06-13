@@ -1,12 +1,17 @@
 /* eslint-disable no-console */
 
-import { multiaddr } from '@multiformats/multiaddr'
+import { multiaddr, validate } from '@multiformats/multiaddr'
 import { multiaddr as multiaddr12 } from '@multiformats/multiaddr-12.4.0'
 import { Bench } from 'tinybench'
+import type { Multiaddr } from '../../../src/multiaddr.js'
 
 const ITERATIONS = parseInt(process.env.ITERATIONS ?? '50000')
 const MIN_TIME = parseInt(process.env.MIN_TIME ?? '1')
 const RESULT_PRECISION = 2
+
+function isMultiaddr (obj?: any): obj is Multiaddr {
+  return typeof obj?.getComponents === 'function'
+}
 
 function bench (m: typeof multiaddr | typeof multiaddr12): void {
   const ma = m('/ip4/127.0.0.1/udp/1234/quic-v1/webtransport/certhash/uEiAkH5a4DPGKUuOBjYw0CgwjvcJCJMD2K_1aluKR_tpevQ/certhash/uEiAfbgiymPP2_nX7Dgir8B4QkksjHp2lVuJZz0F79Be9JA')

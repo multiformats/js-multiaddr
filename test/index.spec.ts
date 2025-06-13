@@ -821,13 +821,13 @@ describe('helpers', () => {
   describe('.getPath', () => {
     it('should return a path for unix', () => {
       expect(
-        multiaddr('/unix/tmp%2Fp2p.sock').getPath()
+        multiaddr('/unix/%2Ftmp%2Fp2p.sock').getPath()
       ).to.eql('/tmp/p2p.sock')
     })
 
     it('should return a path for unix when other protos exist', () => {
       expect(
-        multiaddr('/ip4/0.0.0.0/tcp/1234/unix/tmp%2Fp2p.sock').getPath()
+        multiaddr('/ip4/0.0.0.0/tcp/1234/unix/%2Ftmp%2Fp2p.sock').getPath()
       ).to.eql('/tmp/p2p.sock')
     })
 

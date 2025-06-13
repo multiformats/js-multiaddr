@@ -182,8 +182,8 @@ const codecs: ProtocolCodec[] = [{
   name: 'unix',
   size: V,
   path: true,
-  stringToValue: (str) => `/${decodeURIComponent(str)}`,
-  valueToString: (val) => encodeURIComponent(val.substring(1))
+  stringToValue: (str) => decodeURIComponent(str),
+  valueToString: (val) => encodeURIComponent(val)
 }, {
   code: CODE_P2P,
   name: 'p2p',
