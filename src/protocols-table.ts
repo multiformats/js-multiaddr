@@ -78,6 +78,8 @@ export function createProtocol (code: number, size: number, name: string, resolv
  * console.info(protocol(4))
  * // { code: 4, size: 32, name: 'ip4', resolvable: false, path: false }
  * ```
+ *
+ * @deprecated This will be removed in a future version
  */
 export function getProtocol (proto: number | string): Protocol {
   if (typeof proto === 'number') {
