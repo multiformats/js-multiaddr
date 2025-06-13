@@ -197,43 +197,30 @@ export const ip6ToString = function (buf: Uint8Array): string {
     const byte1 = buf[i]
     const byte2 = buf[i + 1]
 
-    let tuple = ''
-
-    if (byte1 > 0) {
-      tuple = `${byte1.toString(16)}${byte2.toString(16).padStart(2, '0')}`
-    } else if (byte2 > 0) {
-      tuple = byte2.toString(16)
-    }
+    let tuple = `${byte1.toString(16).padStart(2, '0')}${byte2.toString(16).padStart(2, '0')}`
 
     result.push(tuple)
   }
 
-  return result.join(':')
-    .replace(/:(:)+/, '::')
+  const ip = result.join(':')
+
+  try {
+    const url = new URL(`http://[${ip}]`)
+
+    return url.hostname.substring(1, url.hostname.length - 1)
+  } catch {
+    throw new InvalidMultiaddrError(`Invalid IPv6 address "${ip}"`)
+  }
 }
 
 export function ip6StringToValue (str: string): string {
-  let parts = str.split(':')
+  try {
+    const url = new URL(`http://[${str}]`)
 
-  parts = parts.map((str, index) => {
-    if (index === parts.length - 1 && isIPv4(str)) {
-      const bytes = str.split('.')
-      return `${
-        parseInt(bytes[0], 10).toString(16)
-      }${
-        parseInt(bytes[1], 10).toString(16).padStart(2, '0')
-      }:${
-        parseInt(bytes[2], 10).toString(16)
-      }${
-        parseInt(bytes[3], 10).toString(16).padStart(2, '0')
-      }`
-    }
-
-    return str.replace(/^(0+)/, '')
-  })
-
-  return `${parts.join(':')}`
-    .replace(/:(:)+/, '::')
+    return url.hostname.substring(1, url.hostname.length - 1)
+  } catch {
+    throw new InvalidMultiaddrError(`Invalid IPv6 address "${str}"`)
+  }
 }
 
 const decoders = Object.values(bases).map((c) => c.decoder)

@@ -11,7 +11,7 @@ describe('convert', () => {
   })
 
   it('handles ip6 buffers', () => {
-    expect(ip6ToString(uint8ArrayFromString('abcd0000000100020003000400050006', 'base16'))).to.equal('abcd::1:2:3:4:5:6')
+    expect(ip6ToString(uint8ArrayFromString('abcd0000000100020003000400050006', 'base16'))).to.equal('abcd:0:1:2:3:4:5:6')
   })
 
   it('handles ipv6 strings', () => {

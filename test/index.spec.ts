@@ -302,7 +302,7 @@ describe('normalize', () => {
       output: '/ip6/::1'
     },
     'ip6 empty': {
-      input: '/ip6/:0::00::000::001',
+      input: '/ip6/::00:0:000:0:001',
       output: '/ip6/::1'
     },
     'ip6 with ip4': {
@@ -312,6 +312,10 @@ describe('normalize', () => {
     'ip6 with ip4 without padding': {
       input: '/ip6/::1.45.5.219/tcp/9090',
       output: '/ip6/::12d:5db/tcp/9090'
+    },
+    'ip6 with multiple repeated empty blocks': {
+      input: '/ip6/0:00:0000:0002:0000:059c:0a24:0801/tcp/64142',
+      output: '/ip6/::2:0:59c:a24:801/tcp/64142'
     },
     'ipfs to p2p': {
       input: '/ipfs/bafzbeidt255unskpefjmqb2rc27vjuyxopkxgaylxij6pw35hhys4vnyp4',

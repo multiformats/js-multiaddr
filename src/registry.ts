@@ -98,7 +98,7 @@ const codecs: ProtocolCodec[] = [{
   bytesToValue: ip4ToString,
   validate: (value) => {
     if (!isIPv4(value)) {
-      throw new ValidationError('Invalid ip address')
+      throw new ValidationError(`Invalid IPv4 address "${value}"`)
     }
   }
 }, {
@@ -131,7 +131,7 @@ const codecs: ProtocolCodec[] = [{
   stringToValue: ip6StringToValue,
   validate: (value) => {
     if (!isIPv6(value)) {
-      throw new ValidationError('Invalid ip address')
+      throw new ValidationError(`Invalid IPv6 address "${value}"`)
     }
   }
 }, {
