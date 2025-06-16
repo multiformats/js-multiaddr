@@ -6,10 +6,10 @@ import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 import { InvalidMultiaddrError } from './errors.ts'
+import { registry } from './registry.js'
 import type { Multiaddr } from './index.ts'
 import type { MultibaseCodec } from 'multiformats'
 import type { SupportedEncodings } from 'uint8arrays/to-string'
-import { registry } from './registry.ts'
 
 export function bytesToString (base: SupportedEncodings): (buf: Uint8Array) => string {
   return (buf) => {
