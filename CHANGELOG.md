@@ -1,3 +1,9 @@
+## [12.4.2](https://github.com/multiformats/js-multiaddr/compare/v12.4.1...v12.4.2) (2025-06-16)
+
+### Bug Fixes
+
+* skip validation when encapsulating/decapsulating ([#420](https://github.com/multiformats/js-multiaddr/issues/420)) ([c208caf](https://github.com/multiformats/js-multiaddr/commit/c208cafc26ce74a96aa0ee3af626c2ffe2e769e9))
+
 ## [12.4.1](https://github.com/multiformats/js-multiaddr/compare/v12.4.0...v12.4.1) (2025-05-30)
 
 ### Dependencies
