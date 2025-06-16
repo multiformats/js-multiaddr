@@ -1,3 +1,9 @@
+## [12.4.3](https://github.com/multiformats/js-multiaddr/compare/v12.4.2...v12.4.3) (2025-06-16)
+
+### Bug Fixes
+
+* restore convert methods ([#423](https://github.com/multiformats/js-multiaddr/issues/423)) ([67f78eb](https://github.com/multiformats/js-multiaddr/commit/67f78eb0c5fbb4b8cbeac73082138520ec28ad20))
+
 ## [12.4.2](https://github.com/multiformats/js-multiaddr/compare/v12.4.1...v12.4.2) (2025-06-16)
 
 ### Bug Fixes
