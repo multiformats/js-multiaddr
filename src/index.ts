@@ -755,22 +755,6 @@ export function protocols (proto: number | string): Protocol {
 }
 
 /**
- * Ensures all multiaddr tuples are correct. Throws if any contain invalid
- * values.
- *
- * @example
- *
- * ```ts
- * import { multiaddr, validate } from '@multiformats/multiaddr'
- *
- * const ma = multiaddr('/ip4/123.123.123.123/tcp/1234')
- *
- * validate(ma) // ok!
- * ```
- */
-export { validate } from './multiaddr.ts'
-
-/**
  * Export all table.csv codes. These are all named exports so can be tree-shaken
  * out by bundlers.
  */
