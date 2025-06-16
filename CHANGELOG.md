@@ -1,3 +1,9 @@
+## [12.4.4](https://github.com/multiformats/js-multiaddr/compare/v12.4.3...v12.4.4) (2025-06-16)
+
+### Bug Fixes
+
+* solve circular import ([#424](https://github.com/multiformats/js-multiaddr/issues/424)) ([0efce94](https://github.com/multiformats/js-multiaddr/commit/0efce9411dd9ac61a3c925e090b67c17d9bae8d4))
+
 ## [12.4.3](https://github.com/multiformats/js-multiaddr/compare/v12.4.2...v12.4.3) (2025-06-16)
 
 ### Bug Fixes
