@@ -1,3 +1,5 @@
+// the values here come from https://github.com/multiformats/multiaddr/blob/master/protocols.csv
+
 export const CODE_IP4 = 4
 export const CODE_TCP = 6
 export const CODE_UDP = 273
