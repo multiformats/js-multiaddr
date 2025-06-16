@@ -93,14 +93,18 @@
  * ```
  */
 
-import { stringTuplesToTuples, tuplesToBytes } from './codec.js'
+import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
+import { InvalidParametersError } from './errors.ts'
 import { Multiaddr as MultiaddrClass, symbol } from './multiaddr.js'
-import { getProtocol } from './protocols-table.js'
+import { registry } from './registry.ts'
 import type { Resolver } from './resolvers/index.js'
 import type { DNS } from '@multiformats/dns'
+import type { AbortOptions } from 'abort-error'
 
 /**
  * Protocols are present in the protocol table
+ *
+ * @deprecated
  */
 export interface Protocol {
   code: number
@@ -132,27 +136,33 @@ export interface NodeAddress {
 /**
  * These types can be parsed into a {@link Multiaddr} object
  */
-export type MultiaddrInput = string | Multiaddr | Uint8Array | null
+export type MultiaddrInput = string | Multiaddr | Uint8Array | null | Component[]
 
 /**
  * A code/value pair
+ *
+ * @deprecated Use Component instead
  */
 export type Tuple = [number, Uint8Array?]
 
 /**
  * A code/value pair with the value as a string
+ *
+ * @deprecated Use Component instead
  */
 export type StringTuple = [number, string?]
 
 /**
  * Allows aborting long-lived operations
+ *
+ * @deprecated Import from `abort-error` instead
  */
-export interface AbortOptions {
-  signal?: AbortSignal
-}
+export type { AbortOptions }
 
 /**
  * All configured {@link Resolver}s
+ *
+ * @deprecated DNS resolving will be removed in a future release
  */
 export const resolvers = new Map<string, Resolver>()
 
@@ -160,6 +170,9 @@ export type { Resolver }
 
 export { MultiaddrFilter } from './filter/multiaddr-filter.js'
 
+/**
+ * @deprecated DNS resolving will be removed in a future release
+ */
 export interface ResolveOptions extends AbortOptions {
   /**
    * An optional DNS resolver
@@ -173,6 +186,37 @@ export interface ResolveOptions extends AbortOptions {
    * @default 32
    */
   maxRecursiveDepth?: number
+}
+
+/**
+ * A Component is a section of a multiaddr with a name/code, possibly with a
+ * value.
+ *
+ * Component names/codes are defined in the protocol table.
+ *
+ * @see https://github.com/multiformats/multiaddr/blob/master/protocols.csv
+ */
+export interface Component {
+  /**
+   * The code of the component as defined in the protocol table
+   */
+  code: number
+
+  /**
+   * The name of the component as defined in the protocol table
+   */
+  name: string
+
+  /**
+   * The component value, if one is present
+   */
+  value?: string
+
+  /**
+   * The bytes that make up the component. This will be set if the multiaddr
+   * was parsed from a `Uint8Array`, or if `.bytes` has been accessed on it.
+   */
+  bytes?: Uint8Array
 }
 
 export interface Multiaddr {
@@ -205,7 +249,21 @@ export interface Multiaddr {
   toJSON(): string
 
   /**
-   * Returns Multiaddr as a convinient options object to be used with net.createConnection
+   * Returns the components that make up this Multiaddr
+   *
+   * @example
+   * ```ts
+   * import { multiaddr } from '@multiformats/multiaddr'
+   *
+   * multiaddr('/ip4/127.0.0.1/tcp/4001').getComponents()
+   * // [{ name: 'ip4', code: 4, value: '127.0.0.1' }, { name: 'tcp', code: 6, value: '4001' }]
+   * ```
+   */
+  getComponents(): Component[]
+
+  /**
+   * Returns Multiaddr as a convenient options object to be used with
+   * `createConnection` from `node:net`
    *
    * @example
    * ```js
@@ -218,9 +276,9 @@ export interface Multiaddr {
   toOptions(): MultiaddrObject
 
   /**
-   * Returns the protocols the Multiaddr is defined with, as an array of objects, in
-   * left-to-right order. Each object contains the protocol code, protocol name,
-   * and the size of its address space in bits.
+   * Returns the protocols the Multiaddr is defined with, as an array of
+   * objects, in left-to-right order. Each object contains the protocol code,
+   * protocol name, and the size of its address space in bits.
    * [See list of protocols](https://github.com/multiformats/multiaddr/blob/master/protocols.csv)
    *
    * @example
@@ -231,6 +289,8 @@ export interface Multiaddr {
    * // [ { code: 4, size: 32, name: 'ip4' },
    * //   { code: 6, size: 16, name: 'tcp' } ]
    * ```
+   *
+   * @deprecated Use `getComponents()` instead
    */
   protos(): Protocol[]
 
@@ -245,6 +305,8 @@ export interface Multiaddr {
    * multiaddr('/ip4/127.0.0.1/tcp/4001').protoCodes()
    * // [ 4, 6 ]
    * ```
+   *
+   * @deprecated Use `getComponents()` instead
    */
   protoCodes(): number[]
 
@@ -259,6 +321,8 @@ export interface Multiaddr {
    * multiaddr('/ip4/127.0.0.1/tcp/4001').protoNames()
    * // [ 'ip4', 'tcp' ]
    * ```
+   *
+   * @deprecated Use `getComponents()` instead
    */
   protoNames(): string[]
 
@@ -272,6 +336,8 @@ export interface Multiaddr {
    * multiaddr('/ip4/127.0.0.1/tcp/4001').tuples()
    * // [ [ 4, <Buffer 7f 00 00 01> ], [ 6, <Buffer 0f a1> ] ]
    * ```
+   *
+   * @deprecated Use `getComponents()` instead
    */
   tuples(): Tuple[]
 
@@ -287,6 +353,8 @@ export interface Multiaddr {
    * multiaddr('/ip4/127.0.0.1/tcp/4001').stringTuples()
    * // [ [ 4, '127.0.0.1' ], [ 6, '4001' ] ]
    * ```
+   *
+   * @deprecated Use `getComponents()` instead
    */
   stringTuples(): StringTuple[]
 
@@ -339,8 +407,8 @@ export interface Multiaddr {
   decapsulate(addr: Multiaddr | string): Multiaddr
 
   /**
-   * A more reliable version of `decapsulate` if you are targeting a
-   * specific code, such as 421 (the `p2p` protocol code). The last index of the code
+   * A more reliable version of `decapsulate` if you are targeting a specific
+   * code, such as 421 (the `p2p` protocol code). The last index of the code
    * will be removed from the `Multiaddr`, and a new instance will be returned.
    * If the code is not present, the original `Multiaddr` is returned.
    *
@@ -373,6 +441,8 @@ export interface Multiaddr {
    * // should return QmValidBase58string or null if the id is missing or invalid
    * const peerId = mh1.getPeerId()
    * ```
+   *
+   * @deprecated A multiaddr can contain multiple PeerIds, use stringTuples() to get a specific one
    */
   getPeerId(): string | null
 
@@ -389,6 +459,8 @@ export interface Multiaddr {
    * // should return utf8 string or null if the id is missing or invalid
    * const path = mh1.getPath()
    * ```
+   *
+   * @deprecated A multiaddr can contain multiple tuples that could be interpreted as paths, use stringTuples() to get a specific one
    */
   getPath(): string | null
 
@@ -430,13 +502,15 @@ export interface Multiaddr {
    * //   Multiaddr(/ip4/147.75.83.83/udp/4001/quic/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb)
    * // ]
    * ```
+   *
+   * @deprecated If you need to resolve `dnsaddr` addresses, use `getComponents()` to extract them and perform the resolution yourself
    */
   resolve(options?: ResolveOptions): Promise<Multiaddr[]>
 
   /**
-   * Gets a Multiaddrs node-friendly address object. Note that protocol information
-   * is left out: in Node (and most network systems) the protocol is unknowable
-   * given only the address.
+   * Gets a Multiaddrs node-friendly address object. Note that protocol
+   * information is left out: in Node (and most network systems) the protocol is
+   * unknowable given only the address.
    *
    * Has to be a ThinWaist Address, otherwise throws error
    *
@@ -495,10 +569,10 @@ export interface Multiaddr {
  */
 export function fromNodeAddress (addr: NodeAddress, transport: string): Multiaddr {
   if (addr == null) {
-    throw new Error('requires node address object')
+    throw new InvalidParametersError('requires node address object')
   }
   if (transport == null) {
-    throw new Error('requires transport protocol')
+    throw new InvalidParametersError('requires transport protocol')
   }
   let ip: string | undefined
   let host = addr.address
@@ -518,12 +592,13 @@ export function fromNodeAddress (addr: NodeAddress, transport: string): Multiadd
 
         host = parts[0]
         const zone = parts[1]
-        ip = `/ip6zone/${zone}/ip6`
+        ip = `ip6zone/${zone}/ip6`
       }
       break
     default:
       throw Error('Invalid addr family, should be 4 or 6.')
   }
+
   return new MultiaddrClass('/' + [ip, host, transport, addr.port].join('/'))
 }
 
@@ -545,7 +620,20 @@ export function fromNodeAddress (addr: NodeAddress, transport: string): Multiadd
  * ```
  */
 export function fromTuples (tuples: Tuple[]): Multiaddr {
-  return multiaddr(tuplesToBytes(tuples))
+  return multiaddr(tuples.map(([code, value]) => {
+    const codec = registry.getCodec(code)
+
+    const component: Component = {
+      code,
+      name: codec.name
+    }
+
+    if (value != null) {
+      component.value = codec.bytesToValue?.(value) ?? uint8ArrayToString(value)
+    }
+
+    return component
+  }))
 }
 
 /**
@@ -566,7 +654,20 @@ export function fromTuples (tuples: Tuple[]): Multiaddr {
  * ```
  */
 export function fromStringTuples (tuples: StringTuple[]): Multiaddr {
-  return fromTuples(stringTuplesToTuples(tuples))
+  return multiaddr(tuples.map(([code, value]) => {
+    const codec = registry.getCodec(code)
+
+    const component: Component = {
+      code,
+      name: codec.name
+    }
+
+    if (value != null) {
+      component.value = value
+    }
+
+    return component
+  }))
 }
 
 /**
@@ -627,4 +728,34 @@ export function multiaddr (addr?: MultiaddrInput): Multiaddr {
   return new MultiaddrClass(addr)
 }
 
-export { getProtocol as protocols }
+/**
+ * For the passed proto string or number, return a {@link Protocol}
+ *
+ * @example
+ *
+ * ```js
+ * import { protocol } from '@multiformats/multiaddr'
+ *
+ * console.info(protocol(4))
+ * // { code: 4, size: 32, name: 'ip4', resolvable: false, path: false }
+ * ```
+ *
+ * @deprecated This will be removed in a future version
+ */
+export function protocols (proto: number | string): Protocol {
+  const codec = registry.getCodec(proto)
+
+  return {
+    code: codec.code,
+    size: codec.size ?? 0,
+    name: codec.name,
+    resolvable: Boolean(codec.resolvable),
+    path: Boolean(codec.path)
+  }
+}
+
+/**
+ * Export all table.csv codes. These are all named exports so can be tree-shaken
+ * out by bundlers.
+ */
+export * from './constants.ts'
