@@ -10,14 +10,14 @@ export function integer (value: string): void {
 
 export function positive (value: any): void {
   if (value < 0) {
-    throw new ValidationError('Value must be a positive integer')
+    throw new ValidationError('Value must be a positive integer, or zero')
   }
 }
 
 export function maxValue (max: number): (value: any) => void {
   return (value) => {
     if (value > max) {
-      throw new ValidationError(`Value must be smaller than ${max}`)
+      throw new ValidationError(`Value must be smaller than or equal to ${max}`)
     }
   }
 }
