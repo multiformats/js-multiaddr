@@ -9,6 +9,7 @@ import { InvalidMultiaddrError } from './errors.ts'
 import type { Multiaddr } from './index.ts'
 import type { MultibaseCodec } from 'multiformats'
 import type { SupportedEncodings } from 'uint8arrays/to-string'
+import { registry } from './registry.ts'
 
 export function bytesToString (base: SupportedEncodings): (buf: Uint8Array) => string {
   return (buf) => {
@@ -258,4 +259,41 @@ export function convertToIpNet (multiaddr: Multiaddr): IpNet {
   }
 
   return new IpNet(addr, mask)
+}
+
+/**
+ * converts (serializes) addresses
+ *
+ * @deprecated Will be removed in a future release
+ */
+export function convert (proto: string, a: string): Uint8Array
+export function convert (proto: string, a: Uint8Array): string
+export function convert (proto: string, a: string | Uint8Array): Uint8Array | string {
+  if (a instanceof Uint8Array) {
+    return convertToString(proto, a)
+  } else {
+    return convertToBytes(proto, a)
+  }
+}
+
+/**
+ * Convert [code, Uint8Array] to string
+ *
+ * @deprecated Will be removed in a future release
+ */
+export function convertToString (proto: number | string, buf: Uint8Array): string {
+  const protocol = registry.getCodec(proto)
+
+  return protocol.bytesToValue?.(buf) ?? uint8ArrayToString(buf, 'base16')  // no clue. convert to hex
+}
+
+/**
+ * Convert [code, string] to Uint8Array
+ *
+ * @deprecated Will be removed in a future release
+ */
+export function convertToBytes (proto: string | number, str: string): Uint8Array {
+  const protocol = registry.getCodec(proto)
+
+  return protocol.valueToBytes?.(str) ?? uint8ArrayFromString(str, 'base16') // no clue. convert from hex
 }
