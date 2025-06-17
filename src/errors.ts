@@ -16,7 +16,7 @@ export class InvalidParametersError extends Error {
   name = 'InvalidParametersError'
 }
 
-export class InvalidProtocolError extends Error {
-  static name = 'InvalidProtocolError'
-  name = 'InvalidProtocolError'
+export class UnknownProtocolError extends Error {
+  static name = 'UnknownProtocolError'
+  name = 'UnknownProtocolError'
 }

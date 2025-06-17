@@ -157,7 +157,7 @@ export class Multiaddr implements MultiaddrInterface {
 
   protos (): Protocol[] {
     return this.#components.map(({ code, value }) => {
-      const codec = registry.getCodec(code)
+      const codec = registry.getProtocol(code)
 
       return {
         code,
@@ -183,7 +183,7 @@ export class Multiaddr implements MultiaddrInterface {
         return [code]
       }
 
-      const codec = registry.getCodec(code)
+      const codec = registry.getProtocol(code)
       const output: Tuple = [code]
 
       if (value != null) {
@@ -283,7 +283,7 @@ export class Multiaddr implements MultiaddrInterface {
 
   getPath (): string | null {
     for (const component of this.#components) {
-      const codec = registry.getCodec(component.code)
+      const codec = registry.getProtocol(component.code)
 
       if (!codec.path) {
         continue
@@ -371,7 +371,7 @@ export class Multiaddr implements MultiaddrInterface {
 export function validate (addr: Multiaddr): void {
   addr.getComponents()
     .forEach(component => {
-      const codec = registry.getCodec(component.code)
+      const codec = registry.getProtocol(component.code)
 
       if (component.value == null) {
         return

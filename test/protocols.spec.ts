@@ -8,14 +8,14 @@ describe('protocols', () => {
       expect(
         () => protocols(1234)
       ).to.throw()
-        .with.property('name', 'InvalidProtocolError')
+        .with.property('name', 'UnknownProtocolError')
     })
 
     it('string', () => {
       expect(
         () => protocols('hello')
       ).to.throw()
-        .with.property('name', 'InvalidProtocolError')
+        .with.property('name', 'UnknownProtocolError')
     })
 
     it('else', () => {
@@ -23,7 +23,7 @@ describe('protocols', () => {
         // @ts-expect-error incorrect parameters
         () => protocols({ hi: 34 })
       ).to.throw()
-        .with.property('name', 'InvalidProtocolError')
+        .with.property('name', 'UnknownProtocolError')
     })
   })
 })

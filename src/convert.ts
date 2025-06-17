@@ -45,7 +45,7 @@ export function convert (proto: string, a: string | Uint8Array): Uint8Array | st
  * @deprecated Will be removed in a future release
  */
 export function convertToString (proto: number | string, buf: Uint8Array): string {
-  const protocol = registry.getCodec(proto)
+  const protocol = registry.getProtocol(proto)
 
   return protocol.bytesToValue?.(buf) ?? uint8ArrayToString(buf, 'base16')  // no clue. convert to hex
 }
@@ -56,7 +56,7 @@ export function convertToString (proto: number | string, buf: Uint8Array): strin
  * @deprecated Will be removed in a future release
  */
 export function convertToBytes (proto: string | number, str: string): Uint8Array {
-  const protocol = registry.getCodec(proto)
+  const protocol = registry.getProtocol(proto)
 
   return protocol.valueToBytes?.(str) ?? uint8ArrayFromString(str, 'base16') // no clue. convert from hex
 }

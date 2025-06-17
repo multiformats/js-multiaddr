@@ -2,18 +2,50 @@ import { isIPv4, isIPv6 } from '@chainsafe/is-ip'
 import { CID } from 'multiformats'
 import { base64url } from 'multiformats/bases/base64'
 import { CODE_CERTHASH, CODE_DCCP, CODE_DNS, CODE_DNS4, CODE_DNS6, CODE_DNSADDR, CODE_GARLIC32, CODE_GARLIC64, CODE_HTTP, CODE_HTTP_PATH, CODE_HTTPS, CODE_IP4, CODE_IP6, CODE_IP6ZONE, CODE_IPCIDR, CODE_MEMORY, CODE_NOISE, CODE_ONION, CODE_ONION3, CODE_P2P, CODE_P2P_CIRCUIT, CODE_P2P_STARDUST, CODE_P2P_WEBRTC_DIRECT, CODE_P2P_WEBRTC_STAR, CODE_P2P_WEBSOCKET_STAR, CODE_QUIC, CODE_QUIC_V1, CODE_SCTP, CODE_SNI, CODE_TCP, CODE_TLS, CODE_UDP, CODE_UDT, CODE_UNIX, CODE_UTP, CODE_WEBRTC, CODE_WEBRTC_DIRECT, CODE_WEBTRANSPORT, CODE_WS, CODE_WSS } from './constants.ts'
-import { InvalidProtocolError, ValidationError } from './errors.ts'
+import { UnknownProtocolError, ValidationError } from './errors.ts'
 import { bytes2mb, bytes2onion, bytes2port, bytesToString, ip4ToBytes, ip4ToString, ip6StringToValue, ip6ToBytes, ip6ToString, mb2bytes, onion2bytes, onion32bytes, port2bytes, stringToBytes } from './utils.ts'
 import { validatePort } from './validation.ts'
+import type { Registry as RegistryInterface } from './index.ts'
 
 export const V = -1
 
 export interface ProtocolCodec {
+  /**
+   * A numeric code that will be used in the binary representation of the tuple.
+   */
   code: number
+
+  /**
+   * A string name that will be used in the string representation of the addr.
+   */
   name: string
+
+  /**
+   * Size defines the expected length of the address part of the tuple - valid
+   * values are `-1` (or the `V` constant) for variable length (this will be
+   * varint encoded in the binary representation), `0` for no address part or a
+   * number that represents a fixed-length address.
+   */
   size?: number
+
+  /**
+   * If this protocol is a path protocol.
+   *
+   * @deprecated This will be removed in a future release
+   */
   path?: boolean
+
+  /**
+   * If this protocol can be resolved using configured resolvers.
+   *
+   * @deprecated This will be removed in a future release
+   */
   resolvable?: boolean
+
+  /**
+   * If specified this protocol codec will also be used to decode tuples with
+   * these names from string multiaddrs.
+   */
   aliases?: string[]
 
   /**
@@ -43,11 +75,11 @@ export interface ProtocolCodec {
   validate?(value: string): void
 }
 
-class Registry {
+class Registry implements RegistryInterface {
   private protocolsByCode = new Map<number, ProtocolCodec>()
   private protocolsByName = new Map<string, ProtocolCodec>()
 
-  getCodec (key: string | number): ProtocolCodec {
+  getProtocol (key: string | number): ProtocolCodec {
     let codec: ProtocolCodec | undefined
 
     if (typeof key === 'string') {
@@ -57,23 +89,23 @@ class Registry {
     }
 
     if (codec == null) {
-      throw new InvalidProtocolError(`Protocol ${key} was unknown`)
+      throw new UnknownProtocolError(`Protocol ${key} was unknown`)
     }
 
     return codec
   }
 
-  addCodec (key: number, codec: ProtocolCodec, aliases?: string[]): void {
-    this.protocolsByCode.set(key, codec)
+  addProtocol (codec: ProtocolCodec): void {
+    this.protocolsByCode.set(codec.code, codec)
     this.protocolsByName.set(codec.name, codec)
 
-    aliases?.forEach(alias => {
+    codec.aliases?.forEach(alias => {
       this.protocolsByName.set(alias, codec)
     })
   }
 
-  deleteCodec (key: number): void {
-    const codec = this.getCodec(key)
+  removeProtocol (code: number): void {
+    const codec = this.protocolsByCode.get(code)
 
     if (codec == null) {
       return
@@ -288,5 +320,5 @@ const codecs: ProtocolCodec[] = [{
 }]
 
 codecs.forEach(codec => {
-  registry.addCodec(codec.code, codec, codec.aliases)
+  registry.addProtocol(codec)
 })

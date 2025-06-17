@@ -78,7 +78,7 @@ describe('codec', () => {
           value: 'non-existant'
         }])
       ).to.throw()
-        .with.property('name', 'InvalidProtocolError')
+        .with.property('name', 'UnknownProtocolError')
     })
   })
 })
