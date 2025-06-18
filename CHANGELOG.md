@@ -1,3 +1,13 @@
+## [12.5.0](https://github.com/multiformats/js-multiaddr/compare/v12.4.4...v12.5.0) (2025-06-18)
+
+### Features
+
+* allow registering custom protocol codecs ([#425](https://github.com/multiformats/js-multiaddr/issues/425)) ([caf2bfd](https://github.com/multiformats/js-multiaddr/commit/caf2bfdfe2614696a2ba90cf06a2527d1fc170be))
+
+### Trivial Changes
+
+* bump sinon from 19.0.5 to 21.0.0 ([#422](https://github.com/multiformats/js-multiaddr/issues/422)) ([d43de69](https://github.com/multiformats/js-multiaddr/commit/d43de69601f649d433e5a0ddb2512385e8390f89))
+
 ## [12.4.4](https://github.com/multiformats/js-multiaddr/compare/v12.4.3...v12.4.4) (2025-06-16)
 
 ### Bug Fixes
