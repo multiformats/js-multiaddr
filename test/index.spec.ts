@@ -672,14 +672,14 @@ describe('helpers', () => {
       expect(
         () => multiaddr('/ip5/127.0.0.1/udp/5000')
       ).to.throw()
-        .with.property('name', 'InvalidProtocolError')
+        .with.property('name', 'UnknownProtocolError')
     })
 
     it('throws on an invalid protocol name when the transport protocol is not valid', () => {
       expect(
         () => multiaddr('/ip4/127.0.0.1/utp/5000')
       ).to.throw()
-        .with.property('name', 'InvalidProtocolError')
+        .with.property('name', 'UnknownProtocolError')
     })
   })
 
@@ -892,6 +892,6 @@ describe('unknown protocols', () => {
   it('throws an error', () => {
     const str = '/ip4/127.0.0.1/unknown'
     expect(() => multiaddr(str)).to.throw()
-      .with.property('name', 'InvalidProtocolError')
+      .with.property('name', 'UnknownProtocolError')
   })
 })

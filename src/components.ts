@@ -13,7 +13,7 @@ export function bytesToComponents (bytes: Uint8Array): Component[] {
   let i = 0
   while (i < bytes.length) {
     const code = varint.decode(bytes, i)
-    const codec = registry.getCodec(code)
+    const codec = registry.getProtocol(code)
     const codeLength = varint.encodingLength(code)
     const size = sizeForAddr(codec, bytes, i + codeLength)
     let sizeLength = 0
@@ -51,7 +51,7 @@ export function componentsToBytes (components: Component[]): Uint8Array {
 
   for (const component of components) {
     if (component.bytes == null) {
-      const codec = registry.getCodec(component.code)
+      const codec = registry.getProtocol(component.code)
       const codecLength = varint.encodingLength(component.code)
       let valueBytes: Uint8Array | undefined
       let valueLength = 0
@@ -119,7 +119,7 @@ export function stringToComponents (string: string): Component[] {
     const ended = i === string.length - 1
 
     if (char === '/' || ended) {
-      const codec = registry.getCodec(protocol)
+      const codec = registry.getProtocol(protocol)
 
       if (collecting === 'protocol') {
         if (codec.size == null || codec.size === 0) {
@@ -176,7 +176,7 @@ export function componentsToString (components: Component[]): string {
         return component.name
       }
 
-      const codec = registry.getCodec(component.code)
+      const codec = registry.getProtocol(component.code)
 
       if (codec == null) {
         throw new InvalidMultiaddrError(`Unknown protocol code ${component.code}`)

@@ -91,12 +91,44 @@
  * console.info(resolved)
  * // [Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...')...]
  * ```
+ *
+ * @example Adding custom protocols
+ *
+ * To add application-specific or experimental protocols, add a protocol codec
+ * to the protocol registry:
+ *
+ * ```ts
+ * import { registry, V, multiaddr } from '@multiformats/multiaddr'
+ * import type { ProtocolCodec } from '@multiformats/multiaddr'
+ *
+ * const maWithCustomTuple = '/custom-protocol/hello'
+ *
+ * // throws UnknownProtocolError
+ * multiaddr(maWithCustomTuple)
+ *
+ * const protocol: ProtocolCodec = {
+ *   code: 2059,
+ *   name: 'custom-protocol',
+ *   size: V
+ *   // V means variable length, can also be 0, a positive integer (e.g. a fixed
+ *   // length or omitted
+ * }
+ *
+ * registry.addProtocol(protocol)
+ *
+ * // does not throw UnknownProtocolError
+ * multiaddr(maWithCustomTuple)
+ *
+ * // protocols can also be removed
+ * registry.removeProtocol(protocol.code)
+ * ```
  */
 
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 import { InvalidParametersError } from './errors.ts'
 import { Multiaddr as MultiaddrClass, symbol } from './multiaddr.js'
-import { registry } from './registry.ts'
+import { registry, V } from './registry.ts'
+import type { ProtocolCodec } from './registry.ts'
 import type { Resolver } from './resolvers/index.js'
 import type { DNS } from '@multiformats/dns'
 import type { AbortOptions } from 'abort-error'
@@ -122,6 +154,28 @@ export interface MultiaddrObject {
   host: string
   transport: 'tcp' | 'udp'
   port: number
+}
+
+/**
+ * The protocol registry stores protocol codecs that allow transformation of
+ * multiaddr tuples from bytes to string and back again, and also validation of
+ * the address values.
+ */
+export interface Registry {
+  /**
+   * Retrieve a protocol definition by it's code or name
+   */
+  getProtocol (key: string | number): ProtocolCodec
+
+  /**
+   * Add a new protocol definition
+   */
+  addProtocol (codec: ProtocolCodec): void
+
+  /**
+   * Remove a protocol definition by it's code
+   */
+  removeProtocol (code: number): void
 }
 
 /**
@@ -621,7 +675,7 @@ export function fromNodeAddress (addr: NodeAddress, transport: string): Multiadd
  */
 export function fromTuples (tuples: Tuple[]): Multiaddr {
   return multiaddr(tuples.map(([code, value]) => {
-    const codec = registry.getCodec(code)
+    const codec = registry.getProtocol(code)
 
     const component: Component = {
       code,
@@ -655,7 +709,7 @@ export function fromTuples (tuples: Tuple[]): Multiaddr {
  */
 export function fromStringTuples (tuples: StringTuple[]): Multiaddr {
   return multiaddr(tuples.map(([code, value]) => {
-    const codec = registry.getCodec(code)
+    const codec = registry.getProtocol(code)
 
     const component: Component = {
       code,
@@ -743,7 +797,7 @@ export function multiaddr (addr?: MultiaddrInput): Multiaddr {
  * @deprecated This will be removed in a future version
  */
 export function protocols (proto: number | string): Protocol {
-  const codec = registry.getCodec(proto)
+  const codec = registry.getProtocol(proto)
 
   return {
     code: codec.code,
@@ -759,3 +813,5 @@ export function protocols (proto: number | string): Protocol {
  * out by bundlers.
  */
 export * from './constants.ts'
+export { registry, V }
+export type { ProtocolCodec }

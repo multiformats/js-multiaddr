@@ -114,6 +114,37 @@ console.info(resolved)
 // [Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...'), Multiaddr('/ip4/147.75...')...]
 ```
 
+## Example - Adding custom protocols
+
+To add application-specific or experimental protocols, add a protocol codec
+to the protocol registry:
+
+```ts
+import { registry, V, multiaddr } from '@multiformats/multiaddr'
+import type { ProtocolCodec } from '@multiformats/multiaddr'
+
+const maWithCustomTuple = '/custom-protocol/hello'
+
+// throws UnknownProtocolError
+multiaddr(maWithCustomTuple)
+
+const protocol: ProtocolCodec = {
+  code: 2059,
+  name: 'custom-protocol',
+  size: V
+  // V means variable length, can also be 0, a positive integer (e.g. a fixed
+  // length or omitted
+}
+
+registry.addProtocol(protocol)
+
+// does not throw UnknownProtocolError
+multiaddr(maWithCustomTuple)
+
+// protocols can also be removed
+registry.removeProtocol(protocol.code)
+```
+
 # Install
 
 ```console
