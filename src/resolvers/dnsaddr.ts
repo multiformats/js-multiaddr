@@ -15,6 +15,9 @@ class RecursionLimitError extends Error {
   }
 }
 
+/**
+ * @deprecated DNS resolving will be removed in a future release
+ */
 export interface DNSADDROptions extends AbortOptions {
   /**
    * An optional DNS resolver
@@ -30,6 +33,9 @@ export interface DNSADDROptions extends AbortOptions {
   maxRecursiveDepth?: number
 }
 
+/**
+ * @deprecated DNS resolving will be removed in a future release
+ */
 export const dnsaddrResolver: Resolver<DNSADDROptions> = async function dnsaddrResolver (ma: Multiaddr, options: DNSADDROptions = {}): Promise<string[]> {
   const recursionLimit = options.maxRecursiveDepth ?? MAX_RECURSIVE_DEPTH
 

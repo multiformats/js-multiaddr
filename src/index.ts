@@ -672,6 +672,8 @@ export function fromNodeAddress (addr: NodeAddress, transport: string): Multiadd
  * console.info(ma2)
  * // '/ip4/127.0.0.1'
  * ```
+ *
+ * @deprecated Will be removed in a future release
  */
 export function fromTuples (tuples: Tuple[]): Multiaddr {
   return multiaddr(tuples.map(([code, value]) => {
@@ -706,6 +708,8 @@ export function fromTuples (tuples: Tuple[]): Multiaddr {
  * console.info(ma2)
  * // '/ip4/127.0.0.1'
  * ```
+ *
+ * @deprecated Will be removed in a future release
  */
 export function fromStringTuples (tuples: StringTuple[]): Multiaddr {
   return multiaddr(tuples.map(([code, value]) => {
@@ -737,6 +741,8 @@ export function fromStringTuples (tuples: StringTuple[]): Multiaddr {
  * isName(multiaddr('/dns/ipfs.io'))
  * // true
  * ```
+ *
+ * @deprecated DNS resolving will be removed in a future release
  */
 export function isName (addr: Multiaddr): boolean {
   if (!isMultiaddr(addr)) {
