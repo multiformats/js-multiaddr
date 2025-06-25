@@ -1,3 +1,9 @@
+## [12.5.1](https://github.com/multiformats/js-multiaddr/compare/v12.5.0...v12.5.1) (2025-06-25)
+
+### Bug Fixes
+
+* deprecate DNS resolvers ([#426](https://github.com/multiformats/js-multiaddr/issues/426)) ([090fe79](https://github.com/multiformats/js-multiaddr/commit/090fe790857bb75cc8df66ee22019ac54106f3ec))
+
 ## [12.5.0](https://github.com/multiformats/js-multiaddr/compare/v12.4.4...v12.5.0) (2025-06-18)
 
 ### Features
