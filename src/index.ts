@@ -4,7 +4,6 @@
  * A standard way to represent addresses that
  *
  * - support any standard network protocol
- * - are self-describing
  * - have a binary packed format
  * - have a nice string representation
  * - encapsulate well
@@ -68,16 +67,6 @@
 import { Multiaddr as MultiaddrClass, symbol } from './multiaddr.js'
 import { registry, V } from './registry.ts'
 import type { ProtocolCodec } from './registry.ts'
-
-/**
- * A plain JavaScript object representation of a thin waist {@link Multiaddr}
- */
-export interface MultiaddrObject {
-  family: 4 | 6
-  host: string
-  transport: 'tcp' | 'udp'
-  port: number
-}
 
 /**
  * The protocol registry stores protocol codecs that allow transformation of

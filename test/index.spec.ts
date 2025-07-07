@@ -371,16 +371,16 @@ describe('.getComponents', () => {
     expect(
       multiaddr('/ip4/0.0.0.0/utp/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getComponents()
     ).to.deep.equal([{
-        code: 4,
-        name: 'ip4',
-        value: '0.0.0.0'
-      }, {
-        code: 302,
-        name: 'utp'
-      }, {
-        code: 421,
-        name: 'p2p',
-        value: 'QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+      code: 4,
+      name: 'ip4',
+      value: '0.0.0.0'
+    }, {
+      code: 302,
+      name: 'utp'
+    }, {
+      code: 421,
+      name: 'p2p',
+      value: 'QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
     }])
   })
 
