@@ -15,7 +15,7 @@
   "devDependencies": {
     "@multiformats/multiaddr-12.4.0": "npm:@multiformats/multiaddr@12.4.0",
     "@multiformats/multiaddr": "../../",
-    "aegir": "^47.0.7",
+    "aegir": "^47.0.16",
     "tinybench": "^4.0.1"
   }
 }
