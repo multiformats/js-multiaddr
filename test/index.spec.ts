@@ -2,8 +2,7 @@
 /* eslint-env mocha */
 import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
-import { multiaddr, isMultiaddr, fromNodeAddress, isName, fromTuples, fromStringTuples } from '../src/index.js'
-import { codes } from '../src/protocols-table.js'
+import { multiaddr, isMultiaddr, CODE_IP4 } from '../src/index.js'
 import type { Multiaddr } from '../src/index.js'
 
 function roundTrip (str: string): void {
@@ -140,10 +139,17 @@ describe('manipulation', () => {
     expect(udpAddr.toString()).to.equal(udpAddrStr)
     expect(udpAddr.bytes).to.equalBytes(udpAddrBuf)
 
-    expect(udpAddr.protoCodes()).to.deep.equal([4, 273])
-    expect(udpAddr.protoNames()).to.deep.equal(['ip4', 'udp'])
-    expect(udpAddr.protos()).to.deep.equal([codes[4], codes[273]])
-    expect(udpAddr.protos()[0] === codes[4]).to.equal(false)
+    expect(udpAddr.getComponents()).to.deep.equal([{
+      bytes: Uint8Array.from([4, 127, 0, 0, 1]),
+      code: 4,
+      name: 'ip4',
+      value: '127.0.0.1'
+    }, {
+      bytes: Uint8Array.from([145, 2, 4, 210]),
+      code: 273,
+      name: 'udp',
+      value: '1234'
+    }])
 
     const udpAddrbytes2 = udpAddr.encapsulate('/udp/5678')
     expect(udpAddrbytes2.toString()).to.equal('/ip4/127.0.0.1/udp/1234/udp/5678')
@@ -331,560 +337,144 @@ describe('normalize', () => {
   }
 })
 
-describe('helpers', () => {
-  describe('.toOptions', () => {
-    it('returns a well formed options object', () => {
-      expect(multiaddr('/ip4/0.0.0.0/tcp/1234').toOptions())
-        .to.eql({
-          family: 4,
-          host: '0.0.0.0',
-          transport: 'tcp',
-          port: 1234
-        })
-    })
-
-    it('returns an options object from a DNS addr', () => {
-      expect(multiaddr('/dns4/google.net/tcp/8000').toOptions())
-        .to.eql({
-          family: 4,
-          host: 'google.net',
-          transport: 'tcp',
-          port: 8000
-        })
-    })
-
-    it('returns an options object from a DNS6 addr', () => {
-      expect(multiaddr('/dns6/google.net/tcp/8000').toOptions())
-        .to.eql({
-          family: 6,
-          host: 'google.net',
-          transport: 'tcp',
-          port: 8000
-        })
-    })
-
-    it('returns an options object from a DNS addr defaulting to https', () => {
-      expect(multiaddr('/dnsaddr/google.net').toOptions())
-        .to.eql({
-          family: 4,
-          host: 'google.net',
-          transport: 'tcp',
-          port: 443
-        })
-    })
-
-    it('returns an options object from a DNS addr with a PeerID defaulting to https', () => {
-      expect(multiaddr('/dnsaddr/google.net/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').toOptions())
-        .to.eql({
-          family: 4,
-          host: 'google.net',
-          transport: 'tcp',
-          port: 443
-        })
-    })
-
-    it('returns an options object from an address with an ip6 zone', () => {
-      expect(
-        multiaddr('/ip6zone/x/ip6/fe80::1/tcp/1234').toOptions()
-      ).to.be.eql({
-        family: 6,
-        host: 'fe80::1%x',
-        transport: 'tcp',
-        port: 1234
-      })
-    })
-  })
-
-  describe('.protos', () => {
-    it('returns a list of all protocols in the address', () => {
-      expect(multiaddr('/ip4/0.0.0.0/utp').protos())
-        .to.eql([{
-          code: 4,
-          name: 'ip4',
-          path: false,
-          size: 32,
-          resolvable: false
-        }, {
-          code: 302,
-          name: 'utp',
-          path: false,
-          size: 0,
-          resolvable: false
-        }])
-    })
-
-    it('works with ipfs', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/utp/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').protos()
-      ).to.be.eql([{
+describe('.getComponents', () => {
+  it('returns a list of all protocols in the address', () => {
+    expect(multiaddr('/ip4/0.0.0.0/utp').getComponents())
+      .to.eql([{
         code: 4,
         name: 'ip4',
-        path: false,
-        size: 32,
-        resolvable: false
+        value: '0.0.0.0'
       }, {
         code: 302,
-        name: 'utp',
-        path: false,
-        size: 0,
-        resolvable: false
-      }, {
-        code: 421,
-        name: 'p2p',
-        path: false,
-        size: -1,
-        resolvable: false
+        name: 'utp'
       }])
-    })
-
-    it('works with p2p', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/utp/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').protos()
-      ).to.be.eql([{
-        code: 4,
-        name: 'ip4',
-        path: false,
-        size: 32,
-        resolvable: false
-      }, {
-        code: 302,
-        name: 'utp',
-        path: false,
-        size: 0,
-        resolvable: false
-      }, {
-        code: 421,
-        name: 'p2p',
-        path: false,
-        size: -1,
-        resolvable: false
-      }])
-    })
-
-    it('works with unix', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/tcp/8000/unix/tmp%2Fp2p.sock').protos()
-      ).to.be.eql([{
-        code: 4,
-        name: 'ip4',
-        path: false,
-        size: 32,
-        resolvable: false
-      }, {
-        code: 6,
-        name: 'tcp',
-        path: false,
-        size: 16,
-        resolvable: false
-      }, {
-        code: 400,
-        name: 'unix',
-        path: true,
-        size: -1,
-        resolvable: false
-      }])
-    })
-
-    it('works with memory', () => {
-      expect(
-        multiaddr('/memory/test/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6').protos()
-      ).to.be.eql([{
-        code: 777,
-        name: 'memory',
-        path: false,
-        size: -1,
-        resolvable: false
-      }, {
-        code: 421,
-        name: 'p2p',
-        path: false,
-        size: -1,
-        resolvable: false
-      }])
-    })
   })
 
-  describe('.tuples', () => {
-    it('returns the tuples', () => {
-      expect(multiaddr('/ip4/0.0.0.0/utp').tuples())
-        .to.eql([
-          [4, Uint8Array.from([0, 0, 0, 0])],
-          [302]
-        ])
-    })
-
-    it('does not allow modifying parts', () => {
-      const ma = multiaddr('/ip4/0.0.0.0/tcp/1234')
-      const tuples = ma.tuples()
-      tuples[0][0] = 41
-
-      expect(ma.toOptions()).to.have.property('family', 4)
-    })
+  it('works with ipfs', () => {
+    expect(
+      multiaddr('/ip4/0.0.0.0/utp/ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getComponents()
+    ).to.deep.equal([{
+      code: 4,
+      name: 'ip4',
+      value: '0.0.0.0'
+    }, {
+      code: 302,
+      name: 'utp'
+    }, {
+      code: 421,
+      name: 'p2p',
+      value: 'QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    }])
   })
 
-  describe('.stringTuples', () => {
-    it('returns the string partss', () => {
-      expect(multiaddr('/ip4/0.0.0.0/utp').stringTuples())
-        .to.eql([
-          [4, '0.0.0.0'],
-          [302]
-        ])
-    })
-
-    it('does not allow modifying string parts', () => {
-      const ma = multiaddr('/ip4/0.0.0.0/tcp/1234')
-      const tuples = ma.stringTuples()
-      tuples[0][0] = 41
-
-      expect(ma.toOptions()).to.have.property('family', 4)
-    })
+  it('works with p2p', () => {
+    expect(
+      multiaddr('/ip4/0.0.0.0/utp/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getComponents()
+    ).to.deep.equal([{
+      code: 4,
+      name: 'ip4',
+      value: '0.0.0.0'
+    }, {
+      code: 302,
+      name: 'utp'
+    }, {
+      code: 421,
+      name: 'p2p',
+      value: 'QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC'
+    }])
   })
 
-  describe('.decapsulate', () => {
-    it('throws on address with no matching subaddress', () => {
-      expect(
-        () => multiaddr('/ip4/127.0.0.1').decapsulate('/ip4/198.168.0.0')
-      ).to.throw(
-        /does not contain subaddress/
-      )
-    })
+  it('works with unix', () => {
+    expect(
+      multiaddr('/ip4/0.0.0.0/tcp/8000/unix/tmp%2Fp2p.sock').getComponents()
+    ).to.deep.equal([{
+      code: 4,
+      name: 'ip4',
+      value: '0.0.0.0'
+    }, {
+      code: 6,
+      name: 'tcp',
+      value: '8000'
+    }, {
+      code: 400,
+      name: 'unix',
+      value: 'tmp/p2p.sock'
+    }])
   })
 
-  describe('.decapsulateCode', () => {
-    it('removes the last occurrence of the code from the multiaddr', () => {
-      const relayTCP = multiaddr('/ip4/0.0.0.0/tcp/8080')
-      const relay = relayTCP.encapsulate('/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6/p2p-circuit')
-      const target = multiaddr('/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
-      const original = relay.encapsulate(target)
-      expect(original.decapsulateCode(421).toJSON()).to.equal(relay.toJSON())
-      expect(relay.decapsulateCode(421).toJSON()).to.equal(relayTCP.toJSON())
-    })
-
-    it('ignores missing codes', () => {
-      const tcp = multiaddr('/ip4/0.0.0.0/tcp/8080')
-      expect(tcp.decapsulateCode(421).toJSON()).to.equal(tcp.toJSON())
-    })
+  it('works with memory', () => {
+    expect(
+      multiaddr('/memory/test/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6').getComponents()
+    ).to.deep.equal([{
+      code: 777,
+      name: 'memory',
+      value: 'test'
+    }, {
+      code: 421,
+      name: 'p2p',
+      value: 'QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6'
+    }])
   })
 
-  describe('.equals', () => {
-    it('returns true for equal addresses', () => {
-      const addr1 = multiaddr('/ip4/192.168.0.1')
-      const addr2 = multiaddr('/ip4/192.168.0.1')
+  it('does not allow modifying parts', () => {
+    const ma = multiaddr('/ip4/0.0.0.0/tcp/1234')
+    const components = ma.getComponents()
+    components.shift()
 
-      expect(addr1.equals(addr2)).to.equal(true)
-    })
+    expect(ma.getComponents()).to.have.nested.property('[0].code', CODE_IP4)
+  })
+})
 
-    it('returns false for non equal addresses', () => {
-      const addr1 = multiaddr('/ip4/192.168.1.1')
-      const addr2 = multiaddr('/ip4/192.168.0.1')
+describe('.decapsulate', () => {
+  it('throws on address with no matching subaddress', () => {
+    expect(
+      () => multiaddr('/ip4/127.0.0.1').decapsulate('/ip4/198.168.0.0')
+    ).to.throw(
+      /does not contain subaddress/
+    )
+  })
+})
 
-      expect(addr1.equals(addr2)).to.equal(false)
-    })
+describe('.decapsulateCode', () => {
+  it('removes the last occurrence of the code from the multiaddr', () => {
+    const relayTCP = multiaddr('/ip4/0.0.0.0/tcp/8080')
+    const relay = relayTCP.encapsulate('/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6/p2p-circuit')
+    const target = multiaddr('/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
+    const original = relay.encapsulate(target)
+    expect(original.decapsulateCode(421).toJSON()).to.equal(relay.toJSON())
+    expect(relay.decapsulateCode(421).toJSON()).to.equal(relayTCP.toJSON())
   })
 
-  describe('.nodeAddress', () => {
-    it('throws on an invalid node address', () => {
-      expect(
-        () => multiaddr('/ip4/192.168.0.1/utp').nodeAddress()
-      ).to.throw(
-        /multiaddr must have a valid format/
-      )
-    })
+  it('ignores missing codes', () => {
+    const tcp = multiaddr('/ip4/0.0.0.0/tcp/8080')
+    expect(tcp.decapsulateCode(421).toJSON()).to.equal(tcp.toJSON())
+  })
+})
 
-    it('returns a node friendly address', () => {
-      expect(
-        multiaddr('/ip4/192.168.0.1/tcp/1234').nodeAddress()
-      ).to.be.eql({
-        address: '192.168.0.1',
-        family: 4,
-        port: 1234
-      })
-    })
+describe('.equals', () => {
+  it('returns true for equal addresses', () => {
+    const addr1 = multiaddr('/ip4/192.168.0.1')
+    const addr2 = multiaddr('/ip4/192.168.0.1')
 
-    it('returns a node friendly address with dns', () => {
-      expect(
-        multiaddr('/dns/wss0.bootstrap.libp2p.io/tcp/443').nodeAddress()
-      ).to.be.eql({
-        address: 'wss0.bootstrap.libp2p.io',
-        family: 4,
-        port: 443
-      })
-    })
-
-    it('returns a node friendly address with dns4', () => {
-      expect(
-        multiaddr('/dns4/wss0.bootstrap.libp2p.io/tcp/443').nodeAddress()
-      ).to.be.eql({
-        address: 'wss0.bootstrap.libp2p.io',
-        family: 4,
-        port: 443
-      })
-    })
-
-    it('returns a node friendly address with dns6', () => {
-      expect(
-        multiaddr('/dns6/wss0.bootstrap.libp2p.io/tcp/443').nodeAddress()
-      ).to.be.eql({
-        address: 'wss0.bootstrap.libp2p.io',
-        family: 6,
-        port: 443
-      })
-    })
-
-    it('returns a node friendly address with dnsaddr', () => {
-      expect(
-        multiaddr('/dnsaddr/wss0.bootstrap.libp2p.io/tcp/443').nodeAddress()
-      ).to.be.eql({
-        address: 'wss0.bootstrap.libp2p.io',
-        family: 4,
-        port: 443
-      })
-    })
-
-    it('should transform a p2p dnsaddr without a tcp port into a node address', () => {
-      expect(
-        multiaddr('/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN').nodeAddress()
-      ).to.be.eql({
-        address: 'bootstrap.libp2p.io',
-        family: 4,
-        port: 443
-      })
-    })
-
-    it('transforms an address with an ip6 zone', () => {
-      expect(
-        multiaddr('/ip6zone/x/ip6/fe80::1/tcp/1234').nodeAddress()
-      ).to.be.eql({
-        address: 'fe80::1%x',
-        family: 6,
-        port: 1234
-      })
-    })
-
-    it('throws on an invalid format address when the addr is not prefixed with a /', () => {
-      expect(
-        () => multiaddr('ip4/192.168.0.1/udp').nodeAddress()
-      ).to.throw()
-        .with.property('name', 'InvalidMultiaddrError')
-    })
-
-    it('throws on an invalid protocol name when the addr has an invalid one', () => {
-      expect(
-        () => multiaddr('/ip5/127.0.0.1/udp/5000')
-      ).to.throw()
-        .with.property('name', 'UnknownProtocolError')
-    })
-
-    it('throws on an invalid protocol name when the transport protocol is not valid', () => {
-      expect(
-        () => multiaddr('/ip4/127.0.0.1/utp/5000')
-      ).to.throw()
-        .with.property('name', 'UnknownProtocolError')
-    })
+    expect(addr1.equals(addr2)).to.equal(true)
   })
 
-  describe('.fromNodeAddress', () => {
-    it('throws on missing address object', () => {
-      expect(
-        // @ts-expect-error incorrect parameters
-        () => fromNodeAddress()
-      ).to.throw()
-        .with.property('name', 'InvalidParametersError')
-    })
+  it('returns false for non equal addresses', () => {
+    const addr1 = multiaddr('/ip4/192.168.1.1')
+    const addr2 = multiaddr('/ip4/192.168.0.1')
 
-    it('throws on missing transport', () => {
-      expect(
-        // @ts-expect-error incorrect parameters
-        () => fromNodeAddress({ address: '0.0.0.0' })
-      ).to.throw()
-        .with.property('name', 'InvalidParametersError')
-    })
-
-    it('parses a node address', () => {
-      expect(
-        fromNodeAddress({
-          address: '192.168.0.1',
-          family: 4,
-          port: 1234
-        }, 'tcp').toString()
-      ).to.equal('/ip4/192.168.0.1/tcp/1234')
-    })
-
-    it('parses a node address with an ip6zone', () => {
-      expect(
-        fromNodeAddress({
-          address: 'fe80::1%x',
-          family: 6,
-          port: 1234
-        }, 'tcp').toString()
-      ).to.equal('/ip6zone/x/ip6/fe80::1/tcp/1234')
-    })
+    expect(addr1.equals(addr2)).to.equal(false)
   })
+})
 
-  describe('.fromTuples', () => {
-    it('should create a multiaddr from a list of tuples', () => {
-      const ma = multiaddr('/ip4/0.0.0.0')
-      const tuples = ma.tuples()
-      tuples.push([0x06, Uint8Array.from([0, 100])])
+describe('multiaddr.isMultiaddr', () => {
+  it('handles different inputs', () => {
+    expect(isMultiaddr(multiaddr('/'))).to.deep.equal(true)
+    expect(isMultiaddr(multiaddr('/ip4/192.0.2.0/ipcidr/24'))).to.deep.equal(true)
+    expect(isMultiaddr('/')).to.deep.equal(false)
+    expect(isMultiaddr(123)).to.deep.equal(false)
 
-      const ma2 = fromTuples(tuples)
-      expect(ma2.toString()).to.equal('/ip4/0.0.0.0/tcp/100')
-    })
-  })
-
-  describe('.fromStringTuples', () => {
-    it('should create a multiaddr from a list of string tuples', () => {
-      const ma = multiaddr('/ip4/0.0.0.0')
-      const tuples = ma.stringTuples()
-      tuples.push([0x06, '100'])
-
-      const ma2 = fromStringTuples(tuples)
-      expect(ma2.toString()).to.equal('/ip4/0.0.0.0/tcp/100')
-    })
-  })
-
-  describe('.isThinWaistAddress', () => {
-    const families = ['ip4', 'ip6']
-    const transports = ['tcp', 'udp']
-    const addresses: Record<string, string> = {
-      ip4: '192.168.0.1',
-      ip6: '2001:8a0:7ac5:4201:3ac9:86ff:fe31:7095'
-    }
-    families.forEach((family) => {
-      transports.forEach((transport) => {
-        it(`returns true for /${family}-${transport}`, () => {
-          expect(
-            multiaddr(`/${family}/${addresses[family]}/${transport}/1234`).isThinWaistAddress()
-          ).to.equal(true)
-        })
-      })
-    })
-
-    it('returns false for two protocols not using {IPv4, IPv6}/{TCP, UDP}', () => {
-      expect(
-        multiaddr('/ip4/192.168.0.1/utp').isThinWaistAddress()
-      ).to.be.false()
-
-      expect(
-        multiaddr('/ip4/192.168.0.1/sctp/1234').isThinWaistAddress()
-      ).to.be.false()
-
-      expect(
-        multiaddr('/http/utp').isThinWaistAddress()
-      ).to.be.false()
-    })
-
-    it('returns false for more than two protocols', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/tcp/1234/utp').isThinWaistAddress()
-      ).to.be.false()
-    })
-  })
-
-  describe('.getPeerId should parse id from multiaddr', () => {
-    it('extracts the peer Id from a multiaddr, p2p', () => {
-      expect(
-        multiaddr('/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPeerId()
-      ).to.equal('QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
-    })
-    it('extracts the correct peer Id from a circuit multiaddr', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/tcp/8080/p2p/QmZR5a9AAXGqQF2ADqoDdGS8zvqv8n3Pag6TDDnTNMcFW6/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPeerId()
-      ).to.equal('QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC')
-    })
-    it('extracts the peer Id from a multiaddr, p2p and CIDv1 Base32', () => {
-      expect(
-        multiaddr('/p2p-circuit/p2p/bafzbeigweq4zr4x4ky2dvv7nanbkw6egutvrrvzw6g3h2rftp7gidyhtt4').getPeerId()
-      ).to.equal('QmckZzdVd72h9QUFuJJpQqhsZqGLwjhh81qSvZ9BhB2FQi')
-    })
-    it('extracts the peer Id from a multiaddr, p2p and CIDv1 Base32, where Id contains non b58 chars', () => {
-      expect(
-        multiaddr('/p2p-circuit/p2p/bafzbeidt255unskpefjmqb2rc27vjuyxopkxgaylxij6pw35hhys4vnyp4').getPeerId()
-      ).to.equal('QmW8rAgaaA6sRydK1k6vonShQME47aDxaFidbtMevWs73t')
-    })
-    it('extracts the peer Id from a multiaddr, p2p and base58btc encoded identity multihash', () => {
-      expect(
-        multiaddr('/p2p-circuit/p2p/12D3KooWNvSZnPi3RrhrTwEY4LuuBeB6K6facKUCJcyWG1aoDd2p').getPeerId()
-      ).to.equal('12D3KooWNvSZnPi3RrhrTwEY4LuuBeB6K6facKUCJcyWG1aoDd2p')
-    })
-    it('does not extract a peer Id from a circuit relay multiaddr where only the relay peer id is present', () => {
-      expect(
-        multiaddr('/ip4/127.0.0.1/tcp/123/p2p/bafzbeigweq4zr4x4ky2dvv7nanbkw6egutvrrvzw6g3h2rftp7gidyhtt4/p2p-circuit').getPeerId()
-      ).to.be.null()
-    })
-  })
-
-  describe('.getPeerId should return null on missing peer id in multiaddr', () => {
-    it('parses extracts the peer Id from a multiaddr', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/tcp/1234/utp').getPeerId()
-      ).to.be.null()
-    })
-  })
-
-  describe('.getPath', () => {
-    it('should return a path for unix', () => {
-      expect(
-        multiaddr('/unix/%2Ftmp%2Fp2p.sock').getPath()
-      ).to.eql('/tmp/p2p.sock')
-    })
-
-    it('should return a path for unix when other protos exist', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/tcp/1234/unix/%2Ftmp%2Fp2p.sock').getPath()
-      ).to.eql('/tmp/p2p.sock')
-    })
-
-    it('should not return a path when no path proto exists', () => {
-      expect(
-        multiaddr('/ip4/0.0.0.0/tcp/1234/p2p-circuit/p2p/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC').getPath()
-      ).to.eql(null)
-    })
-  })
-
-  describe('multiaddr.isMultiaddr', () => {
-    it('handles different inputs', () => {
-      expect(isMultiaddr(multiaddr('/'))).to.be.eql(true)
-      expect(isMultiaddr(multiaddr('/ip4/192.0.2.0/ipcidr/24'))).to.be.eql(true)
-      expect(isMultiaddr('/')).to.be.eql(false)
-      expect(isMultiaddr(123)).to.be.eql(false)
-
-      expect(isMultiaddr(uint8ArrayFromString('/hello'))).to.be.eql(false)
-    })
-  })
-
-  describe('resolvable multiaddrs', () => {
-    describe('.isName', () => {
-      it('valid name dns', () => {
-        const str = '/dns/ipfs.io'
-        const addr = multiaddr(str)
-        expect(isName(addr)).to.equal(true)
-      })
-
-      it('valid name dnsaddr', () => {
-        const str = '/dnsaddr/ipfs.io'
-        const addr = multiaddr(str)
-        expect(isName(addr)).to.equal(true)
-      })
-
-      it('valid name dns4', () => {
-        const str = '/dns4/ipfs.io'
-        const addr = multiaddr(str)
-        expect(isName(addr)).to.equal(true)
-      })
-
-      it('valid name dns6', () => {
-        const str = '/dns6/ipfs.io'
-        const addr = multiaddr(str)
-        expect(isName(addr)).to.equal(true)
-      })
-
-      it('invalid name', () => {
-        const str = '/ip4/127.0.0.1'
-        const addr = multiaddr(str)
-        expect(isName(addr)).to.equal(false)
-      })
-    })
+    expect(isMultiaddr(uint8ArrayFromString('/hello'))).to.deep.equal(false)
   })
 })
 

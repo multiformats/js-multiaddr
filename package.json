@@ -1,7 +1,7 @@
 {
   "name": "@multiformats/multiaddr",
   "version": "12.5.1",
-  "description": "multiaddr implementation (binary + string representation of network addresses)",
+  "description": "The JavaScript implementation of the Multiaddr spec",
   "license": "Apache-2.0 OR MIT",
   "homepage": "https://github.com/multiformats/js-multiaddr#readme",
   "repository": {
@@ -22,22 +22,6 @@
   ],
   "type": "module",
   "types": "./dist/src/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "*",
-        "dist/*",
-        "dist/src/*",
-        "dist/src/*/index"
-      ],
-      "src/*": [
-        "*",
-        "dist/*",
-        "dist/src/*",
-        "dist/src/*/index"
-      ]
-    }
-  },
   "files": [
     "src",
     "dist",
@@ -48,14 +32,6 @@
     ".": {
       "types": "./dist/src/index.d.ts",
       "import": "./dist/src/index.js"
-    },
-    "./convert": {
-      "types": "./dist/src/convert.d.ts",
-      "import": "./dist/src/convert.js"
-    },
-    "./resolvers": {
-      "types": "./dist/src/resolvers/index.d.ts",
-      "import": "./dist/src/resolvers/index.js"
     }
   },
   "release": {
@@ -169,18 +145,12 @@
   },
   "dependencies": {
     "@chainsafe/is-ip": "^2.0.1",
-    "@chainsafe/netmask": "^2.0.0",
-    "@multiformats/dns": "^1.0.3",
-    "abort-error": "^1.0.1",
     "multiformats": "^13.0.0",
     "uint8-varint": "^2.0.1",
     "uint8arrays": "^5.0.0"
   },
   "devDependencies": {
-    "@types/sinon": "^17.0.2",
-    "aegir": "^47.0.16",
-    "sinon": "^21.0.0",
-    "sinon-ts": "^2.0.0"
+    "aegir": "^47.0.16"
   },
   "browser": {
     "./dist/src/resolvers/dns.js": "./dist/src/resolvers/dns.browser.js"

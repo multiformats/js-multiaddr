@@ -29,20 +29,6 @@ export interface ProtocolCodec {
   size?: number
 
   /**
-   * If this protocol is a path protocol.
-   *
-   * @deprecated This will be removed in a future release
-   */
-  path?: boolean
-
-  /**
-   * If this protocol can be resolved using configured resolvers.
-   *
-   * @deprecated This will be removed in a future release
-   */
-  resolvable?: boolean
-
-  /**
    * If specified this protocol codec will also be used to decode tuples with
    * these names from string multiaddrs.
    */
@@ -179,23 +165,19 @@ const codecs: ProtocolCodec[] = [{
 }, {
   code: CODE_DNS,
   name: 'dns',
-  size: V,
-  resolvable: true
+  size: V
 }, {
   code: CODE_DNS4,
   name: 'dns4',
-  size: V,
-  resolvable: true
+  size: V
 }, {
   code: CODE_DNS6,
   name: 'dns6',
-  size: V,
-  resolvable: true
+  size: V
 }, {
   code: CODE_DNSADDR,
   name: 'dnsaddr',
-  size: V,
-  resolvable: true
+  size: V
 }, {
   code: CODE_SCTP,
   name: 'sctp',
@@ -213,7 +195,6 @@ const codecs: ProtocolCodec[] = [{
   code: CODE_UNIX,
   name: 'unix',
   size: V,
-  path: true,
   stringToValue: (str) => decodeURIComponent(str),
   valueToString: (val) => encodeURIComponent(val)
 }, {
