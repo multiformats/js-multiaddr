@@ -1,3 +1,17 @@
+## [13.0.0](https://github.com/multiformats/js-multiaddr/compare/v12.5.1...v13.0.0) (2025-09-02)
+
+### ⚠ BREAKING CHANGES
+
+* `.resolve`, `.isThinWaist`, `.protos`, `.fromNodeAddress`, etc have been removed
+
+### Bug Fixes
+
+* simplify API ([#427](https://github.com/multiformats/js-multiaddr/issues/427)) ([1f3fb63](https://github.com/multiformats/js-multiaddr/commit/1f3fb6317141d06bf69f712fd807cc0ac0e05158))
+
+### Trivial Changes
+
+* add or force update .github/workflows/stale.yml ([#428](https://github.com/multiformats/js-multiaddr/issues/428)) ([3685574](https://github.com/multiformats/js-multiaddr/commit/36855740d3a36f347c29499ec82bf1399022efc6))
+
 ## [12.5.1](https://github.com/multiformats/js-multiaddr/compare/v12.5.0...v12.5.1) (2025-06-25)
 
 ### Bug Fixes
