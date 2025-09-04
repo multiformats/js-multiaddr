@@ -86,7 +86,7 @@ export class Multiaddr implements MultiaddrInterface {
 
   getComponents (): Component[] {
     return [
-      ...this.#components
+      ...this.#components.map(c => ({ ...c }))
     ]
   }
 
