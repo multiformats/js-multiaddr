@@ -423,6 +423,14 @@ describe('.getComponents', () => {
 
     expect(ma.getComponents()).to.have.nested.property('[0].code', CODE_IP4)
   })
+
+  it('does not allow modifying individual parts', () => {
+    const ma = multiaddr('/ip4/0.0.0.0/tcp/1234')
+    const components = ma.getComponents()
+    components[0].value = '1.1.1.1'
+
+    expect(ma.getComponents()).to.have.nested.property('[0].value', '0.0.0.0')
+  })
 })
 
 describe('.decapsulate', () => {
