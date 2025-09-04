@@ -1,6 +1,6 @@
 {
   "name": "@multiformats/multiaddr",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "description": "The JavaScript implementation of the Multiaddr spec",
   "license": "Apache-2.0 OR MIT",
   "homepage": "https://github.com/multiformats/js-multiaddr#readme",

@@ -1,3 +1,9 @@
+## [13.0.1](https://github.com/multiformats/js-multiaddr/compare/v13.0.0...v13.0.1) (2025-09-04)
+
+### Bug Fixes
+
+* return deep copy of components ([#429](https://github.com/multiformats/js-multiaddr/issues/429)) ([15e7227](https://github.com/multiformats/js-multiaddr/commit/15e7227c386f458006d0374b1a2528a8c26599ac))
+
 ## [13.0.0](https://github.com/multiformats/js-multiaddr/compare/v12.5.1...v13.0.0) (2025-09-02)
 
 ### ⚠ BREAKING CHANGES
