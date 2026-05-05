@@ -150,7 +150,7 @@
     "uint8arrays": "^5.0.0"
   },
   "devDependencies": {
-    "aegir": "^47.0.16"
+    "aegir": "^48.0.1"
   },
   "browser": {
     "./dist/src/resolvers/dns.js": "./dist/src/resolvers/dns.browser.js"
