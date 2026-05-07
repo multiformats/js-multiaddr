@@ -147,7 +147,7 @@
     "@chainsafe/is-ip": "^2.0.1",
     "multiformats": "^13.0.0",
     "uint8-varint": "^2.0.1",
-    "uint8arrays": "^5.0.0"
+    "uint8arrays": "^6.0.0"
   },
   "devDependencies": {
     "aegir": "^47.0.16"
