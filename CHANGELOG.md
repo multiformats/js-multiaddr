@@ -1,3 +1,9 @@
+## [13.0.3](https://github.com/multiformats/js-multiaddr/compare/v13.0.2...v13.0.3) (2026-05-12)
+
+### Bug Fixes
+
+* export registry as interface instance ([#437](https://github.com/multiformats/js-multiaddr/issues/437)) ([e80b489](https://github.com/multiformats/js-multiaddr/commit/e80b489cc9b70e2065632d1a5635cfc89810af9e))
+
 ## [13.0.2](https://github.com/multiformats/js-multiaddr/compare/v13.0.1...v13.0.2) (2026-05-12)
 
 ### Trivial Changes
