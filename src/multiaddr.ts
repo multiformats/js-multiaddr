@@ -1,9 +1,9 @@
 import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
-import { bytesToComponents, componentsToBytes, componentsToString, stringToComponents } from './components.js'
+import { bytesToComponents, componentsToBytes, componentsToString, stringToComponents } from './components.ts'
 import { InvalidMultiaddrError, InvalidParametersError } from './errors.ts'
+import { isMultiaddr } from './index.ts'
 import { registry } from './registry.ts'
-import { isMultiaddr } from './index.js'
-import type { MultiaddrInput, Multiaddr as MultiaddrInterface, Component } from './index.js'
+import type { MultiaddrInput, Multiaddr as MultiaddrInterface, Component } from './index.ts'
 
 const inspect = Symbol.for('nodejs.util.inspect.custom')
 export const symbol = Symbol.for('@multiformats/multiaddr')

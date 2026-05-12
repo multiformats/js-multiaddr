@@ -1,8 +1,7 @@
-/* eslint-env mocha */
 import { expect } from 'aegir/chai'
 import { componentsToString, stringToComponents } from '../src/components.ts'
 import { CODE_HTTP, CODE_HTTP_PATH, CODE_IP4, CODE_UNIX, CODE_UTP } from '../src/constants.ts'
-import type { Component } from '../src/index.js'
+import type { Component } from '../src/index.ts'
 
 interface TestCase {
   name: string
