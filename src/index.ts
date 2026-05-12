@@ -123,11 +123,11 @@ export interface Component {
    * The bytes that make up the component. This will be set if the multiaddr
    * was parsed from a `Uint8Array`, or if `.bytes` has been accessed on it.
    */
-  bytes?: Uint8Array
+  bytes?: Uint8Array<ArrayBuffer>
 }
 
 export interface Multiaddr {
-  bytes: Uint8Array
+  bytes: Uint8Array<ArrayBuffer>
 
   /**
    * Returns Multiaddr as a String
@@ -258,7 +258,7 @@ export interface Multiaddr {
    * // false
    * ```
    */
-  equals(addr: { bytes: Uint8Array }): boolean
+  equals(addr?: any): boolean
 }
 
 /**
