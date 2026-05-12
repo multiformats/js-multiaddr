@@ -1,4 +1,5 @@
 import * as varint from 'uint8-varint'
+import { withArrayBuffer } from 'uint8arrays'
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
@@ -27,7 +28,7 @@ export function bytesToComponents (bytes: Uint8Array): Component[] {
     const component: Component = {
       code,
       name: codec.name,
-      bytes: bytes.subarray(i, i + componentLength)
+      bytes: withArrayBuffer(bytes.subarray(i, i + componentLength))
     }
 
     if (size > 0) {
@@ -45,7 +46,7 @@ export function bytesToComponents (bytes: Uint8Array): Component[] {
   return components
 }
 
-export function componentsToBytes (components: Component[]): Uint8Array {
+export function componentsToBytes (components: Component[]): Uint8Array<ArrayBuffer> {
   let length = 0
   const bytes: Uint8Array[] = []
 

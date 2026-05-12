@@ -54,7 +54,7 @@ export class Multiaddr implements MultiaddrInterface {
   // cache string representation
   #string: string | undefined
   // cache byte representation
-  #bytes: Uint8Array | undefined
+  #bytes: Uint8Array<ArrayBuffer> | undefined
 
   constructor (addr: MultiaddrInput | Component[] = '/', options: MultiaddrOptions = {}) {
     this.#components = toComponents(addr)
@@ -64,7 +64,7 @@ export class Multiaddr implements MultiaddrInterface {
     }
   }
 
-  get bytes (): Uint8Array {
+  get bytes (): Uint8Array<ArrayBuffer> {
     if (this.#bytes == null) {
       this.#bytes = componentsToBytes(this.#components)
     }

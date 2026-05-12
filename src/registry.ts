@@ -48,7 +48,7 @@ export interface ProtocolCodec {
   /**
    * To encode the multiaddr as bytes, convert the value to bytes
    */
-  valueToBytes?(value: string): Uint8Array
+  valueToBytes?(value: string): Uint8Array<ArrayBuffer>
 
   /**
    * To decode bytes to a multiaddr, convert the value bytes to a string

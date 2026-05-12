@@ -14,7 +14,7 @@ export function bytesToString (base: SupportedEncodings): (buf: Uint8Array) => s
   }
 }
 
-export function stringToBytes (base: SupportedEncodings): (value: string) => Uint8Array {
+export function stringToBytes (base: SupportedEncodings): (value: string) => Uint8Array<ArrayBuffer> {
   return (buf) => {
     return uint8ArrayFromString(buf, base)
   }
@@ -25,7 +25,7 @@ export function bytes2port (buf: Uint8Array): string {
   return view.getUint16(buf.byteOffset).toString()
 }
 
-export function port2bytes (port: string | number): Uint8Array {
+export function port2bytes (port: string | number): Uint8Array<ArrayBuffer> {
   const buf = new ArrayBuffer(2)
   const view = new DataView(buf)
   view.setUint16(0, typeof port === 'string' ? parseInt(port) : port)
@@ -33,7 +33,7 @@ export function port2bytes (port: string | number): Uint8Array {
   return new Uint8Array(buf)
 }
 
-export function onion2bytes (str: string): Uint8Array {
+export function onion2bytes (str: string): Uint8Array<ArrayBuffer> {
   const addr = str.split(':')
 
   if (addr.length !== 2) {
@@ -59,7 +59,7 @@ export function onion2bytes (str: string): Uint8Array {
   return uint8ArrayConcat([buf, portBuf], buf.length + portBuf.length)
 }
 
-export function onion32bytes (str: string): Uint8Array {
+export function onion32bytes (str: string): Uint8Array<ArrayBuffer> {
   const addr = str.split(':')
 
   if (addr.length !== 2) {
@@ -95,7 +95,7 @@ export function bytes2onion (buf: Uint8Array): string {
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L7
 // but with buf/offset args removed because we don't use them
-export const ip4ToBytes = function (ip: string): Uint8Array {
+export const ip4ToBytes = function (ip: string): Uint8Array<ArrayBuffer> {
   ip = ip.toString().trim()
 
   const bytes = new Uint8Array(4)
@@ -115,7 +115,7 @@ export const ip4ToBytes = function (ip: string): Uint8Array {
 
 // Copied from https://github.com/indutny/node-ip/blob/master/lib/ip.js#L7
 // but with buf/offset args removed because we don't use them
-export const ip6ToBytes = function (ip: string): Uint8Array {
+export const ip6ToBytes = function (ip: string): Uint8Array<ArrayBuffer> {
   let offset = 0
   ip = ip.toString().trim()
 
@@ -228,7 +228,7 @@ const anybaseDecoder = (function () {
   return acc
 })()
 
-export function mb2bytes (mbstr: string): Uint8Array {
+export function mb2bytes (mbstr: string): Uint8Array<ArrayBuffer> {
   return anybaseDecoder.decode(mbstr)
 }
 
