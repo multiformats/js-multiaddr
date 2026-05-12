@@ -64,7 +64,7 @@
  * ```
  */
 
-import { Multiaddr as MultiaddrClass, symbol } from './multiaddr.js'
+import { Multiaddr as MultiaddrClass, symbol } from './multiaddr.ts'
 import { registry, V } from './registry.ts'
 import type { ProtocolCodec } from './registry.ts'
 

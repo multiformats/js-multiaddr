@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 import { expect } from 'aegir/chai'
 import { base64url } from 'multiformats/bases/base64'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'

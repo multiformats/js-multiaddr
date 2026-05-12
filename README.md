@@ -85,6 +85,20 @@ multiaddr(maWithCustomTuple)
 registry.removeProtocol(protocol.code)
 ```
 
+# Install
+
+```console
+$ npm i @multiformats/multiaddr
+```
+
+## Browser `<script>` tag
+
+Loading this module through a script tag will make its exports available as `MultiformatsMultiaddr` in the global namespace.
+
+```html
+<script src="https://unpkg.com/@multiformats/multiaddr/dist/index.min.js"></script>
+```
+
 # API Docs
 
 - <https://multiformats.github.io/js-multiaddr>

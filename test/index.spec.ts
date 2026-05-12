@@ -1,9 +1,8 @@
 /* eslint max-nested-callbacks: ["error", 8] */
-/* eslint-env mocha */
 import { expect } from 'aegir/chai'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
-import { multiaddr, isMultiaddr, CODE_IP4 } from '../src/index.js'
-import type { Multiaddr } from '../src/index.js'
+import { multiaddr, isMultiaddr, CODE_IP4 } from '../src/index.ts'
+import type { Multiaddr } from '../src/index.ts'
 
 function roundTrip (str: string): void {
   const output = str.replace('/ipfs/', '/p2p/')
