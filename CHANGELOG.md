@@ -1,3 +1,13 @@
+## [13.0.2](https://github.com/multiformats/js-multiaddr/compare/v13.0.1...v13.0.2) (2026-05-12)
+
+### Trivial Changes
+
+* bump aegir from 47.2.0 to 48.0.4 ([#435](https://github.com/multiformats/js-multiaddr/issues/435)) ([b9354d3](https://github.com/multiformats/js-multiaddr/commit/b9354d36a35c4dadb108a5ce09e45576d88fcff4))
+
+### Dependencies
+
+* bump multiformats from 13.4.2 to 14.0.0 ([#432](https://github.com/multiformats/js-multiaddr/issues/432)) ([c21e208](https://github.com/multiformats/js-multiaddr/commit/c21e2089311c258bd58a68be1d242bf995773b61))
+
 ## [13.0.1](https://github.com/multiformats/js-multiaddr/compare/v13.0.0...v13.0.1) (2025-09-04)
 
 ### Bug Fixes
