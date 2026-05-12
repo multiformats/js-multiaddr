@@ -106,7 +106,7 @@ class Registry implements RegistryInterface {
   }
 }
 
-export const registry = new Registry()
+export const registry: RegistryInterface = new Registry()
 
 const codecs: ProtocolCodec[] = [{
   code: CODE_IP4,
